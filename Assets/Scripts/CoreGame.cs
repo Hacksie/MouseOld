@@ -40,10 +40,16 @@ namespace HackedDesign {
 			Debug.Log("Scene Initialization");
 			player = GameObject.FindWithTag (TagManager.PLAYER);
 			playerController = player.GetComponent<PlayerController> ();
+			state = GameState.PLAYING;
 		}		
 
 
 		void Update () {
+
+			if(inputController.GetStartButton())
+			{
+				state = GameState.STARTMENU;
+			}			
 
 			switch (state) {
 				case GameState.LOADING:
@@ -61,6 +67,13 @@ namespace HackedDesign {
 
 				case GameState.PAUSE:
 					break;
+			}
+		}
+
+		void LateUpdate() {
+			switch(state)
+			{
+				
 			}
 		}
 
@@ -98,6 +111,7 @@ namespace HackedDesign {
 
 
 	public enum GameState {
+		MAINMENU,
 		CUTSCENE,
 		PLAYING,
 		PAUSE,
