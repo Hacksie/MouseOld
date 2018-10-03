@@ -7,7 +7,8 @@ namespace HackedDesign {
 
 		public interface IInputController {
 			Vector2 GetMovementAxis();
-			bool GetStartButton();
+			bool StartButtonUp();
+			bool SelectButtonUp();
 
 		}
 	}

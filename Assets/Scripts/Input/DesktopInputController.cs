@@ -11,10 +11,15 @@ namespace HackedDesign {
 				return new Vector2(UnityEngine.Input.GetAxis("Horizontal"), UnityEngine.Input.GetAxis("Vertical"));
 			}
 
-			public bool GetStartButton()
+			public bool StartButtonUp()
 			{
 				return UnityEngine.Input.GetButtonUp("Start");
 			}
+
+			public bool SelectButtonUp()
+			{
+				return UnityEngine.Input.GetButtonUp("Select");
+			}			
 		}
 
 	}

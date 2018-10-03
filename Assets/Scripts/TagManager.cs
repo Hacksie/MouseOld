@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace HackedDesign {
-	public class TagManager {
+﻿namespace HackedDesign
+{
+    public class TagManager {
 
 		public const string SPAWN = "Respawn";
 		public const string GAMEMANAGER = "GameController";
