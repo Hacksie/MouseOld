@@ -16,6 +16,8 @@ namespace HackedDesign {
 		private GameObject startMenuPanel;
 		private GameObject selectMenuPanel;
 		private GameObject taskPanel;
+		private Dialogue.INarrationManager narrationManager;
+		private Dialogue.NarrationPanelPresenter narrationPanel;
 
 		CoreGame () {
 			instance = this;
@@ -35,7 +37,16 @@ namespace HackedDesign {
 			Debug.Log ("Initialization");
 			startMenuPanel = GameObject.FindWithTag (TagManager.STARTMENU);
 			selectMenuPanel = GameObject.FindWithTag (TagManager.SELECTMENU);
-			taskPanel = GameObject.FindWithTag(TagManager.TASK_PANEL);
+			taskPanel = GameObject.FindWithTag (TagManager.TASK_PANEL);
+
+			GameObject narrationManagerObj = GameObject.FindWithTag (TagManager.NARRATION_MANAGER);
+			GameObject narrationPanelObj = GameObject.FindWithTag (TagManager.NARRATION_PANEL);
+
+			narrationManager = narrationManagerObj.GetComponent<HackedDesign.Dialogue.NarrationManager> ();
+			narrationPanel = narrationPanelObj.GetComponent<HackedDesign.Dialogue.NarrationPanelPresenter> ();
+
+			narrationManager.Initialize (inputController);
+			narrationPanel.Initialize (narrationManager);
 
 			startMenuPanel.SetActive (false);
 			selectMenuPanel.SetActive (false);
@@ -50,17 +61,44 @@ namespace HackedDesign {
 			player = GameObject.FindWithTag (TagManager.PLAYER);
 			playerController = player.GetComponent<PlayerController> ();
 			state = GameState.PLAYING;
+			Cursor.visible = false;
 		}
 
 		public void ResumeEvent () {
-			state = GameState.PLAYING;
-			HideStartMenu();
-			HideSelectMenu();
+			Resume ();
 		}
 
 		public void QuitEvent () {
 			//FIXME: Ask for save?
 			SceneManager.LoadScene ("MainMenu");
+		}
+
+		// public void Pause () {
+		// 	Time.timeScale = 0;
+		// 	playingUI.SetActive (false);
+		// 	pausedUI.SetActive (true);
+		// 	state = GameState.PAUSE;
+		// 	Cursor.visible = true;
+		// }
+
+		public void Resume () {
+			Debug.Log ("State set to RESUME");
+			Time.timeScale = 1;
+			HideStartMenu ();
+			HideSelectMenu ();
+			//pausedUI.SetActive (false);
+			//playingUI.SetActive (true);
+			state = GameState.PLAYING;
+			Cursor.visible = false;
+		}
+
+		public void Dialogue () {
+			Debug.Log ("State set to DIALOGUE");
+			Time.timeScale = 0;
+			//pausedUI.SetActive (false);
+			//playingUI.SetActive (true);
+			state = GameState.DIALOGUE;
+			Cursor.visible = true;
 		}
 
 		void Update () {
@@ -85,19 +123,24 @@ namespace HackedDesign {
 						state = GameState.PLAYING;
 						HideSelectMenu ();
 					}
-					break;	
+					break;
 
 				case GameState.STARTMENU:
 					if (inputController.StartButtonUp ()) {
 						state = GameState.PLAYING;
 						HideStartMenu ();
 					}
-					break;					
+					break;
 			}
 		}
 
 		void LateUpdate () {
 
+			switch (state) {
+				case GameState.PLAYING:
+					narrationPanel.Repaint ();
+					break;
+			}
 		}
 
 		void FixedUpdate () {
@@ -111,22 +154,24 @@ namespace HackedDesign {
 		void ShowStartMenu () {
 			state = GameState.STARTMENU;
 			startMenuPanel.SetActive (true);
+			Cursor.visible = true;
 		}
 
-		void HideStartMenu() {
+		void HideStartMenu () {
 			startMenuPanel.SetActive (false);
+			Cursor.visible = false;
 		}
-
-
 
 		void ShowSelectMenu () {
 			state = GameState.SELECTMENU;
 			selectMenuPanel.SetActive (true);
+			Cursor.visible = true;
 		}
 
-		void HideSelectMenu() {
+		void HideSelectMenu () {
 			selectMenuPanel.SetActive (false);
-		}		
+			Cursor.visible = false;
+		}
 
 		void PlayingUpdate () {
 			playerController.UpdateMovement (inputController);

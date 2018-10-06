@@ -28,6 +28,8 @@
 		public const string TASK_MANAGER = "TaskManager";
 		public const string DIALOGUE_MANAGER = "DialogueManager";
 		public const string DOOR = "Door";
+		public const string NARRATION_MANAGER = "NarrationManager";
+		public const string NARRATION_PANEL = "NarrationPanel";
 
 	}
 }

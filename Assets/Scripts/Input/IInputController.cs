@@ -9,7 +9,7 @@ namespace HackedDesign {
 			Vector2 GetMovementAxis();
 			bool StartButtonUp();
 			bool SelectButtonUp();
-
+			void ResetInput();
 		}
 	}
 }
