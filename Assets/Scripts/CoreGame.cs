@@ -19,6 +19,8 @@ namespace HackedDesign {
 		private Dialogue.INarrationManager narrationManager;
 		private Dialogue.NarrationPanelPresenter narrationPanel;
 
+		public Story.StoryEvent startingStory;
+
 		CoreGame () {
 			instance = this;
 		}
@@ -62,10 +64,17 @@ namespace HackedDesign {
 			playerController = player.GetComponent<PlayerController> ();
 			state = GameState.PLAYING;
 			Cursor.visible = false;
+
+			if (startingStory != null) {
+				startingStory.Start ();
+			} else {
+				Debug.LogError ("No starting story set");
+			}
+
 		}
 
 		public void ResumeEvent () {
-			Resume ();
+			SetResume ();
 		}
 
 		public void QuitEvent () {
@@ -81,23 +90,33 @@ namespace HackedDesign {
 		// 	Cursor.visible = true;
 		// }
 
-		public void Resume () {
+		public void SetResume () {
 			Debug.Log ("State set to RESUME");
 			Time.timeScale = 1;
 			HideStartMenu ();
 			HideSelectMenu ();
+			narrationPanel.Repaint ();
 			//pausedUI.SetActive (false);
 			//playingUI.SetActive (true);
 			state = GameState.PLAYING;
 			Cursor.visible = false;
 		}
 
-		public void Dialogue () {
+		public void SetDialogue () {
 			Debug.Log ("State set to DIALOGUE");
 			Time.timeScale = 0;
 			//pausedUI.SetActive (false);
 			//playingUI.SetActive (true);
 			state = GameState.DIALOGUE;
+			Cursor.visible = true;
+
+		}
+
+		public void SetNarration () {
+			Debug.Log ("State set to NARRATIOn");
+			Time.timeScale = 0;
+			narrationPanel.Repaint ();
+			state = GameState.NARRATION;
 			Cursor.visible = true;
 		}
 
@@ -137,8 +156,8 @@ namespace HackedDesign {
 		void LateUpdate () {
 
 			switch (state) {
-				case GameState.PLAYING:
-					narrationPanel.Repaint ();
+				case GameState.NARRATION:
+					//narrationPanel.Repaint ();
 					break;
 			}
 		}
@@ -188,6 +207,7 @@ namespace HackedDesign {
 		CUTSCENE,
 		PLAYING,
 		LOADING,
+		NARRATION,
 		DIALOGUE,
 		STARTMENU,
 		SELECTMENU

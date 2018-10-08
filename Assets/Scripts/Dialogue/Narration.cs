@@ -9,7 +9,7 @@ namespace HackedDesign {
 			[TextArea]
 			public string text;
 			public Sprite button;
-			//public DialogueAction dialogueAction;
+			public NarrationAction narrationAction;
 		}
 	}
 

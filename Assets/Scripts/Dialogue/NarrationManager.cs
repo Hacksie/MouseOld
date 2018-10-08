@@ -27,7 +27,7 @@ namespace HackedDesign {
 				//Input.ResetInputAxes();
 				if (narration != null) {
 					currentNarration = narration;
-					CoreGame.instance.Dialogue ();
+					CoreGame.instance.SetNarration ();
 				} else {
 					Debug.LogError ("No dialogue to show");
 				}
@@ -40,15 +40,15 @@ namespace HackedDesign {
 			public void NarrationButtonEvent () {
 				Debug.Log ("Narration Button Event");
 
-				currentNarration = null;
-				CoreGame.instance.Resume ();
+				//currentNarration = null;
+				//CoreGame.instance.SetResume ();
 
-				// if (currentNarration.dialogueAction != null) {
-				// 	DialogueAction dialogueAction = currentNarration.dialogueAction;
-				// 	currentNarration = null;
-				// 	CoreGame.instance.Resume ();
-				// 	dialogueAction.Invoke ();
-				// }
+				if (currentNarration.narrationAction != null) {
+					NarrationAction narrationAction = currentNarration.narrationAction;
+					currentNarration = null;
+					CoreGame.instance.SetResume ();
+					narrationAction.Invoke ();
+				}
 
 				// if(currentDialogue.nextDialogue == null)
 				// {
