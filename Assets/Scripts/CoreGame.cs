@@ -18,6 +18,8 @@ namespace HackedDesign {
 		private GameObject taskPanel;
 		private Dialogue.INarrationManager narrationManager;
 		private Dialogue.NarrationPanelPresenter narrationPanel;
+		private Dialogue.IDialogueManager dialogueManager;
+		private Dialogue.DialoguePanelPresenter dialoguePanel;
 
 		public Story.StoryEvent startingStory;
 
@@ -43,16 +45,25 @@ namespace HackedDesign {
 
 			GameObject narrationManagerObj = GameObject.FindWithTag (TagManager.NARRATION_MANAGER);
 			GameObject narrationPanelObj = GameObject.FindWithTag (TagManager.NARRATION_PANEL);
+			GameObject dialogueManagerObj = GameObject.FindWithTag(TagManager.DIALOGUE_MANAGER);
+			GameObject dialoguePanelObj = GameObject.FindWithTag (TagManager.DIALOGUE_PANEL);
 
-			narrationManager = narrationManagerObj.GetComponent<HackedDesign.Dialogue.NarrationManager> ();
-			narrationPanel = narrationPanelObj.GetComponent<HackedDesign.Dialogue.NarrationPanelPresenter> ();
+			narrationManager = narrationManagerObj.GetComponent<Dialogue.NarrationManager> ();
+			narrationPanel = narrationPanelObj.GetComponent<Dialogue.NarrationPanelPresenter> ();
+
+			dialogueManager = dialogueManagerObj.GetComponent<Dialogue.DialogueManager>();
+			dialoguePanel = dialoguePanelObj.GetComponent<Dialogue.DialoguePanelPresenter>();
 
 			narrationManager.Initialize (inputController);
 			narrationPanel.Initialize (narrationManager);
 
+			dialogueManager.Initialize(inputController);
+			dialoguePanel.Initialize(dialogueManager);
+
 			startMenuPanel.SetActive (false);
 			selectMenuPanel.SetActive (false);
 			taskPanel.SetActive (false);
+			
 		}
 
 		/// <summary>
@@ -62,14 +73,19 @@ namespace HackedDesign {
 			Debug.Log ("Scene Initialization");
 			player = GameObject.FindWithTag (TagManager.PLAYER);
 			playerController = player.GetComponent<PlayerController> ();
-			state = GameState.PLAYING;
-			Cursor.visible = false;
 
 			if (startingStory != null) {
 				startingStory.Start ();
 			} else {
 				Debug.LogError ("No starting story set");
 			}
+			HideStartMenu ();
+			HideSelectMenu ();
+			narrationPanel.Repaint ();
+			dialoguePanel.Repaint();			
+
+			//SetResume();
+
 
 		}
 
@@ -80,6 +96,11 @@ namespace HackedDesign {
 		public void QuitEvent () {
 			//FIXME: Ask for save?
 			SceneManager.LoadScene ("MainMenu");
+		}
+
+		public GameObject GetPlayer()
+		{
+			return player;
 		}
 
 		// public void Pause () {
@@ -96,6 +117,7 @@ namespace HackedDesign {
 			HideStartMenu ();
 			HideSelectMenu ();
 			narrationPanel.Repaint ();
+			dialoguePanel.Repaint();
 			//pausedUI.SetActive (false);
 			//playingUI.SetActive (true);
 			state = GameState.PLAYING;
@@ -105,15 +127,15 @@ namespace HackedDesign {
 		public void SetDialogue () {
 			Debug.Log ("State set to DIALOGUE");
 			Time.timeScale = 0;
+			dialoguePanel.Repaint();
 			//pausedUI.SetActive (false);
 			//playingUI.SetActive (true);
 			state = GameState.DIALOGUE;
 			Cursor.visible = true;
-
 		}
 
 		public void SetNarration () {
-			Debug.Log ("State set to NARRATIOn");
+			Debug.Log ("State set to NARRATION");
 			Time.timeScale = 0;
 			narrationPanel.Repaint ();
 			state = GameState.NARRATION;
@@ -184,12 +206,13 @@ namespace HackedDesign {
 		void ShowSelectMenu () {
 			state = GameState.SELECTMENU;
 			selectMenuPanel.SetActive (true);
-			Cursor.visible = true;
+			//Cursor.visible = true;
+			//FIXME: 
 		}
 
 		void HideSelectMenu () {
 			selectMenuPanel.SetActive (false);
-			Cursor.visible = false;
+			//Cursor.visible = false;
 		}
 
 		void PlayingUpdate () {

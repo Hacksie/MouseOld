@@ -7,7 +7,7 @@ namespace HackedDesign {
         public class StoryEvent : ScriptableObject {
 
             public StoryEventState currentState = StoryEventState.UNSTARTED;
-            public StoryEvent nextStoryEvent;
+            //public StoryEvent nextStoryEvent;
 
             private List<StoryEventListener> listeners = new List<StoryEventListener> ();
 
@@ -42,9 +42,9 @@ namespace HackedDesign {
                     listeners[i].OnEventTrigger (currentState);
                 }         
                        
-                if (nextStoryEvent != null) {
-                    nextStoryEvent.Start ();
-                }
+                // if (nextStoryEvent != null) {
+                //     nextStoryEvent.Start ();
+                // }
             }
 
             // public void TriggerState (StoryEventState eventType) {
