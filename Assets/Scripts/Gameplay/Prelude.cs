@@ -33,20 +33,24 @@ namespace HackedDesign {
 
 			public void Prelude2Start() {
 				Debug.Log("Prelude 2 Start");
-				kitty.SetActive(false); // Animate this
-				Dialogue.NarrationManager.instance.ShowNarration("Prelude2");
+				kitty.SetActive(true); // Animate this
+				Dialogue.DialogueManager.instance.ShowDialogue("Prelude2");
+
+				//kitty.SetActive(false); // Animate this
+				//Dialogue.NarrationManager.instance.ShowNarration("Prelude2");
 				//Dialogue.DialogueManager.instance.ShowDialogue(prelude2);
 			}
 
 			public void Prelude3Start() {
 				Debug.Log("Prelude 3 Start");
 				//kitty.SetActive(true); // Animate this
-				Dialogue.NarrationManager.instance.ShowNarration("Prelude3");
+				
 			}	
 
 			public void Prelude4Start() {
 				Debug.Log("Prelude 4 Start");
 				kitty.SetActive(true); // Animate this
+				
 				//Dialogue.NarrationManager.instance.ShowNarration("Prelude4");
 			}	
 

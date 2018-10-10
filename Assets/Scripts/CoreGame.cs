@@ -74,15 +74,18 @@ namespace HackedDesign {
 			player = GameObject.FindWithTag (TagManager.PLAYER);
 			playerController = player.GetComponent<PlayerController> ();
 
+			HideStartMenu ();
+			HideSelectMenu ();			
+			narrationPanel.Repaint ();
+			dialoguePanel.Repaint();			
+
 			if (startingStory != null) {
 				startingStory.Start ();
 			} else {
 				Debug.LogError ("No starting story set");
 			}
-			HideStartMenu ();
-			HideSelectMenu ();
-			narrationPanel.Repaint ();
-			dialoguePanel.Repaint();			
+
+			
 
 			//SetResume();
 

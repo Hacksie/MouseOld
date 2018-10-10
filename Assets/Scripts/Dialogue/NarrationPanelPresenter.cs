@@ -11,7 +11,7 @@ namespace HackedDesign {
             public Text text; 
             public Button actionButton;
             public Image actionButtonImage;
-            //public Text speaker;
+            public Text speaker;
             //public Image avatar;
 
             //public List<Character.Corp> corps = new List<Character.Corp>();
@@ -41,6 +41,7 @@ namespace HackedDesign {
 
 
                 //Debug.Log(currentDialogue.speaker.corp.color.ToString());
+                speaker.text = currentNarration.speaker.fullName + " / \"" + currentNarration.speaker.handle + "\"";
 
                 text.text = currentNarration.text;
                 //speaker.text = currentNarration.speaker.fullName + " / <color=cyan>\"" + currentNarration.speaker.handle + "\"</color> / <color="+ currentNarration.speaker.corp.color.ToString() + ">" + currentNarration.speaker.corp.name + "</color> / " + currentNarration.speaker.serial;

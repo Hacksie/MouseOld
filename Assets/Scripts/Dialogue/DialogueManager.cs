@@ -27,7 +27,7 @@ namespace HackedDesign {
 				//Input.ResetInputAxes();
 				if (dialogue != null) {
 					currentDialogue = dialogue;
-					CoreGame.instance.SetNarration ();
+					CoreGame.instance.SetDialogue ();
 				} else {
 					Debug.LogError ("No dialogue to show");
 				}
@@ -37,30 +37,49 @@ namespace HackedDesign {
 				ShowDialogue (dialogueList.FirstOrDefault (e => e.name == name));
 			}
 
-			public void DialogueButtonEvent () {
-				Debug.Log ("Narration Button Event");
+			public void DialogueButton1Event () {
+				Debug.Log ("Dialogue Button 1 Event");
 
-				//currentNarration = null;
-				//CoreGame.instance.SetResume ();
-
-				if (currentDialogue.dialogueAction != null) {
-					DialogueAction dialogueAction = currentDialogue.dialogueAction;
+				if (currentDialogue.dialogueAction1 != null) {
+					DialogueAction dialogueAction = currentDialogue.dialogueAction1;
 					currentDialogue = null;
 					CoreGame.instance.SetResume ();
 					dialogueAction.Invoke ();
 				}
-
-				// if(currentDialogue.nextDialogue == null)
-				// {
-				// 	currentDialogue = null;
-				// 	GameManager.instance.Resume();
-				// }
-				// else
-				// {
-				// 	ShowDialogue(currentDialogue.nextDialogue);
-				// }
-
 			}
+
+			public void DialogueButton2Event () {
+				Debug.Log ("Dialogue Button 2 Event");
+
+				if (currentDialogue.dialogueAction2 != null) {
+					DialogueAction dialogueAction = currentDialogue.dialogueAction2;
+					currentDialogue = null;
+					CoreGame.instance.SetResume ();
+					dialogueAction.Invoke ();
+				}
+			}			
+
+			public void DialogueButton3Event () {
+				Debug.Log ("Dialogue Button 3 Event");
+
+				if (currentDialogue.dialogueAction3 != null) {
+					DialogueAction dialogueAction = currentDialogue.dialogueAction3;
+					currentDialogue = null;
+					CoreGame.instance.SetResume ();
+					dialogueAction.Invoke ();
+				}
+			}		
+
+			public void DialogueButton4Event () {
+				Debug.Log ("Dialogue Button 4 Event");
+
+				if (currentDialogue.dialogueAction4 != null) {
+					DialogueAction dialogueAction = currentDialogue.dialogueAction4;
+					currentDialogue = null;
+					CoreGame.instance.SetResume ();
+					dialogueAction.Invoke ();
+				}
+			}						
 
 			public void SetCurrentDialogue (string name) {
 

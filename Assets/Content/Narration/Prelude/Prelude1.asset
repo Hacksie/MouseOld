@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3796c84e8e0744f9da802e8c3841a1, type: 3}
   m_Name: Prelude1
   m_EditorClassIdentifier: 
-  text: Twas the night before christmas, when all through the city, all the creatures
-    were stirring. Even a Mouse...
+  speaker: {fileID: 11400000, guid: 1366536d38d42804c8c99d9aa88423ba, type: 2}
+  text: "Twas the night before christmas, when all through the city, all the creatures
+    were stirring. Even a Mouse...\nThough, if I had my way, I'd leave the creatures
+    to their stirring and stay here in my apartment where things are far... cleaner.
+    \nSadly, I doubt there is any chance for that tonight."
   button: {fileID: 21300000, guid: a19b55180624445c3a72c7b8a5f68a69, type: 3}
   narrationAction: {fileID: 11400000, guid: 3100b99c6c2556a47995bfb21a6c5d2c, type: 2}
