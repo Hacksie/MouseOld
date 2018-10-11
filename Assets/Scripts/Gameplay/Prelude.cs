@@ -11,7 +11,7 @@ namespace HackedDesign {
 			// public Dialogue.Narration prelude3;
 			// public Dialogue.Narration prelude4;
 
-			public GameObject kitty;
+			//public GameObject kitty;
 
 
 
@@ -19,10 +19,10 @@ namespace HackedDesign {
 			public void Prelude1Start () {
 				
 				Debug.Log("Prelude 1 Started");
-				kitty = GameObject.Find("Kitty"); // FIXME: What about if it's saved and restarted
+				//kitty = GameObject.Find("Kitty"); // FIXME: What about if it's saved and restarted
 				//FIXME: Create a character manager to pool & find characters
 				
-				kitty.SetActive(false);
+				//kitty.SetActive(false);
 				
 
 				//var spawn = GameObject.FindWithTag (TagManager.SPAWN);
@@ -33,7 +33,7 @@ namespace HackedDesign {
 
 			public void Prelude2Start() {
 				Debug.Log("Prelude 2 Start");
-				kitty.SetActive(true); // Animate this
+				//kitty.SetActive(true); // Animate this
 				Dialogue.DialogueManager.instance.ShowDialogue("Prelude2");
 
 				//kitty.SetActive(false); // Animate this
@@ -49,7 +49,7 @@ namespace HackedDesign {
 
 			public void Prelude4Start() {
 				Debug.Log("Prelude 4 Start");
-				kitty.SetActive(true); // Animate this
+				//kitty.SetActive(true); // Animate this
 				
 				//Dialogue.NarrationManager.instance.ShowNarration("Prelude4");
 			}	

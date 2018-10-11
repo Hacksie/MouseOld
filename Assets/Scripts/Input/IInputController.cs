@@ -10,6 +10,7 @@ namespace HackedDesign {
 			bool StartButtonUp();
 			bool SelectButtonUp();
 			void ResetInput();
+			bool InteractButtonUp();
 		}
 	}
 }

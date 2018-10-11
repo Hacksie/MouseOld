@@ -85,6 +85,16 @@ namespace HackedDesign {
 				Debug.LogError ("No starting story set");
 			}
 
+			foreach (GameObject sb in GameObject.FindGameObjectsWithTag("SpeechBubble"))
+			{
+				SpeechBubbleTrigger sbt = sb.GetComponent<SpeechBubbleTrigger>();
+				if(sbt != null)
+				{
+					sbt.Initialize(inputController);
+				}
+
+			}
+
 			
 
 			//SetResume();

@@ -10,6 +10,10 @@ namespace HackedDesign {
 				return new Vector2 (UnityEngine.Input.GetAxis ("Horizontal"), UnityEngine.Input.GetAxis ("Vertical"));
 			}
 
+			public void ResetInput () {
+				UnityEngine.Input.ResetInputAxes ();
+			}			
+
 			public bool StartButtonUp () {
 				return UnityEngine.Input.GetButtonUp ("Start");
 			}
@@ -18,8 +22,10 @@ namespace HackedDesign {
 				return UnityEngine.Input.GetButtonUp ("Select");
 			}
 
-			public void ResetInput () {
-				UnityEngine.Input.ResetInputAxes ();
+
+
+			public bool InteractButtonUp() {
+				return UnityEngine.Input.GetButtonUp("Interact");
 			}
 		}
 	}
