@@ -15,6 +15,8 @@ namespace HackedDesign {
 
             public override void Invoke () {
                 Debug.Log ("Narration Action Invoke");
+                //Story.StoryEvent currentStoryEvent = NarrationManager.instance.GetCurrentNarration();
+
                 if (currentStoryEvent != null) {
                     currentStoryEvent.Complete ();
                 }

@@ -28,10 +28,11 @@ namespace HackedDesign {
 
 			moveVector = inputController.GetMovementAxis ();
 
+			
+
 			//If horizontal or vertical axis is above the threshold value (moveSense), set the move state to Walk.
 			if (moveVector.sqrMagnitude > (moveSense * moveSense)) {
 				//moveState = MoveState.Walk;
-
 				//Pass the moveVector axes to the animators move variables and set animator's isMoving to true.
 				anim.SetFloat ("moveX", moveVector.x);
 				anim.SetFloat ("moveY", moveVector.y);

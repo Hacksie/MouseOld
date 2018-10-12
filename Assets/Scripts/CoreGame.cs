@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace HackedDesign {
 	public class CoreGame : MonoBehaviour {
@@ -23,6 +25,9 @@ namespace HackedDesign {
 
 		public Story.StoryEvent startingStory;
 
+		private List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger>();
+		private List<NPCController> npcList = new List<NPCController>();
+
 		CoreGame () {
 			instance = this;
 		}
@@ -30,7 +35,8 @@ namespace HackedDesign {
 		// Use this for initialization
 		void Start () {
 			//FIXME: Make this work in editory only 
-			if (SceneManager.GetActiveScene ().name == "Core" || SceneManager.GetActiveScene ().name == "IntroRoom") {
+			
+			if ((SceneManager.GetActiveScene ().name == "Core" || SceneManager.GetActiveScene ().name == "IntroRoom")) {
 				Initialization ();
 				SceneInitialize ();
 			}
@@ -74,6 +80,10 @@ namespace HackedDesign {
 			player = GameObject.FindWithTag (TagManager.PLAYER);
 			playerController = player.GetComponent<PlayerController> ();
 
+			SceneTriggersInitialize();
+			SceneNPCsInitialize();
+
+
 			HideStartMenu ();
 			HideSelectMenu ();			
 			narrationPanel.Repaint ();
@@ -84,22 +94,37 @@ namespace HackedDesign {
 			} else {
 				Debug.LogError ("No starting story set");
 			}
-
-			foreach (GameObject sb in GameObject.FindGameObjectsWithTag("SpeechBubble"))
-			{
-				SpeechBubbleTrigger sbt = sb.GetComponent<SpeechBubbleTrigger>();
-				if(sbt != null)
-				{
-					sbt.Initialize(inputController);
-				}
-
-			}
-
-			
-
 			//SetResume();
+		}
 
+		void SceneTriggersInitialize() {
+			triggerList.Clear();
+			Debug.Log("Initializing triggers");
+			Debug.Log("Count " + GameObject.FindGameObjectsWithTag("Trigger").Length);
+			foreach (GameObject triggerObject in GameObject.FindGameObjectsWithTag("Trigger"))
+			{
+				Debug.Log("Initializing trigger " + triggerObject.name);
+				Triggers.ITrigger trigger = triggerObject.GetComponent<Triggers.ITrigger>();
+				if(trigger != null)
+				{
+					triggerList.Add(trigger);
+					trigger.Initialize(inputController);
+				}
+			}
+		}
 
+		void SceneNPCsInitialize() {
+			npcList.Clear();
+
+			foreach(GameObject npcObject in GameObject.FindGameObjectsWithTag("NPC"))
+			{
+				NPCController npc = npcObject.GetComponent<NPCController>();
+				if(npc != null)
+				{
+					npcList.Add(npc);
+					npc.Initialize(player.transform);
+				}
+			}
 		}
 
 		public void ResumeEvent () {
@@ -220,7 +245,6 @@ namespace HackedDesign {
 			state = GameState.SELECTMENU;
 			selectMenuPanel.SetActive (true);
 			//Cursor.visible = true;
-			//FIXME: 
 		}
 
 		void HideSelectMenu () {
@@ -229,7 +253,24 @@ namespace HackedDesign {
 		}
 
 		void PlayingUpdate () {
+			//Debug.Log("Test");
 			playerController.UpdateMovement (inputController);
+			PlayingNPCUpdate();
+			PlayingTriggerUpdate();
+		}
+
+		void PlayingTriggerUpdate() {
+			foreach(Triggers.ITrigger trigger in triggerList)
+			{
+				trigger.UpdateTrigger();
+			}
+		}
+
+		void PlayingNPCUpdate() {
+			foreach(NPCController npc in npcList)
+			{
+				npc.UpdateBehaviour();
+			}
 		}
 
 		void PlayingFixedUpdate () {

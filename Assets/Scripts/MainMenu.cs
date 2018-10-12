@@ -61,14 +61,19 @@ namespace HackedDesign {
 			asyncLoadBaseScene.allowSceneActivation = true;
 			asyncLoadRubyScene.allowSceneActivation = true;
 
-			while (asyncLoadBaseScene.progress < 1.0f || asyncLoadRubyScene.progress < 1.0f) {
+			while (!asyncLoadBaseScene.isDone || !asyncLoadRubyScene.isDone) {
 				Debug.Log ("Activating scenes");
 				yield return null;
 			}
+
 			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("IntroRoom"));
+			
 			CoreGame.instance.Initialization ();
-			SceneManager.UnloadSceneAsync ("MainMenu");
 			CoreGame.instance.SceneInitialize ();
+			
+			
+			SceneManager.UnloadSceneAsync ("MainMenu");
+			
 		}
 	}
 }

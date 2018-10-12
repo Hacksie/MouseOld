@@ -10,6 +10,9 @@ namespace HackedDesign {
 		public bool facePlayer = true;
 
 		private List<SpriteRenderer> sprites = new List<SpriteRenderer> ();
+		private Transform player;
+
+		public Vector2 direction; 
 
 		// Use this for initialization
 		void Start () {
@@ -17,12 +20,21 @@ namespace HackedDesign {
 
 			sprites.Add (GetComponent<SpriteRenderer> ());
 			sprites.AddRange (GetComponentsInChildren<SpriteRenderer> ());
+			FaceDirection(direction);
+
+		}
+
+		public void Initialize (Transform player) {
+			this.player = player;
+
 		}
 
 		// Update is called once per frame
-		void Update () {
-			Vector2 direction = CoreGame.instance.GetPlayer ().transform.position - transform.position;
+		public void UpdateBehaviour () {
+			// FIXME: 
+			
 			if (facePlayer) {
+				direction = player.position - transform.position;
 				FaceDirection (direction);
 			}
 
