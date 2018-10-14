@@ -24,10 +24,6 @@ namespace HackedDesign {
 			public bool loop = false;
 			bool triggered;
 
-			// Use this for initialization
-			void Start () {
-
-			}
 
 			public void Initialize (Input.IInputController inputController) {
 				Debug.Log ("Initialize speech bubble");

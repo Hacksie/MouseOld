@@ -8,8 +8,8 @@
 		public const string CAMERA = "MainCamera";
 		public const string SECURITY_CAMERA = "SecurityCamera";
 		public const string VEHICLEMANAGER = "MainCamera";
-		public const string STARTMENU = "StartMenu";
-		public const string SELECTMENU = "SelectMenu";
+		//public const string STARTMENU = "StartMenu";
+		//public const string SELECTMENU = "SelectMenu";
 		public const string DIALOGUE = "Dialogue";
 		public const string SPEECH = "Speech";
 		public const string INFO_PANEL = "InfoPanel";
@@ -30,6 +30,12 @@
 		public const string DIALOGUE_PANEL = "DialoguePanel";
 		public const string NARRATION_MANAGER = "NarrationManager";
 		public const string NARRATION_PANEL = "NarrationPanel";
+		public const string STARTMENU_MANAGER = "StartMenuManager";
+		public const string STARTMENU_PANEL = "StartMenuPanel";		
+		public const string SELECTMENU_MANAGER = "SelectMenuManager";
+		public const string SELECTMENU_PANEL = "SelectMenuPanel";				
+		public const string WORLDMAP_MANAGER = "WorldMapManager";
+		public const string WORLDMAP_PANEL = "WorldMapPanel";
 
 	}
 }

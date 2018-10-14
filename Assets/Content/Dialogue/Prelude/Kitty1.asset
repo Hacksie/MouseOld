@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d21f44c566266340930c91c1bdb0a74, type: 3}
-  m_Name: Prelude2
+  m_Name: Kitty1
   m_EditorClassIdentifier: 
   speaker: {fileID: 11400000, guid: 7b0ab88b4fb757947ad38ab6026c5eb4, type: 2}
-  text: Miss Ives, just letting you know it's 2am, like you asked. You have a task
-    waiting for you from your Manager Dion on your terminal.
-  button1text: Thanks Kitty
-  button2text: 
+  text: It's 2am, it's currently raining outside and I've started a pot of coffee
+    for you. Would you like me to turn the lights on for you?
+  button1text: No thank you, Kitty
+  button2text: Yes please, Kitty
   button3text: 
   button4text: 
-  dialogueAction1: {fileID: 11400000, guid: 80caae386d51c25419f5d903f2c6a77a, type: 2}
-  dialogueAction2: {fileID: 0}
+  dialogueAction1: {fileID: 11400000, guid: 8a778bafb8580254e88c7878015a9dcf, type: 2}
+  dialogueAction2: {fileID: 11400000, guid: 80caae386d51c25419f5d903f2c6a77a, type: 2}
   dialogueAction3: {fileID: 0}
   dialogueAction4: {fileID: 0}

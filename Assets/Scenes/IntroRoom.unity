@@ -1600,9 +1600,10 @@ GameObject:
   m_Component:
   - component: {fileID: 83563242}
   - component: {fileID: 83563243}
+  - component: {fileID: 83563244}
   m_Layer: 0
   m_Name: DoorTrigger
-  m_TagString: Untagged
+  m_TagString: Trigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1645,6 +1646,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &83563244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 83563241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca04ae7fc466ac46aedc86e4d0f5535, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &116102080
 GameObject:
   m_ObjectHideFlags: 0
@@ -6893,7 +6905,7 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 640143522}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -6923,9 +6935,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf3ca73d8ae6954d8d616d5d349f2ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStoryEvent: {fileID: 11400000, guid: 09df8828b30274748a29e48e1bf0a16b, type: 2}
-  nextStoryEvent: {fileID: 11400000, guid: 463cdb19d6670514d8269acdc2123968, type: 2}
-  loop: 0
+  currentStoryEvent: {fileID: 11400000, guid: 463cdb19d6670514d8269acdc2123968, type: 2}
+  nextStoryEvent: {fileID: 11400000, guid: 6e648e90dc9a0d947b92cee6a2d3bb1f, type: 2}
+  loop: 1
 --- !u!1 &688290629
 GameObject:
   m_ObjectHideFlags: 0
@@ -8059,8 +8071,10 @@ GameObject:
   - component: {fileID: 723641143}
   - component: {fileID: 723641142}
   - component: {fileID: 723641144}
+  - component: {fileID: 723641148}
   - component: {fileID: 723641145}
   - component: {fileID: 723641146}
+  - component: {fileID: 723641147}
   m_Layer: 0
   m_Name: Prelude
   m_TagString: Untagged
@@ -8125,8 +8139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3165933b5ad264b479a7a63d098e83f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prelude3triggers: {fileID: 992679680}
-  prelude4triggers: {fileID: 1906802691}
+  prelude4triggers: {fileID: 992679680}
+  prelude5triggers: {fileID: 1906802691}
 --- !u!114 &723641144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8176,7 +8190,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 723641143}
-        m_MethodName: Prelude3Start
+        m_MethodName: Prelude3_Yes_Start
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8210,6 +8224,72 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 723641143}
         m_MethodName: Prelude4Start
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  completedAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &723641147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 723641140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c14d8361e83d3845885216a1fee86dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storyEvent: {fileID: 11400000, guid: 6e648e90dc9a0d947b92cee6a2d3bb1f, type: 2}
+  startedAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 723641143}
+        m_MethodName: Prelude5Start
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  completedAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &723641148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 723641140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c14d8361e83d3845885216a1fee86dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storyEvent: {fileID: 11400000, guid: 1fa0a272e23915349a75a827bab269cb, type: 2}
+  startedAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 723641143}
+        m_MethodName: Prelude3_No_Start
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10621,7 +10701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 992679681}
   m_Layer: 0
-  m_Name: Prelude3
+  m_Name: Prelude4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11008,7 +11088,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &1442124111
 Grid:
   m_ObjectHideFlags: 0
@@ -11233,6 +11313,16 @@ Prefab:
       propertyPath: m_TagString
       value: NPC
       objectReference: {fileID: 0}
+    - target: {fileID: 108200544415506624, guid: 94b6a2a9550e7844d99e2582fc52fab5,
+        type: 2}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 108200544415506624, guid: 94b6a2a9550e7844d99e2582fc52fab5,
+        type: 2}
+      propertyPath: m_Range
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b6a2a9550e7844d99e2582fc52fab5, type: 2}
   m_IsPrefabAsset: 0
@@ -11299,7 +11389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1906802692}
   m_Layer: 0
-  m_Name: Prelude4
+  m_Name: Prelude5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

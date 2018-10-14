@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b024f780f99974c83ac59d2cb59e27, type: 3}
+  m_Name: Kitty2NoAction
+  m_EditorClassIdentifier: 
+  currentStoryEvent: {fileID: 11400000, guid: 1fa0a272e23915349a75a827bab269cb, type: 2}
+  nextStoryEvent: {fileID: 11400000, guid: 463cdb19d6670514d8269acdc2123968, type: 2}
