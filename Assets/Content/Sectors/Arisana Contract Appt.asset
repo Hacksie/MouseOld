@@ -9,12 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb99916c1f88fd4e9ebeaff6efa2261, type: 3}
-  m_Name: Arisana Building
+  m_Name: Arisana Contract Appt
   m_EditorClassIdentifier: 
-  available: 0
-  current: 0
+  available: 1
+  current: 1
   target: 0
-  title: 
-  description: 
-  locations: []
+  title: Arisana Apartment C
+  description: Apartment Complex C for Arisana contractors
+  locations:
+  - {fileID: 11400000, guid: 243a421b3f10bfb43a3e3096e698e751, type: 2}
   mapPosition: {x: 0, y: 0}

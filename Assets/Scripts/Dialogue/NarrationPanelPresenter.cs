@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -47,6 +48,7 @@ namespace HackedDesign {
                 //speaker.text = currentNarration.speaker.fullName + " / <color=cyan>\"" + currentNarration.speaker.handle + "\"</color> / <color="+ currentNarration.speaker.corp.color.ToString() + ">" + currentNarration.speaker.corp.name + "</color> / " + currentNarration.speaker.serial;
                 //avatar.sprite = currentNarration.speaker.avatar;
                 actionButtonImage.sprite = currentNarration.button;
+                EventSystem.current.SetSelectedGameObject(actionButton.gameObject);
                 //.text = currentNarration.button;
 
             }    

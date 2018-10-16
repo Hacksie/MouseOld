@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -46,10 +47,12 @@ namespace HackedDesign {
                 text.text = currentDialogue.text;
                 speaker.text = currentDialogue.speaker.fullName + " / \"" + currentDialogue.speaker.handle + "\"";
 
+                EventSystem.current.SetSelectedGameObject(null);
                 if(currentDialogue.button1text != "")
                 {
                     response1Button.gameObject.SetActive(true);
                     response1ButtonText.text = currentDialogue.button1text;
+                    EventSystem.current.SetSelectedGameObject(response1Button.gameObject);
                 }
                 else
                 {

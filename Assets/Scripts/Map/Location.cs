@@ -6,8 +6,11 @@ namespace HackedDesign {
         [CreateAssetMenu (fileName = "Location", menuName = "Mouse/Map/Location")]
         public class Location : ScriptableObject {
             public string title;
+            [TextArea]
             public string description;
-            public Scene scene;
+            public string scene;
+            //public bool current;
+            public bool available;
         }
     }
 }

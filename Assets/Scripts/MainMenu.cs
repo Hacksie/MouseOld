@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 namespace HackedDesign {
 	public class MainMenu : MonoBehaviour {
 
-		public AudioClip audioclick; 
-
 		public void ContinueEvent () {
 			Debug.Log ("Continue Event");
 		}

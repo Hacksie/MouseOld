@@ -11,10 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 937a7c2e8c5e9254ab8b10e44f709ed4, type: 3}
   m_Name: Magenta District
   m_EditorClassIdentifier: 
-  available: 0
-  current: 0
+  available: 1
   target: 0
   title: Magenta District
-  description: 
-  buildings: []
+  description: 'The city''s party district. Where all classes come out to play. '
+  buildings:
+  - {fileID: 11400000, guid: 7ea3fb75e690729459ba0218d2b2f8b6, type: 2}
   mapPosition: {x: 0, y: 0}
