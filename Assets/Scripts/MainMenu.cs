@@ -5,13 +5,15 @@ using UnityEngine.SceneManagement;
 namespace HackedDesign {
 	public class MainMenu : MonoBehaviour {
 
+		public string newGameScene = "IntroRoom";
+
 		public void ContinueEvent () {
 			Debug.Log ("Continue Event");
 		}
 
 		public void NewGameEvent () {
 			Debug.Log ("New Game Event");
-			StartCoroutine (LoadNewGameScenes ());
+			StartCoroutine (LoadNewGameScenes (newGameScene));
 		}
 
 		public void OptionsEvent () {
@@ -27,7 +29,7 @@ namespace HackedDesign {
 			Application.Quit ();
 		}
 
-		IEnumerator LoadNewGameScenes () {
+		IEnumerator LoadNewGameScenes (string newGameScene) {
 			Debug.Log ("Loading new game scenes");
 
 			AsyncOperation asyncLoadBaseScene = SceneManager.LoadSceneAsync ("Core", LoadSceneMode.Additive);
@@ -43,18 +45,18 @@ namespace HackedDesign {
 
 			Debug.Log ("Core ready");
 
-			AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync ("IntroRoom", LoadSceneMode.Additive);
+			AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
 			asyncLoadRubyScene.allowSceneActivation = false;
 
 			yield return null;
 
 			//Wait until we are done loading the scene
 			while (asyncLoadRubyScene.progress < 0.9f) {
-				Debug.Log ("Loading scene #:" + "IntroRoom" + " [][] Progress: " + asyncLoadRubyScene.progress);
+				Debug.Log ("Loading scene #:" + newGameScene + " [][] Progress: " + asyncLoadRubyScene.progress);
 				yield return null;
 			}
 
-			Debug.Log ("IntroRoom ready");
+			Debug.Log (newGameScene +" ready");
 
 			asyncLoadBaseScene.allowSceneActivation = true;
 			asyncLoadRubyScene.allowSceneActivation = true;
@@ -64,7 +66,7 @@ namespace HackedDesign {
 				yield return null;
 			}
 
-			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("IntroRoom"));
+			SceneManager.SetActiveScene (SceneManager.GetSceneByName (newGameScene));
 			
 			CoreGame.instance.Initialization ();
 			CoreGame.instance.SceneInitialize ();

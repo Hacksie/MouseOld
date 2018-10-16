@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 namespace HackedDesign {
 	public class WorldMapManager : MonoBehaviour {
@@ -15,18 +16,33 @@ namespace HackedDesign {
 			CoreGame.instance.SetResume ();
 		}
 
-		public Map.Sector GetSelectedSector()
-		{
+		public void LocationClickEvent () {
+			GameObject selectedLocation = EventSystem.current.currentSelectedGameObject;
+			Map.LocationBehaviour lb = selectedLocation.GetComponent<Map.LocationBehaviour> ();
+
+			Scene currentScene = SceneManager.GetActiveScene();
+
+			if(currentScene.name != lb.location.scene && lb.location.available)
+			{
+				Debug.Log("Loading location " + lb.location.scene);
+				CoreGame.instance.ChangeScene(lb.location.scene);
+			}
+			else
+			{
+				Debug.LogWarning("Scene " + lb.location.scene + " is not available for loading");
+			}
+		}
+
+		public Map.Sector GetSelectedSector () {
 			return selectedSector;
 		}
 
 		public void SetSelectedSector (Map.Sector sector) {
-			selectedSector = sector;	
+			selectedSector = sector;
 			//sector.current = true;
 		}
 
-		public Map.Building GetSelectedBuilding()
-		{
+		public Map.Building GetSelectedBuilding () {
 			return selectedBuilding;
 		}
 
@@ -36,8 +52,7 @@ namespace HackedDesign {
 			//building.current = true;
 		}
 
-		public Map.Location GetSelectedLocation()
-		{
+		public Map.Location GetSelectedLocation () {
 			return selectedLocation;
 		}
 

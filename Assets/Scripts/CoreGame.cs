@@ -125,8 +125,8 @@ namespace HackedDesign {
 
 		void SceneTriggersInitialize () {
 			triggerList.Clear ();
-			Debug.Log ("Initializing triggers");
-			Debug.Log ("Count " + GameObject.FindGameObjectsWithTag ("Trigger").Length);
+			Debug.Log ("Initializing triggers, count " + GameObject.FindGameObjectsWithTag ("Trigger").Length);
+
 			foreach (GameObject triggerObject in GameObject.FindGameObjectsWithTag ("Trigger")) {
 				Debug.Log ("Initializing trigger " + triggerObject.name);
 				Triggers.ITrigger trigger = triggerObject.GetComponent<Triggers.ITrigger> ();
@@ -188,6 +188,46 @@ namespace HackedDesign {
 			worldMapPanel.Repaint ();
 			Cursor.visible = true;
 		}
+
+		public void ChangeScene(string newGameScene) {
+			StartCoroutine (LoadGameScene (newGameScene));
+		}
+
+		IEnumerator LoadGameScene (string newGameScene) {
+			Debug.Log ("Loading new game scenes");
+
+			Scene currentScene = SceneManager.GetActiveScene();
+
+			AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
+			asyncLoadRubyScene.allowSceneActivation = false;
+
+			yield return null;
+
+			//Wait until we are done loading the scene
+			while (asyncLoadRubyScene.progress < 0.9f) {
+				Debug.Log ("Loading scene #:" + newGameScene + " [][] Progress: " + asyncLoadRubyScene.progress);
+				yield return null;
+			}
+
+			Debug.Log (newGameScene +" ready");
+
+			asyncLoadRubyScene.allowSceneActivation = true;
+
+			while (!asyncLoadRubyScene.isDone) {
+				Debug.Log ("Activating scenes");
+				yield return null;
+			}
+
+			SceneManager.SetActiveScene (SceneManager.GetSceneByName (newGameScene));
+			SceneManager.UnloadSceneAsync (currentScene);
+			//CoreGame.instance.Initialization ();
+			CoreGame.instance.SceneInitialize ();
+
+			
+			
+			
+			
+		}		
 
 		void Update () {
 
