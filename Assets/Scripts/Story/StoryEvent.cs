@@ -26,7 +26,7 @@ namespace HackedDesign {
             }
 
             public void Start () {
-                StoryEventState currentState = StoryEventState.STARTED;
+                currentState = StoryEventState.STARTED;
 
                 for (int i = 0; i < listeners.Count; i++) {
                     Debug.Log ("Triggering story start " + listeners[i].name);
@@ -35,7 +35,7 @@ namespace HackedDesign {
             }
 
             public void Complete () {
-                StoryEventState currentState = StoryEventState.COMPLETED;
+                currentState = StoryEventState.COMPLETED;
 
                 for (int i = 0; i < listeners.Count; i++) {
                     Debug.Log ("Triggering story complete " + listeners[i].name);

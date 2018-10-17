@@ -9,10 +9,12 @@ namespace HackedDesign {
 
 		// Update is called once per frame
 		public void Repaint () {
-			//Debug.Log("")
+			
 			if (CoreGame.instance.state == GameState.STARTMENU) {
+				Debug.Log("Set start menu active");
 				this.gameObject.SetActive (true);
 			} else {
+				Debug.Log("Set start menu inactive");
 				this.gameObject.SetActive (false);
 			}
 

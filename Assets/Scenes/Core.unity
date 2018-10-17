@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 123134075}
   - component: {fileID: 123134074}
   m_Layer: 5
-  m_Name: AssistantButton
+  m_Name: PsychButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7987,7 +7987,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 1
-  startingStory: {fileID: 11400000, guid: f060265403a462d4abeada1c8c5c53bc, type: 2}
 --- !u!1 &1371707647
 GameObject:
   m_ObjectHideFlags: 0
@@ -11301,7 +11300,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Assist
+  m_Text: Psych
 --- !u!222 &1874197309
 CanvasRenderer:
   m_ObjectHideFlags: 0

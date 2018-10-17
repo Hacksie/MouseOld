@@ -20,17 +20,18 @@ namespace HackedDesign {
 			GameObject selectedLocation = EventSystem.current.currentSelectedGameObject;
 			Map.LocationBehaviour lb = selectedLocation.GetComponent<Map.LocationBehaviour> ();
 
-			Scene currentScene = SceneManager.GetActiveScene();
+			for(int i=0; i < SceneManager.sceneCount; i++)
+			{
 
-			if(currentScene.name != lb.location.scene && lb.location.available)
-			{
-				Debug.Log("Loading location " + lb.location.scene);
-				CoreGame.instance.ChangeScene(lb.location.scene);
+				if(SceneManager.GetSceneAt(i).isLoaded && SceneManager.GetSceneAt(i).name == lb.location.scene)
+				{
+					Debug.LogWarning("We can't travel to the scene we're already in");
+					return;
+				}
 			}
-			else
-			{
-				Debug.LogWarning("Scene " + lb.location.scene + " is not available for loading");
-			}
+
+			CoreGame.instance.ChangeScene(lb.location.scene);
+	
 		}
 
 		public Map.Sector GetSelectedSector () {

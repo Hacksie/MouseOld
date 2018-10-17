@@ -28,7 +28,7 @@ namespace HackedDesign {
 		private Dialogue.IDialogueManager dialogueManager;
 		private Dialogue.DialoguePanelPresenter dialoguePanel;
 
-		public Story.StoryEvent startingStory;
+		//public Story.StoryEvent startingStory;
 
 		private List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
 		private List<NPCController> npcList = new List<NPCController> ();
@@ -40,11 +40,12 @@ namespace HackedDesign {
 		// Use this for initialization
 		void Start () {
 			//FIXME: Make this work in editory only 
-
-			if ((SceneManager.GetActiveScene ().name == "Core" || SceneManager.GetActiveScene ().name == "IntroRoom")) {
+			#if UNITY_EDITOR
+			//if ((SceneManager.GetActiveScene ().name == "Core" || SceneManager.GetActiveScene ().name == "IntroRoom")) {
 				Initialization ();
 				SceneInitialize ();
-			}
+			//}
+			#endif
 		}
 
 		public void Initialization () {
@@ -94,20 +95,16 @@ namespace HackedDesign {
 			//worldMapManager.
 			worldMapPanel.Initialize (worldMapManager);
 
-			taskPanel.SetActive (false);
-
-			startMenuPanel.Repaint ();
-			selectMenuPanel.Repaint ();
-			worldMapPanel.Repaint ();
-
 		}
 
 		/// <summary>
 		/// Run this each time the scene is changed
 		/// </summary>
 		public void SceneInitialize () {
+			state = GameState.LOADING;
 			Debug.Log ("Scene Initialization");
 			player = GameObject.FindWithTag (TagManager.PLAYER);
+			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 			playerController = player.GetComponent<PlayerController> ();
 
 			SceneTriggersInitialize ();
@@ -116,11 +113,32 @@ namespace HackedDesign {
 			narrationPanel.Repaint ();
 			dialoguePanel.Repaint ();
 
-			if (startingStory != null) {
-				startingStory.Start ();
+			taskPanel.SetActive (false);
+
+			startMenuPanel.Repaint ();
+			selectMenuPanel.Repaint ();
+			worldMapPanel.Repaint ();		
+			SetResume();
+
+			//state = GameState.PLAYING; // Set this, and the starting stories can override it if need be	
+
+			if (sceneStoriesObj != null) {
+
+				Story.StoryEventTransition[] stories = sceneStoriesObj.GetComponents<Story.StoryEventTransition> ();
+
+				for (int i = 0; i < stories.Length; i++) {
+					stories[i].Invoke ();
+				}
 			} else {
-				Debug.LogError ("No starting story set");
+				Debug.LogWarning ("No starting stories set");
 			}
+
+
+			// if (startingStory != null) {
+			// 	startingStory.Start ();
+			// } else {
+			// 	Debug.LogError ("No starting story set");
+			// }
 		}
 
 		void SceneTriggersInitialize () {
@@ -189,14 +207,25 @@ namespace HackedDesign {
 			Cursor.visible = true;
 		}
 
-		public void ChangeScene(string newGameScene) {
+		public void ChangeScene (string newGameScene) {
 			StartCoroutine (LoadGameScene (newGameScene));
 		}
 
 		IEnumerator LoadGameScene (string newGameScene) {
 			Debug.Log ("Loading new game scenes");
 
-			Scene currentScene = SceneManager.GetActiveScene();
+			List<Scene> currentScenes = new List<Scene>();
+
+			for(int i = 0 ; i < SceneManager.sceneCount; i++)
+			{
+				if(SceneManager.GetSceneAt(i).isLoaded && SceneManager.GetSceneAt(i).name != "Core")
+				{
+					currentScenes.Add(SceneManager.GetSceneAt(i));
+
+				}
+			}
+
+			//Scene currentScene = SceneManager.GetActiveScene ();
 
 			AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
 			asyncLoadRubyScene.allowSceneActivation = false;
@@ -209,7 +238,7 @@ namespace HackedDesign {
 				yield return null;
 			}
 
-			Debug.Log (newGameScene +" ready");
+			Debug.Log (newGameScene + " ready");
 
 			asyncLoadRubyScene.allowSceneActivation = true;
 
@@ -219,15 +248,14 @@ namespace HackedDesign {
 			}
 
 			SceneManager.SetActiveScene (SceneManager.GetSceneByName (newGameScene));
-			SceneManager.UnloadSceneAsync (currentScene);
-			//CoreGame.instance.Initialization ();
-			CoreGame.instance.SceneInitialize ();
 
-			
-			
-			
-			
-		}		
+			for(int j = 0; j < currentScenes.Count; j++)
+			{
+				SceneManager.UnloadScene (currentScenes[j]);
+			}
+
+			CoreGame.instance.SceneInitialize ();
+		}
 
 		void Update () {
 
