@@ -32,9 +32,10 @@ namespace HackedDesign {
 		// Update is called once per frame
 		public void UpdateBehaviour () {
 			// FIXME: 
+
+			direction = player.position - transform.position;
 			
 			if (facePlayer) {
-				direction = player.position - transform.position;
 				FaceDirection (direction);
 			}
 
