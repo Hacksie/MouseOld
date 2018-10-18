@@ -8,12 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 937a7c2e8c5e9254ab8b10e44f709ed4, type: 3}
-  m_Name: Blade Point
+  m_Script: {fileID: 11500000, guid: 5e728b75ede1ad240b1076a43b0acda3, type: 3}
+  m_Name: Break in to the Tashakana Corp
   m_EditorClassIdentifier: 
+  objective: 
+  completed: 0
   available: 0
-  target: 0
-  title: Blade Point
-  description: 'A quiet location by the sea. Living sector for the city''s elite. '
-  buildings: []
-  mapPosition: {x: 0, y: 0}
+  optional: 0

@@ -819,7 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fb1dbd52e39fb4f83ae850f23f8511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioclick: {fileID: 733980884}
+  newGameScene: IntroRoom
 --- !u!82 &733980884
 AudioSource:
   m_ObjectHideFlags: 0
@@ -830,7 +830,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 316ddb1e6f3f0ec46a3d525e85cf1ef0,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 55e571673da33ef45bf2ab735ea082ca, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 63359e520e4f23d418257a17f3e54a82, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -953,7 +953,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 41}
+  m_AnchoredPosition: {x: 0, y: 30}
   m_SizeDelta: {x: 0, y: 24}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &911075717
@@ -1824,7 +1824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -20, y: 40}
+  m_AnchoredPosition: {x: -20, y: 30}
   m_SizeDelta: {x: 128, y: 64}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1832425597

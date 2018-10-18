@@ -11,7 +11,6 @@
 		public const string DIALOGUE = "Dialogue";
 		public const string SPEECH = "Speech";
 		public const string INFO_PANEL = "InfoPanel";
-		public const string TASK_PANEL = "TaskPanel";
 		public const string CROSSHAIR = "Crosshair";
 		public const string INTERACTABLE = "Interactable";
 		public const string NORMAL_PPV = "NormalPPV";
@@ -23,6 +22,7 @@
 		public const string IN_GAME_UI = "In Game UI";
 		public const string PAUSED_UI = "Paused UI";
 		public const string TASK_MANAGER = "TaskManager";
+		public const string TASK_PANEL = "TaskPanel";
 		public const string DOOR = "Door";
 		public const string DIALOGUE_MANAGER = "DialogueManager";
 		public const string DIALOGUE_PANEL = "DialoguePanel";

@@ -22,7 +22,8 @@ namespace HackedDesign {
 		private WorldMapManager worldMapManager;
 		private WorldMapPanelPresenter worldMapPanel;
 
-		private GameObject taskPanel;
+		private Story.TaskManager taskManager;
+		private Story.TaskPanelPresenter taskPanel;
 		private Dialogue.INarrationManager narrationManager;
 		private Dialogue.NarrationPanelPresenter narrationPanel;
 		private Dialogue.IDialogueManager dialogueManager;
@@ -54,7 +55,7 @@ namespace HackedDesign {
 
 			//startMenuPanel = GameObject.FindWithTag (TagManager.STARTMENU);
 			//selectMenuPanel = GameObject.FindWithTag (TagManager.SELECTMENU);
-			taskPanel = GameObject.FindWithTag (TagManager.TASK_PANEL);
+			
 			GameObject startMenuManagerObj = GameObject.FindWithTag (TagManager.STARTMENU_MANAGER);
 			GameObject startMenuPanelObj = GameObject.FindWithTag (TagManager.STARTMENU_PANEL);
 			GameObject selectMenuManagerObj = GameObject.FindWithTag (TagManager.SELECTMENU_MANAGER);
@@ -67,6 +68,9 @@ namespace HackedDesign {
 
 			GameObject worldmapManagerObj = GameObject.FindWithTag (TagManager.WORLDMAP_MANAGER);
 			GameObject worldmapPanelObj = GameObject.FindWithTag (TagManager.WORLDMAP_PANEL);
+
+			GameObject taskManagerObj = GameObject.FindWithTag(TagManager.TASK_MANAGER);
+			GameObject taskPanelObj = GameObject.FindWithTag (TagManager.TASK_PANEL);
 
 			startMenuManager = startMenuManagerObj.GetComponent<StartMenuManager> ();
 			startMenuPanel = startMenuPanelObj.GetComponent<StartMenuPanelPresenter> ();
@@ -83,6 +87,9 @@ namespace HackedDesign {
 			dialogueManager = dialogueManagerObj.GetComponent<Dialogue.DialogueManager> ();
 			dialoguePanel = dialoguePanelObj.GetComponent<Dialogue.DialoguePanelPresenter> ();
 
+			taskManager = taskManagerObj.GetComponent<Story.TaskManager>();
+			taskPanel = taskPanelObj.GetComponent<Story.TaskPanelPresenter>();
+
 			startMenuPanel.Initialize (startMenuManager);
 			selectMenuPanel.Initialize (selectMenuManager);
 
@@ -94,6 +101,8 @@ namespace HackedDesign {
 
 			//worldMapManager.
 			worldMapPanel.Initialize (worldMapManager);
+
+			taskPanel.Initialize(taskManager);
 
 		}
 
@@ -112,8 +121,9 @@ namespace HackedDesign {
 
 			narrationPanel.Repaint ();
 			dialoguePanel.Repaint ();
+			taskPanel.Repaint();
 
-			taskPanel.SetActive (false);
+			//taskPanel.SetActive (false);
 
 			startMenuPanel.Repaint ();
 			selectMenuPanel.Repaint ();
