@@ -11,7 +11,7 @@ namespace HackedDesign {
 			public float showTime = 3.0f;
 
 			private int currentTextItem = 0;
-			public string[] text;
+			public Dialogue.SpeechBubble[] speechBubbles;
 
 			public GameObject textFieldPrefab;
 
@@ -32,7 +32,7 @@ namespace HackedDesign {
 				GameObject canvas = GameObject.Instantiate (textFieldPrefab);
 				canvas.transform.SetParent (this.transform);
 				textField = GetComponentInChildren<Text> ();
-				textField.text = text[currentTextItem];
+				textField.text = speechBubbles[currentTextItem].text;
 				textField.gameObject.SetActive (false);
 			}
 
@@ -49,12 +49,12 @@ namespace HackedDesign {
 			}
 
 			public void Invoke () {
-				if (currentTextItem < text.Length) {
-					textField.text = text[currentTextItem];
+				if (currentTextItem < speechBubbles.Length) {
+					textField.text = speechBubbles[currentTextItem].text;
 					textField.gameObject.SetActive (true);
 					startTime = Time.time;
 					currentTextItem++;
-					if(loop && currentTextItem >= text.Length) currentTextItem = 0;
+					if(loop && currentTextItem >= speechBubbles.Length) currentTextItem = 0;
 				}
 			}
 

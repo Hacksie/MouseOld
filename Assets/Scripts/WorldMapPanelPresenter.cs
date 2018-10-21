@@ -20,20 +20,18 @@ namespace HackedDesign {
 			this.worldMapManager = worldMapManager;
 		}
 
-		public void Repaint () {
-			Debug.Log ("Repaint World map");
+		public void Show (bool flag) {
+			Debug.Log ("Set World map" + flag);
 
-			if (CoreGame.instance.state != GameState.WORLDMAP) {
-				Debug.Log ("Hiding world map");
-				this.gameObject.SetActive (false);
+			this.gameObject.SetActive (flag);
+
+			if(!flag) 
+			{
 				return;
 			}
 
-			this.gameObject.SetActive (true);
 			Reset();
-
 			RepaintSectors (worldMapManager.GetSectors ());
-
 		}
 
 		private void Reset()

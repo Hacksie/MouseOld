@@ -6,16 +6,7 @@
 		public const string GAMEMANAGER = "GameController";
 		public const string PLAYER = "Player";
 		public const string CAMERA = "MainCamera";
-		public const string SECURITY_CAMERA = "SecurityCamera";
-		public const string VEHICLEMANAGER = "MainCamera";
-		public const string DIALOGUE = "Dialogue";
-		public const string SPEECH = "Speech";
-		public const string INFO_PANEL = "InfoPanel";
-		public const string CROSSHAIR = "Crosshair";
 		public const string INTERACTABLE = "Interactable";
-		public const string NORMAL_PPV = "NormalPPV";
-		public const string COLOUR_PPV = "ColourPPV";
-		public const string UNSATURATED_PPV = "UnsaturatedPPV";
 		public const string ENEMY = "Enemy";
 		public const string NPC = "NPC";
 		public const string ENTITY = "Entity";
@@ -34,6 +25,8 @@
 		public const string SELECTMENU_PANEL = "SelectMenuPanel";				
 		public const string WORLDMAP_MANAGER = "WorldMapManager";
 		public const string WORLDMAP_PANEL = "WorldMapPanel";
+		public const string INFO_MANAGER = "InfoManager";
+		public const string INFO_PANEL = "InfoPanel";
 		public const string STORY = "Story";
 
 	}

@@ -5,7 +5,7 @@ namespace HackedDesign {
 	namespace Dialogue {
 		[CreateAssetMenu (fileName = "Dialogue", menuName = "Mouse/Dialogue/Dialogue")]
 		public class Dialogue : ScriptableObject {
-			public Character.Character speaker;
+			public Story.Character speaker;
 			//public string speaker;
 			[TextArea]
 			public string text;

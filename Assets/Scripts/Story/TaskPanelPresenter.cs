@@ -12,9 +12,10 @@ namespace HackedDesign {
                 this.taskManager = taskManager;
             }
 
-            public void Repaint()
+            public void Show(bool flag)
             {
-                transform.gameObject.SetActive(false);
+                Debug.Log("Set task panel " + flag);
+                this.gameObject.SetActive(flag);
             }
         }
     }

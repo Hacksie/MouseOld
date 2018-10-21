@@ -10,6 +10,9 @@ namespace HackedDesign {
 
             IDialogueManager dialogueManager;
             public Text speaker;
+            public Text speakerHandle;
+            public Text speakerCorp;
+            public Text speakerStatus;
             public Text text; 
             public Button response1Button;
             public Button response2Button;
@@ -30,8 +33,8 @@ namespace HackedDesign {
                 this.dialogueManager = dialogueManager;
             }  
 
-            public void Repaint () {
-                //FIXME: Don't repaint if nothing's changed
+            public void Show(bool flag) {
+                Debug.Log("Show dialogue " + flag);
                 Dialogue currentDialogue = dialogueManager.GetCurrentDialogue ();
 
                 if(currentDialogue == null)
@@ -40,12 +43,22 @@ namespace HackedDesign {
                     return;
                 }
 
-                this.gameObject.SetActive(true);
+                this.gameObject.SetActive(flag);
+
+                if(!flag)
+                {
+                    return;
+                }
+
 
                 //Debug.Log(currentDialogue.speaker.corp.color.ToString());
 
                 text.text = currentDialogue.text;
-                speaker.text = currentDialogue.speaker.fullName + " / \"" + currentDialogue.speaker.handle + "\"";
+                speaker.text = currentDialogue.speaker.fullName;
+                speakerHandle.text = currentDialogue.speaker.handle;
+                speakerCorp.text = currentDialogue.speaker.corp.name;
+                speakerCorp.color = currentDialogue.speaker.corp.color;
+                speakerStatus.text = currentDialogue.speaker.status.ToString();                
 
                 EventSystem.current.SetSelectedGameObject(null);
                 if(currentDialogue.button1text != "")

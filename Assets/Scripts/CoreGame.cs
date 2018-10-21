@@ -15,21 +15,21 @@ namespace HackedDesign {
 
 		private GameObject player;
 		private PlayerController playerController;
-		private StartMenuManager startMenuManager;
-		private StartMenuPanelPresenter startMenuPanel;
-		private SelectMenuManager selectMenuManager;
-		private SelectMenuPanelPresenter selectMenuPanel;
-		private WorldMapManager worldMapManager;
-		private WorldMapPanelPresenter worldMapPanel;
+		public StartMenuManager startMenuManager;
+		public StartMenuPanelPresenter startMenuPanel;
+		public SelectMenuManager selectMenuManager;
+		public SelectMenuPanelPresenter selectMenuPanel;
+		public WorldMapManager worldMapManager;
+		public WorldMapPanelPresenter worldMapPanel;
 
-		private Story.TaskManager taskManager;
-		private Story.TaskPanelPresenter taskPanel;
-		private Dialogue.INarrationManager narrationManager;
-		private Dialogue.NarrationPanelPresenter narrationPanel;
-		private Dialogue.IDialogueManager dialogueManager;
-		private Dialogue.DialoguePanelPresenter dialoguePanel;
-
-		//public Story.StoryEvent startingStory;
+		public Story.InfoManager infoManager;
+		public Story.InfoPanelPresenter infoPanel;
+		public Story.TaskManager taskManager;
+		public Story.TaskPanelPresenter taskPanel;
+		public Dialogue.NarrationManager narrationManager;
+		public Dialogue.NarrationPanelPresenter narrationPanel;
+		public Dialogue.DialogueManager dialogueManager;
+		public Dialogue.DialoguePanelPresenter dialoguePanel;
 
 		private List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
 		private List<NPCController> npcList = new List<NPCController> ();
@@ -37,72 +37,35 @@ namespace HackedDesign {
 		CoreGame () {
 			instance = this;
 		}
-
-		// Use this for initialization
+#if UNITY_EDITOR
+		/// <summary>
+		/// Run in editor
+		/// </summary>
 		void Start () {
-			//FIXME: Make this work in editory only 
-			#if UNITY_EDITOR
-			//if ((SceneManager.GetActiveScene ().name == "Core" || SceneManager.GetActiveScene ().name == "IntroRoom")) {
-				Initialization ();
-				SceneInitialize ();
-			//}
-			#endif
-		}
 
+	
+			Initialization ();
+			SceneInitialize ();
+
+		}
+#endif		
+
+		/// <summary>
+		/// Run only once
+		/// </summary>
 		public void Initialization () {
 			state = GameState.LOADING;
 			Debug.Log ("Initialization");
 
-			//startMenuPanel = GameObject.FindWithTag (TagManager.STARTMENU);
-			//selectMenuPanel = GameObject.FindWithTag (TagManager.SELECTMENU);
-			
-			GameObject startMenuManagerObj = GameObject.FindWithTag (TagManager.STARTMENU_MANAGER);
-			GameObject startMenuPanelObj = GameObject.FindWithTag (TagManager.STARTMENU_PANEL);
-			GameObject selectMenuManagerObj = GameObject.FindWithTag (TagManager.SELECTMENU_MANAGER);
-			GameObject selectMenuPanelObj = GameObject.FindWithTag (TagManager.SELECTMENU_PANEL);
-
-			GameObject narrationManagerObj = GameObject.FindWithTag (TagManager.NARRATION_MANAGER);
-			GameObject narrationPanelObj = GameObject.FindWithTag (TagManager.NARRATION_PANEL);
-			GameObject dialogueManagerObj = GameObject.FindWithTag (TagManager.DIALOGUE_MANAGER);
-			GameObject dialoguePanelObj = GameObject.FindWithTag (TagManager.DIALOGUE_PANEL);
-
-			GameObject worldmapManagerObj = GameObject.FindWithTag (TagManager.WORLDMAP_MANAGER);
-			GameObject worldmapPanelObj = GameObject.FindWithTag (TagManager.WORLDMAP_PANEL);
-
-			GameObject taskManagerObj = GameObject.FindWithTag(TagManager.TASK_MANAGER);
-			GameObject taskPanelObj = GameObject.FindWithTag (TagManager.TASK_PANEL);
-
-			startMenuManager = startMenuManagerObj.GetComponent<StartMenuManager> ();
-			startMenuPanel = startMenuPanelObj.GetComponent<StartMenuPanelPresenter> ();
-
-			selectMenuManager = selectMenuManagerObj.GetComponent<SelectMenuManager> ();
-			selectMenuPanel = selectMenuPanelObj.GetComponent<SelectMenuPanelPresenter> ();
-
-			worldMapManager = worldmapManagerObj.GetComponent<WorldMapManager> ();
-			worldMapPanel = worldmapPanelObj.GetComponent<WorldMapPanelPresenter> ();
-
-			narrationManager = narrationManagerObj.GetComponent<Dialogue.NarrationManager> ();
-			narrationPanel = narrationPanelObj.GetComponent<Dialogue.NarrationPanelPresenter> ();
-
-			dialogueManager = dialogueManagerObj.GetComponent<Dialogue.DialogueManager> ();
-			dialoguePanel = dialoguePanelObj.GetComponent<Dialogue.DialoguePanelPresenter> ();
-
-			taskManager = taskManagerObj.GetComponent<Story.TaskManager>();
-			taskPanel = taskPanelObj.GetComponent<Story.TaskPanelPresenter>();
-
-			startMenuPanel.Initialize (startMenuManager);
-			selectMenuPanel.Initialize (selectMenuManager);
-
 			narrationManager.Initialize (inputController);
-			narrationPanel.Initialize (narrationManager);
-
 			dialogueManager.Initialize (inputController);
+			startMenuPanel.Initialize (startMenuManager);
+			selectMenuPanel.Initialize (selectMenuManager, infoPanel, taskPanel);
+			narrationPanel.Initialize (narrationManager);
 			dialoguePanel.Initialize (dialogueManager);
-
-			//worldMapManager.
 			worldMapPanel.Initialize (worldMapManager);
-
-			taskPanel.Initialize(taskManager);
+			taskPanel.Initialize (taskManager);
+			infoPanel.Initialize (infoManager);
 
 		}
 
@@ -119,18 +82,8 @@ namespace HackedDesign {
 			SceneTriggersInitialize ();
 			SceneNPCsInitialize ();
 
-			narrationPanel.Repaint ();
-			dialoguePanel.Repaint ();
-			taskPanel.Repaint();
-
-			//taskPanel.SetActive (false);
-
-			startMenuPanel.Repaint ();
-			selectMenuPanel.Repaint ();
-			worldMapPanel.Repaint ();		
-			SetResume();
-
-			//state = GameState.PLAYING; // Set this, and the starting stories can override it if need be	
+			RepaintAll ();
+			SetResume ();
 
 			if (sceneStoriesObj != null) {
 
@@ -142,13 +95,14 @@ namespace HackedDesign {
 			} else {
 				Debug.LogWarning ("No starting stories set");
 			}
+		}
 
-
-			// if (startingStory != null) {
-			// 	startingStory.Start ();
-			// } else {
-			// 	Debug.LogError ("No starting story set");
-			// }
+		void RepaintAll () {
+			narrationPanel.Show(false);
+			dialoguePanel.Show(false);
+			startMenuPanel.Show(false);
+			selectMenuPanel.Show(false);
+			worldMapPanel.Show(false);
 		}
 
 		void SceneTriggersInitialize () {
@@ -185,18 +139,18 @@ namespace HackedDesign {
 			Debug.Log ("State set to RESUME");
 			Time.timeScale = 1;
 			state = GameState.PLAYING;
-			startMenuPanel.Repaint ();
-			selectMenuPanel.Repaint ();
-			narrationPanel.Repaint ();
-			dialoguePanel.Repaint ();
-			worldMapPanel.Repaint ();
+			startMenuPanel.Show(false);
+			selectMenuPanel.Show(false);
+			narrationPanel.Show (false);
+			dialoguePanel.Show(false);
+			worldMapPanel.Show(false);
 			Cursor.visible = false;
 		}
 
 		public void SetDialogue () {
 			Debug.Log ("State set to DIALOGUE");
 			Time.timeScale = 0;
-			dialoguePanel.Repaint ();
+			dialoguePanel.Show(true);
 			state = GameState.DIALOGUE;
 			Cursor.visible = true;
 		}
@@ -204,7 +158,7 @@ namespace HackedDesign {
 		public void SetNarration () {
 			Debug.Log ("State set to NARRATION");
 			Time.timeScale = 0;
-			narrationPanel.Repaint ();
+			narrationPanel.Show(true);
 			state = GameState.NARRATION;
 			Cursor.visible = true;
 		}
@@ -213,7 +167,7 @@ namespace HackedDesign {
 			Debug.Log ("State set to WORLDMAP");
 			Time.timeScale = 0;
 			state = GameState.WORLDMAP;
-			worldMapPanel.Repaint ();
+			worldMapPanel.Show(true);
 			Cursor.visible = true;
 		}
 
@@ -224,13 +178,11 @@ namespace HackedDesign {
 		IEnumerator LoadGameScene (string newGameScene) {
 			Debug.Log ("Loading new game scenes");
 
-			List<Scene> currentScenes = new List<Scene>();
+			List<Scene> currentScenes = new List<Scene> ();
 
-			for(int i = 0 ; i < SceneManager.sceneCount; i++)
-			{
-				if(SceneManager.GetSceneAt(i).isLoaded && SceneManager.GetSceneAt(i).name != "Core")
-				{
-					currentScenes.Add(SceneManager.GetSceneAt(i));
+			for (int i = 0; i < SceneManager.sceneCount; i++) {
+				if (SceneManager.GetSceneAt (i).isLoaded && SceneManager.GetSceneAt (i).name != "Core") {
+					currentScenes.Add (SceneManager.GetSceneAt (i));
 
 				}
 			}
@@ -259,8 +211,7 @@ namespace HackedDesign {
 
 			SceneManager.SetActiveScene (SceneManager.GetSceneByName (newGameScene));
 
-			for(int j = 0; j < currentScenes.Count; j++)
-			{
+			for (int j = 0; j < currentScenes.Count; j++) {
 				SceneManager.UnloadScene (currentScenes[j]);
 			}
 
@@ -278,16 +229,14 @@ namespace HackedDesign {
 						Debug.Log ("Show start menu");
 						Cursor.visible = true;
 						state = GameState.STARTMENU;
-						startMenuPanel.Repaint ();
-
-						//ShowStartMenu ();
+						startMenuPanel.Show(true);
 					}
 
 					if (inputController.SelectButtonUp ()) {
 						Debug.Log ("Show select menu");
 						Cursor.visible = true;
 						state = GameState.SELECTMENU;
-						selectMenuPanel.Repaint ();
+						selectMenuPanel.Show(true);
 					}
 
 					break;

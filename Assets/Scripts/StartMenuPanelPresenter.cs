@@ -7,17 +7,10 @@ namespace HackedDesign {
 
 		StartMenuManager startMenuManager;
 
-		// Update is called once per frame
-		public void Repaint () {
-			
-			if (CoreGame.instance.state == GameState.STARTMENU) {
-				Debug.Log("Set start menu active");
-				this.gameObject.SetActive (true);
-			} else {
-				Debug.Log("Set start menu inactive");
-				this.gameObject.SetActive (false);
-			}
-
+		public void Show(bool flag)
+		{
+				Debug.Log("Set start menu " + flag);
+				this.gameObject.SetActive (flag);			
 		}
 
 

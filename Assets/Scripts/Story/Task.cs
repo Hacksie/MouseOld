@@ -15,7 +15,7 @@ namespace HackedDesign {
 
 			public List<TaskObjective> objectives;
 
-			public List<Character.Character> keyContacts;
+			public List<Story.Character> keyContacts;
 		}
 	}
 }

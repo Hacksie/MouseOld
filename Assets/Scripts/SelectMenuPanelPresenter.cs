@@ -8,30 +8,35 @@ namespace HackedDesign {
 		SelectMenuManager selectMenuManager;
 
 		// Inject these in
-		public GameObject InfoPanel;
-		public GameObject TaskPanel;
-		public GameObject StashPanel;
-		public GameObject PsychPanel;
+		private Story.InfoPanelPresenter infoPanel;
+		private Story.TaskPanelPresenter taskPanel;
+		private GameObject StashPanel;
+		private GameObject PsychPanel;
 
+		public void Initialize(SelectMenuManager selectMenuManager, Story.InfoPanelPresenter infoPanel, Story.TaskPanelPresenter taskPanel)
+		{
+			this.selectMenuManager = selectMenuManager;
+			this.infoPanel = infoPanel;
+			this.taskPanel = taskPanel;
+		}
 
-		public void Repaint () {
+		public void Show(bool flag) {
 			Debug.Log("Repaint select");
-			if (CoreGame.instance.state == GameState.SELECTMENU) {
-				this.gameObject.SetActive (true);
-			} else {
-				this.gameObject.SetActive (false);
+			HideAll();
+			this.gameObject.SetActive (flag);
+
+			if (!flag) {
 				return;
 			}
-
-			HideAll();
 
 			switch(selectMenuManager.GetMenuState())
 			{
 				case SelectMenuManager.SelectMenuState.INFO:
+				infoPanel.Show(true);
 				break;
 
 				case SelectMenuManager.SelectMenuState.TASKS:
-				ShowTasks();
+				taskPanel.Show(true);
 				break;
 
 				case SelectMenuManager.SelectMenuState.STASH:
@@ -44,12 +49,12 @@ namespace HackedDesign {
 
 		public void HideAll()
 		{
-			if(InfoPanel != null) {
-				InfoPanel.SetActive(false);
+			if(infoPanel != null) {
+				infoPanel.Show(false);
 			}
 
-			if(TaskPanel != null) {
-				TaskPanel.SetActive(false);
+			if(taskPanel != null) {
+				taskPanel.Show(false);
 			}
 			
 			if(StashPanel != null) {
@@ -60,30 +65,19 @@ namespace HackedDesign {
 				PsychPanel.SetActive(false);
 			}
 		}
-
-		public void ShowTasks()
-		{
-			TaskPanel.SetActive(true);
-		}
-
-		
+	
 		public void InfoClickEvent()
 		{
 			Debug.Log("Select Menu Info Clicked");
 			selectMenuManager.SetMenuState(SelectMenuManager.SelectMenuState.INFO);
-			Repaint();
+			Show(true);
 		}
 
 		public void TaskClickEvent()
 		{
 			Debug.Log("Select Menu Task Clicked");
 			selectMenuManager.SetMenuState(SelectMenuManager.SelectMenuState.TASKS);
-			Repaint();
+			Show(true);
 		}
-
-		public void Initialize (SelectMenuManager selectMenuManager) {
-			this.selectMenuManager = selectMenuManager;
-		}
-
 	}
 }

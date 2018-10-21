@@ -13,6 +13,9 @@ namespace HackedDesign {
             public Button actionButton;
             public Image actionButtonImage;
             public Text speaker;
+            public Text speakerHandle;
+            public Text speakerCorp;
+            public Text speakerStatus;
             //public Image avatar;
 
             //public List<Character.Corp> corps = new List<Character.Corp>();
@@ -26,11 +29,9 @@ namespace HackedDesign {
                 if(actionButtonImage == null) Debug.LogError("Button sprite is null");
             }  
 
-            public void Repaint () {
-                //FIXME: Don't repaint if nothing's changed
-                Narration currentNarration = narrationManager.GetCurrentNarration ();
-
-                
+            public void Show(bool flag) {
+                Debug.Log("Show dialogue " + flag);
+                Narration currentNarration = narrationManager.GetCurrentNarration ();              
 
                 if(currentNarration == null)
                 {
@@ -38,11 +39,19 @@ namespace HackedDesign {
                     return;
                 }
 
-                this.gameObject.SetActive(true);
+                this.gameObject.SetActive(flag);
 
+                if(!flag)
+                {
+                    return;
+                }
 
                 //Debug.Log(currentDialogue.speaker.corp.color.ToString());
-                speaker.text = currentNarration.speaker.fullName + " / \"" + currentNarration.speaker.handle + "\"";
+                speaker.text = currentNarration.speaker.fullName;
+                speakerHandle.text = currentNarration.speaker.handle;
+                speakerCorp.text = currentNarration.speaker.corp.name;
+                speakerCorp.color = currentNarration.speaker.corp.color;
+                speakerStatus.text = currentNarration.speaker.status.ToString();
 
                 text.text = currentNarration.text;
                 //speaker.text = currentNarration.speaker.fullName + " / <color=cyan>\"" + currentNarration.speaker.handle + "\"</color> / <color="+ currentNarration.speaker.corp.color.ToString() + ">" + currentNarration.speaker.corp.name + "</color> / " + currentNarration.speaker.serial;
@@ -52,8 +61,6 @@ namespace HackedDesign {
                 //.text = currentNarration.button;
 
             }    
-
-            
         }
     }
 }
