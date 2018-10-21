@@ -8,6 +8,8 @@ namespace HackedDesign {
 
 		public static CoreGame instance;
 
+		public Timer timer;
+
 		[SerializeField]
 		public GameState state = GameState.LOADING;
 
@@ -30,6 +32,8 @@ namespace HackedDesign {
 		public Dialogue.NarrationPanelPresenter narrationPanel;
 		public Dialogue.DialogueManager dialogueManager;
 		public Dialogue.DialoguePanelPresenter dialoguePanel;
+
+		public TimerPanelPresenter timerPanel;
 
 		private List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
 		private List<NPCController> npcList = new List<NPCController> ();
@@ -56,6 +60,8 @@ namespace HackedDesign {
 		public void Initialization () {
 			state = GameState.LOADING;
 			Debug.Log ("Initialization");
+
+			timerPanel.Initialize(this.timer);
 
 			narrationManager.Initialize (inputController);
 			dialogueManager.Initialize (inputController);
@@ -95,6 +101,8 @@ namespace HackedDesign {
 			} else {
 				Debug.LogWarning ("No starting stories set");
 			}
+
+			timer.Start();
 		}
 
 		void RepaintAll () {
@@ -224,6 +232,8 @@ namespace HackedDesign {
 
 				case GameState.PLAYING:
 					PlayingUpdate ();
+					timer.UpdateTimer();
+					timerPanel.Repaint();
 
 					if (inputController.StartButtonUp ()) {
 						Debug.Log ("Show start menu");
@@ -313,6 +323,7 @@ namespace HackedDesign {
 		DIALOGUE,
 		WORLDMAP,
 		STARTMENU,
-		SELECTMENU
+		SELECTMENU,
+		DOOR
 	}
 }
