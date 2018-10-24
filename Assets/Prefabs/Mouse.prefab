@@ -32,6 +32,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1494187257395622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4560747683504392}
+  - component: {fileID: 212617596192994382}
+  - component: {fileID: 114302746916755534}
+  m_Layer: 0
+  m_Name: Female - Hair - Pony (Blonde)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1685152997274196
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,8 +188,22 @@ Transform:
   - {fileID: 4144229297352262}
   - {fileID: 4703348740263068}
   - {fileID: 4492740891015106}
+  - {fileID: 4560747683504392}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4560747683504392
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1494187257395622}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4546495147908606}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4586184415837696
 Transform:
@@ -277,6 +308,21 @@ MonoBehaviour:
   newSprite: {fileID: 2800000, guid: e9720c4b7e2cb8a47aa8291da3b926d9, type: 3}
   folderPath: _External/Retro 2D Characters/Spritesheets/Female/3 - Outfits/Tintable
     Clothes/
+  useColorOutline: 1
+  isChildSprite: 1
+--- !u!114 &114302746916755534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1494187257395622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a857ff52570f8c479946076ced790ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSprite: {fileID: 2800000, guid: f39b1327cc817d14dbb817c565adac5f, type: 3}
+  folderPath: _External/Retro 2D Characters/Spritesheets/Female/5 - Hairstyles/
   useColorOutline: 1
   isChildSprite: 1
 --- !u!114 &114480847339448766
@@ -589,6 +635,52 @@ SpriteRenderer:
   m_SortingOrder: 150
   m_Sprite: {fileID: 21300256, guid: 8bdec7538dc12e24dac2f148aa37746a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!212 &212617596192994382
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1494187257395622}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 466f923893613ae408e296892a51785b, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 152
+  m_Sprite: {fileID: 21300256, guid: f39b1327cc817d14dbb817c565adac5f, type: 3}
+  m_Color: {r: 1, g: 0.97058827, b: 0.5735294, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
