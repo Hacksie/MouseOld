@@ -7,25 +7,32 @@ namespace HackedDesign {
 		public class DoorTrigger : MonoBehaviour, ITrigger {
 
             Input.IInputController inputController;
-            public GameObject doorObject;
+            //public GameObject doorObject;
             public Collider2D doorCollider;
+            Animator animator;
+            bool open = false;
 
             public void Initialize (Input.IInputController inputController) {
                 Debug.Log ("Initialize world map trigger");
                 this.inputController = inputController;
+                animator = GetComponent<Animator>();
 
             }
 
             // Update is called once per frame
-            public void UpdateTrigger () { }
+            public void UpdateTrigger () {
+                if(animator != null)
+                    animator.SetBool("Open", open);
+             }
 
             public void Invoke () {
 				//CoreGame.instance.GetPlayer().transform.position = transform.position;
-                if(doorObject != null )
-                    doorObject.SetActive(false);
 
-                if(doorCollider != null)                    
-                    doorCollider.enabled = false;
+                open = true;
+                //doorObject.SetActive(false);
+
+                //if(doorCollider != null)                    
+                //    doorCollider.enabled = false;
                 //CoreGame.instance.SetWorldMap ();
             }
 
@@ -43,11 +50,13 @@ namespace HackedDesign {
 
             private void OnTriggerExit2D (Collider2D other) {
 
-                if(doorObject != null )
-                    doorObject.SetActive(true);
 
-                if(doorCollider != null)
-                    doorCollider.enabled = true;                
+                open = false;
+
+                    
+
+                //if(doorCollider != null)
+                //    doorCollider.enabled = true;                
             }
 
             
