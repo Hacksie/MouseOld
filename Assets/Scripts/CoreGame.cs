@@ -47,9 +47,10 @@ namespace HackedDesign {
 		/// </summary>
 		void Start () {
 
-	
-			Initialization ();
-			SceneInitialize ();
+			if (SceneManager.GetActiveScene ().name != "MainMenu") {
+				Initialization ();
+				SceneInitialize ();
+			}
 
 		}
 #endif		
@@ -61,7 +62,7 @@ namespace HackedDesign {
 			state = GameState.LOADING;
 			Debug.Log ("Initialization");
 
-			timerPanel.Initialize(this.timer);
+			timerPanel.Initialize (this.timer);
 
 			narrationManager.Initialize (inputController);
 			dialogueManager.Initialize (inputController);
@@ -102,15 +103,15 @@ namespace HackedDesign {
 				Debug.LogWarning ("No starting stories set");
 			}
 
-			timer.Start();
+			timer.Start ();
 		}
 
 		void RepaintAll () {
-			narrationPanel.Show(false);
-			dialoguePanel.Show(false);
-			startMenuPanel.Show(false);
-			selectMenuPanel.Show(false);
-			worldMapPanel.Show(false);
+			narrationPanel.Show (false);
+			dialoguePanel.Show (false);
+			startMenuPanel.Show (false);
+			selectMenuPanel.Show (false);
+			worldMapPanel.Show (false);
 		}
 
 		void SceneTriggersInitialize () {
@@ -147,18 +148,18 @@ namespace HackedDesign {
 			Debug.Log ("State set to RESUME");
 			Time.timeScale = 1;
 			state = GameState.PLAYING;
-			startMenuPanel.Show(false);
-			selectMenuPanel.Show(false);
+			startMenuPanel.Show (false);
+			selectMenuPanel.Show (false);
 			narrationPanel.Show (false);
-			dialoguePanel.Show(false);
-			worldMapPanel.Show(false);
+			dialoguePanel.Show (false);
+			worldMapPanel.Show (false);
 			Cursor.visible = false;
 		}
 
 		public void SetDialogue () {
 			Debug.Log ("State set to DIALOGUE");
 			Time.timeScale = 0;
-			dialoguePanel.Show(true);
+			dialoguePanel.Show (true);
 			state = GameState.DIALOGUE;
 			Cursor.visible = true;
 		}
@@ -166,7 +167,7 @@ namespace HackedDesign {
 		public void SetNarration () {
 			Debug.Log ("State set to NARRATION");
 			Time.timeScale = 0;
-			narrationPanel.Show(true);
+			narrationPanel.Show (true);
 			state = GameState.NARRATION;
 			Cursor.visible = true;
 		}
@@ -175,7 +176,7 @@ namespace HackedDesign {
 			Debug.Log ("State set to WORLDMAP");
 			Time.timeScale = 0;
 			state = GameState.WORLDMAP;
-			worldMapPanel.Show(true);
+			worldMapPanel.Show (true);
 			Cursor.visible = true;
 		}
 
@@ -232,21 +233,21 @@ namespace HackedDesign {
 
 				case GameState.PLAYING:
 					PlayingUpdate ();
-					timer.UpdateTimer();
-					timerPanel.Repaint();
+					timer.UpdateTimer ();
+					timerPanel.Repaint ();
 
 					if (inputController.StartButtonUp ()) {
 						Debug.Log ("Show start menu");
 						Cursor.visible = true;
 						state = GameState.STARTMENU;
-						startMenuPanel.Show(true);
+						startMenuPanel.Show (true);
 					}
 
 					if (inputController.SelectButtonUp ()) {
 						Debug.Log ("Show select menu");
 						Cursor.visible = true;
 						state = GameState.SELECTMENU;
-						selectMenuPanel.Show(true);
+						selectMenuPanel.Show (true);
 					}
 
 					break;

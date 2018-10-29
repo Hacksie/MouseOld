@@ -26,14 +26,7 @@ namespace HackedDesign {
              }
 
             public void Invoke () {
-				//CoreGame.instance.GetPlayer().transform.position = transform.position;
-
-                open = true;
-                //doorObject.SetActive(false);
-
-                //if(doorCollider != null)                    
-                //    doorCollider.enabled = false;
-                //CoreGame.instance.SetWorldMap ();
+                open = true;            
             }
 
             // TODO: Make door close trigger
@@ -49,17 +42,8 @@ namespace HackedDesign {
             }
 
             private void OnTriggerExit2D (Collider2D other) {
-
-
-                open = false;
-
-                    
-
-                //if(doorCollider != null)
-                //    doorCollider.enabled = true;                
-            }
-
-            
+                open = false;         
+            }          
 		}
 	}
 }
