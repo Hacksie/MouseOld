@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace HackedDesign {
 	namespace Triggers {
-		public class SpeechBubbleTrigger : MonoBehaviour, ITrigger {
+		public class SpeechBubbleTrigger : BaseTrigger, ITrigger {
 
 			public float startTime;
 			public float showTime = 3.0f;
@@ -19,25 +19,25 @@ namespace HackedDesign {
 
 			public Vector3 offset;
 
-			Input.IInputController inputController;
 
 			public bool loop = false;
 			bool triggered;
 
 
-			public void Initialize (Input.IInputController inputController) {
+			public new void Initialize (Input.IInputController inputController) {
+				base.Initialize(inputController);
 				Debug.Log ("Initialize speech bubble");
-				this.inputController = inputController;
-
+				
 				GameObject canvas = GameObject.Instantiate (textFieldPrefab);
 				canvas.transform.SetParent (this.transform);
 				textField = GetComponentInChildren<Text> ();
 				textField.text = speechBubbles[currentTextItem].text;
 				textField.gameObject.SetActive (false);
+				
 			}
 
 			// Update is called once per frame
-			public void UpdateTrigger () {
+			public new void UpdateTrigger () {
 				if (textField.gameObject.activeInHierarchy) {
 					textField.rectTransform.position = Camera.main.WorldToScreenPoint (transform.position + offset);
 
@@ -48,8 +48,10 @@ namespace HackedDesign {
 
 			}
 
-			public void Invoke () {
+			public new void Invoke () {
+				Debug.Log("Invoke trigger");
 				if (currentTextItem < speechBubbles.Length) {
+					Debug.Log("1");
 					textField.text = speechBubbles[currentTextItem].text;
 					textField.gameObject.SetActive (true);
 					startTime = Time.time;

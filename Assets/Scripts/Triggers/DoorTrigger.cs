@@ -4,28 +4,29 @@ using UnityEngine;
 
 namespace HackedDesign {
 	namespace Triggers {
-		public class DoorTrigger : MonoBehaviour, ITrigger {
+		public class DoorTrigger : BaseTrigger {
 
-            Input.IInputController inputController;
+
             //public GameObject doorObject;
             public Collider2D doorCollider;
             Animator animator;
             bool open = false;
 
-            public void Initialize (Input.IInputController inputController) {
-                Debug.Log ("Initialize world map trigger");
-                this.inputController = inputController;
+            public new void Initialize (Input.IInputController inputController) {
+                base.Initialize(inputController);
+                Debug.Log ("Initialize door trigger");
+                
                 animator = GetComponent<Animator>();
 
             }
 
             // Update is called once per frame
-            public void UpdateTrigger () {
+            public new void UpdateTrigger () {
                 if(animator != null)
                     animator.SetBool("Open", open);
              }
 
-            public void Invoke () {
+            public new void Invoke () {
                 open = true;            
             }
 

@@ -12,6 +12,7 @@ namespace HackedDesign {
             private List<StoryEventListener> listeners = new List<StoryEventListener> ();
 
             public void RegisterListener (StoryEventListener listener) {
+                Debug.Log("Listener registered " + listener.gameObject.name);
                 if (!listeners.Contains (listener)) {
                     listeners.Add (listener);
                 } else {
@@ -27,6 +28,8 @@ namespace HackedDesign {
 
             public void Start () {
                 currentState = StoryEventState.STARTED;
+
+                Debug.Log(listeners.Count);
 
                 for (int i = 0; i < listeners.Count; i++) {
                     Debug.Log ("Triggering story start " + listeners[i].name);

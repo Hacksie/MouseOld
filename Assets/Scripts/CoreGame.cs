@@ -112,6 +112,7 @@ namespace HackedDesign {
 			startMenuPanel.Show (false);
 			selectMenuPanel.Show (false);
 			worldMapPanel.Show (false);
+			timerPanel.Repaint();
 		}
 
 		void SceneTriggersInitialize () {

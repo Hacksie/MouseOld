@@ -21,7 +21,7 @@ namespace HackedDesign {
 				return;
 			}
 
-			if(!timer.running && gameObject.activeInHierarchy)
+			if(!timer.running)
 			{
 				gameObject.SetActive(false);
 				return;

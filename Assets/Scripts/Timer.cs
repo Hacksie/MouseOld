@@ -24,7 +24,7 @@ namespace HackedDesign {
 		public void Start()
 		{
 			startTime = Time.time;
-			running = true;
+			//running = true;
 			//public float startTime  = Time.time;
 			//public float currentTime  = Time.time;			
 		}
