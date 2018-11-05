@@ -28,7 +28,7 @@ namespace HackedDesign {
 			}
 			//FIXME: Replace this stuff with StoryEventTransition.cs
 			public void Invoke () {
-				Debug.Log ("Invoking  story trigger " + currentStoryEvent.name + " -> " + nextStoryEvent.name);
+				//Debug.Log ("Invoking  story trigger " + currentStoryEvent.name + " -> " + nextStoryEvent.name);
 				if (currentStoryEvent != null && currentStoryEvent.currentState == Story.StoryEvent.StoryEventState.STARTED) {
 					currentStoryEvent.Complete ();
 				}

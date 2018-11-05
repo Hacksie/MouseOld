@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Name: Kitty1
   m_EditorClassIdentifier: 
   speaker: {fileID: 11400000, guid: 7b0ab88b4fb757947ad38ab6026c5eb4, type: 2}
-  text: Miss Ives, it's 2:03am, it's currently raining outside and I've started a
-    pot of coffee for you. Would you like me to turn the lights on for you?
-  button1text: No thank you, Kitty
-  button2text: Yes please, Kitty
+  text: 'Good morning Miss Ives, it''s 2:03am and I''ve just started a pot of coffee
+    for you. It''s currently raining outside and there is a message waiting for you
+    on your terminal. '
+  button1text: Thank you, Kitty
+  button2text: 
   button3text: 
   button4text: 
-  dialogueAction1: {fileID: 11400000, guid: 8a778bafb8580254e88c7878015a9dcf, type: 2}
-  dialogueAction2: {fileID: 11400000, guid: 80caae386d51c25419f5d903f2c6a77a, type: 2}
+  dialogueAction1: {fileID: 11400000, guid: b8d3f2307a030e143b2f0d9940697f18, type: 2}
+  dialogueAction2: {fileID: 0}
   dialogueAction3: {fileID: 0}
   dialogueAction4: {fileID: 0}

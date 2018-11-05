@@ -29,6 +29,14 @@ namespace HackedDesign {
 
 		}
 
+		public void Activate() {
+			//gameObject.SetActive(true);
+		}
+
+		public void Deactivate() {
+			//gameObject.SetActive(false);
+		}
+
 		// Update is called once per frame
 		public void UpdateBehaviour () {
 			// FIXME: 

@@ -11,7 +11,7 @@ namespace HackedDesign {
 			// public Dialogue.Narration prelude3;
 			// public Dialogue.Narration prelude4;
 
-			//public GameObject kitty;
+			public GameObject kari;
 
 			//public GameObject prelude4triggers;
 			//public GameObject prelude5triggers;
@@ -24,6 +24,7 @@ namespace HackedDesign {
 			// FIXME: Make these register themselves
 			public void Prelude1Start () {
 				Debug.Log("Prelude 1 Started");
+				kari.SetActive(false);
 				//prelude4triggers.SetActive(false);
 				//prelude5triggers.SetActive(false);
 				RenderSettings.ambientLight = Color.black;
@@ -41,10 +42,11 @@ namespace HackedDesign {
 
 			public void Prelude2Start() {
 				Debug.Log("Prelude 2 Start");
+				kari.SetActive(true);
 				//prelude4triggers.SetActive(false);
 				//prelude5triggers.SetActive(false);				
 				//kitty.SetActive(true); // Animate this
-				Dialogue.DialogueManager.instance.ShowDialogue("Kitty1");
+				//Dialogue.DialogueManager.instance.ShowDialogue("Kitty1");
 
 				//kitty.SetActive(false); // Animate this
 				//Dialogue.NarrationManager.instance.ShowNarration("Prelude2");
@@ -89,6 +91,11 @@ namespace HackedDesign {
 				
 				//Dialogue.NarrationManager.instance.ShowNarration("Prelude4");
 			}	
+
+			public void Kari1Start() {
+				Debug.Log("Kari 1 start");
+				Dialogue.DialogueManager.instance.ShowDialogue("Kitty1");
+			}
 
 
 
