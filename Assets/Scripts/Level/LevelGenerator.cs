@@ -8,7 +8,7 @@ namespace HackedDesign {
 	namespace Level {
 		public class LevelGenerator : MonoBehaviour {
 
-			public int levelLength = 5;
+			public int levelLength = 7;
 			public int levelWidth = 10;
 			public int levelHeight = 10;
 
@@ -35,16 +35,30 @@ namespace HackedDesign {
 				// entry.right = Chunk.ChunkSide.Wall;
 				// entry.top = Chunk.ChunkSide.Door;
 
-				// Starting at the bottom means we should never create a chain that fails and roles all the way back to the entry
+				// Starting at the bottom and going up means we should never create a chain that fails completely and roles all the way back to the entry
 				// This is important!
 
-				level[pos.x, pos.y] = "DWWW";
+				level[pos.x, pos.y] = "1211";
 
 				Debug.Log (pos);
 
 				GenerateMainChain (new Vector2Int (pos.x, pos.y - 1), pos, levelLength);
+				GenerateAuxRooms();
 
 				return pos;
+			}
+
+			void GenerateAuxRooms()
+			{
+				// iterate through every position, checking for neighbours and creating rooms accordingly. 
+				// Keep iterating until we stop creating rooms
+
+			}
+
+			bool HasNeighbours(Vector2Int location) 
+			{
+				
+				return false;
 			}
 
 			bool GenerateMainChain (Vector2Int newLocation, Vector2Int lastLocation, int lengthRemaining) {
@@ -55,29 +69,29 @@ namespace HackedDesign {
 				if (lengthRemaining == 0) {
 					Debug.Log ("End of main chain");
 
-					List<string> endFreeChoice = new List<string> () { "W" }; // Don't expect me to honor the order
+					List<string> endFreeChoice = new List<string> () { "1" }; // Don't expect me to honor the order
 
 					List<string> endTops = PossibleTopSides (newLocation, endFreeChoice);
-					List<string> endLefts = PossibleMainLeftSides (newLocation, endFreeChoice);
+					List<string> endLefts = PossibleLeftSides (newLocation, endFreeChoice);
 					List<string> endBottoms = PossibleBottomSides (newLocation, endFreeChoice);
 					List<string> endRights = PossibleRightSides (newLocation, endFreeChoice);
 
-					string endRoom = endTops[0] + endLefts[0] + endBottoms[0] + endRights[0];
+					string endRoom = endLefts[0]  + endTops[0] + endBottoms[0] + endRights[0];
 
 					level[newLocation.x, newLocation.y] = endRoom;
 					PrintLevelDebug ();
 					return true;
 				}
 
-				List<string> mainChainFreeChoice = new List<string> () { "O", "D" }; // Don't expect me to honor the order
+				List<string> mainChainFreeChoice = new List<string> () { "3", "2" }; // Don't expect me to honor the order
 
 				// Get Top Side
 				List<string> tops = PossibleTopSides (newLocation, mainChainFreeChoice);
-				List<string> lefts = PossibleMainLeftSides (newLocation, mainChainFreeChoice);
+				List<string> lefts = PossibleLeftSides (newLocation, mainChainFreeChoice);
 				List<string> bottoms = PossibleBottomSides (newLocation, mainChainFreeChoice);
 				List<string> rights = PossibleRightSides (newLocation, mainChainFreeChoice);
 
-				string room = tops[0] + lefts[0] + bottoms[0] + rights[0];
+				string room = lefts[0] + tops[0] + bottoms[0] + rights[0];
 
 				level[newLocation.x, newLocation.y] = room; // Try and place a new tile here 
 
@@ -90,7 +104,6 @@ namespace HackedDesign {
 
 				// Iterate over potential directions from here
 				for (int i = 0; i < directions.Count; i++) {
-					//level[directions[i].x, directions[i].y] = "OOOO";
 
 					result = GenerateMainChain (directions[i], newLocation, lengthRemaining - 1);
 
@@ -115,7 +128,7 @@ namespace HackedDesign {
 
 				// If the side would lead out of the level, the side has to be wall
 				if (pos.y == 0) {
-					sides.Add ("W");
+					sides.Add ("1");
 					return sides;
 				}
 
@@ -126,12 +139,6 @@ namespace HackedDesign {
 				if (string.IsNullOrEmpty (chunk)) {
 					freeChoice = freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
-					//sides.Add("O");
-					//sides.Add("D");
-
-					//sides = sides.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
-					//return sides;
-					//sides.Add("W"); // Don't add walls to the main chain room options
 				}
 
 				// Otherwise, match what's currently in the bottom side
@@ -144,7 +151,7 @@ namespace HackedDesign {
 
 				// If the side would lead out of the level, the side has to be wall
 				if (pos.y == (levelHeight - 1)) {
-					sides.Add ("W");
+					sides.Add ("1");
 					return sides;
 				}
 
@@ -158,16 +165,16 @@ namespace HackedDesign {
 				}
 
 				// Otherwise, match what's currently in the top side
-				sides.Add (chunk.Substring (0, 1));
+				sides.Add (chunk.Substring (1, 1));
 				return sides;
 			}
 
-			List<string> PossibleMainLeftSides (Vector2Int pos, List<string> freeChoice) {
+			List<string> PossibleLeftSides (Vector2Int pos, List<string> freeChoice) {
 				List<string> sides = new List<string> ();
 
 				// If the side would lead out of the level, the side has to be wall
 				if (pos.x == 0) {
-					sides.Add ("W");
+					sides.Add ("1");
 					return sides;
 				}
 
@@ -181,7 +188,7 @@ namespace HackedDesign {
 				}
 
 				// Otherwise, match what's currently in the bottom side
-				sides.Add (chunk.Substring (1, 1));
+				sides.Add (chunk.Substring (3, 1));
 				return sides;
 			}
 
@@ -190,7 +197,7 @@ namespace HackedDesign {
 
 				// If the side would lead out of the level, the side has to be wall
 				if (pos.x == (levelWidth - 1)) {
-					sides.Add ("W");
+					sides.Add ("1");
 					return sides;
 				}
 
@@ -204,7 +211,7 @@ namespace HackedDesign {
 				}
 
 				// Otherwise, match what's currently in the bottom side
-				sides.Add (chunk.Substring (1, 1));
+				sides.Add (chunk.Substring (0, 1));
 				return sides;
 			}
 
@@ -213,7 +220,16 @@ namespace HackedDesign {
 				string s = level[pos.x, pos.y];
 				List<Vector2Int> results = new List<Vector2Int> ();
 
-				if (s[0] == 'D' || s[0] == 'O') {
+				if (s[0] == '2' || s[0] == '3') {
+					var leftPos = new Vector2Int (pos.x - 1, pos.y);
+					if (!PositionHasChunk (leftPos)) {
+						//Debug.Log ("We can move left");
+						results.Add (leftPos);
+					}
+
+				}
+
+				if (s[1] == '2' || s[1] == '3') {
 					var upPos = new Vector2Int (pos.x, pos.y - 1);
 					if (!PositionHasChunk (upPos)) {
 						//Debug.Log ("We can move up");
@@ -221,15 +237,7 @@ namespace HackedDesign {
 					}
 				}
 
-				if (s[1] == 'D' || s[1] == 'O') {
-					var leftPos = new Vector2Int (pos.x - 1, pos.y);
-					if (!PositionHasChunk (leftPos)) {
-						//Debug.Log ("We can move left");
-						results.Add (leftPos);
-					}
-				}
-
-				if (s[2] == 'D' || s[2] == 'O') {
+				if (s[2] == '2' || s[2] == '3') {
 					var downPos = new Vector2Int (pos.x, pos.y + 1);
 					if (!PositionHasChunk (downPos)) {
 						//Debug.Log ("We can move down");
@@ -237,13 +245,15 @@ namespace HackedDesign {
 					}
 				}
 
-				if (s[3] == 'D' || s[3] == 'O') {
+				if (s[3] == '2' || s[3] == '3') {
 					var rightPos = new Vector2Int (pos.x - 1, pos.y);
 					if (!PositionHasChunk (rightPos)) {
 						//Debug.Log ("We can move right");
 						results.Add (rightPos);
 					}
 				}
+
+				//1234
 
 				return results;
 
@@ -266,15 +276,16 @@ namespace HackedDesign {
 			}
 
 			void PrintLevelDebug () {
+				Debug.Log("Printing level");
 				for (int i = 0; i < levelHeight; i++) {
 					string line = "";
 					//Debug.Log ("i" + i);
 					for (int j = 0; j < levelWidth; j++) {
 						//Debug.Log ("j " + j);
 						if (!string.IsNullOrEmpty (level[j, i])) {
-							line += level[j, i] + "";
+							line += "[" + level[j, i] + "]";
 						} else {
-							line += "XXXX";
+							line += "[0000]";
 						}
 
 					}
