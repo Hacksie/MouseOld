@@ -4,14 +4,27 @@ using UnityEngine;
 
 namespace HackedDesign {
 	namespace Level {
-		public class Chunk : ScriptableObject {
 
-			public bool[] open = new bool[4];
-			public bool[] door = new bool[4];
+		[CreateAssetMenu (fileName = "Chunk", menuName = "Mouse/Level/Chunk")]
+		public class Chunk: ScriptableObject {
 
-			public GameObject prefab;
+			public bool isEntry;
+			public bool isEnd;
+
+			public ChunkSide top;
+			public ChunkSide left;
+			public ChunkSide bottom;
+			public ChunkSide right;
+
+			public GameObject gameObject;
 
 			public ColorPalette colorPalette;
+
+			public enum ChunkSide {
+				Wall,
+				Open,
+				Door
+			}
 
 
 			public enum ColorPalette {
