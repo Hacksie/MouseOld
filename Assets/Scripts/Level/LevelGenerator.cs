@@ -22,6 +22,7 @@ namespace HackedDesign {
 			}
 
 			void GenerateLevel () {
+				Debug.Log("Generating Level");
 				levelChunks = new LevelChunk[levelWidth, levelHeight];
 
 				var pos = GenerateStartingLocation ();
@@ -31,6 +32,7 @@ namespace HackedDesign {
 			}
 
 			Vector2Int GenerateStartingLocation () {
+				Debug.Log("Generating Starting Location");
 				Vector2Int pos = new Vector2Int (UnityEngine.Random.Range (0, levelWidth), levelHeight - 1);
 
 				// Starting at the bottom and going up means we should never create a chain that fails completely and roles all the way back to the entry
@@ -43,7 +45,7 @@ namespace HackedDesign {
 
 			bool GenerateMainChain (Vector2Int newLocation, Vector2Int lastLocation, int lengthRemaining) {
 
-				Debug.Log ("Generating main chain");
+				Debug.Log ("Generating Main Chain");
 
 				// The end room is considered special
 				if (lengthRemaining == 0) {
@@ -51,13 +53,13 @@ namespace HackedDesign {
 
 					levelChunks[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Wall }); // Place a new tile here
 					levelChunks[newLocation.x, newLocation.y].isEnd = true;
-					PrintLevelDebug ();
+					//PrintLevelDebug ();
 					return true;
 				}
 
 				levelChunks[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Open, Chunk.ChunkSide.Door }); // Place a new tile here 
 
-				PrintLevelDebug ();
+				//PrintLevelDebug ();
 				List<Vector2Int> directions = PossibleDirections (newLocation);
 
 				directions = directions.OrderBy (a => Guid.NewGuid ()).ToList ();
@@ -92,8 +94,8 @@ namespace HackedDesign {
 				// iterate through every position, checking for neighbours and creating rooms accordingly. 
 				// Keep iterating until we stop creating rooms				
 				while (newRooms) {
-					PrintLevelDebug ();
-					Debug.Log ("Iteration");
+					//PrintLevelDebug ();
+					//Debug.Log ("Iteration");
 					newRooms = false;
 					for (int i = 0; i < levelHeight; i++) {
 						for (int j = 0; j < levelWidth; j++) {

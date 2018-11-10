@@ -18,7 +18,7 @@ namespace HackedDesign {
 
 			public GameObject gameObject;
 
-			public ColorPalette colorPalette;
+			
 
 			public enum ChunkSide {
 				Wall,
@@ -27,12 +27,7 @@ namespace HackedDesign {
 			}
 
 
-			public enum ColorPalette {
-				Magenta,
-				Blue,
-				Cyan,
-				Beige
-			}
+
 		}
 	}
 }
