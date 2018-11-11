@@ -83,8 +83,29 @@ namespace HackedDesign {
 			state = GameState.LOADING;
 			Debug.Log ("Scene Initialization");
 			player = GameObject.FindWithTag (TagManager.PLAYER);
+
+			GameObject environmentObj = GameObject.FindWithTag(TagManager.ENVIRONMENT);
+
+			Level.LevelGenerator levelGenerator = environmentObj.GetComponent<Level.LevelGenerator>();
+
+
+			levelGenerator.Initialize(environmentObj);
+
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
+			
+
+
+			GameObject spawn = GameObject.FindWithTag(TagManager.SPAWN);
+
+
+
 			playerController = player.GetComponent<PlayerController> ();
+
+
+			player.transform.position = spawn.transform.position;
+
+			
+
 
 			SceneTriggersInitialize ();
 			SceneNPCsInitialize ();

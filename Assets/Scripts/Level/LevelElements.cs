@@ -7,9 +7,11 @@ namespace HackedDesign {
 		[CreateAssetMenu (fileName = "LevelElements", menuName = "Mouse/Level/LevelElements")]
 		public class LevelElements : ScriptableObject {
 
-			List<Chunk> chunks;
+			public List<Chunk> chunks;
 			
 			public ColorPalette colorPalette;
+
+			public Difficulty difficulty;
 
 			public enum ColorPalette {
 				Magenta,

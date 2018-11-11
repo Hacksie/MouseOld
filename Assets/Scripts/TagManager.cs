@@ -28,6 +28,7 @@
 		public const string INFO_MANAGER = "InfoManager";
 		public const string INFO_PANEL = "InfoPanel";
 		public const string STORY = "Story";
+		public const string ENVIRONMENT = "Environment";
 
 	}
 }

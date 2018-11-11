@@ -18,16 +18,11 @@ namespace HackedDesign {
 
 			public GameObject gameObject;
 
-			
-
 			public enum ChunkSide {
 				Wall,
 				Open,
 				Door
 			}
-
-
-
 		}
 	}
 }

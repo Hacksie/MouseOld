@@ -8,31 +8,50 @@ namespace HackedDesign {
 	namespace Level {
 		public class LevelGenerator : MonoBehaviour {
 
+			public GameObject parent;
+
 			public int levelLength = 7;
 			public int levelWidth = 10;
 			public int levelHeight = 10;
 
-			public LevelChunk[, ] levelChunks;
+			public string levelName;
+			public string floorName;
+
+			public List<Floor> floors;
+			public List<LevelElements> levelElements;
+
+			public GeneratorChunk[, ] levelChunks;
 
 			// Use this for initialization
 			void Start () {
 
+				//GenerateLevel ();
+				//PrintLevelDebug ();
+
+			}
+
+			public void Initialize(GameObject parent)
+			{
+				this.parent = parent;
 				GenerateLevel ();
-				PrintLevelDebug ();
+				PopulateLevelChunks ();
 			}
 
 			void GenerateLevel () {
-				Debug.Log("Generating Level");
-				levelChunks = new LevelChunk[levelWidth, levelHeight];
+				Debug.Log ("Generating Level");
+				levelChunks = new GeneratorChunk[levelWidth, levelHeight];
 
 				var pos = GenerateStartingLocation ();
 
-				GenerateMainChain (new Vector2Int (pos.x, pos.y - 1), pos, levelLength);
-				GenerateAuxRooms ();
+				if (levelLength > 0) {
+
+					GenerateMainChain (new Vector2Int (pos.x, pos.y - 1), pos, levelLength);
+					GenerateAuxRooms ();
+				}
 			}
 
 			Vector2Int GenerateStartingLocation () {
-				Debug.Log("Generating Starting Location");
+				Debug.Log ("Generating Starting Location");
 				Vector2Int pos = new Vector2Int (UnityEngine.Random.Range (0, levelWidth), levelHeight - 1);
 
 				// Starting at the bottom and going up means we should never create a chain that fails completely and roles all the way back to the entry
@@ -46,9 +65,12 @@ namespace HackedDesign {
 			bool GenerateMainChain (Vector2Int newLocation, Vector2Int lastLocation, int lengthRemaining) {
 
 				Debug.Log ("Generating Main Chain");
+				if (lengthRemaining == 0) {
+					return true;
+				}
 
 				// The end room is considered special
-				if (lengthRemaining == 0) {
+				if (lengthRemaining == 1) {
 					Debug.Log ("End of main chain");
 
 					levelChunks[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Wall }); // Place a new tile here
@@ -87,6 +109,43 @@ namespace HackedDesign {
 				return result;
 			}
 
+
+
+
+			void PopulateLevelChunks () {
+				for (int i = 0; i < levelHeight; i++) {
+					for (int j = 0; j < levelWidth; j++) {
+						if (levelChunks[j, i] != null) {
+							Chunk c = FindChunk (levelChunks[j, i]);
+							if (c != null) {
+								var f = FindFloor();
+								Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4), 0);
+
+								GameObject.Instantiate(f.gameObject, pos, Quaternion.identity, parent.transform);
+
+								GameObject.Instantiate (c.gameObject, pos, Quaternion.identity, parent.transform);
+								Debug.Log (c.name);
+								Debug.Log (j + ":" + j * 4);
+								Debug.Log (i + ":" + (i * -4 + ((levelHeight - 1) * 4)));
+							}
+
+						}
+					}
+				}
+			}
+
+			Floor FindFloor()
+			{
+				return floors.FirstOrDefault(f => f.name == floorName);
+			}
+
+			Chunk FindChunk (GeneratorChunk chunk) {
+				return levelElements.FirstOrDefault (l => l.name == levelName).chunks.FirstOrDefault (c => c.isEntry == chunk.isEntry);
+			}
+
+
+
+
 			void GenerateAuxRooms () {
 				Debug.Log ("Generating Aux Rooms");
 				bool newRooms = true;
@@ -113,18 +172,18 @@ namespace HackedDesign {
 				}
 			}
 
-			LevelChunk GenerateRoom (Vector2Int location, List<Chunk.ChunkSide> freeChoiceSides) {
+			GeneratorChunk GenerateRoom (Vector2Int location, List<Chunk.ChunkSide> freeChoiceSides) {
 				// Get Top Side
 				List<Chunk.ChunkSide> tops = PossibleTopSides (location, freeChoiceSides);
 				List<Chunk.ChunkSide> lefts = PossibleLeftSides (location, freeChoiceSides);
 				List<Chunk.ChunkSide> bottoms = PossibleBottomSides (location, freeChoiceSides);
 				List<Chunk.ChunkSide> rights = PossibleRightSides (location, freeChoiceSides);
 
-				return new LevelChunk () { isEntry = false, isEnd = false, top = tops[0], left = lefts[0], bottom = bottoms[0], right = rights[0] };
+				return new GeneratorChunk () { isEntry = false, isEnd = false, top = tops[0], left = lefts[0], bottom = bottoms[0], right = rights[0] };
 			}
 
-			LevelChunk GenerateEntryRoomChunk () {
-				return new LevelChunk () { isEntry = true, isEnd = false, top = Chunk.ChunkSide.Door, left = Chunk.ChunkSide.Wall, bottom = Chunk.ChunkSide.Wall, right = Chunk.ChunkSide.Wall };
+			GeneratorChunk GenerateEntryRoomChunk () {
+				return new GeneratorChunk () { isEntry = true, isEnd = false, top = Chunk.ChunkSide.Door, left = Chunk.ChunkSide.Wall, bottom = Chunk.ChunkSide.Wall, right = Chunk.ChunkSide.Wall };
 			}
 
 			List<Chunk.ChunkSide> PossibleTopSides (Vector2Int pos, List<Chunk.ChunkSide> freeChoice) {
@@ -137,7 +196,7 @@ namespace HackedDesign {
 				}
 
 				// Get what's at the position 
-				LevelChunk chunk = levelChunks[pos.x, pos.y - 1];
+				GeneratorChunk chunk = levelChunks[pos.x, pos.y - 1];
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
@@ -160,7 +219,7 @@ namespace HackedDesign {
 				}
 
 				// Get what's at the position 
-				LevelChunk chunk = levelChunks[pos.x, pos.y + 1];
+				GeneratorChunk chunk = levelChunks[pos.x, pos.y + 1];
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
@@ -183,7 +242,7 @@ namespace HackedDesign {
 				}
 
 				// Get what's at the position 
-				LevelChunk chunk = levelChunks[pos.x - 1, pos.y];
+				GeneratorChunk chunk = levelChunks[pos.x - 1, pos.y];
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
@@ -206,7 +265,7 @@ namespace HackedDesign {
 				}
 
 				// Get what's at the position 
-				LevelChunk chunk = levelChunks[pos.x + 1, pos.y];
+				GeneratorChunk chunk = levelChunks[pos.x + 1, pos.y];
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
@@ -219,7 +278,7 @@ namespace HackedDesign {
 			}
 
 			List<Vector2Int> PossibleDirections (Vector2Int pos) {
-				LevelChunk chunk = levelChunks[pos.x, pos.y];
+				GeneratorChunk chunk = levelChunks[pos.x, pos.y];
 
 				List<Vector2Int> results = new List<Vector2Int> ();
 
@@ -287,7 +346,7 @@ namespace HackedDesign {
 				}
 			}
 
-			public class LevelChunk {
+			public class GeneratorChunk {
 				public bool isEntry = false;
 				public bool isEnd = false;
 
