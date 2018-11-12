@@ -12,15 +12,18 @@ namespace HackedDesign {
 		private List<SpriteRenderer> sprites = new List<SpriteRenderer> ();
 		private Transform player;
 
-		public Vector2 direction; 
+		public Vector2 direction = Vector2.zero;
 
 		// Use this for initialization
 		void Start () {
 			anim = transform.GetComponent<Animator> ();
 
+			Debug.Log ("Anim " + (anim == null));
+
 			sprites.Add (GetComponent<SpriteRenderer> ());
 			sprites.AddRange (GetComponentsInChildren<SpriteRenderer> ());
-			FaceDirection(direction);
+			player = CoreGame.instance.GetPlayer ().transform;
+			FaceDirection (direction);
 
 		}
 
@@ -29,25 +32,27 @@ namespace HackedDesign {
 
 		}
 
-		public void Activate() {
+		public void Activate () {
 			//gameObject.SetActive(true);
 		}
 
-		public void Deactivate() {
+		public void Deactivate () {
 			//gameObject.SetActive(false);
 		}
 
 		// Update is called once per frame
 		public void UpdateBehaviour () {
 			// FIXME: 
+			if (anim != null) {
 
-			direction = player.position - transform.position;
-			
-			if (facePlayer) {
-				FaceDirection (direction);
+				direction = player.position - transform.position;
+
+				if (facePlayer) {
+					FaceDirection (direction);
+				}
+
+				UpdateLayer (direction);
 			}
-
-			UpdateLayer (direction);
 		}
 
 		public void UpdateLayer (Vector2 direction) {

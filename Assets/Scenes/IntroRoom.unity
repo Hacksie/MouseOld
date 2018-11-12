@@ -287,9 +287,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
-  levelLength: 0
+  levelLength: 10
   levelWidth: 10
   levelHeight: 10
+  seed: 3
   levelName: IntroRoom
   floorName: Blue1
   floors:

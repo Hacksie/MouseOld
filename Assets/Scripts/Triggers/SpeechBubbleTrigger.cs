@@ -15,7 +15,7 @@ namespace HackedDesign {
 
 			public GameObject textFieldPrefab;
 
-			public Text textField;
+			private Text textField;
 
 			public Vector3 offset;
 

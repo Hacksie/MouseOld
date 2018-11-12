@@ -13,6 +13,7 @@ namespace HackedDesign {
 			public int levelLength = 7;
 			public int levelWidth = 10;
 			public int levelHeight = 10;
+			public int seed = 1;
 
 			public string levelName;
 			public string floorName;
@@ -30,35 +31,45 @@ namespace HackedDesign {
 
 			}
 
-			public void Initialize(GameObject parent)
-			{
+			public void Initialize (GameObject parent) {
 				this.parent = parent;
 				GenerateLevel ();
 				PopulateLevelChunks ();
+				PrintLevelDebug ();
 			}
 
 			void GenerateLevel () {
 				Debug.Log ("Generating Level");
 				levelChunks = new GeneratorChunk[levelWidth, levelHeight];
 
-				var pos = GenerateStartingLocation ();
+				UnityEngine.Random.InitState (seed); // Psuedo random seed gives predictable results, so we can save the seed and recreate the level
 
+				// Seems like a sensible limit
+				if (levelLength < Mathf.Sqrt (levelLength * levelWidth)) {
+					levelLength = (int) Mathf.Sqrt (levelLength * levelWidth);
+				}
+
+				if (levelLength < 0) {
+					return;
+				}
+
+				var pos = GenerateStartingLocation ();
 				if (levelLength > 0) {
 
 					GenerateMainChain (new Vector2Int (pos.x, pos.y - 1), pos, levelLength);
 					GenerateAuxRooms ();
 				}
+
 			}
 
 			Vector2Int GenerateStartingLocation () {
 				Debug.Log ("Generating Starting Location");
-				Vector2Int pos = new Vector2Int (UnityEngine.Random.Range (0, levelWidth), levelHeight - 1);
 
 				// Starting at the bottom and going up means we should never create a chain that fails completely and roles all the way back to the entry
-				// This is important!
-
+				// This is important!				
+				// It also means the player starts at the bottom and plays upwards, which is ideal
+				Vector2Int pos = new Vector2Int (UnityEngine.Random.Range (0, levelWidth), levelHeight - 1);
 				levelChunks[pos.x, pos.y] = GenerateEntryRoomChunk ();
-
 				return pos;
 			}
 
@@ -73,18 +84,18 @@ namespace HackedDesign {
 				if (lengthRemaining == 1) {
 					Debug.Log ("End of main chain");
 
-					levelChunks[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Wall }); // Place a new tile here
+					levelChunks[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Wall }, true); // Place a new tile here
 					levelChunks[newLocation.x, newLocation.y].isEnd = true;
 					//PrintLevelDebug ();
 					return true;
 				}
 
-				levelChunks[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Open, Chunk.ChunkSide.Door }); // Place a new tile here 
+				levelChunks[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Open, Chunk.ChunkSide.Door }, true); // Place a new tile here 
 
 				//PrintLevelDebug ();
 				List<Vector2Int> directions = PossibleDirections (newLocation);
 
-				directions = directions.OrderBy (a => Guid.NewGuid ()).ToList ();
+				directions = RandomizeDirections (directions); // directions.OrderBy (a => Guid.NewGuid ()).ToList ();
 
 				bool result = false;
 
@@ -109,8 +120,19 @@ namespace HackedDesign {
 				return result;
 			}
 
+			//FIXME: Probably shit
+			List<Vector2Int> RandomizeDirections (List<Vector2Int> list) {
+				Vector2Int temp;
 
+				for (int i = 0; i < list.Count; i++) {
+					int r = UnityEngine.Random.Range (i, list.Count);
+					temp = list[r];
+					list[r] = list[i];
+					list[i] = temp;
+				}
 
+				return list;
+			}
 
 			void PopulateLevelChunks () {
 				for (int i = 0; i < levelHeight; i++) {
@@ -118,10 +140,10 @@ namespace HackedDesign {
 						if (levelChunks[j, i] != null) {
 							Chunk c = FindChunk (levelChunks[j, i]);
 							if (c != null) {
-								var f = FindFloor();
+								var f = FindFloor ();
 								Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4), 0);
 
-								GameObject.Instantiate(f.gameObject, pos, Quaternion.identity, parent.transform);
+								GameObject.Instantiate (f.gameObject, pos, Quaternion.identity, parent.transform);
 
 								GameObject.Instantiate (c.gameObject, pos, Quaternion.identity, parent.transform);
 								Debug.Log (c.name);
@@ -134,17 +156,13 @@ namespace HackedDesign {
 				}
 			}
 
-			Floor FindFloor()
-			{
-				return floors.FirstOrDefault(f => f.name == floorName);
+			Floor FindFloor () {
+				return floors.FirstOrDefault (f => f.name == floorName);
 			}
 
 			Chunk FindChunk (GeneratorChunk chunk) {
 				return levelElements.FirstOrDefault (l => l.name == levelName).chunks.FirstOrDefault (c => c.isEntry == chunk.isEntry);
 			}
-
-
-
 
 			void GenerateAuxRooms () {
 				Debug.Log ("Generating Aux Rooms");
@@ -164,7 +182,7 @@ namespace HackedDesign {
 
 								foreach (Vector2Int location in dirs) {
 									newRooms = true;
-									levelChunks[location.x, location.y] = GenerateRoom (location, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Open, Chunk.ChunkSide.Door, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall });
+									levelChunks[location.x, location.y] = GenerateRoom (location, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Open, Chunk.ChunkSide.Door, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall }, false);
 								}
 							}
 						}
@@ -172,18 +190,18 @@ namespace HackedDesign {
 				}
 			}
 
-			GeneratorChunk GenerateRoom (Vector2Int location, List<Chunk.ChunkSide> freeChoiceSides) {
+			GeneratorChunk GenerateRoom (Vector2Int location, List<Chunk.ChunkSide> freeChoiceSides, bool isMainChain) {
 				// Get Top Side
 				List<Chunk.ChunkSide> tops = PossibleTopSides (location, freeChoiceSides);
 				List<Chunk.ChunkSide> lefts = PossibleLeftSides (location, freeChoiceSides);
 				List<Chunk.ChunkSide> bottoms = PossibleBottomSides (location, freeChoiceSides);
 				List<Chunk.ChunkSide> rights = PossibleRightSides (location, freeChoiceSides);
 
-				return new GeneratorChunk () { isEntry = false, isEnd = false, top = tops[0], left = lefts[0], bottom = bottoms[0], right = rights[0] };
+				return new GeneratorChunk () { isEntry = false, isEnd = false, isMainChain = isMainChain, top = tops[0], left = lefts[0], bottom = bottoms[0], right = rights[0] };
 			}
 
 			GeneratorChunk GenerateEntryRoomChunk () {
-				return new GeneratorChunk () { isEntry = true, isEnd = false, top = Chunk.ChunkSide.Door, left = Chunk.ChunkSide.Wall, bottom = Chunk.ChunkSide.Wall, right = Chunk.ChunkSide.Wall };
+				return new GeneratorChunk () { isEntry = true, isEnd = false, isMainChain = true, top = Chunk.ChunkSide.Door, left = Chunk.ChunkSide.Wall, bottom = Chunk.ChunkSide.Wall, right = Chunk.ChunkSide.Wall };
 			}
 
 			List<Chunk.ChunkSide> PossibleTopSides (Vector2Int pos, List<Chunk.ChunkSide> freeChoice) {
@@ -200,7 +218,7 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice = freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
+					freeChoice = RandomizeSides (freeChoice); //freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
 
@@ -223,7 +241,8 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice = freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
+					freeChoice = RandomizeSides (freeChoice); //freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
+
 					return freeChoice;
 				}
 
@@ -246,7 +265,7 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice = freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
+					freeChoice = RandomizeSides (freeChoice); // freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
 
@@ -269,12 +288,26 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice = freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
+					freeChoice = RandomizeSides (freeChoice); // freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
 
 				sides.Add (chunk.left);
 				return sides;
+			}
+
+			//FIXME: Probably shit
+			List<Chunk.ChunkSide> RandomizeSides (List<Chunk.ChunkSide> list) {
+				Chunk.ChunkSide temp;
+
+				for (int i = 0; i < list.Count; i++) {
+					int r = UnityEngine.Random.Range (i, list.Count);
+					temp = list[r];
+					list[r] = list[i];
+					list[i] = temp;
+				}
+
+				return list;
 			}
 
 			List<Vector2Int> PossibleDirections (Vector2Int pos) {
@@ -333,6 +366,8 @@ namespace HackedDesign {
 							} else if (levelChunks[j, i].isEnd) {
 								line += "{" + levelChunks[j, i].AsPrintableString () + "}";
 
+							} else if (levelChunks[j, i].isMainChain) {
+								line += "<" + levelChunks[j, i].AsPrintableString () + ">";
 							} else {
 
 								line += "(" + levelChunks[j, i].AsPrintableString () + ")";
@@ -349,6 +384,7 @@ namespace HackedDesign {
 			public class GeneratorChunk {
 				public bool isEntry = false;
 				public bool isEnd = false;
+				public bool isMainChain = false;
 
 				public Chunk.ChunkSide top;
 				public Chunk.ChunkSide left;
