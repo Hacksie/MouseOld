@@ -8,7 +8,7 @@ namespace HackedDesign {
 	namespace Level {
 		public class LevelGenerator : MonoBehaviour {
 
-			public GameObject parent;
+			private GameObject parent;
 
 			public int levelLength = 7;
 			public int levelWidth = 10;
@@ -38,6 +38,8 @@ namespace HackedDesign {
 				PrintLevelDebug ();
 			}
 
+
+			// Template -> Generate -> GeneratedLevel
 			void GenerateLevel () {
 				Debug.Log ("Generating Level");
 				levelChunks = new GeneratorChunk[levelWidth, levelHeight];
@@ -95,8 +97,8 @@ namespace HackedDesign {
 				//PrintLevelDebug ();
 				List<Vector2Int> directions = PossibleDirections (newLocation);
 
-				directions = RandomizeDirections (directions); // directions.OrderBy (a => Guid.NewGuid ()).ToList ();
-
+				directions.Randomize();
+				
 				bool result = false;
 
 				// Iterate over potential directions from here
@@ -118,20 +120,6 @@ namespace HackedDesign {
 				}
 
 				return result;
-			}
-
-			//FIXME: Probably shit
-			List<Vector2Int> RandomizeDirections (List<Vector2Int> list) {
-				Vector2Int temp;
-
-				for (int i = 0; i < list.Count; i++) {
-					int r = UnityEngine.Random.Range (i, list.Count);
-					temp = list[r];
-					list[r] = list[i];
-					list[i] = temp;
-				}
-
-				return list;
 			}
 
 			void PopulateLevelChunks () {
@@ -218,7 +206,8 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice = RandomizeSides (freeChoice); //freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
+					freeChoice.Randomize();
+					//freeChoice = RandomizeSides (freeChoice); //freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
 
@@ -241,7 +230,8 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice = RandomizeSides (freeChoice); //freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
+					freeChoice.Randomize();
+					//freeChoice = RandomizeSides (freeChoice); //freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 
 					return freeChoice;
 				}
@@ -265,7 +255,8 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice = RandomizeSides (freeChoice); // freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
+					freeChoice.Randomize();
+					//freeChoice = RandomizeSides (freeChoice); // freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
 
@@ -288,26 +279,13 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice = RandomizeSides (freeChoice); // freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
+					freeChoice.Randomize();
+					//freeChoice = RandomizeSides (freeChoice); // freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
 
 				sides.Add (chunk.left);
 				return sides;
-			}
-
-			//FIXME: Probably shit
-			List<Chunk.ChunkSide> RandomizeSides (List<Chunk.ChunkSide> list) {
-				Chunk.ChunkSide temp;
-
-				for (int i = 0; i < list.Count; i++) {
-					int r = UnityEngine.Random.Range (i, list.Count);
-					temp = list[r];
-					list[r] = list[i];
-					list[i] = temp;
-				}
-
-				return list;
 			}
 
 			List<Vector2Int> PossibleDirections (Vector2Int pos) {

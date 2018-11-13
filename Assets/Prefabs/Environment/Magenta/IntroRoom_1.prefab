@@ -940,7 +940,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 0, g: 0.21176471, b: 0.32941177, a: 1}
+  m_Color: {r: 0, g: 0.4509804, b: 0.7058824, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -1208,6 +1208,7 @@ MonoBehaviour:
   startTime: 0
   showTime: 3
   speechBubbles:
+  - {fileID: 11400000, guid: 3454db1a6bb37724ab615d9c8ccdb9e9, type: 2}
   - {fileID: 11400000, guid: 2828f073bf5c69d488040eaf6338d9f7, type: 2}
   textFieldPrefab: {fileID: 1015936161054472, guid: 5a18c75dd7faea0409576839bb75388c,
     type: 2}
