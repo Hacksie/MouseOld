@@ -10,6 +10,9 @@ namespace HackedDesign {
 
 		public Timer timer;
 
+		public string testLevel = "IntroRoom";
+		public string testLevelGenTemplate = "IntroRoom";
+
 		[SerializeField]
 		public GameState state = GameState.LOADING;
 
@@ -33,6 +36,8 @@ namespace HackedDesign {
 		public Dialogue.DialogueManager dialogueManager;
 		public Dialogue.DialoguePanelPresenter dialoguePanel;
 
+		public Level.LevelGenerator levelGenerator;
+
 		public TimerPanelPresenter timerPanel;
 
 		private List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
@@ -49,7 +54,7 @@ namespace HackedDesign {
 
 			if (SceneManager.GetActiveScene ().name != "MainMenu") {
 				Initialization ();
-				SceneInitialize ();
+				SceneInitialize (testLevel, testLevelGenTemplate);
 			}
 
 		}
@@ -61,6 +66,7 @@ namespace HackedDesign {
 		public void Initialization () {
 			state = GameState.LOADING;
 			Debug.Log ("Initialization");
+			//ScriptableObject.
 
 			timerPanel.Initialize (this.timer);
 
@@ -79,17 +85,21 @@ namespace HackedDesign {
 		/// <summary>
 		/// Run this each time the scene is changed
 		/// </summary>
-		public void SceneInitialize () {
+		public void SceneInitialize (string name, string levelGenTemplate) {
 			state = GameState.LOADING;
 			Debug.Log ("Scene Initialization");
 			player = GameObject.FindWithTag (TagManager.PLAYER);
 
 			GameObject environmentObj = GameObject.FindWithTag(TagManager.ENVIRONMENT);
+			//GameObject levelGenObj = GameObject.FindWithTag(TagManager.LEVELGEN);
 
-			Level.LevelGenerator levelGenerator = environmentObj.GetComponent<Level.LevelGenerator>();
+
+			//Level.LevelGenerator levelGenerator = levelGenObj.GetComponent<Level.LevelGenerator>();
 
 
 			levelGenerator.Initialize(environmentObj);
+
+			levelGenerator.GenerateLevel(name, levelGenTemplate);
 
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 			
@@ -202,11 +212,11 @@ namespace HackedDesign {
 			Cursor.visible = true;
 		}
 
-		public void ChangeScene (string newGameScene) {
-			StartCoroutine (LoadGameScene (newGameScene));
-		}
+		// public void ChangeScene (string newGameScene) {
+		// 	StartCoroutine (LoadGameScene (newGameScene));
+		// }
 
-		IEnumerator LoadGameScene (string newGameScene) {
+		IEnumerator LoadGameScene (string newGameScene, string levelName, string levelGenTemplate) {
 			Debug.Log ("Loading new game scenes");
 
 			List<Scene> currentScenes = new List<Scene> ();
@@ -246,7 +256,7 @@ namespace HackedDesign {
 				SceneManager.UnloadScene (currentScenes[j]);
 			}
 
-			CoreGame.instance.SceneInitialize ();
+			CoreGame.instance.SceneInitialize (levelName, levelGenTemplate);
 		}
 
 		void Update () {

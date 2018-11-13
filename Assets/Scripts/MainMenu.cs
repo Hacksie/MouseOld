@@ -13,7 +13,7 @@ namespace HackedDesign {
 
 		public void NewGameEvent () {
 			Debug.Log ("New Game Event");
-			StartCoroutine (LoadNewGameScenes (newGameScene));
+			StartCoroutine (LoadNewGameScenes ( "IntroRoom", "IntroRoom"));
 		}
 
 		public void OptionsEvent () {
@@ -29,7 +29,7 @@ namespace HackedDesign {
 			Application.Quit ();
 		}
 
-		IEnumerator LoadNewGameScenes (string newGameScene) {
+		IEnumerator LoadNewGameScenes (string levelName, string levelGenTemplate) {
 			Debug.Log ("Loading new game scenes");
 
 			AsyncOperation asyncLoadBaseScene = SceneManager.LoadSceneAsync ("Core", LoadSceneMode.Additive);
@@ -45,31 +45,31 @@ namespace HackedDesign {
 
 			Debug.Log ("Core ready");
 
-			AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
-			asyncLoadRubyScene.allowSceneActivation = false;
+			// AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
+			// asyncLoadRubyScene.allowSceneActivation = false;
 
-			yield return null;
+			// yield return null;
 
-			//Wait until we are done loading the scene
-			while (asyncLoadRubyScene.progress < 0.9f) {
-				Debug.Log ("Loading scene #:" + newGameScene + " [][] Progress: " + asyncLoadRubyScene.progress);
-				yield return null;
-			}
+			// //Wait until we are done loading the scene
+			// while (asyncLoadRubyScene.progress < 0.9f) {
+			// 	Debug.Log ("Loading scene #:" + newGameScene + " [][] Progress: " + asyncLoadRubyScene.progress);
+			// 	yield return null;
+			// }
 
-			Debug.Log (newGameScene +" ready");
+			// Debug.Log (newGameScene +" ready");
 
 			asyncLoadBaseScene.allowSceneActivation = true;
-			asyncLoadRubyScene.allowSceneActivation = true;
+			//asyncLoadRubyScene.allowSceneActivation = true;
 
-			while (!asyncLoadBaseScene.isDone || !asyncLoadRubyScene.isDone) {
+			while (!asyncLoadBaseScene.isDone /* || !asyncLoadRubyScene.isDone */) {
 				Debug.Log ("Activating scenes");
 				yield return null;
 			}
 
-			SceneManager.SetActiveScene (SceneManager.GetSceneByName (newGameScene));
+			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("Core"));
 			
 			CoreGame.instance.Initialization ();
-			CoreGame.instance.SceneInitialize ();
+			CoreGame.instance.SceneInitialize ("IntroRoom", "IntroRoom");
 			
 			
 			SceneManager.UnloadSceneAsync ("MainMenu");

@@ -29,6 +29,7 @@
 		public const string INFO_PANEL = "InfoPanel";
 		public const string STORY = "Story";
 		public const string ENVIRONMENT = "Environment";
+		public const string LEVELGEN = "LevelGen";
 
 	}
 }

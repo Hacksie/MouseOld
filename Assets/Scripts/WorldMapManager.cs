@@ -30,7 +30,7 @@ namespace HackedDesign {
 				}
 			}
 
-			CoreGame.instance.ChangeScene(lb.location.scene);
+			//CoreGame.instance.ChangeScene(lb.location.scene);
 	
 		}
 

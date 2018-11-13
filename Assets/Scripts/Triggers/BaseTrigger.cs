@@ -8,8 +8,8 @@ namespace HackedDesign {
 		public class BaseTrigger : MonoBehaviour, ITrigger {
 
 			protected Input.IInputController inputController;
-			protected Collider2D collider;
-			public bool enabled = true;
+			protected new Collider2D collider;
+			public new bool enabled = true;
 
 			public void Initialize (Input.IInputController inputController) {
 				Debug.Log ("Initialize base trigger");

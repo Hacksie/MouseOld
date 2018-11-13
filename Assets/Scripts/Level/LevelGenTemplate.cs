@@ -7,17 +7,17 @@ namespace HackedDesign
 {
     namespace Level
     {
+		[CreateAssetMenu (fileName = "LevelTemplate", menuName = "Mouse/Level/Level Template")]
         public class LevelGenTemplate : ScriptableObject
         {
 			public int levelLength = 7;
 			public int levelWidth = 10;
 			public int levelHeight = 10;
 
-			public string levelName;
-			public string floorName;
+			public string levelNameTemplate;
 
-			public List<Floor> floors;
-			public List<LevelElements> levelElements;                        
+			public Floor floor;
+			public LevelElements levelElements;                        
         }
     }
 }
