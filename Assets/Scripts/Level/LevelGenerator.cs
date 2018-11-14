@@ -33,18 +33,18 @@ namespace HackedDesign {
 			public void Initialize (GameObject parent) {
 				this.parent = parent;
 
-
 				//GenerateLevel ();
 				//PopulateLevelChunks ();
 				//PrintLevelDebug ();
 			}
 
-
 			// Template -> Generate -> GeneratedLevel
-			public void GenerateLevel (string name, string template) {
+			public int GenerateLevel (string name, string template) {
 				Debug.Log ("Generating Level");
 
-				LevelGenTemplate levelGenTemplate = GetLevelGenTemplate(template);				
+				//seed = (int) 
+
+				LevelGenTemplate levelGenTemplate = GetLevelGenTemplate (template);
 
 				this.levelLength = levelGenTemplate.levelLength;
 				this.levelWidth = levelGenTemplate.levelWidth;
@@ -54,10 +54,9 @@ namespace HackedDesign {
 				this.floor = levelGenTemplate.floor;
 				this.levelElements = levelGenTemplate.levelElements;
 
-
 				placeholderLevel = new PlaceholderChunk[levelWidth, levelHeight];
 
-				UnityEngine.Random.InitState (seed); // Psuedo random seed gives predictable results, so we can save the seed and recreate the level
+				//UnityEngine.Random.InitState (seed); // Psuedo random seed gives predictable results, so we can save the seed and recreate the level
 
 				// Seems like a sensible limit
 				if (levelLength < Mathf.Sqrt (levelLength * levelWidth)) {
@@ -65,7 +64,7 @@ namespace HackedDesign {
 				}
 
 				if (levelLength < 1) {
-					return;
+					return -1;
 				}
 
 				var position = GenerateStartingLocation ();
@@ -75,15 +74,16 @@ namespace HackedDesign {
 					GenerateAuxRooms ();
 				}
 
-				PopulateLevelTilemap();
+				PopulateLevelTilemap ();
+				PrintLevelDebug ();
+
+				return seed;
 
 			}
 
-			LevelGenTemplate GetLevelGenTemplate(string template)
-			{
-				return levelGenTemplates.FirstOrDefault(t => t.name == template);
+			LevelGenTemplate GetLevelGenTemplate (string template) {
+				return levelGenTemplates.FirstOrDefault (t => t.name == template);
 			}
-
 
 			Vector2Int GenerateStartingLocation () {
 				Debug.Log ("Generating Starting Location");
@@ -98,7 +98,6 @@ namespace HackedDesign {
 
 			bool GenerateMainChain (Vector2Int newLocation, Vector2Int lastLocation, int lengthRemaining) {
 
-				
 				if (lengthRemaining == 0) {
 					return true;
 				}
@@ -120,8 +119,8 @@ namespace HackedDesign {
 				//PrintLevelDebug ();
 				List<Vector2Int> directions = PossibleDirections (newLocation);
 
-				directions.Randomize();
-				
+				directions.Randomize ();
+
 				bool result = false;
 
 				// Iterate over potential directions from here
@@ -146,20 +145,19 @@ namespace HackedDesign {
 			}
 
 			public void PopulateLevelTilemap () {
-				for(int kk =0; kk < parent.transform.childCount; kk++)
-				{
-					GameObject.Destroy(parent.transform.GetChild(kk));
+				for (int kk = 0; kk < parent.transform.childCount; kk++) {
+					GameObject.Destroy (parent.transform.GetChild (kk).gameObject);
 				}
-				
+
 				for (int i = 0; i < levelHeight; i++) {
 					for (int j = 0; j < levelWidth; j++) {
 						if (placeholderLevel[j, i] != null) {
+							Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4), 0);
+							if (floor != null) {
+								GameObject.Instantiate (floor.gameObject, pos, Quaternion.identity, parent.transform);
+							}
 							Chunk c = FindChunk (placeholderLevel[j, i]);
 							if (c != null) {
-								Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4), 0);
-
-								GameObject.Instantiate (floor.gameObject, pos, Quaternion.identity, parent.transform);
-
 								GameObject.Instantiate (c.gameObject, pos, Quaternion.identity, parent.transform);
 								Debug.Log (c.name);
 								Debug.Log (j + ":" + j * 4);
@@ -172,7 +170,12 @@ namespace HackedDesign {
 			}
 
 			Chunk FindChunk (PlaceholderChunk chunk) {
-				return levelElements.chunks.FirstOrDefault (c => c.isEntry == chunk.isEntry);
+				return levelElements.chunks.FirstOrDefault (c => c != null &&
+					c.isEntry == chunk.isEntry &&
+					c.top == chunk.top &&
+					c.bottom == chunk.bottom &&
+					c.left == chunk.left &&
+					c.right == chunk.right);
 			}
 
 			void GenerateAuxRooms () {
@@ -229,7 +232,7 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice.Randomize();
+					freeChoice.Randomize ();
 					//freeChoice = RandomizeSides (freeChoice); //freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
@@ -253,7 +256,7 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice.Randomize();
+					freeChoice.Randomize ();
 					//freeChoice = RandomizeSides (freeChoice); //freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 
 					return freeChoice;
@@ -278,7 +281,7 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice.Randomize();
+					freeChoice.Randomize ();
 					//freeChoice = RandomizeSides (freeChoice); // freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
@@ -302,7 +305,7 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice.Randomize();
+					freeChoice.Randomize ();
 					//freeChoice = RandomizeSides (freeChoice); // freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}

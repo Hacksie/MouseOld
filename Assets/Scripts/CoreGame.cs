@@ -90,32 +90,27 @@ namespace HackedDesign {
 			Debug.Log ("Scene Initialization");
 			player = GameObject.FindWithTag (TagManager.PLAYER);
 
-			GameObject environmentObj = GameObject.FindWithTag(TagManager.ENVIRONMENT);
+			GameObject environmentObj = GameObject.FindWithTag (TagManager.ENVIRONMENT);
 			//GameObject levelGenObj = GameObject.FindWithTag(TagManager.LEVELGEN);
-
 
 			//Level.LevelGenerator levelGenerator = levelGenObj.GetComponent<Level.LevelGenerator>();
 
+			levelGenerator.Initialize (environmentObj);
 
-			levelGenerator.Initialize(environmentObj);
-
-			levelGenerator.GenerateLevel(name, levelGenTemplate);
+			levelGenerator.GenerateLevel (name, levelGenTemplate);
 
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
-			
 
-
-			GameObject spawn = GameObject.FindWithTag(TagManager.SPAWN);
-
-
+			GameObject spawn = GameObject.FindWithTag (TagManager.SPAWN);
 
 			playerController = player.GetComponent<PlayerController> ();
 
+			if (spawn != null) {
+				player.transform.position = spawn.transform.position;
 
-			player.transform.position = spawn.transform.position;
-
-			
-
+			} else {
+				Debug.LogWarning ("No spawn point set");
+			}
 
 			SceneTriggersInitialize ();
 			SceneNPCsInitialize ();
@@ -143,7 +138,7 @@ namespace HackedDesign {
 			startMenuPanel.Show (false);
 			selectMenuPanel.Show (false);
 			worldMapPanel.Show (false);
-			timerPanel.Repaint();
+			timerPanel.Repaint ();
 		}
 
 		void SceneTriggersInitialize () {
