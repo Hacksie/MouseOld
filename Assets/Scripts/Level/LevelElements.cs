@@ -7,8 +7,8 @@ namespace HackedDesign {
 		[CreateAssetMenu (fileName = "LevelElements", menuName = "Mouse/Level/LevelElements")]
 		public class LevelElements : ScriptableObject {
 
-			public List<Chunk> chunks;
-			
+			public List<GameObject> chunkObjects;
+
 			public ColorPalette colorPalette;
 
 			public Difficulty difficulty;

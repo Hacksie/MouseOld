@@ -156,27 +156,85 @@ namespace HackedDesign {
 							if (floor != null) {
 								GameObject.Instantiate (floor.gameObject, pos, Quaternion.identity, parent.transform);
 							}
+							GameObject go = FindChunkObject (placeholderLevel[j, i]);
+							if (go != null) {
+								GameObject.Instantiate (go, pos, Quaternion.identity, parent.transform);
+
+							}
+
+							/* 
 							Chunk c = FindChunk (placeholderLevel[j, i]);
 							if (c != null) {
 								GameObject.Instantiate (c.gameObject, pos, Quaternion.identity, parent.transform);
 								Debug.Log (c.name);
 								Debug.Log (j + ":" + j * 4);
 								Debug.Log (i + ":" + (i * -4 + ((levelHeight - 1) * 4)));
-							}
+							}*/
 
 						}
 					}
 				}
 			}
 
-			Chunk FindChunk (PlaceholderChunk chunk) {
-				return levelElements.chunks.FirstOrDefault (c => c != null &&
-					c.isEntry == chunk.isEntry &&
-					c.top == chunk.top &&
-					c.bottom == chunk.bottom &&
-					c.left == chunk.left &&
-					c.right == chunk.right);
+			GameObject FindChunkObject (PlaceholderChunk chunk) {
+				return levelElements.chunkObjects.FirstOrDefault (g => g != null && ChunkMatchesString (chunk, g.name));
 			}
+
+			bool ChunkMatchesString (PlaceholderChunk chunk, string s) {
+				var goChunk = ChunkFromString (s);
+				return (
+					goChunk.isEntry == chunk.isEntry &&
+					goChunk.top == chunk.top &&
+					goChunk.bottom == chunk.bottom &&
+					goChunk.left == chunk.left &&
+					goChunk.right == chunk.right
+				);
+			}
+
+			PlaceholderChunk ChunkFromString (string s) {
+				PlaceholderChunk response = new PlaceholderChunk ();
+				string[] sp = s.Split ('_');
+
+				if (sp.Length < 1) {
+					return null;
+				}
+
+				if (sp.Length > 0) {
+
+					response.left = SideFromChar (sp[0][0]);
+					response.top = SideFromChar (sp[0][1]);
+					response.bottom = SideFromChar (sp[0][2]);
+					response.right = SideFromChar (sp[0][3]);
+				}
+
+				if (sp.Length > 1) {
+					response.isEntry = sp[1] == "entry";
+					response.isEnd = sp[1] == "exit";
+				}
+
+				return response;
+			}
+
+			Chunk.ChunkSide SideFromChar (char c) {
+				switch (c) {
+					case 'w':
+						return Chunk.ChunkSide.Wall;
+					case 'd':
+						return Chunk.ChunkSide.Door;
+					case 'o':
+						return Chunk.ChunkSide.Open;
+				}
+				return Chunk.ChunkSide.Wall;
+			}
+
+			// Chunk FindChunk (PlaceholderChunk chunk) {
+			// 	return levelElements.chunks.FirstOrDefault (c => c != null &&
+			// 		c.isEntry == chunk.isEntry &&
+			// 		c.top == chunk.top &&
+			// 		c.bottom == chunk.bottom &&
+			// 		c.left == chunk.left &&
+			// 		c.right == chunk.right);
+			// }
 
 			void GenerateAuxRooms () {
 				Debug.Log ("Generating Aux Rooms");
