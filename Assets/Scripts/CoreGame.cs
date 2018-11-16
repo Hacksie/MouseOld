@@ -106,6 +106,7 @@ namespace HackedDesign {
 			playerController = player.GetComponent<PlayerController> ();
 
 			if (spawn != null) {
+				Debug.Log("Spawn " + spawn.name + ":" + spawn.transform.position);
 				player.transform.position = spawn.transform.position;
 
 			} else {
