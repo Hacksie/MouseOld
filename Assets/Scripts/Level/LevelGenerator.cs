@@ -42,8 +42,6 @@ namespace HackedDesign {
 			public int GenerateLevel (string name, string template) {
 				Debug.Log ("Generating Level");
 
-				//seed = (int) 
-
 				LevelGenTemplate levelGenTemplate = GetLevelGenTemplate (template);
 
 				this.levelLength = levelGenTemplate.levelLength;
@@ -110,13 +108,11 @@ namespace HackedDesign {
 
 					placeholderLevel[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Wall }, true); // Place a new tile here
 					placeholderLevel[newLocation.x, newLocation.y].isEnd = true;
-					//PrintLevelDebug ();
 					return true;
 				}
 
 				placeholderLevel[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Open, Chunk.ChunkSide.Door }, true); // Place a new tile here 
 
-				//PrintLevelDebug ();
 				List<Vector2Int> directions = PossibleDirections (newLocation);
 
 				directions.Randomize ();
@@ -138,7 +134,6 @@ namespace HackedDesign {
 				// Fixme: we probably have to change a side because of this
 				if (!result) {
 					Debug.Log ("Abandoning chain, role back one step");
-					//level[newLocation.x, newLocation.y] = "####";
 				}
 
 				return result;
@@ -151,26 +146,23 @@ namespace HackedDesign {
 
 				for (int i = 0; i < levelHeight; i++) {
 					for (int j = 0; j < levelWidth; j++) {
+						Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4), 0);
+
 						if (placeholderLevel[j, i] != null) {
-							Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4), 0);
+							
 							if (floor != null) {
 								GameObject.Instantiate (floor.gameObject, pos, Quaternion.identity, parent.transform);
 							}
 							GameObject go = FindChunkObject (placeholderLevel[j, i]);
 							if (go != null) {
-								GameObject.Instantiate (go, pos, Quaternion.identity, parent.transform);
-
+								
+								var x = GameObject.Instantiate (go, pos, Quaternion.identity, parent.transform);
+							} 
+						} else {
+							GameObject gw = FindChunkObject (ChunkFromString ("wwww"));
+							if (gw != null) {
+								GameObject.Instantiate (gw, pos, Quaternion.identity, parent.transform);
 							}
-
-							/* 
-							Chunk c = FindChunk (placeholderLevel[j, i]);
-							if (c != null) {
-								GameObject.Instantiate (c.gameObject, pos, Quaternion.identity, parent.transform);
-								Debug.Log (c.name);
-								Debug.Log (j + ":" + j * 4);
-								Debug.Log (i + ":" + (i * -4 + ((levelHeight - 1) * 4)));
-							}*/
-
 						}
 					}
 				}
