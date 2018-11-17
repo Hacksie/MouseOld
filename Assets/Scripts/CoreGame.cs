@@ -51,11 +51,20 @@ namespace HackedDesign {
 		/// Run in editor
 		/// </summary>
 		void Start () {
+			GameObject[] list = GameObject.FindObjectsOfType<GameObject>();
+
+			foreach(GameObject g in list)
+			{
+				Debug.Log(g.name);
+			}			
 
 			if (SceneManager.GetActiveScene ().name != "MainMenu") {
 				Initialization ();
 				SceneInitialize (testLevel, testLevelGenTemplate);
 			}
+
+
+			
 
 		}
 #endif		

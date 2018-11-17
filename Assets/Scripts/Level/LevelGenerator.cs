@@ -89,7 +89,8 @@ namespace HackedDesign {
 				// Starting at the bottom and going up means we should never create a chain that fails completely and roles all the way back to the entry
 				// This is important!				
 				// It also means the player starts at the bottom and plays upwards, which is ideal
-				Vector2Int position = new Vector2Int (UnityEngine.Random.Range (0, levelWidth), levelHeight - 1);
+				//Vector2Int position = new Vector2Int (UnityEngine.Random.Range (0, levelWidth), levelHeight - 1);
+				Vector2Int position = new Vector2Int (levelWidth / 2 - 1, levelHeight - 1);
 				placeholderLevel[position.x, position.y] = GenerateEntryRoomChunk ();
 				return position;
 			}
