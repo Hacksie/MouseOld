@@ -30,7 +30,7 @@ namespace HackedDesign {
             }  
 
             public void Show(bool flag) {
-                Debug.Log("Show dialogue " + flag);
+                Debug.Log("Show narration " + flag);
                 Narration currentNarration = narrationManager.GetCurrentNarration ();              
 
                 if(currentNarration == null)
@@ -46,7 +46,7 @@ namespace HackedDesign {
                     return;
                 }
 
-                //Debug.Log(currentDialogue.speaker.corp.color.ToString());
+
                 speaker.text = currentNarration.speaker.fullName;
                 speakerHandle.text = currentNarration.speaker.handle;
                 speakerCorp.text = currentNarration.speaker.corp.name;

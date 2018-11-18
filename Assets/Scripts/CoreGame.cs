@@ -51,21 +51,11 @@ namespace HackedDesign {
 		/// Run in editor
 		/// </summary>
 		void Start () {
-			GameObject[] list = GameObject.FindObjectsOfType<GameObject>();
-
-			foreach(GameObject g in list)
-			{
-				Debug.Log(g.name);
-			}			
 
 			if (SceneManager.GetActiveScene ().name != "MainMenu") {
 				Initialization ();
 				SceneInitialize (testLevel, testLevelGenTemplate);
 			}
-
-
-			
-
 		}
 #endif		
 
@@ -100,10 +90,6 @@ namespace HackedDesign {
 			player = GameObject.FindWithTag (TagManager.PLAYER);
 
 			GameObject environmentObj = GameObject.FindWithTag (TagManager.ENVIRONMENT);
-			//GameObject levelGenObj = GameObject.FindWithTag(TagManager.LEVELGEN);
-
-			//Level.LevelGenerator levelGenerator = levelGenObj.GetComponent<Level.LevelGenerator>();
-
 			levelGenerator.Initialize (environmentObj);
 
 			levelGenerator.GenerateLevel (name, levelGenTemplate);

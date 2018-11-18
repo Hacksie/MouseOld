@@ -32,17 +32,29 @@ namespace HackedDesign {
 
 			public void Initialize (GameObject parent) {
 				this.parent = parent;
-
-				//GenerateLevel ();
-				//PopulateLevelChunks ();
-				//PrintLevelDebug ();
 			}
 
 			// Template -> Generate -> GeneratedLevel
 			public int GenerateLevel (string name, string template) {
 				Debug.Log ("Generating Level");
 
+				if(string.IsNullOrEmpty(template)) {
+					Debug.LogError("No level template set");
+					return 0;
+				}
+
+				if(string.IsNullOrEmpty(name)){
+					Debug.LogError("No level name set");
+					return 0;
+				}
+
 				LevelGenTemplate levelGenTemplate = GetLevelGenTemplate (template);
+
+				if(levelGenTemplate == null) 
+				{
+					Debug.LogError("No level gen template found");
+					return 0;
+				}
 
 				this.levelLength = levelGenTemplate.levelLength;
 				this.levelWidth = levelGenTemplate.levelWidth;
@@ -53,6 +65,7 @@ namespace HackedDesign {
 				this.levelElements = levelGenTemplate.levelElements;
 
 				placeholderLevel = new PlaceholderChunk[levelWidth, levelHeight];
+				Debug.Log("Random seed is " + UnityEngine.Random.seed);
 
 				//UnityEngine.Random.InitState (seed); // Psuedo random seed gives predictable results, so we can save the seed and recreate the level
 
@@ -90,7 +103,9 @@ namespace HackedDesign {
 				// This is important!				
 				// It also means the player starts at the bottom and plays upwards, which is ideal
 				//Vector2Int position = new Vector2Int (UnityEngine.Random.Range (0, levelWidth), levelHeight - 1);
-				Vector2Int position = new Vector2Int (levelWidth / 2 - 1, levelHeight - 1);
+				Vector2Int position = new Vector2Int ((levelWidth - 1) / 2, (levelHeight - 1) / 2);
+
+				Debug.Log(position);
 				placeholderLevel[position.x, position.y] = GenerateEntryRoomChunk ();
 				return position;
 			}
