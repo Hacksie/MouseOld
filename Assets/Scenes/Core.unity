@@ -11579,6 +11579,48 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1258368086}
   m_CullTransparentMesh: 0
+--- !u!1001 &1268136190
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4018848563275878, guid: 98067d1878e28aa458099807b74c7c71, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018848563275878, guid: 98067d1878e28aa458099807b74c7c71, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018848563275878, guid: 98067d1878e28aa458099807b74c7c71, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018848563275878, guid: 98067d1878e28aa458099807b74c7c71, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018848563275878, guid: 98067d1878e28aa458099807b74c7c71, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018848563275878, guid: 98067d1878e28aa458099807b74c7c71, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018848563275878, guid: 98067d1878e28aa458099807b74c7c71, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018848563275878, guid: 98067d1878e28aa458099807b74c7c71, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 98067d1878e28aa458099807b74c7c71, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &1284790251
 GameObject:
   m_ObjectHideFlags: 0
@@ -19365,6 +19407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0f1af93e505d249a929c695959038a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorPrefab: {fileID: 1503932064757186, guid: 98067d1878e28aa458099807b74c7c71, type: 2}
   floor: {fileID: 0}
   levelElements: {fileID: 0}
   levelGenTemplates:

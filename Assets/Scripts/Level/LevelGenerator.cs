@@ -9,6 +9,7 @@ namespace HackedDesign {
 		public class LevelGenerator : MonoBehaviour {
 
 			private GameObject parent;
+			public GameObject doorPrefab;
 
 			private int levelLength = 7;
 			private int levelWidth = 10;
@@ -38,21 +39,20 @@ namespace HackedDesign {
 			public int GenerateLevel (string name, string template) {
 				Debug.Log ("Generating Level");
 
-				if(string.IsNullOrEmpty(template)) {
-					Debug.LogError("No level template set");
+				if (string.IsNullOrEmpty (template)) {
+					Debug.LogError ("No level template set");
 					return 0;
 				}
 
-				if(string.IsNullOrEmpty(name)){
-					Debug.LogError("No level name set");
+				if (string.IsNullOrEmpty (name)) {
+					Debug.LogError ("No level name set");
 					return 0;
 				}
 
 				LevelGenTemplate levelGenTemplate = GetLevelGenTemplate (template);
 
-				if(levelGenTemplate == null) 
-				{
-					Debug.LogError("No level gen template found");
+				if (levelGenTemplate == null) {
+					Debug.LogError ("No level gen template found");
 					return 0;
 				}
 
@@ -65,7 +65,7 @@ namespace HackedDesign {
 				this.levelElements = levelGenTemplate.levelElements;
 
 				placeholderLevel = new PlaceholderChunk[levelWidth, levelHeight];
-				Debug.Log("Random seed is " + UnityEngine.Random.seed);
+				Debug.Log ("Random seed is " + UnityEngine.Random.seed);
 
 				//UnityEngine.Random.InitState (seed); // Psuedo random seed gives predictable results, so we can save the seed and recreate the level
 
@@ -86,6 +86,7 @@ namespace HackedDesign {
 				}
 
 				PopulateLevelTilemap ();
+				PopulateLevelDoors ();
 				PrintLevelDebug ();
 
 				return seed;
@@ -105,7 +106,7 @@ namespace HackedDesign {
 				//Vector2Int position = new Vector2Int (UnityEngine.Random.Range (0, levelWidth), levelHeight - 1);
 				Vector2Int position = new Vector2Int ((levelWidth - 1) / 2, (levelHeight - 1) / 2);
 
-				Debug.Log(position);
+				Debug.Log (position);
 				placeholderLevel[position.x, position.y] = GenerateEntryRoomChunk ();
 				return position;
 			}
@@ -165,20 +166,43 @@ namespace HackedDesign {
 						Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4), 0);
 
 						if (placeholderLevel[j, i] != null) {
-							
+
 							if (floor != null) {
 								GameObject.Instantiate (floor.gameObject, pos, Quaternion.identity, parent.transform);
 							}
 							GameObject go = FindChunkObject (placeholderLevel[j, i]);
 							if (go != null) {
-								
+
 								var x = GameObject.Instantiate (go, pos, Quaternion.identity, parent.transform);
-							} 
+							}
 						} else {
 							GameObject gw = FindChunkObject (ChunkFromString ("wwww"));
 							if (gw != null) {
 								GameObject.Instantiate (gw, pos, Quaternion.identity, parent.transform);
 							}
+						}
+					}
+				}
+			}
+
+			public void PopulateLevelDoors () {
+				for (int i = 0; i < levelHeight; i++) {
+					for (int j = 0; j < levelWidth; j++) {
+						PlaceholderChunk placeholder = placeholderLevel[j, i];
+
+						if (placeholder != null) {
+							if(placeholder.top == Chunk.ChunkSide.Door)
+							{
+								Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelHeight - 1) * 4)  + 4, 0);
+								GameObject.Instantiate (doorPrefab, pos, Quaternion.identity, parent.transform);
+							}
+
+							if(placeholder.left == Chunk.ChunkSide.Door)
+							{
+								Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4)  + 2, 0);
+								GameObject.Instantiate (doorPrefab, pos, Quaternion.identity, parent.transform);
+							}							
+							
 						}
 					}
 				}
