@@ -321,6 +321,7 @@ namespace HackedDesign {
 		}
 
 		void PlayingTriggerUpdate () {
+			//Debug.Log("Triggers " + triggerList.Count);
 			foreach (Triggers.ITrigger trigger in triggerList) {
 				trigger.UpdateTrigger ();
 			}

@@ -9,29 +9,33 @@ namespace HackedDesign {
 
             //public GameObject doorObject;
             public Collider2D doorCollider;
-            Animator animator;
+            public Animator animator;
             bool open = false;
 
-            public new void Initialize (Input.IInputController inputController) {
+            public void Initialize (Input.IInputController inputController) {
                 base.Initialize(inputController);
                 Debug.Log ("Initialize door trigger");
+                base.Activate();
                 
                 animator = GetComponent<Animator>();
 
             }
 
             // Update is called once per frame
-            public new void UpdateTrigger () {
+            public override void UpdateTrigger () {
+                //Debug.Log("update trigger " + open);
                 if(animator != null)
-                    animator.SetBool("Open", open);
+                    animator.SetBool("open", open);
              }
 
-            public new void Invoke () {
+            public override void Invoke () {
+                
                 open = true;            
             }
 
             // TODO: Make door close trigger
             private void OnTriggerStay2D (Collider2D other) {
+                
                 if (inputController == null) {
                     Debug.LogWarning ("Trigger isn't tagged as a trigger");
                     return;

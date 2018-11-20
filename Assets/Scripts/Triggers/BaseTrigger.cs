@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace HackedDesign {
 	namespace Triggers {
-		public class BaseTrigger : MonoBehaviour, ITrigger {
+		public abstract class BaseTrigger : MonoBehaviour, ITrigger {
 
 			protected Input.IInputController inputController;
 			protected new Collider2D collider;
@@ -36,14 +36,12 @@ namespace HackedDesign {
 				}
 			}
 
-			public void UpdateTrigger () {
+			public abstract void UpdateTrigger ();
+			// 	Debug.Log("update trigger base ");
 
-			}
+			// }
 
-			public void Invoke () {
-
-			}
-
+			public abstract void Invoke (); 
 		}
 	}
 }

@@ -37,7 +37,7 @@ namespace HackedDesign {
 			}
 
 			// Update is called once per frame
-			public new void UpdateTrigger () {
+			public override void UpdateTrigger () {
 				if (textField.gameObject.activeInHierarchy) {
 					textField.rectTransform.position = Camera.main.WorldToScreenPoint (transform.position + offset);
 
@@ -48,7 +48,7 @@ namespace HackedDesign {
 
 			}
 
-			public new void Invoke () {
+			public override void Invoke () {
 				Debug.Log("Invoke trigger");
 				if (currentTextItem < speechBubbles.Length) {
 					Debug.Log("1");
