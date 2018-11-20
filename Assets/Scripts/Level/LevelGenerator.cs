@@ -9,7 +9,9 @@ namespace HackedDesign {
 		public class LevelGenerator : MonoBehaviour {
 
 			private GameObject parent;
-			public GameObject doorPrefab;
+			public GameObject doorewPrefab;
+			public GameObject doornsPrefab;
+
 
 			private int levelLength = 7;
 			private int levelWidth = 10;
@@ -194,13 +196,13 @@ namespace HackedDesign {
 							if(placeholder.top == Chunk.ChunkSide.Door)
 							{
 								Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelHeight - 1) * 4)  + 4, 0);
-								GameObject.Instantiate (doorPrefab, pos, Quaternion.identity, parent.transform);
+								GameObject.Instantiate (doorewPrefab, pos, Quaternion.identity, parent.transform);
 							}
 
 							if(placeholder.left == Chunk.ChunkSide.Door)
 							{
 								Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4)  + 2, 0);
-								GameObject.Instantiate (doorPrefab, pos, Quaternion.identity, parent.transform);
+								GameObject.Instantiate (doornsPrefab, pos, Quaternion.identity, parent.transform);
 							}							
 							
 						}
