@@ -51,7 +51,6 @@ namespace HackedDesign {
 			public override void Invoke () {
 				Debug.Log("Invoke trigger");
 				if (currentTextItem < speechBubbles.Length) {
-					Debug.Log("1");
 					textField.text = speechBubbles[currentTextItem].text;
 					textField.gameObject.SetActive (true);
 					startTime = Time.time;
