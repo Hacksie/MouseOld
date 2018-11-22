@@ -14,8 +14,9 @@ namespace HackedDesign {
 			public Dialogue.SpeechBubble[] speechBubbles;
 
 			public GameObject textFieldPrefab;
+			private GameObject canvas;
 
-			private Text textField;
+			public Text textField;
 
 			public Vector3 offset;
 
@@ -28,9 +29,9 @@ namespace HackedDesign {
 				base.Initialize(inputController);
 				Debug.Log ("Initialize speech bubble");
 				
-				GameObject canvas = GameObject.Instantiate (textFieldPrefab);
+				canvas = GameObject.Instantiate (textFieldPrefab);
 				canvas.transform.SetParent (this.transform);
-				textField = GetComponentInChildren<Text> ();
+				textField = canvas.GetComponentInChildren<Text> ();
 				textField.text = speechBubbles[currentTextItem].text;
 				textField.gameObject.SetActive (false);
 				
@@ -38,12 +39,15 @@ namespace HackedDesign {
 
 			// Update is called once per frame
 			public override void UpdateTrigger () {
-				if (textField.gameObject.activeInHierarchy) {
-					textField.rectTransform.position = Camera.main.WorldToScreenPoint (transform.position + offset);
+				//Debug.Log("Update trigger");
 
-					if (Time.time - startTime >= showTime) {
-						textField.gameObject.SetActive (false);
-					}
+
+				if (textField.gameObject.activeInHierarchy) {
+				 	textField.rectTransform.position = Camera.main.WorldToScreenPoint (transform.position + offset);
+
+				 	if (Time.time - startTime >= showTime) {
+				 		textField.gameObject.SetActive (false);
+				 	}
 				}
 
 			}

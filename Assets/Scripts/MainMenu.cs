@@ -1,27 +1,72 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 namespace HackedDesign {
 	public class MainMenu : MonoBehaviour {
 
 		public string newGameScene = "IntroRoom";
 
+		public GameObject optionsPanel;
+		public GameObject creditsPanel;
+		public UnityEngine.UI.Dropdown resolutions;
+
+		public void Start() {
+			ShowOptionsPanel(false);
+			ShowCreditsPanel(false);
+			SetResolutions();
+		}
+
+		public void SetResolutions()
+		{
+			resolutions.ClearOptions();
+			resolutions.AddOptions(Screen.resolutions.ToList().ConvertAll(r => new UnityEngine.UI.Dropdown.OptionData(r.ToString())));
+
+			
+		}
+
+		public void ShowOptionsPanel(bool show)
+		{
+			if(optionsPanel != null)
+			{
+				optionsPanel.SetActive(show);
+			}
+		}
+
+		public void ShowCreditsPanel(bool show) 
+		{
+			if(creditsPanel != null) 
+			{
+				creditsPanel.SetActive(show);
+			}
+		}
+
+
 		public void ContinueEvent () {
 			Debug.Log ("Continue Event");
+			ShowCreditsPanel(false);
+			ShowOptionsPanel(false);			
 		}
 
 		public void NewGameEvent () {
 			Debug.Log ("New Game Event");
+			ShowCreditsPanel(false);
+			ShowOptionsPanel(false);
 			StartCoroutine (LoadNewGameScenes ( "IntroRoom", "IntroRoom"));
 		}
 
 		public void OptionsEvent () {
 			Debug.Log ("Options Event");
+			ShowCreditsPanel(false);
+			ShowOptionsPanel(true);
 		}
 
 		public void CreditsEvent () {
 			Debug.Log ("Credits Event");
+			ShowCreditsPanel(true);
+			ShowOptionsPanel(false);			
 		}
 
 		public void QuitEvent () {
@@ -61,19 +106,20 @@ namespace HackedDesign {
 			asyncLoadBaseScene.allowSceneActivation = true;
 			//asyncLoadRubyScene.allowSceneActivation = true;
 
-			while (!asyncLoadBaseScene.isDone /* || !asyncLoadRubyScene.isDone */) {
+			
+
+			while (!asyncLoadBaseScene.isDone ) {
 				Debug.Log ("Activating scenes");
 				yield return null;
 			}
+			
+			SceneManager.UnloadScene ("MainMenu");
 
 			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("Core"));
-			
+
 			CoreGame.instance.Initialization ();
 			CoreGame.instance.SceneInitialize ("IntroRoom", "IntroRoom");
-			
-			
-			SceneManager.UnloadSceneAsync ("MainMenu");
-			
+
 		}
 	}
 }

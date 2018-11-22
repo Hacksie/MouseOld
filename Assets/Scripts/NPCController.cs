@@ -17,18 +17,15 @@ namespace HackedDesign {
 		// Use this for initialization
 		void Start () {
 			anim = transform.GetComponent<Animator> ();
-
-			Debug.Log ("Anim " + (anim == null));
-
 			sprites.Add (GetComponent<SpriteRenderer> ());
 			sprites.AddRange (GetComponentsInChildren<SpriteRenderer> ());
-			player = CoreGame.instance.GetPlayer ().transform;
-			FaceDirection (direction);
+			//player = CoreGame.instance.GetPlayer ().transform;
 
 		}
 
 		public void Initialize (Transform player) {
 			this.player = player;
+			FaceDirection (direction);
 
 		}
 
@@ -69,8 +66,13 @@ namespace HackedDesign {
 		}
 
 		public void FaceDirection (Vector2 direction) {
-			anim.SetFloat ("moveX", direction.x);
-			anim.SetFloat ("moveY", direction.y);
+			if (direction == null)
+				direction = Vector2.zero;
+
+			if (anim != null) {
+				anim.SetFloat ("moveX", direction.x);
+				anim.SetFloat ("moveY", direction.y);
+			}
 		}
 	}
 }
