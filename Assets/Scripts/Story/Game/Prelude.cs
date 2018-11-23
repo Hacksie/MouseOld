@@ -27,7 +27,8 @@ namespace HackedDesign {
 				kari.SetActive(false);
 				//prelude4triggers.SetActive(false);
 				//prelude5triggers.SetActive(false);
-				RenderSettings.ambientLight = Color.black;
+				//RenderSettings.ambientLight = new Color(26, 5, 5);
+				//RenderSettings.ambientLight = Color.black;
 				//kitty = GameObject.Find("Kitty"); // FIXME: What about if it's saved and restarted
 				//FIXME: Create a character manager to pool & find characters
 				

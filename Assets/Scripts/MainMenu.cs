@@ -12,19 +12,26 @@ namespace HackedDesign {
 		public GameObject optionsPanel;
 		public GameObject creditsPanel;
 		public UnityEngine.UI.Dropdown resolutions;
+		public UnityEngine.UI.Toggle windowToggle;
 
 		public void Start() {
 			ShowOptionsPanel(false);
 			ShowCreditsPanel(false);
-			SetResolutions();
+			PopulateResolutions();
 		}
 
-		public void SetResolutions()
+		public void PopulateResolutions()
 		{
 			resolutions.ClearOptions();
 			resolutions.AddOptions(Screen.resolutions.ToList().ConvertAll(r => new UnityEngine.UI.Dropdown.OptionData(r.ToString())));
 
-			
+			resolutions.value = Screen.resolutions.ToList().IndexOf(Screen.currentResolution);
+		}
+
+		public void SetResolution()
+		{
+			Resolution res = Screen.resolutions.ToList()[resolutions.value];
+			Screen.SetResolution(res.width, res.height, windowToggle.isOn, res.refreshRate);
 		}
 
 		public void ShowOptionsPanel(bool show)

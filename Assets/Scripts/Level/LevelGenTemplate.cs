@@ -14,6 +14,8 @@ namespace HackedDesign
 			public int levelWidth = 10;
 			public int levelHeight = 10;
 
+			public bool generateDoors = true;
+
 			public string levelNameTemplate;
 
 			public Floor floor;
