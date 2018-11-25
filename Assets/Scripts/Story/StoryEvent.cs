@@ -29,8 +29,6 @@ namespace HackedDesign {
             public void Start () {
                 currentState = StoryEventState.STARTED;
 
-                Debug.Log(listeners.Count);
-
                 for (int i = 0; i < listeners.Count; i++) {
                     Debug.Log ("Triggering story start " + listeners[i].name);
                     listeners[i].OnEventTrigger (currentState);
@@ -44,22 +42,7 @@ namespace HackedDesign {
                     Debug.Log ("Triggering story complete " + listeners[i].name);
                     listeners[i].OnEventTrigger (currentState);
                 }         
-                       
-                // if (nextStoryEvent != null) {
-                //     nextStoryEvent.Start ();
-                // }
             }
-
-            // public void TriggerState (StoryEventState eventType) {
-            //     StoryEventState currentState = eventType;
-
-            //     if (listeners.ContainsKey (eventType)) {
-            //         for (int i = 0; i < listeners[eventType].Count; i++) {
-            //             Debug.Log("Triggering story start "+ listeners[eventType][i].name + " " + eventType.ToString());
-            //             listeners[eventType][i].OnEventTrigger ();
-            //         }
-            //     }
-            // }
 
             public enum StoryEventState {
                 UNSTARTED,

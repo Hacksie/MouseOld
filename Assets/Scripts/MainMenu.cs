@@ -13,11 +13,16 @@ namespace HackedDesign {
 		public GameObject creditsPanel;
 		public UnityEngine.UI.Dropdown resolutions;
 		public UnityEngine.UI.Toggle windowToggle;
+		public UnityEngine.UI.Slider ambientSlider;
+		public UnityEngine.UI.Slider musicSlider;
+		public UnityEngine.UI.Slider fxSlider;
+		public UnityEngine.Audio.AudioMixer masterMixer;
 
 		public void Start() {
 			ShowOptionsPanel(false);
 			ShowCreditsPanel(false);
 			PopulateResolutions();
+			PopulateAudioSliders();
 		}
 
 		public void PopulateResolutions()
@@ -32,6 +37,14 @@ namespace HackedDesign {
 		{
 			Resolution res = Screen.resolutions.ToList()[resolutions.value];
 			Screen.SetResolution(res.width, res.height, windowToggle.isOn, res.refreshRate);
+		}
+
+		public void PopulateAudioSliders()
+		{
+			float masterVolume;
+			masterMixer.GetFloat("MasterVolume", out masterVolume);
+			Debug.Log(masterVolume);
+			
 		}
 
 		public void ShowOptionsPanel(bool show)

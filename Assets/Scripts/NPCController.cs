@@ -14,6 +14,7 @@ namespace HackedDesign {
 
 		public Vector2 direction = Vector2.zero;
 
+
 		// Use this for initialization
 		void Start () {
 			anim = transform.GetComponent<Animator> ();
@@ -44,6 +45,7 @@ namespace HackedDesign {
 
 				direction = player.position - transform.position;
 
+				// If we don't set a notice trigger, always face the player
 				if (facePlayer) {
 					FaceDirection (direction);
 				}
@@ -63,6 +65,12 @@ namespace HackedDesign {
 					sprites[i].sortingOrder = 100 + i;
 				}
 			}
+		}
+
+		public void OnTriggerStay2D(Collider2D other)
+		{
+
+
 		}
 
 		public void FaceDirection (Vector2 direction) {

@@ -12,19 +12,18 @@ namespace HackedDesign {
 			public GameObject doorewPrefab;
 			public GameObject doornsPrefab;
 
-
-			private int levelLength = 7;
-			private int levelWidth = 10;
-			private int levelHeight = 10;
+			//private int levelLength = 7;
+			//private int levelWidth = 10;
+			//private int levelHeight = 10;
 			private int seed = 1;
 
-			private string levelNameTemplate;
-			private string floorName;
+			//private string levelNameTemplate;
+			//private string floorName;
 
-			public Floor floor;
-			public LevelElements levelElements;
+			//public Floor floor;
+			//public LevelElements levelElements;
 
-			public PlaceholderChunk[, ] placeholderLevel;
+			//public PlaceholderChunk[, ] placeholderLevel;
 
 			public LevelGenTemplate[] levelGenTemplates;
 
@@ -58,38 +57,39 @@ namespace HackedDesign {
 					return 0;
 				}
 
-				this.levelLength = levelGenTemplate.levelLength;
-				this.levelWidth = levelGenTemplate.levelWidth;
-				this.levelHeight = levelGenTemplate.levelHeight;
-				this.levelNameTemplate = levelGenTemplate.levelNameTemplate;
+				//this.levelLength = levelGenTemplate.levelLength;
+				//this.levelWidth = levelGenTemplate.levelWidth;
+				//this.levelHeight = levelGenTemplate.levelHeight;
+				//this.levelNameTemplate = levelGenTemplate.levelNameTemplate;
 				//this.floorName = levelGenTemplate.floorName;
-				this.floor = levelGenTemplate.floor;
-				this.levelElements = levelGenTemplate.levelElements;
+				//this.floor = levelGenTemplate.floor;
+				//this.levelElements = levelGenTemplate.levelElements;
 
-				placeholderLevel = new PlaceholderChunk[levelWidth, levelHeight];
+				PlaceholderChunk[, ] placeholderLevel = new PlaceholderChunk[levelGenTemplate.levelWidth, levelGenTemplate.levelHeight];
 				Debug.Log ("Random seed is " + UnityEngine.Random.seed);
 
 				//UnityEngine.Random.InitState (seed); // Psuedo random seed gives predictable results, so we can save the seed and recreate the level
 
 				// Seems like a sensible limit
-				if (levelLength < Mathf.Sqrt (levelLength * levelWidth)) {
-					levelLength = (int) Mathf.Sqrt (levelLength * levelWidth);
+				if (levelGenTemplate.levelLength > Mathf.Sqrt (levelGenTemplate.levelLength * levelGenTemplate.levelWidth)) {
+					levelGenTemplate.levelLength = (int) Mathf.Sqrt (levelGenTemplate.levelLength * levelGenTemplate.levelWidth);
 				}
 
-				if (levelLength < 1) {
+				if (levelGenTemplate.levelLength < 1) {
 					return -1;
 				}
 
-				var position = GenerateStartingLocation ();
-				if (levelLength > 1) {
+				var position = GenerateStartingLocation (placeholderLevel, levelGenTemplate);
+				if (levelGenTemplate.levelLength > 1) {
 
-					GenerateMainChain (new Vector2Int (position.x, position.y - 1), position, levelLength - 1);
-					GenerateAuxRooms ();
+					GenerateMainChain (new Vector2Int (position.x, position.y - 1), position, levelGenTemplate.levelLength - 1, placeholderLevel, levelGenTemplate);
 				}
 
-				PopulateLevelTilemap ();
-				PopulateLevelDoors ();
-				PrintLevelDebug ();
+				GenerateAuxRooms (placeholderLevel, levelGenTemplate);
+
+				PopulateLevelTilemap (placeholderLevel, levelGenTemplate);
+				PopulateLevelDoors (placeholderLevel, levelGenTemplate);
+				PrintLevelDebug (placeholderLevel, levelGenTemplate);
 
 				return seed;
 
@@ -99,21 +99,18 @@ namespace HackedDesign {
 				return levelGenTemplates.FirstOrDefault (t => t.name == template);
 			}
 
-			Vector2Int GenerateStartingLocation () {
+			Vector2Int GenerateStartingLocation (PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 				Debug.Log ("Generating Starting Location");
 
 				// Starting at the bottom and going up means we should never create a chain that fails completely and roles all the way back to the entry
 				// This is important!				
 				// It also means the player starts at the bottom and plays upwards, which is ideal
-				//Vector2Int position = new Vector2Int (UnityEngine.Random.Range (0, levelWidth), levelHeight - 1);
-				Vector2Int position = new Vector2Int ((levelWidth - 1) / 2, (levelHeight - 1) / 2);
-
-				Debug.Log (position);
-				placeholderLevel[position.x, position.y] = GenerateEntryRoomChunk ();
+				Vector2Int position = new Vector2Int ((levelGenTemplate.levelWidth - 1) / 2, (levelGenTemplate.levelHeight - 1) / 2);
+				placeholderLevel[position.x, position.y] = GenerateEntryRoomChunk (levelGenTemplate);
 				return position;
 			}
 
-			bool GenerateMainChain (Vector2Int newLocation, Vector2Int lastLocation, int lengthRemaining) {
+			bool GenerateMainChain (Vector2Int newLocation, Vector2Int lastLocation, int lengthRemaining, PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 
 				if (lengthRemaining == 0) {
 					return true;
@@ -125,14 +122,14 @@ namespace HackedDesign {
 				if (lengthRemaining == 1) {
 					Debug.Log ("End of main chain");
 
-					placeholderLevel[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Wall }, true); // Place a new tile here
+					placeholderLevel[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Wall }, true, placeholderLevel, levelGenTemplate); // Place a new tile here
 					placeholderLevel[newLocation.x, newLocation.y].isEnd = true;
 					return true;
 				}
 
-				placeholderLevel[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Open, Chunk.ChunkSide.Door }, true); // Place a new tile here 
+				placeholderLevel[newLocation.x, newLocation.y] = GenerateRoom (newLocation, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Open, Chunk.ChunkSide.Door }, true, placeholderLevel, levelGenTemplate); // Place a new tile here 
 
-				List<Vector2Int> directions = PossibleDirections (newLocation);
+				List<Vector2Int> directions = PossibleDirections (newLocation, placeholderLevel, levelGenTemplate);
 
 				directions.Randomize ();
 
@@ -141,7 +138,7 @@ namespace HackedDesign {
 				// Iterate over potential directions from here
 				for (int i = 0; i < directions.Count; i++) {
 
-					result = GenerateMainChain (directions[i], newLocation, lengthRemaining - 1);
+					result = GenerateMainChain (directions[i], newLocation, lengthRemaining - 1, placeholderLevel, levelGenTemplate);
 
 					if (result) // If the chain is okay, don't need to try any new directions. We could probably return true here
 					{
@@ -152,70 +149,85 @@ namespace HackedDesign {
 				// If we didn't complete the chain, abandon this location
 				// Fixme: we probably have to change a side because of this
 				if (!result) {
-					Debug.Log ("Abandoning chain, role back one step");
+					Debug.Log ("Abandoning chain, roll back one step");
 				}
 
 				return result;
 			}
 
-			public void PopulateLevelTilemap () {
-				for (int kk = 0; kk < parent.transform.childCount; kk++) {
-					GameObject.Destroy (parent.transform.GetChild (kk).gameObject);
+			public void PopulateLevelTilemap (PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
+				for (int k = 0; k < parent.transform.childCount; k++) {
+					GameObject.Destroy (parent.transform.GetChild (k).gameObject);
 				}
 
-				for (int i = 0; i < levelHeight; i++) {
-					for (int j = 0; j < levelWidth; j++) {
-						Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4), 0);
+				for (int i = 0; i < levelGenTemplate.levelHeight; i++) {
+					for (int j = 0; j < levelGenTemplate.levelWidth; j++) {
+						Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4), 0);
 
 						if (placeholderLevel[j, i] != null) {
 
-							if (floor != null) {
-								GameObject.Instantiate (floor.gameObject, pos, Quaternion.identity, parent.transform);
+							if (levelGenTemplate.floor != null) {
+								GameObject.Instantiate (levelGenTemplate.floor, pos, Quaternion.identity, parent.transform);
 							}
-							GameObject go = FindChunkObject (placeholderLevel[j, i]);
-							if (go != null) {
 
-								var x = GameObject.Instantiate (go, pos, Quaternion.identity, parent.transform);
-							}
-						} else {
-							GameObject gw = FindChunkObject (ChunkFromString ("wwww"));
-							if (gw != null) {
-								GameObject.Instantiate (gw, pos, Quaternion.identity, parent.transform);
+							List<GameObject> goList = FindChunkObject (placeholderLevel[j, i], levelGenTemplate).ToList ();
+
+							goList.Randomize ();
+
+							if (goList.FirstOrDefault () != null) {
+
+								GameObject.Instantiate (goList[0], pos, Quaternion.identity, parent.transform);
 							}
 						}
+						// else {
+						// 	GameObject gw = FindChunkObject (ChunkFromString ("wwww"), levelGenTemplate).FirstOrDefault();
+						// 	if (gw != null) {
+						// 		GameObject.Instantiate (gw, pos, Quaternion.identity, parent.transform);
+						// 	}
+						// }
 					}
 				}
 			}
 
-			public void PopulateLevelDoors () {
-				for (int i = 0; i < levelHeight; i++) {
-					for (int j = 0; j < levelWidth; j++) {
+			public void PopulateLevelDoors (PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
+				if (!levelGenTemplate.generateDoors) {
+					Debug.Log ("Skipping doors");
+					return;
+				}
+
+				for (int i = 0; i < levelGenTemplate.levelHeight; i++) {
+					for (int j = 0; j < levelGenTemplate.levelWidth; j++) {
 						PlaceholderChunk placeholder = placeholderLevel[j, i];
 
 						if (placeholder != null) {
-							if(placeholder.top == Chunk.ChunkSide.Door)
-							{
-								Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelHeight - 1) * 4)  + 4, 0);
+							if (placeholder.top == Chunk.ChunkSide.Door) {
+								Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 4, 0);
 								GameObject.Instantiate (doorewPrefab, pos, Quaternion.identity, parent.transform);
 							}
 
-							if(placeholder.left == Chunk.ChunkSide.Door)
-							{
-								Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelHeight - 1) * 4)  + 2, 0);
+							if (placeholder.left == Chunk.ChunkSide.Door) {
+								Vector3 pos = new Vector3 (j * 4, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 2, 0);
 								GameObject.Instantiate (doornsPrefab, pos, Quaternion.identity, parent.transform);
-							}							
-							
+							}
+
 						}
 					}
 				}
 			}
 
-			GameObject FindChunkObject (PlaceholderChunk chunk) {
-				return levelElements.chunkObjects.FirstOrDefault (g => g != null && ChunkMatchesString (chunk, g.name));
+			IEnumerable<GameObject> FindChunkObject (PlaceholderChunk chunk, LevelGenTemplate levelGenTemplate) {
+				return levelGenTemplate.levelElements.Where (g => g != null && ChunkMatchesString (chunk, g.name));
 			}
 
-			bool ChunkMatchesString (PlaceholderChunk chunk, string s) {
-				var goChunk = ChunkFromString (s);
+			bool ChunkMatchesString (PlaceholderChunk chunk, string str) {
+
+				var goChunk = ChunkFromString (str);
+				if (chunk.isEntry && goChunk.isEntry == chunk.isEntry) {
+					return true;
+				}
+
+				//Debug.Log("x " + str + " " + (goChunk.isEntry == chunk.isEntry) + ":" + (goChunk.top == chunk.top) + ":" + (goChunk.bottom == chunk.bottom) + ":" + (goChunk.left == chunk.left) + ":" + (goChunk.right == chunk.right));
+
 				return (
 					goChunk.isEntry == chunk.isEntry &&
 					goChunk.top == chunk.top &&
@@ -223,34 +235,45 @@ namespace HackedDesign {
 					goChunk.left == chunk.left &&
 					goChunk.right == chunk.right
 				);
+
+				// bool res = (goChunk.isEntry == chunk.isEntry &&
+				// 	goChunk.top == chunk.top &&
+				// 	goChunk.bottom == chunk.bottom &&
+				// 	goChunk.left == chunk.left &&
+				// 	goChunk.right == chunk.right);
+
+				// Debug.Log(res);
+
+				// return res;
+
 			}
 
-			PlaceholderChunk ChunkFromString (string s) {
+			PlaceholderChunk ChunkFromString (string str) {
 				PlaceholderChunk response = new PlaceholderChunk ();
-				string[] sp = s.Split ('_');
+				string[] splitString = str.Split ('_');
 
-				if (sp.Length < 1) {
+				if (splitString.Length < 1) {
 					return null;
 				}
 
-				if (sp.Length > 0) {
+				if (splitString.Length > 0) {
 
-					response.left = SideFromChar (sp[0][0]);
-					response.top = SideFromChar (sp[0][1]);
-					response.bottom = SideFromChar (sp[0][2]);
-					response.right = SideFromChar (sp[0][3]);
+					response.left = SideFromChar (splitString[0][0]);
+					response.top = SideFromChar (splitString[0][1]);
+					response.bottom = SideFromChar (splitString[0][2]);
+					response.right = SideFromChar (splitString[0][3]);
 				}
 
-				if (sp.Length > 1) {
-					response.isEntry = sp[1] == "entry";
-					response.isEnd = sp[1] == "exit";
+				if (splitString.Length > 1) {
+					response.isEntry = splitString[1] == "entry";
+					response.isEnd = splitString[1] == "exit";
 				}
 
 				return response;
 			}
 
-			Chunk.ChunkSide SideFromChar (char c) {
-				switch (c) {
+			Chunk.ChunkSide SideFromChar (char ch) {
+				switch (ch) {
 					case 'w':
 						return Chunk.ChunkSide.Wall;
 					case 'd':
@@ -270,7 +293,7 @@ namespace HackedDesign {
 			// 		c.right == chunk.right);
 			// }
 
-			void GenerateAuxRooms () {
+			void GenerateAuxRooms (PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 				Debug.Log ("Generating Aux Rooms");
 				bool newRooms = true;
 
@@ -280,15 +303,17 @@ namespace HackedDesign {
 					//PrintLevelDebug ();
 					//Debug.Log ("Iteration");
 					newRooms = false;
-					for (int i = 0; i < levelHeight; i++) {
-						for (int j = 0; j < levelWidth; j++) {
+					for (int i = 0; i < levelGenTemplate.levelHeight; i++) {
+						for (int j = 0; j < levelGenTemplate.levelWidth; j++) {
 							if ((placeholderLevel[j, i] != null)) {
 								Vector2Int pos = new Vector2Int (j, i);
-								List<Vector2Int> dirs = PossibleDirections (pos);
+								List<Vector2Int> dirs = PossibleDirections (pos, placeholderLevel, levelGenTemplate);
 
 								foreach (Vector2Int location in dirs) {
 									newRooms = true;
-									placeholderLevel[location.x, location.y] = GenerateRoom (location, new List<Chunk.ChunkSide> () { Chunk.ChunkSide.Open, Chunk.ChunkSide.Door, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall }, false);
+									placeholderLevel[location.x, location.y] = GenerateRoom (location, new List<Chunk.ChunkSide> () {
+										Chunk.ChunkSide.Open, Chunk.ChunkSide.Door, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall, Chunk.ChunkSide.Wall
+									}, false, placeholderLevel, levelGenTemplate);
 								}
 							}
 						}
@@ -296,25 +321,43 @@ namespace HackedDesign {
 				}
 			}
 
-			PlaceholderChunk GenerateRoom (Vector2Int location, List<Chunk.ChunkSide> freeChoiceSides, bool isMainChain) {
+			PlaceholderChunk GenerateRoom (Vector2Int location, List<Chunk.ChunkSide> freeChoiceSides, bool isMainChain, PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 				// Get Top Side
-				List<Chunk.ChunkSide> tops = PossibleTopSides (location, freeChoiceSides);
-				List<Chunk.ChunkSide> lefts = PossibleLeftSides (location, freeChoiceSides);
-				List<Chunk.ChunkSide> bottoms = PossibleBottomSides (location, freeChoiceSides);
-				List<Chunk.ChunkSide> rights = PossibleRightSides (location, freeChoiceSides);
+				List<Chunk.ChunkSide> tops = PossibleTopSides (location, freeChoiceSides, placeholderLevel, levelGenTemplate);
+				List<Chunk.ChunkSide> lefts = PossibleLeftSides (location, freeChoiceSides, placeholderLevel, levelGenTemplate);
+				List<Chunk.ChunkSide> bottoms = PossibleBottomSides (location, freeChoiceSides, placeholderLevel, levelGenTemplate);
+				List<Chunk.ChunkSide> rights = PossibleRightSides (location, freeChoiceSides, placeholderLevel, levelGenTemplate);
+
+				tops.Randomize ();
+				lefts.Randomize ();
+				bottoms.Randomize ();
+				rights.Randomize ();
 
 				return new PlaceholderChunk () { isEntry = false, isEnd = false, isMainChain = isMainChain, top = tops[0], left = lefts[0], bottom = bottoms[0], right = rights[0] };
 			}
 
-			PlaceholderChunk GenerateEntryRoomChunk () {
-				return new PlaceholderChunk () { isEntry = true, isEnd = false, isMainChain = true, top = Chunk.ChunkSide.Door, left = Chunk.ChunkSide.Wall, bottom = Chunk.ChunkSide.Wall, right = Chunk.ChunkSide.Wall };
+			PlaceholderChunk GenerateEntryRoomChunk (LevelGenTemplate levelGenTemplate) {
+
+				string start = string.IsNullOrEmpty (levelGenTemplate.startingChunkString) ? "wdww_entry" : levelGenTemplate.startingChunkString;
+
+				//FIXME: Make this more robust
+				if (!start.Contains ("_entry")) {
+					start += "_entry";
+				}
+
+				PlaceholderChunk res = ChunkFromString (start);
+				res.isMainChain = true;
+
+				return res;
+
+				//return new PlaceholderChunk () { isEntry = true, isEnd = false, isMainChain = true, top = Chunk.ChunkSide.Door, left = Chunk.ChunkSide.Wall, bottom = Chunk.ChunkSide.Wall, right = Chunk.ChunkSide.Wall };
 			}
 
-			List<Chunk.ChunkSide> PossibleTopSides (Vector2Int pos, List<Chunk.ChunkSide> freeChoice) {
+			List<Chunk.ChunkSide> PossibleTopSides (Vector2Int pos, List<Chunk.ChunkSide> freeChoice, PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 				List<Chunk.ChunkSide> sides = new List<Chunk.ChunkSide> ();
 
 				// If the side would lead out of the level, the side has to be wall
-				if (pos.y == 0) {
+				if (pos.y <= 0) {
 					sides.Add (Chunk.ChunkSide.Wall);
 					return sides;
 				}
@@ -324,8 +367,6 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice.Randomize ();
-					//freeChoice = RandomizeSides (freeChoice); //freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
 
@@ -334,11 +375,11 @@ namespace HackedDesign {
 				return sides;
 			}
 
-			List<Chunk.ChunkSide> PossibleBottomSides (Vector2Int pos, List<Chunk.ChunkSide> freeChoice) {
+			List<Chunk.ChunkSide> PossibleBottomSides (Vector2Int pos, List<Chunk.ChunkSide> freeChoice, PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 				List<Chunk.ChunkSide> sides = new List<Chunk.ChunkSide> ();
 
 				// If the side would lead out of the level, the side has to be wall
-				if (pos.y == (levelHeight - 1)) {
+				if (pos.y >= (levelGenTemplate.levelHeight - 1)) {
 					sides.Add (Chunk.ChunkSide.Wall);
 					return sides;
 				}
@@ -348,9 +389,6 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice.Randomize ();
-					//freeChoice = RandomizeSides (freeChoice); //freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
-
 					return freeChoice;
 				}
 
@@ -359,11 +397,11 @@ namespace HackedDesign {
 				return sides;
 			}
 
-			List<Chunk.ChunkSide> PossibleLeftSides (Vector2Int pos, List<Chunk.ChunkSide> freeChoice) {
+			List<Chunk.ChunkSide> PossibleLeftSides (Vector2Int pos, List<Chunk.ChunkSide> freeChoice, PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 				List<Chunk.ChunkSide> sides = new List<Chunk.ChunkSide> ();
 
 				// If the side would lead out of the level, the side has to be wall
-				if (pos.x == 0) {
+				if (pos.x <= 0) {
 					sides.Add (Chunk.ChunkSide.Wall);
 					return sides;
 				}
@@ -373,8 +411,6 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice.Randomize ();
-					//freeChoice = RandomizeSides (freeChoice); // freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
 
@@ -383,11 +419,11 @@ namespace HackedDesign {
 				return sides;
 			}
 
-			List<Chunk.ChunkSide> PossibleRightSides (Vector2Int position, List<Chunk.ChunkSide> freeChoice) {
+			List<Chunk.ChunkSide> PossibleRightSides (Vector2Int position, List<Chunk.ChunkSide> freeChoice, PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 				List<Chunk.ChunkSide> sides = new List<Chunk.ChunkSide> ();
 
 				// If the side would lead out of the level, the side has to be wall
-				if (position.x == (levelWidth - 1)) {
+				if (position.x >= (levelGenTemplate.levelWidth - 1)) {
 					sides.Add (Chunk.ChunkSide.Wall);
 					return sides;
 				}
@@ -397,8 +433,6 @@ namespace HackedDesign {
 
 				// If there's nothing then we're free to do anything
 				if (chunk == null) {
-					freeChoice.Randomize ();
-					//freeChoice = RandomizeSides (freeChoice); // freeChoice.OrderBy (a => Guid.NewGuid ()).ToList (); // Randomize them
 					return freeChoice;
 				}
 
@@ -406,35 +440,35 @@ namespace HackedDesign {
 				return sides;
 			}
 
-			List<Vector2Int> PossibleDirections (Vector2Int pos) {
+			List<Vector2Int> PossibleDirections (Vector2Int pos, PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 				PlaceholderChunk chunk = placeholderLevel[pos.x, pos.y];
 
 				List<Vector2Int> results = new List<Vector2Int> ();
 
 				if (chunk.left == Chunk.ChunkSide.Door || chunk.left == Chunk.ChunkSide.Open) {
 					var leftPos = new Vector2Int (pos.x - 1, pos.y);
-					if (!PositionHasChunk (leftPos)) {
+					if (!PositionHasChunk (leftPos, placeholderLevel, levelGenTemplate)) {
 						results.Add (leftPos);
 					}
 				}
 
 				if (chunk.top == Chunk.ChunkSide.Door || chunk.top == Chunk.ChunkSide.Open) {
 					var upPos = new Vector2Int (pos.x, pos.y - 1);
-					if (!PositionHasChunk (upPos)) {
+					if (!PositionHasChunk (upPos, placeholderLevel, levelGenTemplate)) {
 						results.Add (upPos);
 					}
 				}
 
 				if (chunk.bottom == Chunk.ChunkSide.Door || chunk.bottom == Chunk.ChunkSide.Open) {
 					var bottomPos = new Vector2Int (pos.x, pos.y + 1);
-					if (!PositionHasChunk (bottomPos)) {
+					if (!PositionHasChunk (bottomPos, placeholderLevel, levelGenTemplate)) {
 						results.Add (bottomPos);
 					}
 				}
 
 				if (chunk.right == Chunk.ChunkSide.Door || chunk.right == Chunk.ChunkSide.Open) {
 					var rightPos = new Vector2Int (pos.x + 1, pos.y);
-					if (!PositionHasChunk (rightPos)) {
+					if (!PositionHasChunk (rightPos, placeholderLevel, levelGenTemplate)) {
 						results.Add (rightPos);
 					}
 				}
@@ -442,18 +476,18 @@ namespace HackedDesign {
 				return results;
 			}
 
-			bool PositionHasChunk (Vector2Int pos) {
-				if (pos.x >= levelWidth || pos.y >= levelHeight || pos.x < 0 || pos.y < 0) {
+			bool PositionHasChunk (Vector2Int pos, PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
+				if (pos.x >= levelGenTemplate.levelWidth || pos.y >= levelGenTemplate.levelHeight || pos.x < 0 || pos.y < 0) {
 					return true; // If we go outside the level, pretend we already put a chunk here
 				}
 				return (!(placeholderLevel[pos.x, pos.y] == null));
 			}
 
-			void PrintLevelDebug () {
+			void PrintLevelDebug (PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 				Debug.Log ("Printing level");
-				for (int i = 0; i < levelHeight; i++) {
+				for (int i = 0; i < levelGenTemplate.levelHeight; i++) {
 					string line = "";
-					for (int j = 0; j < levelWidth; j++) {
+					for (int j = 0; j < levelGenTemplate.levelWidth; j++) {
 						if (placeholderLevel[j, i] != null) {
 
 							if (placeholderLevel[j, i].isEntry) {

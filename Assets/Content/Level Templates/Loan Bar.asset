@@ -9,14 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
-  m_Name: IntroRoom
+  m_Name: Loan Bar
   m_EditorClassIdentifier: 
   levelLength: 1
-  levelWidth: 1
+  levelWidth: 2
   levelHeight: 1
   generateDoors: 1
-  startingChunkString: wdww
-  levelNameTemplate: IntroRoom
-  floor: {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 2}
+  startingChunkString: wwwo
+  levelNameTemplate: Loan Bar
+  floor: {fileID: 1056373204243600, guid: b750c21915b3fba4497f67bdbb77ff54, type: 2}
   levelElements:
-  - {fileID: 1729427683819166, guid: 6310dffa061e95748885f1b74b9c1d17, type: 2}
+  - {fileID: 1643488782608406, guid: d114bfef3a67609428677f674b91e969, type: 2}
+  - {fileID: 1430490241129162, guid: 4b5ebcbd382e37143804816336504418, type: 2}

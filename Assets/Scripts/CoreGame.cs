@@ -95,15 +95,12 @@ namespace HackedDesign {
 			levelGenerator.GenerateLevel (name, levelGenTemplate);
 
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
-
 			GameObject spawn = GameObject.FindWithTag (TagManager.SPAWN);
 
 			playerController = player.GetComponent<PlayerController> ();
 
 			if (spawn != null) {
-				Debug.Log("Spawn " + spawn.name + ":" + spawn.transform.position);
 				player.transform.position = spawn.transform.position;
-
 			} else {
 				Debug.LogWarning ("No spawn point set");
 			}
@@ -314,14 +311,12 @@ namespace HackedDesign {
 		}
 
 		void PlayingUpdate () {
-			//Debug.Log("Test");
 			playerController.UpdateMovement (inputController);
 			PlayingNPCUpdate ();
 			PlayingTriggerUpdate ();
 		}
 
 		void PlayingTriggerUpdate () {
-			//Debug.Log("Triggers " + triggerList.Count);
 			foreach (Triggers.ITrigger trigger in triggerList) {
 				trigger.UpdateTrigger ();
 			}

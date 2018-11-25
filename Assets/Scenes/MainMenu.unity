@@ -760,7 +760,7 @@ GameObject:
   - component: {fileID: 303740841}
   - component: {fileID: 303740842}
   m_Layer: 0
-  m_Name: Slider
+  m_Name: AmbientVolumeSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1315,7 +1315,7 @@ GameObject:
   - component: {fileID: 536718075}
   - component: {fileID: 536718076}
   m_Layer: 0
-  m_Name: Slider (1)
+  m_Name: MusicVolumeSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1400,7 +1400,7 @@ GameObject:
   - component: {fileID: 553406315}
   - component: {fileID: 553406316}
   m_Layer: 0
-  m_Name: Slider (2)
+  m_Name: FXVolumeSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1592,6 +1592,10 @@ MonoBehaviour:
   creditsPanel: {fileID: 85461989}
   resolutions: {fileID: 800684943}
   windowToggle: {fileID: 1514709347}
+  ambientSlider: {fileID: 303740842}
+  musicSlider: {fileID: 536718076}
+  fxSlider: {fileID: 553406316}
+  masterMixer: {fileID: 24100000, guid: 6c8e355ba1895a848a3e74f985765dbe, type: 2}
 --- !u!82 &733980884
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1600,7 +1604,7 @@ AudioSource:
   m_GameObject: {fileID: 733980881}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 316ddb1e6f3f0ec46a3d525e85cf1ef0,
+  OutputAudioMixerGroup: {fileID: 243086261542663120, guid: 6c8e355ba1895a848a3e74f985765dbe,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 4c60f4fe6840d7f4fa604cd7b60469c4, type: 3}
   m_PlayOnAwake: 0
@@ -1700,7 +1704,7 @@ GameObject:
   - component: {fileID: 800684944}
   - component: {fileID: 800684943}
   m_Layer: 0
-  m_Name: Dropdown
+  m_Name: ResolutionDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2957,7 +2961,7 @@ GameObject:
   - component: {fileID: 1338933698}
   - component: {fileID: 1338933697}
   m_Layer: 0
-  m_Name: ResolutionText (3)
+  m_Name: FXVolumeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3306,7 +3310,7 @@ GameObject:
   - component: {fileID: 1394566296}
   - component: {fileID: 1394566295}
   m_Layer: 0
-  m_Name: ResolutionText (1)
+  m_Name: AmbientVolumeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3362,7 +3366,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Master Volume
+  m_Text: "Ambient \nVolume"
 --- !u!222 &1394566296
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3586,7 +3590,7 @@ GameObject:
   - component: {fileID: 1514709346}
   - component: {fileID: 1514709347}
   m_Layer: 0
-  m_Name: Toggle
+  m_Name: WindowedToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3845,7 +3849,7 @@ GameObject:
   - component: {fileID: 1598288257}
   - component: {fileID: 1598288256}
   m_Layer: 0
-  m_Name: ResolutionText (2)
+  m_Name: MusicVolumeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4339,7 +4343,7 @@ GameObject:
   - component: {fileID: 1865755245}
   - component: {fileID: 1865755244}
   m_Layer: 0
-  m_Name: ResolutionText (4)
+  m_Name: WindowedText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

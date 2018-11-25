@@ -16,10 +16,13 @@ namespace HackedDesign
 
 			public bool generateDoors = true;
 
+			public string startingChunkString = "wdww";
+
 			public string levelNameTemplate;
 
-			public Floor floor;
-			public LevelElements levelElements;                        
+			public GameObject floor;
+			//public LevelElements levelElements;   
+			public List<GameObject> levelElements;                     
         }
     }
 }
