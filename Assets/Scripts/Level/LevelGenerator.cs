@@ -105,7 +105,7 @@ namespace HackedDesign {
 				// Starting at the bottom and going up means we should never create a chain that fails completely and roles all the way back to the entry
 				// This is important!				
 				// It also means the player starts at the bottom and plays upwards, which is ideal
-				Vector2Int position = new Vector2Int ((levelGenTemplate.levelWidth - 1) / 2, (levelGenTemplate.levelHeight - 1) / 2);
+				Vector2Int position = new Vector2Int ((levelGenTemplate.levelWidth - 1) / 2, (levelGenTemplate.levelHeight - 1));
 				placeholderLevel[position.x, position.y] = GenerateEntryRoomChunk (levelGenTemplate);
 				return position;
 			}
