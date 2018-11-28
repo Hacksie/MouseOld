@@ -26,6 +26,7 @@ namespace HackedDesign {
 			//public PlaceholderChunk[, ] placeholderLevel;
 
 			public LevelGenTemplate[] levelGenTemplates;
+			public GameObject[] securityGuardEasyPrefabs;
 
 			// Use this for initialization
 			void Start () {
@@ -213,6 +214,11 @@ namespace HackedDesign {
 						}
 					}
 				}
+			}
+
+			public void PopulateSecurityGuards(PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate)
+			{
+
 			}
 
 			IEnumerable<GameObject> FindChunkObject (PlaceholderChunk chunk, LevelGenTemplate levelGenTemplate) {

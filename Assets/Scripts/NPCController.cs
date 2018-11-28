@@ -74,8 +74,6 @@ namespace HackedDesign {
 		}
 
 		public void FaceDirection (Vector2 direction) {
-			if (direction == null)
-				direction = Vector2.zero;
 
 			if (anim != null) {
 				anim.SetFloat ("moveX", direction.x);
