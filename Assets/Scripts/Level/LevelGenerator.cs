@@ -26,12 +26,9 @@ namespace HackedDesign {
 			//public PlaceholderChunk[, ] placeholderLevel;
 
 			public LevelGenTemplate[] levelGenTemplates;
-			public GameObject[] securityGuardEasyPrefabs;
+			public List<GameObject> securityGuardEasyPrefabs;
 
-			// Use this for initialization
-			void Start () {
-
-			}
+			//public List<Vector2> enemySpawnList;
 
 			public void Initialize (GameObject parent) {
 				this.parent = parent;
@@ -90,6 +87,7 @@ namespace HackedDesign {
 
 				PopulateLevelTilemap (placeholderLevel, levelGenTemplate);
 				PopulateLevelDoors (placeholderLevel, levelGenTemplate);
+				PopulateSecurityGuards(placeholderLevel, levelGenTemplate);
 				PrintLevelDebug (placeholderLevel, levelGenTemplate);
 
 				return seed;
@@ -218,6 +216,37 @@ namespace HackedDesign {
 
 			public void PopulateSecurityGuards(PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate)
 			{
+				List<Vector3> spawnLocationList = new List<Vector3>();
+
+				for (int i = 0; i < levelGenTemplate.levelHeight; i++) {
+					for (int j = 0; j < levelGenTemplate.levelWidth; j++) {				
+						if(placeholderLevel[j, i] != null)
+						{
+							Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 2, 0);
+							spawnLocationList.Add(pos);
+						}
+					}
+				}
+
+				spawnLocationList.Randomize();
+
+				if(securityGuardEasyPrefabs.Count <= 0)
+				{
+					return;
+				}
+
+				for(int i = 0; i < spawnLocationList.Count; i++)
+				{
+					if(i > levelGenTemplate.securityGuards)
+					{
+						break;
+					}
+
+					securityGuardEasyPrefabs.Randomize();
+
+					GameObject.Instantiate(securityGuardEasyPrefabs[0], spawnLocationList[i], Quaternion.identity, parent.transform);
+
+				}
 
 			}
 
