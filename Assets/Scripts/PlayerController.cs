@@ -14,6 +14,8 @@ namespace HackedDesign {
 		private Vector2 moveVector; //The vector used to apply movement to the controller.		
 		private Animator anim; //The parent animator.
 
+		public bool lyingDown = false;
+
 		// Use this for initialization
 		void Start () {
 			anim = transform.GetComponent<Animator> ();
@@ -26,9 +28,14 @@ namespace HackedDesign {
 		// Update is called once per frame
 		public void UpdateMovement (Input.IInputController inputController) {
 
-			moveVector = inputController.GetMovementAxis ();
+			if (lyingDown) {
 
-			
+				return;
+			}
+
+			//StandUp();
+
+			moveVector = inputController.GetMovementAxis ();
 
 			//If horizontal or vertical axis is above the threshold value (moveSense), set the move state to Walk.
 			if (moveVector.sqrMagnitude > (moveSense * moveSense)) {
@@ -49,14 +56,24 @@ namespace HackedDesign {
 			}
 		}
 
+		public void LieDown () {
+			lyingDown = true;
+			anim.SetBool ("isMoving", false);
+			anim.Play ("Dead");
+		}
+
+		public void StandUp() {
+			lyingDown = false;
+			anim.Play ("Stand Tree");
+		}
+
 		public void UpdateTransform () {
 			transform.Translate (moveVector * moveSpeed * Time.fixedDeltaTime);
 		}
 
-		private void OnCollisionEnter2D(Collision2D other)
-		{
+		private void OnCollisionEnter2D (Collision2D other) {
 			//Debug.Log(other.gameObject.name);
-			
+
 		}
 	}
 }

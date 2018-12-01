@@ -13,7 +13,7 @@ namespace HackedDesign
 			public int levelLength = 7;
 			public int levelWidth = 10;
 			public int levelHeight = 10;
-			public int securityGuards = 2;
+			public int securityGuards = 0;
 
 			public bool generateDoors = true;
 

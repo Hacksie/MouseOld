@@ -13,6 +13,7 @@ namespace HackedDesign {
 		public GameObject creditsPanel;
 		public UnityEngine.UI.Dropdown resolutions;
 		public UnityEngine.UI.Toggle windowToggle;
+		public UnityEngine.UI.Slider masterSlider;
 		public UnityEngine.UI.Slider ambientSlider;
 		public UnityEngine.UI.Slider musicSlider;
 		public UnityEngine.UI.Slider fxSlider;
@@ -42,8 +43,19 @@ namespace HackedDesign {
 		public void PopulateAudioSliders()
 		{
 			float masterVolume;
+			float ambientVolume;
+			float fxVolume;
+			float musicVolume;
 			masterMixer.GetFloat("MasterVolume", out masterVolume);
-			Debug.Log(masterVolume);
+			masterMixer.GetFloat("AmbientVolume", out ambientVolume);
+			masterMixer.GetFloat("FXVolume", out fxVolume);
+			masterMixer.GetFloat("MusicVolume", out musicVolume);
+
+			masterSlider.value = (masterVolume + 80) / 100;
+			ambientSlider.value = (ambientVolume + 80) / 100;
+			fxSlider.value = (fxVolume + 80) / 100;
+			musicSlider.value = (musicVolume + 80) / 100;
+			//Debug.Log(masterVolume);
 			
 		}
 

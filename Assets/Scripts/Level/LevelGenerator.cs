@@ -11,24 +11,10 @@ namespace HackedDesign {
 			private GameObject parent;
 			public GameObject doorewPrefab;
 			public GameObject doornsPrefab;
-
-			//private int levelLength = 7;
-			//private int levelWidth = 10;
-			//private int levelHeight = 10;
 			private int seed = 1;
-
-			//private string levelNameTemplate;
-			//private string floorName;
-
-			//public Floor floor;
-			//public LevelElements levelElements;
-
-			//public PlaceholderChunk[, ] placeholderLevel;
 
 			public LevelGenTemplate[] levelGenTemplates;
 			public List<GameObject> securityGuardEasyPrefabs;
-
-			//public List<Vector2> enemySpawnList;
 
 			public void Initialize (GameObject parent) {
 				this.parent = parent;
@@ -54,14 +40,6 @@ namespace HackedDesign {
 					Debug.LogError ("No level gen template found");
 					return 0;
 				}
-
-				//this.levelLength = levelGenTemplate.levelLength;
-				//this.levelWidth = levelGenTemplate.levelWidth;
-				//this.levelHeight = levelGenTemplate.levelHeight;
-				//this.levelNameTemplate = levelGenTemplate.levelNameTemplate;
-				//this.floorName = levelGenTemplate.floorName;
-				//this.floor = levelGenTemplate.floor;
-				//this.levelElements = levelGenTemplate.levelElements;
 
 				PlaceholderChunk[, ] placeholderLevel = new PlaceholderChunk[levelGenTemplate.levelWidth, levelGenTemplate.levelHeight];
 				Debug.Log ("Random seed is " + UnityEngine.Random.seed);
@@ -237,17 +215,14 @@ namespace HackedDesign {
 
 				for(int i = 0; i < spawnLocationList.Count; i++)
 				{
-					if(i > levelGenTemplate.securityGuards)
+					if(i >= levelGenTemplate.securityGuards)
 					{
 						break;
 					}
 
 					securityGuardEasyPrefabs.Randomize();
-
 					GameObject.Instantiate(securityGuardEasyPrefabs[0], spawnLocationList[i], Quaternion.identity, parent.transform);
-
 				}
-
 			}
 
 			IEnumerable<GameObject> FindChunkObject (PlaceholderChunk chunk, LevelGenTemplate levelGenTemplate) {
@@ -261,8 +236,6 @@ namespace HackedDesign {
 					return true;
 				}
 
-				//Debug.Log("x " + str + " " + (goChunk.isEntry == chunk.isEntry) + ":" + (goChunk.top == chunk.top) + ":" + (goChunk.bottom == chunk.bottom) + ":" + (goChunk.left == chunk.left) + ":" + (goChunk.right == chunk.right));
-
 				return (
 					goChunk.isEntry == chunk.isEntry &&
 					goChunk.top == chunk.top &&
@@ -270,17 +243,6 @@ namespace HackedDesign {
 					goChunk.left == chunk.left &&
 					goChunk.right == chunk.right
 				);
-
-				// bool res = (goChunk.isEntry == chunk.isEntry &&
-				// 	goChunk.top == chunk.top &&
-				// 	goChunk.bottom == chunk.bottom &&
-				// 	goChunk.left == chunk.left &&
-				// 	goChunk.right == chunk.right);
-
-				// Debug.Log(res);
-
-				// return res;
-
 			}
 
 			PlaceholderChunk ChunkFromString (string str) {
@@ -319,15 +281,6 @@ namespace HackedDesign {
 				return Chunk.ChunkSide.Wall;
 			}
 
-			// Chunk FindChunk (PlaceholderChunk chunk) {
-			// 	return levelElements.chunks.FirstOrDefault (c => c != null &&
-			// 		c.isEntry == chunk.isEntry &&
-			// 		c.top == chunk.top &&
-			// 		c.bottom == chunk.bottom &&
-			// 		c.left == chunk.left &&
-			// 		c.right == chunk.right);
-			// }
-
 			void GenerateAuxRooms (PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
 				Debug.Log ("Generating Aux Rooms");
 				bool newRooms = true;
@@ -335,8 +288,6 @@ namespace HackedDesign {
 				// iterate through every position, checking for neighbours and creating rooms accordingly. 
 				// Keep iterating until we stop creating rooms				
 				while (newRooms) {
-					//PrintLevelDebug ();
-					//Debug.Log ("Iteration");
 					newRooms = false;
 					for (int i = 0; i < levelGenTemplate.levelHeight; i++) {
 						for (int j = 0; j < levelGenTemplate.levelWidth; j++) {
@@ -384,8 +335,6 @@ namespace HackedDesign {
 				res.isMainChain = true;
 
 				return res;
-
-				//return new PlaceholderChunk () { isEntry = true, isEnd = false, isMainChain = true, top = Chunk.ChunkSide.Door, left = Chunk.ChunkSide.Wall, bottom = Chunk.ChunkSide.Wall, right = Chunk.ChunkSide.Wall };
 			}
 
 			List<Chunk.ChunkSide> PossibleTopSides (Vector2Int pos, List<Chunk.ChunkSide> freeChoice, PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
@@ -405,7 +354,7 @@ namespace HackedDesign {
 					return freeChoice;
 				}
 
-				// Otherwise, match what's currently in the bottom side
+				// Otherwise, match what's currently on the top
 				sides.Add (chunk.bottom);
 				return sides;
 			}
@@ -427,7 +376,7 @@ namespace HackedDesign {
 					return freeChoice;
 				}
 
-				// Otherwise, match what's currently in the bottom side
+				// Otherwise, match what's currently on the bottom
 				sides.Add (chunk.top);
 				return sides;
 			}
@@ -449,7 +398,7 @@ namespace HackedDesign {
 					return freeChoice;
 				}
 
-				// Otherwise, match what's currently in the bottom side
+				// Otherwise, match what's currently on the left
 				sides.Add (chunk.right);
 				return sides;
 			}
@@ -471,6 +420,7 @@ namespace HackedDesign {
 					return freeChoice;
 				}
 
+				// Otherwise, match what's currently on the right
 				sides.Add (chunk.left);
 				return sides;
 			}
@@ -543,71 +493,6 @@ namespace HackedDesign {
 					}
 
 					Debug.Log (line);
-				}
-			}
-
-			public class PlaceholderChunk {
-				public bool isEntry = false;
-				public bool isEnd = false;
-				public bool isMainChain = false;
-
-				public Chunk.ChunkSide top;
-				public Chunk.ChunkSide left;
-				public Chunk.ChunkSide bottom;
-				public Chunk.ChunkSide right;
-
-				public string AsPrintableString () {
-					string s = "";
-
-					switch (left) {
-						case Chunk.ChunkSide.Wall:
-							s += "W";
-							break;
-						case Chunk.ChunkSide.Door:
-							s += "D";
-							break;
-						case Chunk.ChunkSide.Open:
-							s += "O";
-							break;
-					}
-
-					switch (top) {
-						case Chunk.ChunkSide.Wall:
-							s += "W";
-							break;
-						case Chunk.ChunkSide.Door:
-							s += "D";
-							break;
-						case Chunk.ChunkSide.Open:
-							s += "O";
-							break;
-					}
-
-					switch (bottom) {
-						case Chunk.ChunkSide.Wall:
-							s += "W";
-							break;
-						case Chunk.ChunkSide.Door:
-							s += "D";
-							break;
-						case Chunk.ChunkSide.Open:
-							s += "O";
-							break;
-					}
-
-					switch (right) {
-						case Chunk.ChunkSide.Wall:
-							s += "W";
-							break;
-						case Chunk.ChunkSide.Door:
-							s += "D";
-							break;
-						case Chunk.ChunkSide.Open:
-							s += "O";
-							break;
-					}
-
-					return s;
 				}
 			}
 		}
