@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4656454341915974}
   - component: {fileID: 212924080560860870}
   - component: {fileID: 95686650216714136}
+  - component: {fileID: 114427906074781496}
   - component: {fileID: 114148210400522826}
   - component: {fileID: 114582725019232012}
   m_Layer: 0
@@ -200,6 +201,27 @@ MonoBehaviour:
   folderPath: _External/Retro 2D Characters/Spritesheets/Male/1 - Character Base/
   useColorOutline: 1
   isChildSprite: 0
+  frameIndex: 0
+--- !u!114 &114427906074781496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1187276860767636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad705bba33f3642f4bc26cd844e12c6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  angularSpeed: 120
+  acceleration: 8
+  stoppingDistance: 0
+  autoBraking: 1
+  radius: 0.25
+  quality: 4
+  priority: 50
+  autoRepath: 0
 --- !u!114 &114578336480697112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -216,6 +238,7 @@ MonoBehaviour:
     Clothes/
   useColorOutline: 1
   isChildSprite: 1
+  frameIndex: 0
 --- !u!114 &114582725019232012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -244,6 +267,7 @@ MonoBehaviour:
   folderPath: _External/Retro 2D Characters/Spritesheets/Male/5 - Hairstyles/
   useColorOutline: 1
   isChildSprite: 1
+  frameIndex: 0
 --- !u!114 &114865858789369176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,6 +284,7 @@ MonoBehaviour:
     Clothes/
   useColorOutline: 1
   isChildSprite: 1
+  frameIndex: 0
 --- !u!114 &114999207616618310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -276,6 +301,7 @@ MonoBehaviour:
     Clothes/
   useColorOutline: 1
   isChildSprite: 1
+  frameIndex: 0
 --- !u!212 &212243393742542026
 SpriteRenderer:
   m_ObjectHideFlags: 1

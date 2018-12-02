@@ -7,6 +7,8 @@ namespace HackedDesign {
 		public class Prelude : MonoBehaviour {
 
 			public GameObject kari;
+			public GameObject spawnPoint;
+			public GameObject startPoint;
 
 			void Start () { }
 
@@ -19,7 +21,7 @@ namespace HackedDesign {
 				PlayerController pc = playerObj.GetComponent<PlayerController> ();
 				pc.LieDown ();
 
-				playerObj.transform.position -= new Vector3 (1, 0.5f, 0);
+				playerObj.transform.position = spawnPoint.transform.position;
 
 				//prelude4triggers.SetActive(false);
 				//prelude5triggers.SetActive(false);
@@ -41,7 +43,7 @@ namespace HackedDesign {
 				kari.SetActive (true);
 
 				GameObject playerObj = CoreGame.instance.GetPlayer ();
-				playerObj.transform.position += new Vector3 (1, 0.5f, 0);
+				playerObj.transform.position = startPoint.transform.position;
 
 				PlayerController pc = playerObj.GetComponent<PlayerController> ();
 				pc.StandUp ();

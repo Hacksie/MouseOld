@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4224788756620924}
   - component: {fileID: 95529358425913334}
   - component: {fileID: 114349829051033928}
+  - component: {fileID: 114748160327007508}
   - component: {fileID: 61927359348290232}
   - component: {fileID: 61317452564106866}
   m_Layer: 0
@@ -155,6 +156,21 @@ MonoBehaviour:
   enabled: 1
   doorCollider: {fileID: 61927359348290232}
   animator: {fileID: 95529358425913334}
+--- !u!114 &114748160327007508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1168148214712842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a99d2eab88b747a9bd011e3d849162f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shape: 1
+  center: {x: 0, y: 0.5}
+  size: {x: 0.25, y: 1.5}
+  carve: 0
 --- !u!212 &212840182407942404
 SpriteRenderer:
   m_ObjectHideFlags: 1

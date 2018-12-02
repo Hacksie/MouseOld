@@ -11,10 +11,13 @@ namespace HackedDesign {
 			private GameObject parent;
 			public GameObject doorewPrefab;
 			public GameObject doornsPrefab;
+			public GameObject roomCentrePrefab;
 			private int seed = 1;
 
 			public LevelGenTemplate[] levelGenTemplates;
 			public List<GameObject> securityGuardEasyPrefabs;
+
+			public DynamicNavigation2D navigation2D;
 
 			public void Initialize (GameObject parent) {
 				this.parent = parent;
@@ -64,9 +67,16 @@ namespace HackedDesign {
 				GenerateAuxRooms (placeholderLevel, levelGenTemplate);
 
 				PopulateLevelTilemap (placeholderLevel, levelGenTemplate);
-				PopulateLevelDoors (placeholderLevel, levelGenTemplate);
-				PopulateSecurityGuards(placeholderLevel, levelGenTemplate);
+				
+				navigation2D.BakeNavMesh2D();
+
+				//PopulateLevelDoors (placeholderLevel, levelGenTemplate);
+				PopulateSecurityGuards (placeholderLevel, levelGenTemplate);
 				PrintLevelDebug (placeholderLevel, levelGenTemplate);
+
+				
+
+				
 
 				return seed;
 
@@ -154,6 +164,8 @@ namespace HackedDesign {
 							if (goList.FirstOrDefault () != null) {
 
 								GameObject.Instantiate (goList[0], pos, Quaternion.identity, parent.transform);
+								GameObject.Instantiate (roomCentrePrefab, pos + new Vector3 (2, 2, 0), Quaternion.identity, parent.transform);
+
 							}
 						}
 						// else {
@@ -192,36 +204,35 @@ namespace HackedDesign {
 				}
 			}
 
-			public void PopulateSecurityGuards(PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate)
-			{
-				List<Vector3> spawnLocationList = new List<Vector3>();
+			public void PopulateSecurityGuards (PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
+				List<Vector3> spawnLocationList = new List<Vector3> ();
 
 				for (int i = 0; i < levelGenTemplate.levelHeight; i++) {
-					for (int j = 0; j < levelGenTemplate.levelWidth; j++) {				
-						if(placeholderLevel[j, i] != null)
-						{
+					for (int j = 0; j < levelGenTemplate.levelWidth; j++) {
+						if (placeholderLevel[j, i] != null && !placeholderLevel[j, i].isNearEntry) {
 							Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 2, 0);
-							spawnLocationList.Add(pos);
+							spawnLocationList.Add (pos);
 						}
 					}
 				}
 
-				spawnLocationList.Randomize();
+				spawnLocationList.Randomize ();
 
-				if(securityGuardEasyPrefabs.Count <= 0)
-				{
+				if (securityGuardEasyPrefabs.Count <= 0) {
 					return;
 				}
 
-				for(int i = 0; i < spawnLocationList.Count; i++)
-				{
-					if(i >= levelGenTemplate.securityGuards)
-					{
+				for (int i = 0; i < spawnLocationList.Count; i++) {
+					if (i >= levelGenTemplate.securityGuards) {
 						break;
 					}
 
-					securityGuardEasyPrefabs.Randomize();
-					GameObject.Instantiate(securityGuardEasyPrefabs[0], spawnLocationList[i], Quaternion.identity, parent.transform);
+					securityGuardEasyPrefabs.Randomize ();
+					GameObject sggo = securityGuardEasyPrefabs[0];
+					var go = GameObject.Instantiate (sggo, spawnLocationList[i], Quaternion.identity, parent.transform);
+
+					NavMeshAgent2D navMeshAgent = go.GetComponent<NavMeshAgent2D>();
+					navMeshAgent.SetDestination(new Vector2(5,5));
 				}
 			}
 
@@ -319,7 +330,57 @@ namespace HackedDesign {
 				bottoms.Randomize ();
 				rights.Randomize ();
 
-				return new PlaceholderChunk () { isEntry = false, isEnd = false, isMainChain = isMainChain, top = tops[0], left = lefts[0], bottom = bottoms[0], right = rights[0] };
+				return new PlaceholderChunk () {
+					isEntry = false,
+						isEnd = false,
+						isMainChain = isMainChain,
+						top = tops[0],
+						left = lefts[0],
+						bottom = bottoms[0],
+						right = rights[0],
+						isNearEntry = IsNearEntry (location, placeholderLevel, levelGenTemplate)
+				};
+
+			}
+
+			bool IsNearEntry (Vector2Int location, PlaceholderChunk[, ] placeholderLevel, LevelGenTemplate levelGenTemplate) {
+				Vector2Int[] surround = new Vector2Int[9];
+				surround[0] = location + new Vector2Int (-1, -1);
+				surround[1] = location + new Vector2Int (0, -1);
+				surround[2] = location + new Vector2Int (1, -1);
+				surround[3] = location + new Vector2Int (-1, 0);
+				surround[4] = location + new Vector2Int (0, 0);
+				surround[5] = location + new Vector2Int (1, 0);
+				surround[6] = location + new Vector2Int (-1, 1);
+				surround[7] = location + new Vector2Int (0, 1);
+				surround[8] = location + new Vector2Int (1, 1);
+
+				for (int i = 0; i < 9; i++) {
+
+					// Check bounds
+					if (surround[i].x < 0)
+						continue;
+
+					if (surround[i].y < 0)
+						continue;
+
+					if (surround[i].x >= levelGenTemplate.levelWidth)
+						continue;
+
+					if (surround[i].y >= levelGenTemplate.levelHeight)
+						continue;
+
+					// Check for a chunk
+					if (placeholderLevel[surround[i].x, surround[i].y] == null)
+						continue;
+
+					if (placeholderLevel[surround[i].x, surround[i].y].isEntry)
+						return true;
+
+				}
+
+				return false;
+
 			}
 
 			PlaceholderChunk GenerateEntryRoomChunk (LevelGenTemplate levelGenTemplate) {
@@ -333,6 +394,7 @@ namespace HackedDesign {
 
 				PlaceholderChunk res = ChunkFromString (start);
 				res.isMainChain = true;
+				res.isNearEntry = true;
 
 				return res;
 			}
