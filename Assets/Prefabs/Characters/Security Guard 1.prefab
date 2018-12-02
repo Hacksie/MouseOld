@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 114582725019232012}
   m_Layer: 0
   m_Name: Security Guard 1
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -250,8 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3536d5a0a54ecb7419632c05a60768ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  facePlayer: 1
+  facePlayer: 0
   direction: {x: 0, y: 0}
+  navMeshAgent: {fileID: 114427906074781496}
 --- !u!114 &114671262613059844
 MonoBehaviour:
   m_ObjectHideFlags: 1

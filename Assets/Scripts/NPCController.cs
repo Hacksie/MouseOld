@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace HackedDesign {
@@ -13,7 +14,9 @@ namespace HackedDesign {
 		private Transform player;
 
 		public Vector2 direction = Vector2.zero;
+		public NavMeshAgent2D navMeshAgent;
 
+		public List<Vector3> patrolPath;
 
 		// Use this for initialization
 		void Start () {
@@ -43,14 +46,16 @@ namespace HackedDesign {
 			// FIXME: 
 			if (anim != null) {
 
-				direction = player.position - transform.position;
-
-				// If we don't set a notice trigger, always face the player
-				if (facePlayer) {
+				if (navMeshAgent != null) {
+					direction = navMeshAgent.velocity;
 					FaceDirection (direction);
 				}
+				// else if (facePlayer) {
 
-				UpdateLayer (direction);
+				// 	FaceDirection (playerDirection);
+				// }
+
+				UpdateLayer (player.position - transform.position);
 			}
 		}
 
@@ -67,9 +72,7 @@ namespace HackedDesign {
 			}
 		}
 
-		public void OnTriggerStay2D(Collider2D other)
-		{
-
+		public void OnTriggerStay2D (Collider2D other) {
 
 		}
 
@@ -80,5 +83,6 @@ namespace HackedDesign {
 				anim.SetFloat ("moveY", direction.y);
 			}
 		}
+
 	}
 }

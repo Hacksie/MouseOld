@@ -92,7 +92,9 @@ namespace HackedDesign {
 			GameObject environmentObj = GameObject.FindWithTag (TagManager.ENVIRONMENT);
 			levelGenerator.Initialize (environmentObj);
 
-			levelGenerator.GenerateLevel (name, levelGenTemplate);
+			int seed = UnityEngine.Random.seed;
+
+			levelGenerator.GenerateLevel (name, levelGenTemplate, seed);
 
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 			GameObject spawn = GameObject.FindWithTag (TagManager.SPAWN);
