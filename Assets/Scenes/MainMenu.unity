@@ -1834,7 +1834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fb1dbd52e39fb4f83ae850f23f8511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newGameScene: IntroRoom
+  newGameScene: Core
   optionsPanel: {fileID: 1285590203}
   creditsPanel: {fileID: 85461989}
   resolutions: {fileID: 800684943}
@@ -5343,7 +5343,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (c) 2018 <color="#0062a0">hacked</color>.<color="#fdb400">design</color>
+  m_Text: (c) 2019 <color="#0062a0">hacked</color>.<color="#fdb400">design</color>
 --- !u!222 &1993987783
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -12,7 +12,6 @@ namespace HackedDesign {
 			public new bool enabled = true;
 
 			public void Initialize (Input.IInputController inputController) {
-				Debug.Log ("Initialize base trigger");
 				this.inputController = inputController;
 				collider = GetComponent<Collider2D> ();
 				if (enabled) {
@@ -24,7 +23,6 @@ namespace HackedDesign {
 			}
 
 			public void Activate () {
-				Debug.Log ("Activate collider");
 				if (collider != null) {
 					collider.enabled = true;
 				}
@@ -37,9 +35,6 @@ namespace HackedDesign {
 			}
 
 			public abstract void UpdateTrigger ();
-			// 	Debug.Log("update trigger base ");
-
-			// }
 
 			public abstract void Invoke (); 
 		}

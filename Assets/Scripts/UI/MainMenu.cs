@@ -144,13 +144,21 @@ namespace HackedDesign {
 				Debug.Log ("Activating scenes");
 				yield return null;
 			}
-			
-			SceneManager.UnloadScene ("MainMenu");
 
 			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("Core"));
 
+			SceneManager.UnloadScene ("MainMenu");
+			
+
+			
+
+			
+
+			
+
 			CoreGame.instance.Initialization ();
-			CoreGame.instance.SceneInitialize ("IntroRoom", "IntroRoom");
+			//CoreGame.instance.SceneInitialize ("Jennifer's Room", "Jennifer's Room");
+			CoreGame.instance.SceneInitialize ("Easy Magenta", "Easy Magenta");
 
 		}
 	}

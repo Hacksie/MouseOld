@@ -41,7 +41,7 @@ namespace HackedDesign {
 		public TimerPanelPresenter timerPanel;
 
 		private List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
-		private List<NPCController> npcList = new List<NPCController> ();
+		private List<BaseNPCController> npcList = new List<BaseNPCController> ();
 
 		CoreGame () {
 			instance = this;
@@ -52,6 +52,8 @@ namespace HackedDesign {
 		/// </summary>
 		void Start () {
 
+			Debug.Log("Editor start function called");
+			
 			if (SceneManager.GetActiveScene ().name != "MainMenu") {
 				Initialization ();
 				SceneInitialize (testLevel, testLevelGenTemplate);
@@ -65,7 +67,6 @@ namespace HackedDesign {
 		public void Initialization () {
 			state = GameState.LOADING;
 			Debug.Log ("Initialization");
-			//ScriptableObject.
 
 			timerPanel.Initialize (this.timer);
 
@@ -154,7 +155,7 @@ namespace HackedDesign {
 			npcList.Clear ();
 
 			foreach (GameObject npcObject in GameObject.FindGameObjectsWithTag ("NPC")) {
-				NPCController npc = npcObject.GetComponent<NPCController> ();
+				BaseNPCController npc = npcObject.GetComponent<BaseNPCController> ();
 				if (npc != null) {
 					npcList.Add (npc);
 					npc.Initialize (player.transform);
@@ -325,7 +326,7 @@ namespace HackedDesign {
 		}
 
 		void PlayingNPCUpdate () {
-			foreach (NPCController npc in npcList) {
+			foreach (BaseNPCController npc in npcList) {
 				npc.UpdateBehaviour ();
 			}
 		}

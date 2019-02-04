@@ -29,9 +29,6 @@ namespace HackedDesign {
 					return;
 				}
 			}
-
-			//CoreGame.instance.ChangeScene(lb.location.scene);
-	
 		}
 
 		public Map.Sector GetSelectedSector () {
