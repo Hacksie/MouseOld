@@ -1,6 +1,6 @@
 namespace HackedDesign {
     namespace Level {
-        public class PlaceholderChunk {
+        public class ProxyChunk {
             public bool isEntry = false;
             public bool isEnd = false;
             public bool isMainChain = false;

@@ -41,7 +41,7 @@ namespace HackedDesign {
 		public TimerPanelPresenter timerPanel;
 
 		private List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
-		private List<BaseNPCController> npcList = new List<BaseNPCController> ();
+		private List<NPC.BaseNPCController> npcList = new List<NPC.BaseNPCController> ();
 
 		CoreGame () {
 			instance = this;
@@ -155,7 +155,7 @@ namespace HackedDesign {
 			npcList.Clear ();
 
 			foreach (GameObject npcObject in GameObject.FindGameObjectsWithTag ("NPC")) {
-				BaseNPCController npc = npcObject.GetComponent<BaseNPCController> ();
+				NPC.BaseNPCController npc = npcObject.GetComponent<NPC.BaseNPCController> ();
 				if (npc != null) {
 					npcList.Add (npc);
 					npc.Initialize (player.transform);
@@ -326,7 +326,7 @@ namespace HackedDesign {
 		}
 
 		void PlayingNPCUpdate () {
-			foreach (BaseNPCController npc in npcList) {
+			foreach (NPC.BaseNPCController npc in npcList) {
 				npc.UpdateBehaviour ();
 			}
 		}

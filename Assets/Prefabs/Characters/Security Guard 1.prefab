@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 95686650216714136}
   - component: {fileID: 114427906074781496}
   - component: {fileID: 114148210400522826}
-  - component: {fileID: 114582725019232012}
+  - component: {fileID: 114281018014118198}
   m_Layer: 0
   m_Name: Security Guard 1
   m_TagString: NPC
@@ -202,6 +202,22 @@ MonoBehaviour:
   useColorOutline: 1
   isChildSprite: 0
   frameIndex: 0
+--- !u!114 &114281018014118198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1187276860767636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95f28d8d6fa1e3c4b8172b541b8847cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  facePlayer: 1
+  direction: {x: 0, y: 0}
+  navMeshAgent: {fileID: 114427906074781496}
+  patrolPath: []
+  patrolPathLength: 4
 --- !u!114 &114427906074781496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -239,20 +255,6 @@ MonoBehaviour:
   useColorOutline: 1
   isChildSprite: 1
   frameIndex: 0
---- !u!114 &114582725019232012
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1187276860767636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3536d5a0a54ecb7419632c05a60768ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  facePlayer: 0
-  direction: {x: 0, y: 0}
-  navMeshAgent: {fileID: 114427906074781496}
 --- !u!114 &114671262613059844
 MonoBehaviour:
   m_ObjectHideFlags: 1
