@@ -10,6 +10,7 @@ namespace HackedDesign {
             public LevelGenTemplate template;
             public ProxyChunk[, ] proxyLevel;
             public int length;
+			public Vector2Int spawn;
 
             public Level(LevelGenTemplate template)
             {

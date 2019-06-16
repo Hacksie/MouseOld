@@ -1761,6 +1761,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facePlayer: 1
   direction: {x: 0, y: 0}
+  navMeshAgent: {fileID: 0}
+  patrolPath: []
+  patrolPathLength: 4
 --- !u!114 &114657198262533748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2142,7 +2145,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5, y: 1.25}
+  m_Size: {x: 0.64, y: 0.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

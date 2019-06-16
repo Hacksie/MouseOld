@@ -13,6 +13,7 @@ namespace HackedDesign {
 			public GameObject doornsPrefab;
 			public GameObject roomCentrePrefab;
 			public GameObject npcParent;
+			public GameObject spawnPrefab;
 			private int seed = 1;
 
 			public LevelGenTemplate[] levelGenTemplates;
@@ -59,7 +60,7 @@ namespace HackedDesign {
 				navigation2D.BakeNavMesh2D ();
 
 				PopulateLevelDoors (level);
-				PopulateSecurityGuards (level);
+				//PopulateSecurityGuards (level);
 				level.Print();
 
 				return level;
@@ -80,6 +81,7 @@ namespace HackedDesign {
 				// It also means the player starts at the bottom and plays upwards, which is ideal
 				Vector2Int position = new Vector2Int ((level.template.levelWidth - 1) / 2, (level.template.levelHeight - 1));
 				level.proxyLevel[position.x, position.y] = GenerateEntryRoomChunk (level);
+				level.spawn = position;
 				return position;
 			}
 
@@ -194,20 +196,68 @@ namespace HackedDesign {
 								GameObject.Instantiate (level.template.floor, pos, Quaternion.identity, parent.transform);
 							}
 
-							List<GameObject> goList = FindChunkObject (level.proxyLevel[j, i], level.template).ToList ();
+							PopulateRoom(level.proxyLevel[j, i], pos, parent.transform, level.template);
 
-							goList.Randomize ();
+							// List<GameObject> goList = FindChunkObject (level.proxyLevel[j, i], level.template).ToList ();
 
-							if (goList.FirstOrDefault () != null) {
+							// goList.Randomize ();
 
-								GameObject.Instantiate (goList[0], pos, Quaternion.identity, parent.transform);
-								GameObject.Instantiate (roomCentrePrefab, pos + new Vector3 (2, 2, 0), Quaternion.identity, parent.transform);
+							// if (goList.FirstOrDefault () != null) {
 
-							}
+							// 	GameObject.Instantiate (goList[0], pos, Quaternion.identity, parent.transform);
+							// 	GameObject.Instantiate (roomCentrePrefab, pos + new Vector3 (2, 2, 0), Quaternion.identity, parent.transform);
+
+							// }
 						}
 					}
 				}
 			}
+
+			public void PopulateRoom(ProxyChunk proxyChunk, Vector3 pos, Transform parent, LevelGenTemplate template)
+			{
+				string chunkString = proxyChunk.AsPrintableString();
+				
+				// TL
+				List<GameObject> goTLList = FindChunkObject("TL", chunkString.Substring(0,1), chunkString.Substring(1,1), template).ToList();
+				
+				goTLList.Randomize ();
+
+				if (goTLList.FirstOrDefault () != null) {
+					GameObject.Instantiate (goTLList[0], pos, Quaternion.identity, parent.transform);
+				}				
+
+				// TR
+
+				List<GameObject> goTRList = FindChunkObject("TR", chunkString.Substring(3,1), chunkString.Substring(1,1), template).ToList();
+				goTRList.Randomize ();
+				
+
+				if (goTRList.FirstOrDefault () != null) {
+					GameObject.Instantiate (goTRList[0], pos, Quaternion.identity, parent.transform);
+				}					
+
+				// BL
+
+				List<GameObject> goBList = FindChunkObject("BL", chunkString.Substring(0,1), chunkString.Substring(2,1), template).ToList();
+				goBList.Randomize ();
+
+				if (goBList.FirstOrDefault () != null) {
+					GameObject.Instantiate (goBList[0], pos, Quaternion.identity, parent.transform);
+				}				
+
+				// BR
+
+				List<GameObject> goBRist = FindChunkObject("BR", chunkString.Substring(3,1), chunkString.Substring(2,1), template).ToList();
+				goBRist.Randomize ();
+
+				if (goBRist.FirstOrDefault () != null) {
+					GameObject.Instantiate (goBRist[0], pos, Quaternion.identity, parent.transform);
+				}
+			}
+
+			IEnumerable<GameObject> FindChunkObject (string corner, string wall1, string wall2, LevelGenTemplate levelGenTemplate) {
+				return levelGenTemplate.levelElements.Where (g => g != null && g.name.Substring(0,2).ToUpper() == corner.ToUpper() && g.name.Substring(3,1).ToUpper() == wall1.ToUpper() && g.name.Substring(4,1).ToUpper() == wall2.ToUpper());
+			}			
 
 			public void PopulateLevelDoors (Level level) {
 				if (!level.template.generateDoors) {
@@ -270,25 +320,25 @@ namespace HackedDesign {
 				}
 			}
 
-			IEnumerable<GameObject> FindChunkObject (ProxyChunk chunk, LevelGenTemplate levelGenTemplate) {
-				return levelGenTemplate.levelElements.Where (g => g != null && ChunkMatchesString (chunk, g.name));
-			}
+			// IEnumerable<GameObject> FindChunkObject (ProxyChunk chunk, LevelGenTemplate levelGenTemplate) {
+			// 	return levelGenTemplate.levelElements.Where (g => g != null && ChunkMatchesString (chunk, g.name));
+			// }
 
-			bool ChunkMatchesString (ProxyChunk chunk, string str) {
+			// bool ChunkMatchesString (ProxyChunk chunk, string str) {
 
-				var goChunk = ChunkFromString (str);
-				if (chunk.isEntry && goChunk.isEntry == chunk.isEntry) {
-					return true;
-				}
+			// 	var goChunk = ChunkFromString (str);
+			// 	if (chunk.isEntry && goChunk.isEntry == chunk.isEntry) {
+			// 		return true;
+			// 	}
 
-				return (
-					goChunk.isEntry == chunk.isEntry &&
-					goChunk.top == chunk.top &&
-					goChunk.bottom == chunk.bottom &&
-					goChunk.left == chunk.left &&
-					goChunk.right == chunk.right
-				);
-			}
+			// 	return (
+			// 		goChunk.isEntry == chunk.isEntry &&
+			// 		goChunk.top == chunk.top &&
+			// 		goChunk.bottom == chunk.bottom &&
+			// 		goChunk.left == chunk.left &&
+			// 		goChunk.right == chunk.right
+			// 	);
+			// }
 
 			ProxyChunk ChunkFromString (string str) {
 				ProxyChunk response = new ProxyChunk ();

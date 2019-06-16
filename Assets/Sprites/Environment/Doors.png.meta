@@ -3,7 +3,8 @@ guid: 664b54a6d8e280a4c9404a8903fd234b
 TextureImporter:
   fileIDToRecycleName:
     21300000: Doors_ew
-    21300002: Doors_ns
+    21300002: Doors_1
+    21300004: Doors_ns
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -33,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -62,7 +63,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -73,7 +74,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -84,7 +85,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -100,9 +101,9 @@ TextureImporter:
       name: Doors_ew
       rect:
         serializedVersion: 2
-        x: 32
+        x: 0
         y: 32
-        width: 32
+        width: 64
         height: 80
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -111,7 +112,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83e384d0f58ffbe4b9d334b61b04e345
+      spriteID: e832306ae68eb8d4dabbf2402d246174
       vertices: []
       indices: 
       edges: []
@@ -121,17 +122,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 32
+        y: 0
         width: 16
-        height: 96
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90d81b3699fa9f44398c3193c8028eb3
+      spriteID: 617a4c8eec908ab488856e11fa5a41d3
       vertices: []
       indices: 
       edges: []
@@ -139,7 +140,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 8ca170ff265c5264a892c33fa0ce935a
+    spriteID: 8978ad0116f0b294ca6eebf52417b68d
     vertices: []
     indices: 
     edges: []

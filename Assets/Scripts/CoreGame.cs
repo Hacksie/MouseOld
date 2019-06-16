@@ -95,18 +95,15 @@ namespace HackedDesign {
 
 			int seed = UnityEngine.Random.seed;
 
-			levelGenerator.GenerateLevel (name, levelGenTemplate, seed);
+			Level.Level level = levelGenerator.GenerateLevel (name, levelGenTemplate, seed);
+			player.transform.position = level.ConvertLevelPosToWorld(level.spawn);			
 
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
-			GameObject spawn = GameObject.FindWithTag (TagManager.SPAWN);
 
 			playerController = player.GetComponent<PlayerController> ();
 
-			if (spawn != null) {
-				player.transform.position = spawn.transform.position;
-			} else {
-				Debug.LogWarning ("No spawn point set");
-			}
+			
+
 
 			SceneTriggersInitialize ();
 			SceneNPCsInitialize ();
