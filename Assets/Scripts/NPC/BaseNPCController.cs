@@ -7,18 +7,22 @@ namespace HackedDesign {
 	namespace NPC {
 		public class BaseNPCController : MonoBehaviour {
 
+			protected CoreGame game;
 			protected Animator anim; //The parent animator.
 
 			public bool facePlayer = true;
 
 			private List<SpriteRenderer> sprites = new List<SpriteRenderer> ();
 			protected Transform player;
+			protected Level.Level level;
 
 			public Vector2 direction = Vector2.zero;
 			public NavMeshAgent2D navMeshAgent;
 
-			public List<Vector3> patrolPath;
-			public int patrolPathLength = 4;
+			public LayerMask layerMask;
+
+			// public List<Vector3> patrolPath;
+			// public int patrolPathLength = 4;
 
 			protected float visibilityDistance = 3.2f;
 
@@ -29,16 +33,18 @@ namespace HackedDesign {
 				anim = transform.GetComponent<Animator> ();
 				sprites.Add (GetComponent<SpriteRenderer> ());
 				sprites.AddRange (GetComponentsInChildren<SpriteRenderer> ());
+				NavMeshAgent2D navMeshAgent = GetComponent<NavMeshAgent2D>();
 
 				randomColor = new Color (Random.Range (0.0f, 1.0f), Random.Range (0.0f, 1.0f), Random.Range (0.0f, 1.0f));
 				//player = CoreGame.instance.GetPlayer ().transform;
 
 			}
 
-			public void Initialize (Transform player) {
-				this.player = player;
+			public void Initialize (CoreGame game, Level.Level level) {
+				this.game = game;
+				this.player = game.GetPlayer().transform;
+				this.level = level;
 				FaceDirection (direction);
-
 			}
 
 			public void Activate () {
@@ -56,7 +62,7 @@ namespace HackedDesign {
 			}
 
 			public RaycastHit2D CanSeePlayer () {
-				return Physics2D.Raycast (transform.position, (player.position - transform.position), visibilityDistance);
+				return Physics2D.Raycast (transform.position, (player.position - transform.position), visibilityDistance, layerMask);
 			}
 
 			public Vector3 DirectionToPlayer () {

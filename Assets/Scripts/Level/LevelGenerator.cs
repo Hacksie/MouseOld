@@ -14,7 +14,6 @@ namespace HackedDesign {
 			public GameObject roomCentrePrefab;
 			public GameObject npcParent;
 			public GameObject spawnPrefab;
-			private int seed = 1;
 
 			public LevelGenTemplate[] levelGenTemplates;
 			public List<GameObject> securityGuardEasyPrefabs;
@@ -25,8 +24,9 @@ namespace HackedDesign {
 				this.parent = parent;
 			}
 
+	
 			// Template -> Generate -> GeneratedLevel
-			public Level GenerateLevel (string name, string template, int seed) {
+			public Level GenerateRandomLevel (string name, string template, int seed) {
 				Debug.Log ("Generating Level");
 
 				if (string.IsNullOrEmpty (template)) {
@@ -59,8 +59,8 @@ namespace HackedDesign {
 
 				navigation2D.BakeNavMesh2D ();
 
-				PopulateLevelDoors (level);
-				//PopulateSecurityGuards (level);
+				//PopulateLevelDoors (level);
+				PopulateSecurityGuards (level);
 				level.Print();
 
 				return level;
@@ -313,10 +313,10 @@ namespace HackedDesign {
 					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (spawnLocationList[i]), Quaternion.identity, npcParent.transform);
 
 					//NavMeshAgent2D navMeshAgent = go.GetComponent<NavMeshAgent2D> ();
-					//BaseNPCController npcController = go.GetComponent<BaseNPCController> ();
+					// BaseNPCController npcController = go.GetComponent<BaseNPCController> ();
 
-					//var relativeList = ConstructRandomPatrolPath (spawnLocationList[i], npcController.patrolPathLength, level.placeholderLevel);
-					//npcController.patrolPath = relativeList.ConvertAll<Vector3> (e => ConvertLevelPosToWorld (e, level.template));
+					// var relativeList = ConstructRandomPatrolPath (spawnLocationList[i], npcController.patrolPathLength, level.placeholderLevel);
+					// npcController.patrolPath = relativeList.ConvertAll<Vector3> (e => ConvertLevelPosToWorld (e, level.template));
 				}
 			}
 

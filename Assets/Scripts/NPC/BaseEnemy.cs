@@ -1,13 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace HackedDesign {
     namespace NPC {
         public class BaseEnemy : BaseNPCController {
 
-            EnemyState state = EnemyState.STANDING;
+            public int patrolSpeed = 4;
+            public float patrolLastCheck = 0;
+            public Vector2Int currentDirection;
+            public List<Vector2Int> currentDirections;
+
+            public float huntingLastSeen = 0;
+            public float seekTime = 5.0f;
+
+            public float fightDistance = 1.5f;
+
+            public Vector3 lastKnownLocation;
+
+            public EnemyState state = EnemyState.PATROLLING;
 
             public override void UpdateBehaviour () {
                 if (anim == null) {
@@ -41,53 +52,131 @@ namespace HackedDesign {
                     if (hit.transform != null) {
                         if (hit.transform.gameObject.tag == TagManager.PLAYER) {
                             state = EnemyState.HUNTING;
-
                         }
                     }
                 }
             }
 
             public void UpdatePatrolling () {
+
                 if (navMeshAgent != null) {
 
                     RaycastHit2D hit = CanSeePlayer ();
 
                     if (hit.transform != null) {
+                        //Debug.Log(hit.transform.gameObject.tag);
+
                         if (hit.transform.gameObject.tag == TagManager.PLAYER) {
                             state = EnemyState.HUNTING;
-
+                            return;
                         }
                     }
+
+                    if (navMeshAgent.remainingDistance < 0.01f || ((Time.time - patrolLastCheck) > patrolSpeed)) {
+                        patrolLastCheck = Time.time;
+                        // Keep patrolling
+                        var location = level.ConvertWorldToLevelPos (transform.position);
+
+                        currentDirections = level.PossibleMovementDirections (location);
+                        currentDirections.Randomize ();
+
+                        if (currentDirections.Count > 0) {
+                            currentDirection = currentDirections[0];
+                            navMeshAgent.SetDestination (level.ConvertLevelPosToWorld (currentDirection));
+                        }
+                        FaceDirection (level.ConvertLevelPosToWorld (currentDirection) - transform.position);
+                    }
                 }
-            }
-
-            public void UpdateSeeking () {
-
             }
 
             public void UpdateHunting () {
-                FaceDirection (player.position - transform.position);
 
-            }
+                if (navMeshAgent != null) {
 
-            public void UpdateFighting () {
-                FaceDirection (player.position - transform.position);
+                    if ((player.position - transform.position).magnitude < fightDistance) {
+                        state = EnemyState.FIGHTING;
+                        return;
+                    }
 
-            }
+                    RaycastHit2D hit = CanSeePlayer ();
 
-            public void OnDrawGizmosSelected () {
-                RaycastHit2D hit = CanSeePlayer ();
+                    if (hit.transform != null) {
 
-                Color debugColor = Color.white;
-                if (hit.transform != null) {
-                    if (hit.transform.gameObject.tag == TagManager.PLAYER) {
-                        debugColor = Color.red;
-                    } else {
-                        debugColor = Color.yellow;
+                        if (hit.transform.gameObject.tag == TagManager.PLAYER) {
+                            huntingLastSeen = Time.time;
+                            lastKnownLocation = player.position;
+                            navMeshAgent.SetDestination (lastKnownLocation);
+
+                            FaceDirection (lastKnownLocation - transform.position);
+                            return;
+                        } else {
+                            state = EnemyState.SEEKING;
+                            return;
+                        }
                     }
                 }
 
-                Debug.DrawLine (transform.position, player.transform.position, debugColor, 0.1f);
+                //FaceDirection (player.position - transform.position);
+
+            }
+
+            public void UpdateSeeking () {
+                if (navMeshAgent != null) {
+
+                    if ((Time.time - huntingLastSeen) > seekTime) {
+                        state = EnemyState.PATROLLING;
+                        return;
+                    }
+
+                    RaycastHit2D hit = CanSeePlayer ();
+
+                    if (hit.transform.gameObject.tag == TagManager.PLAYER) {
+                        state = EnemyState.HUNTING;
+                        return;
+                    }
+                }
+            }
+
+            public void UpdateFighting () {
+                //FaceDirection (player.position - transform.position);
+                game.GameOver ();
+
+            }
+
+            public void OnCollisionEnter2D (Collision2D collision) {
+                if (collision.gameObject.tag == "Player") {
+                    state = EnemyState.FIGHTING;
+                    return;
+                }
+
+            }
+
+            public void OnDrawGizmos () {
+                if (Time.timeScale == 1) {
+                    RaycastHit2D hit = CanSeePlayer ();
+
+                    Color debugColor = Color.white;
+                    if (hit.transform != null) {
+                        if (hit.transform.gameObject.tag == TagManager.PLAYER) {
+                            debugColor = Color.red;
+                        } else {
+                            debugColor = Color.yellow;
+                        }
+                    }
+
+                    Debug.DrawRay (transform.position, (player.position - transform.position), debugColor);
+
+                    //Debug.DrawLine(level.ConvertLevelPosToWorld(level.ConvertWorldToLevelPos(transform.position)), level.ConvertLevelPosToWorld(currentDirection));
+                    Vector3 v1 = transform.position;
+                    Vector3 v2 = level.ConvertLevelPosToWorld (level.ConvertWorldToLevelPos (transform.position));
+                    Debug.DrawLine (v1 + new Vector3 (-0.5f, 0, 0), v1 + new Vector3 (0.5f, 0, 0), Color.red);
+                    Debug.DrawLine (v2 + new Vector3 (-0.5f, 0, 0), v2 + new Vector3 (0.5f, 0, 0), Color.cyan);
+
+                    foreach (var d in currentDirections) {
+                        Debug.DrawLine (v1, level.ConvertLevelPosToWorld (d), Color.magenta);
+                    }
+                }
+
             }
 
             public enum EnemyState {

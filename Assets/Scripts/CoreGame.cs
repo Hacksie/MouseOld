@@ -46,20 +46,19 @@ namespace HackedDesign {
 		CoreGame () {
 			instance = this;
 		}
-#if UNITY_EDITOR
+
 		/// <summary>
 		/// Run in editor
 		/// </summary>
 		void Start () {
 
-			Debug.Log("Editor start function called");
-			
-			if (SceneManager.GetActiveScene ().name != "MainMenu") {
-				Initialization ();
-				SceneInitialize (testLevel, testLevelGenTemplate);
-			}
+			Initialization ();
+
+			// if (SceneManager.GetActiveScene ().name != "MainMenu") {
+			// 	Initialization ();
+			// 	// 	SceneInitialize (testLevel, testLevelGenTemplate);
+			// }
 		}
-#endif		
 
 		/// <summary>
 		/// Run only once
@@ -79,6 +78,7 @@ namespace HackedDesign {
 			worldMapPanel.Initialize (worldMapManager);
 			taskPanel.Initialize (taskManager);
 			infoPanel.Initialize (infoManager);
+			RepaintAll ();
 
 		}
 
@@ -95,18 +95,15 @@ namespace HackedDesign {
 
 			int seed = UnityEngine.Random.seed;
 
-			Level.Level level = levelGenerator.GenerateLevel (name, levelGenTemplate, seed);
-			player.transform.position = level.ConvertLevelPosToWorld(level.spawn);			
+			Level.Level level = levelGenerator.GenerateRandomLevel (name, levelGenTemplate, seed);
+			player.transform.position = level.ConvertLevelPosToWorld (level.spawn);
 
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 
 			playerController = player.GetComponent<PlayerController> ();
 
-			
-
-
 			SceneTriggersInitialize ();
-			SceneNPCsInitialize ();
+			SceneNPCsInitialize (level);
 
 			RepaintAll ();
 			SetResume ();
@@ -148,20 +145,25 @@ namespace HackedDesign {
 			}
 		}
 
-		void SceneNPCsInitialize () {
+		void SceneNPCsInitialize (Level.Level level) {
 			npcList.Clear ();
 
 			foreach (GameObject npcObject in GameObject.FindGameObjectsWithTag ("NPC")) {
 				NPC.BaseNPCController npc = npcObject.GetComponent<NPC.BaseNPCController> ();
 				if (npc != null) {
 					npcList.Add (npc);
-					npc.Initialize (player.transform);
+					npc.Initialize (this, level);
 				}
 			}
 		}
 
 		public GameObject GetPlayer () {
 			return player;
+		}
+
+		public void GameOver() {
+			Debug.Log("GameOver");
+			Time.timeScale = 0;
 		}
 
 		public void SetResume () {
@@ -173,7 +175,7 @@ namespace HackedDesign {
 			narrationPanel.Show (false);
 			dialoguePanel.Show (false);
 			worldMapPanel.Show (false);
-			Cursor.visible = false;
+			//Cursor.visible = false;
 		}
 
 		public void SetDialogue () {
@@ -181,7 +183,7 @@ namespace HackedDesign {
 			Time.timeScale = 0;
 			dialoguePanel.Show (true);
 			state = GameState.DIALOGUE;
-			Cursor.visible = true;
+			//Cursor.visible = true;
 		}
 
 		public void SetNarration () {
@@ -189,7 +191,7 @@ namespace HackedDesign {
 			Time.timeScale = 0;
 			narrationPanel.Show (true);
 			state = GameState.NARRATION;
-			Cursor.visible = true;
+			//Cursor.visible = true;
 		}
 
 		public void SetWorldMap () {
@@ -197,55 +199,55 @@ namespace HackedDesign {
 			Time.timeScale = 0;
 			state = GameState.WORLDMAP;
 			worldMapPanel.Show (true);
-			Cursor.visible = true;
+			//Cursor.visible = true;
 		}
 
 		// public void ChangeScene (string newGameScene) {
 		// 	StartCoroutine (LoadGameScene (newGameScene));
 		// }
 
-		IEnumerator LoadGameScene (string newGameScene, string levelName, string levelGenTemplate) {
-			Debug.Log ("Loading new game scenes");
+		// IEnumerator LoadGameScene (string newGameScene, string levelName, string levelGenTemplate) {
+		// 	Debug.Log ("Loading new game scenes");
 
-			List<Scene> currentScenes = new List<Scene> ();
+		// 	List<Scene> currentScenes = new List<Scene> ();
 
-			for (int i = 0; i < SceneManager.sceneCount; i++) {
-				if (SceneManager.GetSceneAt (i).isLoaded && SceneManager.GetSceneAt (i).name != "Core") {
-					currentScenes.Add (SceneManager.GetSceneAt (i));
+		// 	for (int i = 0; i < SceneManager.sceneCount; i++) {
+		// 		if (SceneManager.GetSceneAt (i).isLoaded && SceneManager.GetSceneAt (i).name != "Core") {
+		// 			currentScenes.Add (SceneManager.GetSceneAt (i));
 
-				}
-			}
+		// 		}
+		// 	}
 
-			//Scene currentScene = SceneManager.GetActiveScene ();
+		// 	//Scene currentScene = SceneManager.GetActiveScene ();
 
-			AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
-			asyncLoadRubyScene.allowSceneActivation = false;
+		// 	AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
+		// 	asyncLoadRubyScene.allowSceneActivation = false;
 
-			yield return null;
+		// 	yield return null;
 
-			//Wait until we are done loading the scene
-			while (asyncLoadRubyScene.progress < 0.9f) {
-				Debug.Log ("Loading scene #:" + newGameScene + " [][] Progress: " + asyncLoadRubyScene.progress);
-				yield return null;
-			}
+		// 	//Wait until we are done loading the scene
+		// 	while (asyncLoadRubyScene.progress < 0.9f) {
+		// 		Debug.Log ("Loading scene #:" + newGameScene + " [][] Progress: " + asyncLoadRubyScene.progress);
+		// 		yield return null;
+		// 	}
 
-			Debug.Log (newGameScene + " ready");
+		// 	Debug.Log (newGameScene + " ready");
 
-			asyncLoadRubyScene.allowSceneActivation = true;
+		// 	asyncLoadRubyScene.allowSceneActivation = true;
 
-			while (!asyncLoadRubyScene.isDone) {
-				Debug.Log ("Activating scenes");
-				yield return null;
-			}
+		// 	while (!asyncLoadRubyScene.isDone) {
+		// 		Debug.Log ("Activating scenes");
+		// 		yield return null;
+		// 	}
 
-			SceneManager.SetActiveScene (SceneManager.GetSceneByName (newGameScene));
+		// 	SceneManager.SetActiveScene (SceneManager.GetSceneByName (newGameScene));
 
-			for (int j = 0; j < currentScenes.Count; j++) {
-				SceneManager.UnloadScene (currentScenes[j]);
-			}
+		// 	for (int j = 0; j < currentScenes.Count; j++) {
+		// 		SceneManager.UnloadScene (currentScenes[j]);
+		// 	}
 
-			CoreGame.instance.SceneInitialize (levelName, levelGenTemplate);
-		}
+		// 	CoreGame.instance.SceneInitialize (levelName, levelGenTemplate);
+		// }
 
 		void Update () {
 

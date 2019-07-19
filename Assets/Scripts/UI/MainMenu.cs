@@ -86,7 +86,8 @@ namespace HackedDesign {
 			Debug.Log ("New Game Event");
 			ShowCreditsPanel(false);
 			ShowOptionsPanel(false);
-			StartCoroutine (LoadNewGameScenes ( "IntroRoom", "IntroRoom"));
+			LoadNewGame();
+			//StartCoroutine (LoadNewGameScenes ( "IntroRoom", "IntroRoom"));
 		}
 
 		public void OptionsEvent () {
@@ -106,61 +107,65 @@ namespace HackedDesign {
 			Application.Quit ();
 		}
 
-		IEnumerator LoadNewGameScenes (string levelName, string levelGenTemplate) {
-			Debug.Log ("Loading new game scenes");
-
-			AsyncOperation asyncLoadBaseScene = SceneManager.LoadSceneAsync ("Core", LoadSceneMode.Additive);
-			asyncLoadBaseScene.allowSceneActivation = false;
-
-			yield return null;
-
-			//Wait until we are done loading the scene
-			while (asyncLoadBaseScene.progress < 0.9f) {
-				Debug.Log ("Loading scene #:" + "Core" + " [][] Progress: " + asyncLoadBaseScene.progress);
-				yield return null;
-			}
-
-			Debug.Log ("Core ready");
-
-			// AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
-			// asyncLoadRubyScene.allowSceneActivation = false;
-
-			// yield return null;
-
-			// //Wait until we are done loading the scene
-			// while (asyncLoadRubyScene.progress < 0.9f) {
-			// 	Debug.Log ("Loading scene #:" + newGameScene + " [][] Progress: " + asyncLoadRubyScene.progress);
-			// 	yield return null;
-			// }
-
-			// Debug.Log (newGameScene +" ready");
-
-			asyncLoadBaseScene.allowSceneActivation = true;
-			//asyncLoadRubyScene.allowSceneActivation = true;
-
+		public void LoadNewGame()
+		{
+			//SceneManager.UnloadScene ("MainMenu");
 			
-
-			while (!asyncLoadBaseScene.isDone ) {
-				Debug.Log ("Activating scenes");
-				yield return null;
-			}
-
-			SceneManager.SetActiveScene (SceneManager.GetSceneByName ("Core"));
-
-			SceneManager.UnloadScene ("MainMenu");
-			
-
-			
-
-			
-
-			
-
 			CoreGame.instance.Initialization ();
 			//CoreGame.instance.SceneInitialize ("Jennifer's Room", "Jennifer's Room");
-			CoreGame.instance.SceneInitialize ("Easy Magenta", "Easy Magenta");
+			CoreGame.instance.SceneInitialize ("Easy Magenta", "Easy Magenta");			
+			gameObject.SetActive(false);
 
 		}
+
+		// IEnumerator LoadNewGameScenes (string levelName, string levelGenTemplate) {
+		// 	Debug.Log ("Loading new game scenes");
+
+		// 	AsyncOperation asyncLoadBaseScene = SceneManager.LoadSceneAsync ("Core", LoadSceneMode.Additive);
+		// 	asyncLoadBaseScene.allowSceneActivation = false;
+
+		// 	yield return null;
+
+		// 	//Wait until we are done loading the scene
+		// 	while (asyncLoadBaseScene.progress < 0.9f) {
+		// 		Debug.Log ("Loading scene #:" + "Core" + " [][] Progress: " + asyncLoadBaseScene.progress);
+		// 		yield return null;
+		// 	}
+
+		// 	Debug.Log ("Core ready");
+
+		// 	// AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
+		// 	// asyncLoadRubyScene.allowSceneActivation = false;
+
+		// 	// yield return null;
+
+		// 	// //Wait until we are done loading the scene
+		// 	// while (asyncLoadRubyScene.progress < 0.9f) {
+		// 	// 	Debug.Log ("Loading scene #:" + newGameScene + " [][] Progress: " + asyncLoadRubyScene.progress);
+		// 	// 	yield return null;
+		// 	// }
+
+		// 	// Debug.Log (newGameScene +" ready");
+
+		// 	asyncLoadBaseScene.allowSceneActivation = true;
+		// 	//asyncLoadRubyScene.allowSceneActivation = true;
+
+			
+
+		// 	while (!asyncLoadBaseScene.isDone ) {
+		// 		Debug.Log ("Activating scenes");
+		// 		yield return null;
+		// 	}
+
+		// 	SceneManager.SetActiveScene (SceneManager.GetSceneByName ("Core"));
+
+		// 	SceneManager.UnloadScene ("MainMenu");
+			
+		// 	CoreGame.instance.Initialization ();
+		// 	//CoreGame.instance.SceneInitialize ("Jennifer's Room", "Jennifer's Room");
+		// 	CoreGame.instance.SceneInitialize ("Easy Magenta", "Easy Magenta");
+
+		// }
 	}
 }
 

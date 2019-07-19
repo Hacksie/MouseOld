@@ -90,6 +90,13 @@ namespace HackedDesign {
 				return new Vector3 (pos.x * 4 + 2, pos.y * -4 + ((template.levelHeight - 1) * 4) + 2);
 			}  
 
+			public Vector2Int ConvertWorldToLevelPos(Vector3 pos) {
+
+				//i * -4 + ((level.template.levelHeight - 1) * 4)
+
+				return new Vector2Int((int)((pos.x) / 4), (int)( (template.levelHeight)  -  (pos.y / 4))); 
+			}
+
 			public void Print () {
 				Debug.Log ("Printing level");
 				for (int i = 0; i < template.levelHeight; i++) {
