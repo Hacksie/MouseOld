@@ -31,12 +31,19 @@ namespace HackedDesign {
 				}
 
 				return levelLength;
-			}            
+			}           
+
+			public List<Vector2Int> MovementDirections (Vector2Int pos, bool entryAllowed, bool endAllowed) {
+				var results = PossibleMovementDirections(pos);
+				return results.TakeWhile(r => (!proxyLevel[r.x, r.y].isEnd && !proxyLevel[r.x, r.y].isEntry) || (proxyLevel[r.x, r.y].isEnd && endAllowed) || (proxyLevel[r.x, r.y].isEntry && entryAllowed)).ToList();
+			}			 
 
 			public List<Vector2Int> PossibleMovementDirections (Vector2Int pos) {
 				ProxyChunk chunk = proxyLevel[pos.x, pos.y];
 
 				List<Vector2Int> results = new List<Vector2Int> ();
+
+
 
 				if (chunk.left == Chunk.ChunkSide.Door || chunk.left == Chunk.ChunkSide.Open) {
 					var leftPos = new Vector2Int (pos.x - 1, pos.y);

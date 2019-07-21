@@ -12,7 +12,8 @@ namespace HackedDesign {
 
 		public void QuitEvent () {
 			//FIXME: Ask for save?
-			SceneManager.LoadScene ("MainMenu");
+			CoreGame.instance.EndGame();
+			//SceneManager.LoadScene ("MainMenu");
 		}
 
 	}

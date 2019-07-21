@@ -77,7 +77,7 @@ namespace HackedDesign {
                         // Keep patrolling
                         var location = level.ConvertWorldToLevelPos (transform.position);
 
-                        currentDirections = level.PossibleMovementDirections (location);
+                        currentDirections = level.MovementDirections (location, false, false);
                         currentDirections.Randomize ();
 
                         if (currentDirections.Count > 0) {
@@ -152,7 +152,7 @@ namespace HackedDesign {
             }
 
             public void OnDrawGizmos () {
-                if (Time.timeScale == 1) {
+                if (Application.isPlaying) {
                     RaycastHit2D hit = CanSeePlayer ();
 
                     Color debugColor = Color.white;
@@ -166,14 +166,8 @@ namespace HackedDesign {
 
                     Debug.DrawRay (transform.position, (player.position - transform.position), debugColor);
 
-                    //Debug.DrawLine(level.ConvertLevelPosToWorld(level.ConvertWorldToLevelPos(transform.position)), level.ConvertLevelPosToWorld(currentDirection));
-                    Vector3 v1 = transform.position;
-                    Vector3 v2 = level.ConvertLevelPosToWorld (level.ConvertWorldToLevelPos (transform.position));
-                    Debug.DrawLine (v1 + new Vector3 (-0.5f, 0, 0), v1 + new Vector3 (0.5f, 0, 0), Color.red);
-                    Debug.DrawLine (v2 + new Vector3 (-0.5f, 0, 0), v2 + new Vector3 (0.5f, 0, 0), Color.cyan);
-
                     foreach (var d in currentDirections) {
-                        Debug.DrawLine (v1, level.ConvertLevelPosToWorld (d), Color.magenta);
+                        Debug.DrawLine (transform.position, level.ConvertLevelPosToWorld (d), Color.magenta);
                     }
                 }
 

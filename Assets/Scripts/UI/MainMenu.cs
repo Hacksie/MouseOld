@@ -86,7 +86,7 @@ namespace HackedDesign {
 			Debug.Log ("New Game Event");
 			ShowCreditsPanel(false);
 			ShowOptionsPanel(false);
-			LoadNewGame();
+			CoreGame.instance.LoadNewGame();
 			//StartCoroutine (LoadNewGameScenes ( "IntroRoom", "IntroRoom"));
 		}
 
@@ -107,16 +107,17 @@ namespace HackedDesign {
 			Application.Quit ();
 		}
 
-		public void LoadNewGame()
+		public void HideMainMenu()
 		{
-			//SceneManager.UnloadScene ("MainMenu");
-			
-			CoreGame.instance.Initialization ();
-			//CoreGame.instance.SceneInitialize ("Jennifer's Room", "Jennifer's Room");
-			CoreGame.instance.SceneInitialize ("Easy Magenta", "Easy Magenta");			
 			gameObject.SetActive(false);
+		}	
 
-		}
+		public void ShowMainMenu()
+		{
+			Time.timeScale = 0;
+			gameObject.SetActive(true);
+		}			
+
 
 		// IEnumerator LoadNewGameScenes (string levelName, string levelGenTemplate) {
 		// 	Debug.Log ("Loading new game scenes");

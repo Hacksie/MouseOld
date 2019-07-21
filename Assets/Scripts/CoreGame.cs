@@ -10,13 +10,13 @@ namespace HackedDesign {
 
 		public Timer timer;
 
-		public string testLevel = "IntroRoom";
-		public string testLevelGenTemplate = "IntroRoom";
-
 		[SerializeField]
 		public GameState state = GameState.LOADING;
 
 		private Input.IInputController inputController = new Input.DesktopInputController ();
+
+		// Make this a tagged item	
+		public MainMenu MainMenu;
 
 		private GameObject player;
 		private PlayerController playerController;
@@ -51,13 +51,8 @@ namespace HackedDesign {
 		/// Run in editor
 		/// </summary>
 		void Start () {
-
 			Initialization ();
-
-			// if (SceneManager.GetActiveScene ().name != "MainMenu") {
-			// 	Initialization ();
-			// 	// 	SceneInitialize (testLevel, testLevelGenTemplate);
-			// }
+			MainMenu.gameObject.SetActive(true);
 		}
 
 		/// <summary>
@@ -80,7 +75,29 @@ namespace HackedDesign {
 			infoPanel.Initialize (infoManager);
 			RepaintAll ();
 
+		}		
+
+		public void LoadNewGame()
+		{	
+			CoreGame.instance.Initialization ();
+			//CoreGame.instance.SceneInitialize ("Jennifer's Room", "Jennifer's Room");
+			CoreGame.instance.SceneInitialize ("Easy Magenta Lab", "Easy Magenta Lab");			
+			MainMenu.HideMainMenu();
+
+		}	
+
+		public void EndGame()
+		{
+			state = GameState.MAINMENU;
+			levelGenerator.DestroyLevel();
+			npcList.Clear ();
+			
+			Time.timeScale = 0;
+			MainMenu.ShowMainMenu();			
 		}
+
+
+
 
 		/// <summary>
 		/// Run this each time the scene is changed
@@ -93,9 +110,9 @@ namespace HackedDesign {
 			GameObject environmentObj = GameObject.FindWithTag (TagManager.ENVIRONMENT);
 			levelGenerator.Initialize (environmentObj);
 
-			int seed = UnityEngine.Random.seed;
+			
 
-			Level.Level level = levelGenerator.GenerateRandomLevel (name, levelGenTemplate, seed);
+			Level.Level level = levelGenerator.GenerateLevel (name, levelGenTemplate);
 			player.transform.position = level.ConvertLevelPosToWorld (level.spawn);
 
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
@@ -163,7 +180,7 @@ namespace HackedDesign {
 
 		public void GameOver() {
 			Debug.Log("GameOver");
-			Time.timeScale = 0;
+			state = GameState.GAMEOVER;
 		}
 
 		public void SetResume () {
@@ -202,52 +219,6 @@ namespace HackedDesign {
 			//Cursor.visible = true;
 		}
 
-		// public void ChangeScene (string newGameScene) {
-		// 	StartCoroutine (LoadGameScene (newGameScene));
-		// }
-
-		// IEnumerator LoadGameScene (string newGameScene, string levelName, string levelGenTemplate) {
-		// 	Debug.Log ("Loading new game scenes");
-
-		// 	List<Scene> currentScenes = new List<Scene> ();
-
-		// 	for (int i = 0; i < SceneManager.sceneCount; i++) {
-		// 		if (SceneManager.GetSceneAt (i).isLoaded && SceneManager.GetSceneAt (i).name != "Core") {
-		// 			currentScenes.Add (SceneManager.GetSceneAt (i));
-
-		// 		}
-		// 	}
-
-		// 	//Scene currentScene = SceneManager.GetActiveScene ();
-
-		// 	AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
-		// 	asyncLoadRubyScene.allowSceneActivation = false;
-
-		// 	yield return null;
-
-		// 	//Wait until we are done loading the scene
-		// 	while (asyncLoadRubyScene.progress < 0.9f) {
-		// 		Debug.Log ("Loading scene #:" + newGameScene + " [][] Progress: " + asyncLoadRubyScene.progress);
-		// 		yield return null;
-		// 	}
-
-		// 	Debug.Log (newGameScene + " ready");
-
-		// 	asyncLoadRubyScene.allowSceneActivation = true;
-
-		// 	while (!asyncLoadRubyScene.isDone) {
-		// 		Debug.Log ("Activating scenes");
-		// 		yield return null;
-		// 	}
-
-		// 	SceneManager.SetActiveScene (SceneManager.GetSceneByName (newGameScene));
-
-		// 	for (int j = 0; j < currentScenes.Count; j++) {
-		// 		SceneManager.UnloadScene (currentScenes[j]);
-		// 	}
-
-		// 	CoreGame.instance.SceneInitialize (levelName, levelGenTemplate);
-		// }
 
 		void Update () {
 
@@ -290,6 +261,10 @@ namespace HackedDesign {
 						//state = GameState.PLAYING;
 						//selectMenuPanel.Repaint ();
 					}
+					break;
+
+				case GameState.GAMEOVER:
+					EndGame();
 					break;
 
 			}
@@ -346,6 +321,7 @@ namespace HackedDesign {
 		WORLDMAP,
 		STARTMENU,
 		SELECTMENU,
-		DOOR
+		GAMEOVER
+
 	}
 }

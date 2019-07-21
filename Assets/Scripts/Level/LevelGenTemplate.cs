@@ -21,9 +21,15 @@ namespace HackedDesign
 
 			public string levelNameTemplate;
 
+			public bool isRandom;
+
 			public GameObject floor;
 			//public LevelElements levelElements;   
-			public List<GameObject> levelElements;                     
+			public List<GameObject> levelElements;     
+			public List<GameObject> endProps;
+			public List<GameObject> startProps;
+			public List<GameObject> randomProps;
+			                
         }
     }
 }

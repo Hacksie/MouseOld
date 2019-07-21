@@ -33,7 +33,7 @@ namespace HackedDesign {
 				anim = transform.GetComponent<Animator> ();
 				sprites.Add (GetComponent<SpriteRenderer> ());
 				sprites.AddRange (GetComponentsInChildren<SpriteRenderer> ());
-				NavMeshAgent2D navMeshAgent = GetComponent<NavMeshAgent2D>();
+				NavMeshAgent2D navMeshAgent = GetComponent<NavMeshAgent2D> ();
 
 				randomColor = new Color (Random.Range (0.0f, 1.0f), Random.Range (0.0f, 1.0f), Random.Range (0.0f, 1.0f));
 				//player = CoreGame.instance.GetPlayer ().transform;
@@ -42,7 +42,7 @@ namespace HackedDesign {
 
 			public void Initialize (CoreGame game, Level.Level level) {
 				this.game = game;
-				this.player = game.GetPlayer().transform;
+				this.player = game.GetPlayer ().transform;
 				this.level = level;
 				FaceDirection (direction);
 			}
@@ -89,9 +89,12 @@ namespace HackedDesign {
 			public void FaceDirection (Vector2 direction) {
 
 				if (anim != null) {
-					anim.SetFloat ("moveX", direction.x);
-					anim.SetFloat ("moveY", direction.y);
-					//anim.SetBool ("isMoving", true);
+					anim.SetFloat ("directionX", direction.x);
+					anim.SetFloat ("directionY", direction.y);
+
+					if (navMeshAgent.velocity.sqrMagnitude > 0.01f) {
+						anim.SetBool ("isMoving", true);
+					}
 				}
 			}
 
