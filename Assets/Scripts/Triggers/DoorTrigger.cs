@@ -41,9 +41,9 @@ namespace HackedDesign {
                     return;
                 }
 
-                if (inputController.InteractButtonUp ()) {
+                //if (inputController.InteractButtonUp ()) {
                     Invoke ();
-                }
+                //}
             }
 
             private void OnTriggerExit2D (Collider2D other) {

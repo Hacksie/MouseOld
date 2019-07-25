@@ -17,7 +17,7 @@ namespace HackedDesign {
 			protected Level.Level level;
 
 			public Vector2 direction = Vector2.zero;
-			public NavMeshAgent2D navMeshAgent;
+			public PolyNav.PolyNavAgent polyNavAgent;
 
 			public LayerMask layerMask;
 
@@ -33,18 +33,19 @@ namespace HackedDesign {
 				anim = transform.GetComponent<Animator> ();
 				sprites.Add (GetComponent<SpriteRenderer> ());
 				sprites.AddRange (GetComponentsInChildren<SpriteRenderer> ());
-				NavMeshAgent2D navMeshAgent = GetComponent<NavMeshAgent2D> ();
+				//polyNavAgent = GetComponent<PolyNav.PolyNavAgent>();
+				//NavMeshAgent2D navMeshAgent = GetComponent<NavMeshAgent2D> ();
 
 				randomColor = new Color (Random.Range (0.0f, 1.0f), Random.Range (0.0f, 1.0f), Random.Range (0.0f, 1.0f));
 				//player = CoreGame.instance.GetPlayer ().transform;
 
 			}
 
-			public void Initialize (CoreGame game, Level.Level level) {
-				this.game = game;
-				this.player = game.GetPlayer ().transform;
+			public void Initialize (Level.Level level, PolyNav.PolyNav2D polyNav2D) {
+				this.player = CoreGame.instance.GetPlayer ().transform;
 				this.level = level;
 				FaceDirection (direction);
+				this.polyNavAgent.map = polyNav2D;
 			}
 
 			public void Activate () {
@@ -92,7 +93,7 @@ namespace HackedDesign {
 					anim.SetFloat ("directionX", direction.x);
 					anim.SetFloat ("directionY", direction.y);
 
-					if (navMeshAgent.velocity.sqrMagnitude > 0.01f) {
+					if (polyNavAgent.currentSpeed > 0.01f) {
 						anim.SetBool ("isMoving", true);
 					}
 				}

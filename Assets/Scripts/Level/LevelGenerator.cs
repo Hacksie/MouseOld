@@ -16,7 +16,8 @@ namespace HackedDesign {
 			public LevelGenTemplate[] levelGenTemplates;
 			public List<GameObject> securityGuardEasyPrefabs;
 
-			public DynamicNavigation2D navigation2D;
+			public PolyNav.PolyNav2D polyNav2D;
+			
 
 			public void Initialize (GameObject parent) {
 				this.parent = parent;
@@ -55,9 +56,18 @@ namespace HackedDesign {
 				PopulateLevelTilemap (level);
 				//PopulateEndRooms (level);
 
-				navigation2D.BakeNavMesh2D ();
+				BoxCollider2D boxCollider = parent.GetComponent<BoxCollider2D>();
 
-				//PopulateLevelDoors (level);
+				boxCollider.size = new Vector2(genTemplate.levelWidth * 4, genTemplate.levelHeight * 4);
+				boxCollider.offset = (boxCollider.size / 2);
+
+
+				polyNav2D.GenerateMap ();
+				
+
+				//navigation2D.BakeNavMesh2D ();
+
+				PopulateLevelDoors (level);
 				PopulateSecurityGuards (level);
 				//level.Print ();
 
@@ -313,16 +323,16 @@ namespace HackedDesign {
 			}
 
 			private bool MatchSpriteName (string name, string corner, string wall1, string wall2) {
-				string[] nameSplit = name.ToUpper().Split ('_');
+				string[] nameSplit = name.ToUpper ().Split ('_');
 
 				if (nameSplit.Length != 4) {
-					Debug.Log("Invalid sprite name");
+					Debug.Log ("Invalid sprite name");
 					return false;
 				}
 
 				//Debug.Log("MATCH: " + nameSplit[0] + "_" + nameSplit[1] + "_" + nameSplit[2] + "_" + nameSplit[3] + " " + corner + "_" + wall1 + wall2 + " " + (nameSplit[2] == corner && nameSplit[3].Substring (0, 1) == wall1 && nameSplit[3].Substring (1, 1) == wall2));
 
-				return (nameSplit[2] == corner.ToUpper() && (nameSplit[3].Substring (0, 1) == "X" || nameSplit[3].Substring (0, 1) == wall1.ToUpper()) && (nameSplit[3].Substring (1, 1) == "X" || nameSplit[3].Substring (1, 1) == wall2.ToUpper()));
+				return (nameSplit[2] == corner.ToUpper () && (nameSplit[3].Substring (0, 1) == "X" || nameSplit[3].Substring (0, 1) == wall1.ToUpper ()) && (nameSplit[3].Substring (1, 1) == "X" || nameSplit[3].Substring (1, 1) == wall2.ToUpper ()));
 			}
 
 			public void PopulateLevelDoors (Level level) {

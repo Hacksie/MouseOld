@@ -45,7 +45,7 @@ namespace HackedDesign {
             }
 
             public void UpdateStanding () {
-                if (navMeshAgent != null) {
+                if (polyNavAgent != null) {
 
                     RaycastHit2D hit = CanSeePlayer ();
 
@@ -59,8 +59,8 @@ namespace HackedDesign {
 
             public void UpdatePatrolling () {
 
-                if (navMeshAgent != null) {
-
+                if (polyNavAgent != null) {
+                    
                     RaycastHit2D hit = CanSeePlayer ();
 
                     if (hit.transform != null) {
@@ -72,7 +72,11 @@ namespace HackedDesign {
                         }
                     }
 
-                    if (navMeshAgent.remainingDistance < 0.01f || ((Time.time - patrolLastCheck) > patrolSpeed)) {
+                    if (polyNavAgent.remainingDistance < 0.01f || ((Time.time - patrolLastCheck) > patrolSpeed)) {
+
+                        
+
+
                         patrolLastCheck = Time.time;
                         // Keep patrolling
                         var location = level.ConvertWorldToLevelPos (transform.position);
@@ -82,7 +86,9 @@ namespace HackedDesign {
 
                         if (currentDirections.Count > 0) {
                             currentDirection = currentDirections[0];
-                            navMeshAgent.SetDestination (level.ConvertLevelPosToWorld (currentDirection));
+
+                            polyNavAgent.SetDestination (level.ConvertLevelPosToWorld (currentDirection));
+                            
                         }
                         FaceDirection (level.ConvertLevelPosToWorld (currentDirection) - transform.position);
                     }
@@ -91,7 +97,7 @@ namespace HackedDesign {
 
             public void UpdateHunting () {
 
-                if (navMeshAgent != null) {
+                if (polyNavAgent != null) {
 
                     if ((player.position - transform.position).magnitude < fightDistance) {
                         state = EnemyState.FIGHTING;
@@ -105,7 +111,7 @@ namespace HackedDesign {
                         if (hit.transform.gameObject.tag == TagManager.PLAYER) {
                             huntingLastSeen = Time.time;
                             lastKnownLocation = player.position;
-                            navMeshAgent.SetDestination (lastKnownLocation);
+                            polyNavAgent.SetDestination (lastKnownLocation);
 
                             FaceDirection (lastKnownLocation - transform.position);
                             return;
@@ -121,7 +127,7 @@ namespace HackedDesign {
             }
 
             public void UpdateSeeking () {
-                if (navMeshAgent != null) {
+                if (polyNavAgent != null) {
 
                     if ((Time.time - huntingLastSeen) > seekTime) {
                         state = EnemyState.PATROLLING;
@@ -152,24 +158,25 @@ namespace HackedDesign {
             }
 
             public void OnDrawGizmos () {
-                if (Application.isPlaying) {
-                    RaycastHit2D hit = CanSeePlayer ();
+                // if (CoreGame.instance.state == GameState.PLAYING && this.player) {
+                //     RaycastHit2D hit = CanSeePlayer ();
 
-                    Color debugColor = Color.white;
-                    if (hit.transform != null) {
-                        if (hit.transform.gameObject.tag == TagManager.PLAYER) {
-                            debugColor = Color.red;
-                        } else {
-                            debugColor = Color.yellow;
-                        }
-                    }
+                //     Color debugColor = Color.white;
+                //     if (hit.transform != null) {
+                //         if (hit.transform.gameObject.tag == TagManager.PLAYER) {
+                //             debugColor = Color.red;
+                //         } else {
+                //             debugColor = Color.yellow;
+                //         }
+                //     }
+                
 
-                    Debug.DrawRay (transform.position, (player.position - transform.position), debugColor);
+                //     Debug.DrawRay (transform.position, (player.position - transform.position), debugColor);
 
-                    foreach (var d in currentDirections) {
-                        Debug.DrawLine (transform.position, level.ConvertLevelPosToWorld (d), Color.magenta);
-                    }
-                }
+                //     foreach (var d in currentDirections) {
+                //         Debug.DrawLine (transform.position, level.ConvertLevelPosToWorld (d), Color.magenta);
+                //     }
+                // }
 
             }
 

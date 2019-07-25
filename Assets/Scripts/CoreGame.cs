@@ -169,7 +169,7 @@ namespace HackedDesign {
 				NPC.BaseNPCController npc = npcObject.GetComponent<NPC.BaseNPCController> ();
 				if (npc != null) {
 					npcList.Add (npc);
-					npc.Initialize (this, level);
+					npc.Initialize (level, levelGenerator.polyNav2D);
 				}
 			}
 		}
