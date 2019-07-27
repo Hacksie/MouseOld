@@ -145,8 +145,7 @@ namespace HackedDesign {
 
             public void UpdateFighting () {
                 //FaceDirection (player.position - transform.position);
-                game.GameOver ();
-
+                CoreGame.instance.GameOver ();
             }
 
             public void OnCollisionEnter2D (Collision2D collision) {

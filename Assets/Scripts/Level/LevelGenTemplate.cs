@@ -13,13 +13,11 @@ namespace HackedDesign
 			public int levelLength = 7;
 			public int levelWidth = 10;
 			public int levelHeight = 10;
-			public int securityGuards = 0;
+			public int enemies = 0;
 
 			public bool generateDoors = true;
 
 			public string startingChunkString = "wdww";
-
-			public string levelNameTemplate;
 
 			public bool isRandom;
 

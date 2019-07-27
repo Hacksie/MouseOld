@@ -55,8 +55,9 @@ namespace HackedDesign {
 				//moveState = MoveState.Stand;
 				moveVector = Vector2.zero;
 				//anim.SetMoving(false);
-
-				anim.SetBool ("isMoving", false);
+				if (anim != null) {
+					anim.SetBool ("isMoving", false);
+				}
 			}
 		}
 
@@ -66,7 +67,7 @@ namespace HackedDesign {
 			//anim.Play ("Dead");
 		}
 
-		public void StandUp() {
+		public void StandUp () {
 			lyingDown = false;
 			//anim.Play ("Stand Tree");
 		}

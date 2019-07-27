@@ -17,13 +17,16 @@ namespace HackedDesign {
 			public List<GameObject> securityGuardEasyPrefabs;
 
 			public PolyNav.PolyNav2D polyNav2D;
-			
 
 			public void Initialize (GameObject parent) {
 				this.parent = parent;
 			}
 
-			public Level GenerateLevel (string name, string template) {
+			public Level GenerateLevel (string template) {
+				return GenerateLevel (template, 0, 0, 0, 0, 0);
+			}
+
+			public Level GenerateLevel (string template, int length, int height, int width, int difficulty, int enemies) {
 				Debug.Log ("Generating Level");
 				DestroyLevel ();
 
@@ -37,7 +40,23 @@ namespace HackedDesign {
 					return null;
 				}
 
+				Debug.Log (template);
+
 				var genTemplate = GetLevelGenTemplate (template);
+
+				if (length > 0) {
+					genTemplate.levelLength = length;
+				}
+
+				if (height > 0) {
+					genTemplate.levelHeight = height;
+				}
+
+				if (width > 0) {
+					genTemplate.levelWidth = width;
+				}
+
+				genTemplate.enemies = enemies;
 
 				if (genTemplate == null) {
 					Debug.LogError ("No level gen template found: " + template);
@@ -47,8 +66,8 @@ namespace HackedDesign {
 				Level level;
 
 				if (genTemplate.isRandom) {
-					int seed = UnityEngine.Random.seed;
-					level = GenerateRandomLevel (name, genTemplate, seed);
+					//int seed = UnityEngine.Random.seed;
+					level = GenerateRandomLevel (genTemplate);
 				} else {
 					return null;
 				}
@@ -56,14 +75,12 @@ namespace HackedDesign {
 				PopulateLevelTilemap (level);
 				//PopulateEndRooms (level);
 
-				BoxCollider2D boxCollider = parent.GetComponent<BoxCollider2D>();
+				BoxCollider2D boxCollider = parent.GetComponent<BoxCollider2D> ();
 
-				boxCollider.size = new Vector2(genTemplate.levelWidth * 4, genTemplate.levelHeight * 4);
+				boxCollider.size = new Vector2 (genTemplate.levelWidth * 4, genTemplate.levelHeight * 4);
 				boxCollider.offset = (boxCollider.size / 2);
 
-
 				polyNav2D.GenerateMap ();
-				
 
 				//navigation2D.BakeNavMesh2D ();
 
@@ -90,7 +107,7 @@ namespace HackedDesign {
 			}
 
 			// Template -> Generate -> GeneratedLevel
-			protected Level GenerateRandomLevel (string name, LevelGenTemplate genTemplate, int seed) {
+			protected Level GenerateRandomLevel (LevelGenTemplate genTemplate) {
 
 				var level = new Level (genTemplate);
 				var position = GenerateStartingLocation (level);
@@ -232,13 +249,13 @@ namespace HackedDesign {
 								GameObject.Instantiate (level.template.floor, pos, Quaternion.identity, parent.transform);
 							}
 
-							PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "WALLS", level.template);
+							PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "WALLS", level.template, false);
 							if (level.proxyLevel[j, i].isEntry) {
-								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "ENTRY", level.template);
+								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "ENTRY", level.template, false);
 							} else if (level.proxyLevel[j, i].isEnd) {
-								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "END", level.template);
+								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "END", level.template, false);
 							} else {
-								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "RANDOM", level.template);
+								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "RANDOM", level.template, true);
 							}
 
 						}
@@ -246,40 +263,50 @@ namespace HackedDesign {
 				}
 			}
 
-			public void PopulateRoomSprites (ProxyChunk proxyChunk, Vector3 pos, Transform parent, string type, LevelGenTemplate template) {
+			public void PopulateRoomSprites (ProxyChunk proxyChunk, Vector3 pos, Transform parent, string type, LevelGenTemplate template, bool allowEmpty) {
 				string chunkString = proxyChunk.AsPrintableString ();
 
 				// TL
-				List<GameObject> goTLList = FindChunkObject ("tl", chunkString.Substring (0, 1), chunkString.Substring (1, 1), type, template).ToList ();
+				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
 
-				goTLList.Randomize ();
+					List<GameObject> goTLList = FindChunkObject ("tl", chunkString.Substring (0, 1), chunkString.Substring (1, 1), type, template).ToList ();
 
-				if (goTLList.FirstOrDefault () != null) {
-					GameObject.Instantiate (goTLList[0], pos, Quaternion.identity, parent.transform);
+					goTLList.Randomize ();
+
+					if (goTLList.FirstOrDefault () != null) {
+						GameObject.Instantiate (goTLList[0], pos, Quaternion.identity, parent.transform);
+					}
 				}
 
 				// TR
-				List<GameObject> goTRList = FindChunkObject ("tr", chunkString.Substring (3, 1), chunkString.Substring (1, 1), type, template).ToList ();
-				goTRList.Randomize ();
 
-				if (goTRList.FirstOrDefault () != null) {
-					GameObject.Instantiate (goTRList[0], pos, Quaternion.identity, parent.transform);
+				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
+					List<GameObject> goTRList = FindChunkObject ("tr", chunkString.Substring (3, 1), chunkString.Substring (1, 1), type, template).ToList ();
+					goTRList.Randomize ();
+
+					if (goTRList.FirstOrDefault () != null) {
+						GameObject.Instantiate (goTRList[0], pos, Quaternion.identity, parent.transform);
+					}
 				}
 
 				// BL
-				List<GameObject> goBList = FindChunkObject ("bl", chunkString.Substring (0, 1), chunkString.Substring (2, 1), type, template).ToList ();
-				goBList.Randomize ();
+				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
+					List<GameObject> goBList = FindChunkObject ("bl", chunkString.Substring (0, 1), chunkString.Substring (2, 1), type, template).ToList ();
+					goBList.Randomize ();
 
-				if (goBList.FirstOrDefault () != null) {
-					GameObject.Instantiate (goBList[0], pos, Quaternion.identity, parent.transform);
+					if (goBList.FirstOrDefault () != null) {
+						GameObject.Instantiate (goBList[0], pos, Quaternion.identity, parent.transform);
+					}
 				}
 
 				// BR
-				List<GameObject> goBRist = FindChunkObject ("br", chunkString.Substring (3, 1), chunkString.Substring (2, 1), type, template).ToList ();
-				goBRist.Randomize ();
+				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
+					List<GameObject> goBRist = FindChunkObject ("br", chunkString.Substring (3, 1), chunkString.Substring (2, 1), type, template).ToList ();
+					goBRist.Randomize ();
 
-				if (goBRist.FirstOrDefault () != null) {
-					GameObject.Instantiate (goBRist[0], pos, Quaternion.identity, parent.transform);
+					if (goBRist.FirstOrDefault () != null) {
+						GameObject.Instantiate (goBRist[0], pos, Quaternion.identity, parent.transform);
+					}
 				}
 			}
 
@@ -330,9 +357,29 @@ namespace HackedDesign {
 					return false;
 				}
 
+				string open = "OAXY";
+				string door = "DAXZ";
+				string wall = "WAYZ";
+
+
+
+				//Debug.Log(wall1.ToUpper () + nameSplit[3].Substring (0, 1));
+				//Debug.Log(wall2.ToUpper () + nameSplit[3].Substring (1, 1));
+
+				string first = nameSplit[3].Substring (0, 1);
+				string second = nameSplit[3].Substring (1, 1);
+
+				return (nameSplit[2] == corner.ToUpper () &&
+					((wall1.ToUpper () == "O" && open.IndexOf (first) >= 0) ||
+					(wall1.ToUpper () == "D" && door.IndexOf (first) >= 0) ||
+					(wall1.ToUpper () == "W" && wall.IndexOf (first) >= 0)) &&
+					((wall2.ToUpper () == "O" && open.IndexOf (second) >= 0) ||
+					(wall2.ToUpper () == "D" && door.IndexOf (second) >= 0) ||
+					(wall2.ToUpper () == "W" && wall.IndexOf (second) >= 0)));
+
 				//Debug.Log("MATCH: " + nameSplit[0] + "_" + nameSplit[1] + "_" + nameSplit[2] + "_" + nameSplit[3] + " " + corner + "_" + wall1 + wall2 + " " + (nameSplit[2] == corner && nameSplit[3].Substring (0, 1) == wall1 && nameSplit[3].Substring (1, 1) == wall2));
 
-				return (nameSplit[2] == corner.ToUpper () && (nameSplit[3].Substring (0, 1) == "X" || nameSplit[3].Substring (0, 1) == wall1.ToUpper ()) && (nameSplit[3].Substring (1, 1) == "X" || nameSplit[3].Substring (1, 1) == wall2.ToUpper ()));
+				//return (nameSplit[2] == corner.ToUpper () && (nameSplit[3].Substring (0, 1) == "X" || nameSplit[3].Substring (0, 1) == wall1.ToUpper ()) && (nameSplit[3].Substring (1, 1) == "X" || nameSplit[3].Substring (1, 1) == wall2.ToUpper ()));
 			}
 
 			public void PopulateLevelDoors (Level level) {
@@ -380,7 +427,7 @@ namespace HackedDesign {
 				}
 
 				for (int i = 0; i < spawnLocationList.Count; i++) {
-					if (i >= level.template.securityGuards) {
+					if (i >= level.template.enemies) {
 						break;
 					}
 

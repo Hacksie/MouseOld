@@ -7,7 +7,6 @@ namespace HackedDesign {
 	namespace NPC {
 		public class BaseNPCController : MonoBehaviour {
 
-			protected CoreGame game;
 			protected Animator anim; //The parent animator.
 
 			public bool facePlayer = true;

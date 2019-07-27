@@ -9,8 +9,10 @@ namespace HackedDesign {
 
 			MobileInputUI mobileInput;
 
-			public AndroidInputController(MobileInputUI mobileInputUI)
-			{
+			bool startButtonDown;
+			bool selectButtonDown;
+
+			public AndroidInputController (MobileInputUI mobileInputUI) {
 				this.mobileInput = mobileInputUI;
 			}
 
@@ -43,7 +45,7 @@ namespace HackedDesign {
 				Vector2 nativeAxis = GetNativeAxis ();
 				Vector2 mobileAxis = GetMobileAxis ();
 
-				Debug.Log(mobileAxis);
+				//Debug.Log(mobileAxis);
 
 				return ClampInputAxis (nativeAxis, mobileAxis);
 
@@ -53,9 +55,7 @@ namespace HackedDesign {
 				return new Vector2 (UnityEngine.Input.GetAxis ("Horizontal"), UnityEngine.Input.GetAxis ("Vertical"));
 			}
 
-
-			private Vector2 ClampInputAxis(Vector2 native, Vector2 mobile)
-			{
+			private Vector2 ClampInputAxis (Vector2 native, Vector2 mobile) {
 				var clamped = native + mobile;
 
 				clamped.x = clamped.x < -1 ? -1 : clamped.x;
@@ -64,17 +64,34 @@ namespace HackedDesign {
 				clamped.y = clamped.y > 1 ? 1 : clamped.y;
 
 				return clamped;
-			}			
+			}
 
 			public void ResetInput () {
 				UnityEngine.Input.ResetInputAxes ();
 			}
 
 			public bool StartButtonUp () {
+
+				if (mobileInput.mobileStart) {
+					startButtonDown = true;
+				} else if (startButtonDown) {
+					startButtonDown = false;
+					return true;
+
+				}
+
 				return UnityEngine.Input.GetButtonUp ("Start");
 			}
 
 			public bool SelectButtonUp () {
+
+				if (mobileInput.mobileSelect) {
+					selectButtonDown = true;
+				} else if (selectButtonDown) {
+					selectButtonDown = false;
+					return true;
+				}
+
 				return UnityEngine.Input.GetButtonUp ("Select");
 			}
 

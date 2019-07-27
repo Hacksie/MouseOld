@@ -14,6 +14,9 @@ namespace HackedDesign {
 		public GameState state = GameState.LOADING;
 
 		private Input.IInputController inputController;
+		public RuntimePlatform testPlatform;
+		public bool testPlatformFlag;
+
 		public Input.MobileInputUI mobileInputUI;
 
 		//public DesktopInputController desktopInputController;
@@ -21,7 +24,7 @@ namespace HackedDesign {
 		// Make this a tagged item	
 		public MainMenu MainMenu;
 
-		private GameObject player;
+		public GameObject player;
 		private PlayerController playerController;
 		public StartMenuManager startMenuManager;
 		public StartMenuPanelPresenter startMenuPanel;
@@ -81,55 +84,74 @@ namespace HackedDesign {
 			infoPanel.Initialize (infoManager);
 			RepaintAll ();
 
+
+			ShowPlayer (false);
 			MainMenu.gameObject.SetActive (true);
 		}
 
 		private void SetPlatformInput () {
-			switch (Application.platform) {
+			switch (testPlatformFlag ? testPlatform : Application.platform) {
 				case RuntimePlatform.Android:
 					Debug.Log ("Android");
 					inputController = new Input.AndroidInputController (mobileInputUI);
 					break;
 				default:
 					Debug.Log ("Default platform");
-					inputController = new Input.AndroidInputController (mobileInputUI);
-					//inputController = new Input.DesktopInputController ();
+					//inputController = new Input.AndroidInputController (mobileInputUI);
+					inputController = new Input.DesktopInputController ();
 					break;
 			}
-
-			
 
 		}
 
 		public void LoadNewGame () {
 			CoreGame.instance.Initialization ();
 			//CoreGame.instance.SceneInitialize ("Jennifer's Room", "Jennifer's Room");
-			CoreGame.instance.SceneInitialize ("Easy Magenta Lab", "Easy Magenta Lab");
+			CoreGame.instance.SceneInitialize ("Easy Magenta Lab", 7, 10, 10, 0, 2);
 			MainMenu.HideMainMenu ();
 
 		}
 
+		public void LoadRandomGame (string template, int length, int height, int width, int difficulty, int enemies) {
+			CoreGame.instance.SceneInitialize (template, length, height, width, difficulty, enemies);
+			MainMenu.HideMainMenu ();
+		}
+
 		public void EndGame () {
 			state = GameState.MAINMENU;
+			RepaintAll ();
 			levelGenerator.DestroyLevel ();
 			npcList.Clear ();
+			ShowPlayer (false);
 
 			Time.timeScale = 0;
 			MainMenu.ShowMainMenu ();
 		}
 
+		public void SceneInitialize (string levelGenTemplate) {
+			SceneInitialize (levelGenTemplate, 0, 0, 0, 0, 0);
+		}
+
+		private void ShowPlayer (bool flag) {
+			if (player != null) {
+				player.SetActive (flag);
+			}
+		}
+
 		/// <summary>
 		/// Run this each time the scene is changed
 		/// </summary>
-		public void SceneInitialize (string name, string levelGenTemplate) {
+		public void SceneInitialize (string levelGenTemplate, int length, int height, int width, int difficulty, int enemies) {
 			state = GameState.LOADING;
 			Debug.Log ("Scene Initialization");
-			player = GameObject.FindWithTag (TagManager.PLAYER);
+
+			ShowPlayer (true);
+			//player = GameObject.FindWithTag (TagManager.PLAYER);
 
 			GameObject environmentObj = GameObject.FindWithTag (TagManager.ENVIRONMENT);
 			levelGenerator.Initialize (environmentObj);
 
-			Level.Level level = levelGenerator.GenerateLevel (name, levelGenTemplate);
+			Level.Level level = levelGenerator.GenerateLevel (levelGenTemplate, length, height, width, difficulty, enemies);
 			player.transform.position = level.ConvertLevelPosToWorld (level.spawn);
 
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
@@ -153,7 +175,7 @@ namespace HackedDesign {
 				Debug.LogWarning ("No starting stories set");
 			}
 
-			timer.Start ();
+			//timer.Start ();
 		}
 
 		void RepaintAll () {

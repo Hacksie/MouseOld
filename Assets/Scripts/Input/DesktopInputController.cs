@@ -23,7 +23,7 @@ namespace HackedDesign {
 
 			public void ResetInput () {
 				UnityEngine.Input.ResetInputAxes ();
-			}			
+			}		
 
 			public bool StartButtonUp () {
 				return UnityEngine.Input.GetButtonUp ("Start");
