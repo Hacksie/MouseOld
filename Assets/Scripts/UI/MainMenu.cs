@@ -11,6 +11,7 @@ namespace HackedDesign {
 
 		public GameObject optionsPanel;
 		public GameObject creditsPanel;
+		public GameObject randomPanel;
 		public UnityEngine.UI.Dropdown resolutions;
 		public UnityEngine.UI.Toggle windowToggle;
 		public UnityEngine.UI.Slider masterSlider;
@@ -26,38 +27,7 @@ namespace HackedDesign {
 			PopulateAudioSliders();
 		}
 
-		public void PopulateResolutions()
-		{
-			resolutions.ClearOptions();
-			resolutions.AddOptions(Screen.resolutions.ToList().ConvertAll(r => new UnityEngine.UI.Dropdown.OptionData(r.ToString())));
 
-			resolutions.value = Screen.resolutions.ToList().IndexOf(Screen.currentResolution);
-		}
-
-		public void SetResolution()
-		{
-			Resolution res = Screen.resolutions.ToList()[resolutions.value];
-			Screen.SetResolution(res.width, res.height, windowToggle.isOn, res.refreshRate);
-		}
-
-		public void PopulateAudioSliders()
-		{
-			float masterVolume;
-			float ambientVolume;
-			float fxVolume;
-			float musicVolume;
-			masterMixer.GetFloat("MasterVolume", out masterVolume);
-			masterMixer.GetFloat("AmbientVolume", out ambientVolume);
-			masterMixer.GetFloat("FXVolume", out fxVolume);
-			masterMixer.GetFloat("MusicVolume", out musicVolume);
-
-			masterSlider.value = (masterVolume + 80) / 100;
-			ambientSlider.value = (ambientVolume + 80) / 100;
-			fxSlider.value = (fxVolume + 80) / 100;
-			musicSlider.value = (musicVolume + 80) / 100;
-			//Debug.Log(masterVolume);
-			
-		}
 
 		public void ShowOptionsPanel(bool show)
 		{
@@ -75,31 +45,50 @@ namespace HackedDesign {
 			}
 		}
 
+		public void ShowRandomPanel(bool show)
+		{
+			if(randomPanel != null)
+			{
+				randomPanel.SetActive(show);
+			}
+		}
+
 
 		public void ContinueEvent () {
 			Debug.Log ("Continue Event");
 			ShowCreditsPanel(false);
-			ShowOptionsPanel(false);			
+			ShowOptionsPanel(false);
+			ShowRandomPanel(false);
+		
 		}
 
 		public void NewGameEvent () {
 			Debug.Log ("New Game Event");
 			ShowCreditsPanel(false);
 			ShowOptionsPanel(false);
+			ShowRandomPanel(false);
 			CoreGame.instance.LoadNewGame();
 			//StartCoroutine (LoadNewGameScenes ( "IntroRoom", "IntroRoom"));
+		}
+
+		public void RandomGameEvent() {
+			Debug.Log ("Random Game Event");
+			ShowCreditsPanel(false);
+			ShowOptionsPanel(false);			
 		}
 
 		public void OptionsEvent () {
 			Debug.Log ("Options Event");
 			ShowCreditsPanel(false);
 			ShowOptionsPanel(true);
+			ShowRandomPanel(false);
 		}
 
 		public void CreditsEvent () {
 			Debug.Log ("Credits Event");
 			ShowCreditsPanel(true);
-			ShowOptionsPanel(false);			
+			ShowOptionsPanel(false);
+			ShowRandomPanel(false);			
 		}
 
 		public void QuitEvent () {
@@ -118,55 +107,38 @@ namespace HackedDesign {
 			gameObject.SetActive(true);
 		}			
 
+		private void PopulateResolutions()
+		{
+			resolutions.ClearOptions();
+			resolutions.AddOptions(Screen.resolutions.ToList().ConvertAll(r => new UnityEngine.UI.Dropdown.OptionData(r.ToString())));
 
-		// IEnumerator LoadNewGameScenes (string levelName, string levelGenTemplate) {
-		// 	Debug.Log ("Loading new game scenes");
+			resolutions.value = Screen.resolutions.ToList().IndexOf(Screen.currentResolution);
+		}
 
-		// 	AsyncOperation asyncLoadBaseScene = SceneManager.LoadSceneAsync ("Core", LoadSceneMode.Additive);
-		// 	asyncLoadBaseScene.allowSceneActivation = false;
+		private void SetResolution()
+		{
+			Resolution res = Screen.resolutions.ToList()[resolutions.value];
+			Screen.SetResolution(res.width, res.height, windowToggle.isOn, res.refreshRate);
+		}
 
-		// 	yield return null;
+		private void PopulateAudioSliders()
+		{
+			float masterVolume;
+			float ambientVolume;
+			float fxVolume;
+			float musicVolume;
+			masterMixer.GetFloat("MasterVolume", out masterVolume);
+			masterMixer.GetFloat("AmbientVolume", out ambientVolume);
+			masterMixer.GetFloat("FXVolume", out fxVolume);
+			masterMixer.GetFloat("MusicVolume", out musicVolume);
 
-		// 	//Wait until we are done loading the scene
-		// 	while (asyncLoadBaseScene.progress < 0.9f) {
-		// 		Debug.Log ("Loading scene #:" + "Core" + " [][] Progress: " + asyncLoadBaseScene.progress);
-		// 		yield return null;
-		// 	}
-
-		// 	Debug.Log ("Core ready");
-
-		// 	// AsyncOperation asyncLoadRubyScene = SceneManager.LoadSceneAsync (newGameScene, LoadSceneMode.Additive);
-		// 	// asyncLoadRubyScene.allowSceneActivation = false;
-
-		// 	// yield return null;
-
-		// 	// //Wait until we are done loading the scene
-		// 	// while (asyncLoadRubyScene.progress < 0.9f) {
-		// 	// 	Debug.Log ("Loading scene #:" + newGameScene + " [][] Progress: " + asyncLoadRubyScene.progress);
-		// 	// 	yield return null;
-		// 	// }
-
-		// 	// Debug.Log (newGameScene +" ready");
-
-		// 	asyncLoadBaseScene.allowSceneActivation = true;
-		// 	//asyncLoadRubyScene.allowSceneActivation = true;
-
+			masterSlider.value = (masterVolume + 80) / 100;
+			ambientSlider.value = (ambientVolume + 80) / 100;
+			fxSlider.value = (fxVolume + 80) / 100;
+			musicSlider.value = (musicVolume + 80) / 100;
+			//Debug.Log(masterVolume);
 			
-
-		// 	while (!asyncLoadBaseScene.isDone ) {
-		// 		Debug.Log ("Activating scenes");
-		// 		yield return null;
-		// 	}
-
-		// 	SceneManager.SetActiveScene (SceneManager.GetSceneByName ("Core"));
-
-		// 	SceneManager.UnloadScene ("MainMenu");
-			
-		// 	CoreGame.instance.Initialization ();
-		// 	//CoreGame.instance.SceneInitialize ("Jennifer's Room", "Jennifer's Room");
-		// 	CoreGame.instance.SceneInitialize ("Easy Magenta", "Easy Magenta");
-
-		// }
+		}
 	}
 }
 

@@ -7,14 +7,64 @@ namespace HackedDesign {
 
 		public class AndroidInputController : IInputController {
 
-			private bool mobileLeft;
-			private bool mobileRight;
-			private bool mobileUp;
-			private bool mobileDown;
+			MobileInputUI mobileInput;
+
+			public AndroidInputController(MobileInputUI mobileInputUI)
+			{
+				this.mobileInput = mobileInputUI;
+			}
+
+			public bool ShowMobileInput () {
+				return true;
+			}
+
+			private Vector2 GetMobileAxis () {
+				Vector2 mobileAxis = Vector2.zero;
+				if (mobileInput.mobileLeft) {
+					mobileAxis.x -= 1;
+				}
+
+				if (mobileInput.mobileRight) {
+					mobileAxis.x += 1;
+				}
+
+				if (mobileInput.mobileUp) {
+					mobileAxis.y += 1;
+				}
+
+				if (mobileInput.mobileDown) {
+					mobileAxis.y -= 1;
+				}
+
+				return mobileAxis;
+			}
 
 			public Vector2 GetMovementAxis () {
+				Vector2 nativeAxis = GetNativeAxis ();
+				Vector2 mobileAxis = GetMobileAxis ();
+
+				Debug.Log(mobileAxis);
+
+				return ClampInputAxis (nativeAxis, mobileAxis);
+
+			}
+
+			public Vector2 GetNativeAxis () {
 				return new Vector2 (UnityEngine.Input.GetAxis ("Horizontal"), UnityEngine.Input.GetAxis ("Vertical"));
 			}
+
+
+			private Vector2 ClampInputAxis(Vector2 native, Vector2 mobile)
+			{
+				var clamped = native + mobile;
+
+				clamped.x = clamped.x < -1 ? -1 : clamped.x;
+				clamped.x = clamped.x > 1 ? 1 : clamped.x;
+				clamped.y = clamped.y < -1 ? -1 : clamped.y;
+				clamped.y = clamped.y > 1 ? 1 : clamped.y;
+
+				return clamped;
+			}			
 
 			public void ResetInput () {
 				UnityEngine.Input.ResetInputAxes ();
@@ -32,58 +82,83 @@ namespace HackedDesign {
 				return UnityEngine.Input.GetButtonUp ("Interact");
 			}
 
-			private Vector2 GetMobileAxis () {
-				Vector2 mobileAxis = Vector2.zero;
-				if (mobileLeft) {
-					mobileAxis.x -= 1;
-				}
+			// private bool mobileLeft;
+			// private bool mobileRight;
+			// private bool mobileUp;
+			// private bool mobileDown;
 
-				if (mobileRight) {
-					mobileAxis.x += 1;
-				}
+			// public Vector2 GetMovementAxis () {
+			// 	return new Vector2 (UnityEngine.Input.GetAxis ("Horizontal"), UnityEngine.Input.GetAxis ("Vertical"));
+			// }
 
-				if (mobileUp) {
-					mobileAxis.y += 1;
-				}
+			// public void ResetInput () {
+			// 	UnityEngine.Input.ResetInputAxes ();
+			// }
 
-				if (mobileDown) {
-					mobileAxis.y -= 1;
-				}
+			// public bool StartButtonUp () {
+			// 	return UnityEngine.Input.GetButtonUp ("Start");
+			// }
 
-				return mobileAxis;
-			}
+			// public bool SelectButtonUp () {
+			// 	return UnityEngine.Input.GetButtonUp ("Select");
+			// }
 
-			private void LeftMobileButtonDown () {
-				mobileLeft = true;
-			}
+			// public bool InteractButtonUp () {
+			// 	return UnityEngine.Input.GetButtonUp ("Interact");
+			// }
 
-			private void LeftMobileButtonUp () {
-				mobileLeft = false;
-			}
+			// private Vector2 GetMobileAxis () {
+			// 	Vector2 mobileAxis = Vector2.zero;
+			// 	if (mobileLeft) {
+			// 		mobileAxis.x -= 1;
+			// 	}
 
-			private void RightMobileButtonDown () {
-				mobileRight = true;
-			}
+			// 	if (mobileRight) {
+			// 		mobileAxis.x += 1;
+			// 	}
 
-			private void RightMobileButtonUp () {
-				mobileRight = false;
-			}
+			// 	if (mobileUp) {
+			// 		mobileAxis.y += 1;
+			// 	}
 
-			private void UpMobileButtonDown () {
-				mobileUp = true;
-			}
+			// 	if (mobileDown) {
+			// 		mobileAxis.y -= 1;
+			// 	}
 
-			private void UpMobileButtonUp () {
-				mobileUp = false;
-			}
+			// 	return mobileAxis;
+			// }
 
-			private void DownMobileButtonDown () {
-				mobileDown = true;
-			}
+			// private void LeftMobileButtonDown () {
+			// 	mobileLeft = true;
+			// }
 
-			private void DownMobileButtonUp () {
-				mobileDown = false;
-			}
+			// private void LeftMobileButtonUp () {
+			// 	mobileLeft = false;
+			// }
+
+			// private void RightMobileButtonDown () {
+			// 	mobileRight = true;
+			// }
+
+			// private void RightMobileButtonUp () {
+			// 	mobileRight = false;
+			// }
+
+			// private void UpMobileButtonDown () {
+			// 	mobileUp = true;
+			// }
+
+			// private void UpMobileButtonUp () {
+			// 	mobileUp = false;
+			// }
+
+			// private void DownMobileButtonDown () {
+			// 	mobileDown = true;
+			// }
+
+			// private void DownMobileButtonUp () {
+			// 	mobileDown = false;
+			// }
 
 		}
 	}

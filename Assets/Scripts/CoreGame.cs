@@ -13,7 +13,10 @@ namespace HackedDesign {
 		[SerializeField]
 		public GameState state = GameState.LOADING;
 
-		private Input.IInputController inputController = new Input.DesktopInputController ();
+		private Input.IInputController inputController;
+		public Input.MobileInputUI mobileInputUI;
+
+		//public DesktopInputController desktopInputController;
 
 		// Make this a tagged item	
 		public MainMenu MainMenu;
@@ -51,8 +54,9 @@ namespace HackedDesign {
 		/// Run in editor
 		/// </summary>
 		void Start () {
+
 			Initialization ();
-			MainMenu.gameObject.SetActive(true);
+
 		}
 
 		/// <summary>
@@ -61,6 +65,8 @@ namespace HackedDesign {
 		public void Initialization () {
 			state = GameState.LOADING;
 			Debug.Log ("Initialization");
+
+			SetPlatformInput ();
 
 			timerPanel.Initialize (this.timer);
 
@@ -75,29 +81,42 @@ namespace HackedDesign {
 			infoPanel.Initialize (infoManager);
 			RepaintAll ();
 
-		}		
-
-		public void LoadNewGame()
-		{	
-			CoreGame.instance.Initialization ();
-			//CoreGame.instance.SceneInitialize ("Jennifer's Room", "Jennifer's Room");
-			CoreGame.instance.SceneInitialize ("Easy Magenta Lab", "Easy Magenta Lab");			
-			MainMenu.HideMainMenu();
-
-		}	
-
-		public void EndGame()
-		{
-			state = GameState.MAINMENU;
-			levelGenerator.DestroyLevel();
-			npcList.Clear ();
-			
-			Time.timeScale = 0;
-			MainMenu.ShowMainMenu();			
+			MainMenu.gameObject.SetActive (true);
 		}
 
+		private void SetPlatformInput () {
+			switch (Application.platform) {
+				case RuntimePlatform.Android:
+					Debug.Log ("Android");
+					inputController = new Input.AndroidInputController (mobileInputUI);
+					break;
+				default:
+					Debug.Log ("Default platform");
+					inputController = new Input.AndroidInputController (mobileInputUI);
+					//inputController = new Input.DesktopInputController ();
+					break;
+			}
 
+			
 
+		}
+
+		public void LoadNewGame () {
+			CoreGame.instance.Initialization ();
+			//CoreGame.instance.SceneInitialize ("Jennifer's Room", "Jennifer's Room");
+			CoreGame.instance.SceneInitialize ("Easy Magenta Lab", "Easy Magenta Lab");
+			MainMenu.HideMainMenu ();
+
+		}
+
+		public void EndGame () {
+			state = GameState.MAINMENU;
+			levelGenerator.DestroyLevel ();
+			npcList.Clear ();
+
+			Time.timeScale = 0;
+			MainMenu.ShowMainMenu ();
+		}
 
 		/// <summary>
 		/// Run this each time the scene is changed
@@ -109,8 +128,6 @@ namespace HackedDesign {
 
 			GameObject environmentObj = GameObject.FindWithTag (TagManager.ENVIRONMENT);
 			levelGenerator.Initialize (environmentObj);
-
-			
 
 			Level.Level level = levelGenerator.GenerateLevel (name, levelGenTemplate);
 			player.transform.position = level.ConvertLevelPosToWorld (level.spawn);
@@ -146,6 +163,7 @@ namespace HackedDesign {
 			selectMenuPanel.Show (false);
 			worldMapPanel.Show (false);
 			timerPanel.Repaint ();
+			mobileInputUI.gameObject.SetActive (false);
 		}
 
 		void SceneTriggersInitialize () {
@@ -178,8 +196,8 @@ namespace HackedDesign {
 			return player;
 		}
 
-		public void GameOver() {
-			Debug.Log("GameOver");
+		public void GameOver () {
+			Debug.Log ("GameOver");
 			state = GameState.GAMEOVER;
 		}
 
@@ -192,6 +210,8 @@ namespace HackedDesign {
 			narrationPanel.Show (false);
 			dialoguePanel.Show (false);
 			worldMapPanel.Show (false);
+
+			mobileInputUI.gameObject.SetActive (inputController.ShowMobileInput ());
 			//Cursor.visible = false;
 		}
 
@@ -219,7 +239,6 @@ namespace HackedDesign {
 			//Cursor.visible = true;
 		}
 
-
 		void Update () {
 
 			switch (state) {
@@ -232,6 +251,7 @@ namespace HackedDesign {
 					if (inputController.StartButtonUp ()) {
 						Debug.Log ("Show start menu");
 						Cursor.visible = true;
+						mobileInputUI.gameObject.SetActive (false);
 						state = GameState.STARTMENU;
 						startMenuPanel.Show (true);
 					}
@@ -239,6 +259,7 @@ namespace HackedDesign {
 					if (inputController.SelectButtonUp ()) {
 						Debug.Log ("Show select menu");
 						Cursor.visible = true;
+						mobileInputUI.gameObject.SetActive (false);
 						state = GameState.SELECTMENU;
 						selectMenuPanel.Show (true);
 					}
@@ -249,6 +270,7 @@ namespace HackedDesign {
 					if (inputController.StartButtonUp ()) {
 						Debug.Log ("Hide start menu");
 						state = GameState.PLAYING;
+						SetResume ();
 						//startMenuPanel.Repaint ();
 						//HideStartMenu ();
 					}
@@ -264,7 +286,7 @@ namespace HackedDesign {
 					break;
 
 				case GameState.GAMEOVER:
-					EndGame();
+					EndGame ();
 					break;
 
 			}

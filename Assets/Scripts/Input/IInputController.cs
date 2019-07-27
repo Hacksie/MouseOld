@@ -6,6 +6,7 @@ namespace HackedDesign {
 	namespace Input {
 
 		public interface IInputController {
+			bool ShowMobileInput();
 			Vector2 GetMovementAxis();
 			bool StartButtonUp();
 			bool SelectButtonUp();
