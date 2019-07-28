@@ -249,13 +249,13 @@ namespace HackedDesign {
 								GameObject.Instantiate (level.template.floor, pos, Quaternion.identity, parent.transform);
 							}
 
-							PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "WALLS", level.template, false);
+							PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "walls", level.template, false);
 							if (level.proxyLevel[j, i].isEntry) {
-								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "ENTRY", level.template, false);
+								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "entry", level.template, false);
 							} else if (level.proxyLevel[j, i].isEnd) {
-								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "END", level.template, false);
+								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "end", level.template, false);
 							} else {
-								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "RANDOM", level.template, true);
+								PopulateRoomSprites (level.proxyLevel[j, i], pos, parent.transform, "random", level.template, true);
 							}
 
 						}
@@ -315,13 +315,11 @@ namespace HackedDesign {
 				IEnumerable<GameObject> results = null;
 
 				switch (type) {
-					case "WALLS":
-						//results = levelGenTemplate.levelElements.Where (g => g != null && g.name.Substring (0, 2).ToUpper () == corner.ToUpper () && g.name.Substring (3, 1).ToUpper () == wall1.ToUpper () && g.name.Substring (4, 1).ToUpper () == wall2.ToUpper ());
-
+					case "walls":
 						results = levelGenTemplate.levelElements.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
 						break;
 
-					case "ENTRY":
+					case "entry":
 						results = levelGenTemplate.startProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
 						if (results.Count () == 0) {
 							results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
@@ -329,7 +327,7 @@ namespace HackedDesign {
 
 						break;
 
-					case "END":
+					case "end":
 						results = levelGenTemplate.endProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
 						if (results.Count () == 0) {
 							results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
@@ -337,7 +335,7 @@ namespace HackedDesign {
 
 						break;
 
-					case "RANDOM":
+					case "random":
 
 						results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
 
@@ -350,36 +348,27 @@ namespace HackedDesign {
 			}
 
 			private bool MatchSpriteName (string name, string corner, string wall1, string wall2) {
-				string[] nameSplit = name.ToUpper ().Split ('_');
+				string[] nameSplit = name.ToLower ().Split ('_');
 
 				if (nameSplit.Length != 4) {
 					Debug.Log ("Invalid sprite name");
 					return false;
 				}
 
-				string open = "OAXY";
-				string door = "DAXZ";
-				string wall = "WAYZ";
-
-
-
-				//Debug.Log(wall1.ToUpper () + nameSplit[3].Substring (0, 1));
-				//Debug.Log(wall2.ToUpper () + nameSplit[3].Substring (1, 1));
+				string open = "oaxy";
+				string door = "daxz";
+				string wall = "wayz";
 
 				string first = nameSplit[3].Substring (0, 1);
 				string second = nameSplit[3].Substring (1, 1);
 
-				return (nameSplit[2] == corner.ToUpper () &&
-					((wall1.ToUpper () == "O" && open.IndexOf (first) >= 0) ||
-					(wall1.ToUpper () == "D" && door.IndexOf (first) >= 0) ||
-					(wall1.ToUpper () == "W" && wall.IndexOf (first) >= 0)) &&
-					((wall2.ToUpper () == "O" && open.IndexOf (second) >= 0) ||
-					(wall2.ToUpper () == "D" && door.IndexOf (second) >= 0) ||
-					(wall2.ToUpper () == "W" && wall.IndexOf (second) >= 0)));
-
-				//Debug.Log("MATCH: " + nameSplit[0] + "_" + nameSplit[1] + "_" + nameSplit[2] + "_" + nameSplit[3] + " " + corner + "_" + wall1 + wall2 + " " + (nameSplit[2] == corner && nameSplit[3].Substring (0, 1) == wall1 && nameSplit[3].Substring (1, 1) == wall2));
-
-				//return (nameSplit[2] == corner.ToUpper () && (nameSplit[3].Substring (0, 1) == "X" || nameSplit[3].Substring (0, 1) == wall1.ToUpper ()) && (nameSplit[3].Substring (1, 1) == "X" || nameSplit[3].Substring (1, 1) == wall2.ToUpper ()));
+				return (nameSplit[2] == corner.ToLower () &&
+					((wall1.ToLower () == "o" && open.IndexOf (first) >= 0) ||
+						(wall1.ToLower () == "d" && door.IndexOf (first) >= 0) ||
+						(wall1.ToLower () == "w" && wall.IndexOf (first) >= 0)) &&
+					((wall2.ToLower () == "o" && open.IndexOf (second) >= 0) ||
+						(wall2.ToLower () == "d" && door.IndexOf (second) >= 0) ||
+						(wall2.ToLower () == "w" && wall.IndexOf (second) >= 0)));
 			}
 
 			public void PopulateLevelDoors (Level level) {
@@ -431,37 +420,14 @@ namespace HackedDesign {
 						break;
 					}
 
-					securityGuardEasyPrefabs.Randomize ();
-					GameObject sggo = securityGuardEasyPrefabs[0];
+					int rand = UnityEngine.Random.Range (0, securityGuardEasyPrefabs.Count);
+
+					//securityGuardEasyPrefabs.Randomize ();
+					GameObject sggo = securityGuardEasyPrefabs[rand];
 					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (spawnLocationList[i]), Quaternion.identity, npcParent.transform);
 
-					//NavMeshAgent2D navMeshAgent = go.GetComponent<NavMeshAgent2D> ();
-					// BaseNPCController npcController = go.GetComponent<BaseNPCController> ();
-
-					// var relativeList = ConstructRandomPatrolPath (spawnLocationList[i], npcController.patrolPathLength, level.placeholderLevel);
-					// npcController.patrolPath = relativeList.ConvertAll<Vector3> (e => ConvertLevelPosToWorld (e, level.template));
 				}
 			}
-
-			// IEnumerable<GameObject> FindChunkObject (ProxyChunk chunk, LevelGenTemplate levelGenTemplate) {
-			// 	return levelGenTemplate.levelElements.Where (g => g != null && ChunkMatchesString (chunk, g.name));
-			// }
-
-			// bool ChunkMatchesString (ProxyChunk chunk, string str) {
-
-			// 	var goChunk = ChunkFromString (str);
-			// 	if (chunk.isEntry && goChunk.isEntry == chunk.isEntry) {
-			// 		return true;
-			// 	}
-
-			// 	return (
-			// 		goChunk.isEntry == chunk.isEntry &&
-			// 		goChunk.top == chunk.top &&
-			// 		goChunk.bottom == chunk.bottom &&
-			// 		goChunk.left == chunk.left &&
-			// 		goChunk.right == chunk.right
-			// 	);
-			// }
 
 			ProxyChunk ChunkFromString (string str) {
 				ProxyChunk response = new ProxyChunk ();
@@ -678,7 +644,7 @@ namespace HackedDesign {
 				return sides;
 			}
 
-			bool PositionHasChunk (Vector2Int pos, Level level) {
+			private bool PositionHasChunk (Vector2Int pos, Level level) {
 				if (pos.x >= level.template.levelWidth || pos.y >= level.template.levelHeight || pos.x < 0 || pos.y < 0) {
 					return true; // If we go outside the level, pretend we already put a chunk here
 				}
