@@ -27,6 +27,9 @@ namespace HackedDesign
 			public List<GameObject> endProps;
 			public List<GameObject> startProps;
 			public List<GameObject> randomProps;
+
+			public List<string> mapWalls;
+			public List<string> mapProps;
 			                
         }
     }
