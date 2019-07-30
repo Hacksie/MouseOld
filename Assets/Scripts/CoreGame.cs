@@ -46,6 +46,8 @@ namespace HackedDesign {
 
 		public TimerPanelPresenter timerPanel;
 
+		public Map.MapUI mapUI;
+
 		private List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
 		private List<NPC.BaseNPCController> npcList = new List<NPC.BaseNPCController> ();
 
@@ -157,6 +159,7 @@ namespace HackedDesign {
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 
 			playerController = player.GetComponent<PlayerController> ();
+			mapUI.InitMapUI(level);
 
 			SceneTriggersInitialize ();
 			SceneNPCsInitialize (level);
