@@ -151,7 +151,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 257
-  patrolSpeed: 4
+  patrolSpeed: 0.4
+  huntSpeed: 1.25
   patrolLastCheck: 0
   currentDirection: {x: 0, y: 0}
   currentDirections: []

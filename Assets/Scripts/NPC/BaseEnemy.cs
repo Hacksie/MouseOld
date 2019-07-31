@@ -6,7 +6,8 @@ namespace HackedDesign {
     namespace NPC {
         public class BaseEnemy : BaseNPCController {
 
-            public int patrolSpeed = 4;
+            public float patrolSpeed = 0.5f;
+            public float huntSpeed = 1.2f;
             public float patrolLastCheck = 0;
             public Vector2Int currentDirection;
             public List<Vector2Int> currentDirections;
@@ -60,6 +61,8 @@ namespace HackedDesign {
             public void UpdatePatrolling () {
 
                 if (polyNavAgent != null) {
+
+                    polyNavAgent.maxSpeed = patrolSpeed;
                     
                     RaycastHit2D hit = CanSeePlayer ();
 
@@ -72,7 +75,7 @@ namespace HackedDesign {
                         }
                     }
 
-                    if (polyNavAgent.remainingDistance < 0.01f || ((Time.time - patrolLastCheck) > patrolSpeed)) {
+                    if (polyNavAgent.remainingDistance < 0.01f || ((Time.time - patrolLastCheck) > (patrolSpeed * 8))) {
 
                         
 
@@ -98,6 +101,8 @@ namespace HackedDesign {
             public void UpdateHunting () {
 
                 if (polyNavAgent != null) {
+
+                    polyNavAgent.maxSpeed = huntSpeed;
 
                     if ((player.position - transform.position).magnitude < fightDistance) {
                         state = EnemyState.FIGHTING;
@@ -136,7 +141,7 @@ namespace HackedDesign {
 
                     RaycastHit2D hit = CanSeePlayer ();
 
-                    if (hit.transform.gameObject.tag == TagManager.PLAYER) {
+                    if (hit.transform != null && hit.transform.gameObject.tag == TagManager.PLAYER) {
                         state = EnemyState.HUNTING;
                         return;
                     }

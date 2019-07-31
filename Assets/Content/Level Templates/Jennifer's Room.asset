@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
   m_Name: Jennifer's Room
   m_EditorClassIdentifier: 
-  levelLength: 1
-  levelWidth: 2
-  levelHeight: 1
+  levelLength: 10
+  levelWidth: 10
+  levelHeight: 10
   enemies: 0
   generateDoors: 1
-  startingChunkString: wwww
+  startingChunkString: 
   isRandom: 0
   floor: {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
   levelElements:
@@ -60,5 +60,6 @@ MonoBehaviour:
   endProps: []
   startProps: []
   randomProps: []
-  mapWalls: []
-  mapProps: []
+  mapWallsRows:
+  - wwwo_end,owww_entry
+  mapPropsRows: []

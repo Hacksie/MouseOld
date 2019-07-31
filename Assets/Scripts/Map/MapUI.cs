@@ -8,11 +8,20 @@ namespace HackedDesign {
     namespace Map {
         public class MapUI : MonoBehaviour {
             public List<Sprite> mapsprites;
+            public Image locationSprite;
+            public Image entrySprite;
+            public Image endSprite;
             public Image mapUIPrefab;
+            public GameObject parent;
+
+            private Level.Level level;
 
             public void InitMapUI (Level.Level level) {
-                for (int i = 0; i < this.transform.childCount; i++) {
-                    GameObject.Destroy (this.transform.GetChild (i).gameObject);
+
+                this.level = level;
+
+                for (int i = 0; i < parent.transform.childCount; i++) {
+                    GameObject.Destroy (parent.transform.GetChild (i).gameObject);
                 }
 
                 for (int i = 0; i < level.template.levelHeight; i++) {
@@ -27,10 +36,19 @@ namespace HackedDesign {
                             Sprite tlSprite = FindChunkObject ("tl", chunkString.Substring (0, 1), chunkString.Substring (1, 1));
                             Sprite trSprite = FindChunkObject ("tr", chunkString.Substring (3, 1), chunkString.Substring (1, 1));
 
-                            Image goBL = GameObject.Instantiate<Image> (mapUIPrefab, new Vector3 (j * 18, (level.template.levelHeight - i) * 18, 0) + this.transform.position, Quaternion.identity, this.transform);
-                            Image goBR = GameObject.Instantiate<Image> (mapUIPrefab, new Vector3 (j * 18 + 9, (level.template.levelHeight - i) * 18, 0) + this.transform.position, Quaternion.identity, this.transform);
-                            Image goTL = GameObject.Instantiate<Image> (mapUIPrefab, new Vector3 (j * 18, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position, Quaternion.identity, this.transform);
-                            Image goTR = GameObject.Instantiate<Image> (mapUIPrefab, new Vector3 (j * 18 + 9, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position, Quaternion.identity, this.transform);
+                            Image goBL = GameObject.Instantiate<Image> (mapUIPrefab, new Vector3 (j * 18, (level.template.levelHeight - i) * 18, 0) + this.transform.position, Quaternion.identity, parent.transform);
+                            Image goBR = GameObject.Instantiate<Image> (mapUIPrefab, new Vector3 (j * 18 + 9, (level.template.levelHeight - i) * 18, 0) + this.transform.position, Quaternion.identity, parent.transform);
+                            Image goTL = GameObject.Instantiate<Image> (mapUIPrefab, new Vector3 (j * 18, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position, Quaternion.identity, parent.transform);
+                            Image goTR = GameObject.Instantiate<Image> (mapUIPrefab, new Vector3 (j * 18 + 9, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position, Quaternion.identity, parent.transform);
+
+                            if(level.proxyLevel[j, i].isEntry) {
+                                entrySprite.transform.position = new Vector3(j * 18 + 3f, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position;
+                            }
+
+                            if(level.proxyLevel[j, i].isEnd) {
+                                endSprite.transform.position = new Vector3(j * 18 + 3f, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position;
+                            }                            
+
                             goBL.sprite = blSprite;
                             goBR.sprite = brSprite;
                             goTL.sprite = tlSprite;
@@ -43,6 +61,19 @@ namespace HackedDesign {
                     }
 
                 }
+            }
+
+            public void ShowMap(bool flag)
+            {
+
+            }
+
+            public void SetPlayerLocation(Vector3 pos) 
+            {
+                var pos2d = level.ConvertWorldToLevelPos(pos);
+
+                locationSprite.transform.position = new Vector3(pos2d.x * 18 + 3f, (level.template.levelHeight - pos2d.y) * 18 + 9, 0) + this.transform.position;
+
             }
 
             Sprite FindChunkObject (string corner, string wall1, string wall2) {

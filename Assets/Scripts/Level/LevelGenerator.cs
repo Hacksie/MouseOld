@@ -69,11 +69,10 @@ namespace HackedDesign {
 					//int seed = UnityEngine.Random.seed;
 					level = GenerateRandomLevel (genTemplate);
 				} else {
-					return null;
+					level = GenerateFixedLevel(genTemplate);
 				}
 
 				PopulateLevelTilemap (level);
-				//PopulateEndRooms (level);
 
 				BoxCollider2D boxCollider = parent.GetComponent<BoxCollider2D> ();
 
@@ -82,11 +81,9 @@ namespace HackedDesign {
 
 				polyNav2D.GenerateMap ();
 
-				//navigation2D.BakeNavMesh2D ();
-
 				PopulateLevelDoors (level);
 				PopulateSecurityGuards (level);
-				//level.Print ();
+				level.Print ();
 
 				return level;
 
@@ -104,6 +101,23 @@ namespace HackedDesign {
 				}
 
 				//npcParent.transform
+			}
+
+			protected Level GenerateFixedLevel (LevelGenTemplate genTemplate) {
+				var level = new Level (genTemplate);
+				for (int y = 0; y < genTemplate.mapWallsRows.Count; y++) {
+					var columns = genTemplate.mapWallsRows[y].Split(',');
+
+					for (int x = 0; x < columns.Length; x++) {
+						var chunk = ChunkFromString (columns[x]);
+						level.proxyLevel[x, y] = chunk;
+						if(chunk != null && chunk.isEntry) {
+							level.spawn = new Vector2Int(x, y);
+						}
+					}
+				}
+
+				return level;
 			}
 
 			// Template -> Generate -> GeneratedLevel
@@ -447,7 +461,7 @@ namespace HackedDesign {
 
 				if (splitString.Length > 1) {
 					response.isEntry = splitString[1] == "entry";
-					response.isEnd = splitString[1] == "exit";
+					response.isEnd = splitString[1] == "end";
 				}
 
 				return response;

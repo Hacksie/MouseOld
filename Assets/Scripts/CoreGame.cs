@@ -161,6 +161,7 @@ namespace HackedDesign {
 			playerController = player.GetComponent<PlayerController> ();
 			mapUI.InitMapUI(level);
 
+
 			SceneTriggersInitialize ();
 			SceneNPCsInitialize (level);
 
@@ -335,6 +336,7 @@ namespace HackedDesign {
 		}
 
 		void PlayingUpdate () {
+			
 			playerController.UpdateMovement (inputController);
 			PlayingNPCUpdate ();
 			PlayingTriggerUpdate ();
@@ -353,6 +355,7 @@ namespace HackedDesign {
 		}
 
 		void PlayingFixedUpdate () {
+			mapUI.SetPlayerLocation(player.transform.position);
 			playerController.UpdateTransform ();
 		}
 
