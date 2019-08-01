@@ -10572,6 +10572,80 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!1 &704510605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 704510606}
+  - component: {fileID: 704510608}
+  - component: {fileID: 704510607}
+  m_Layer: 5
+  m_Name: MapFogSprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &704510606
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704510605}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2104847994}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &704510607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704510605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &704510608
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704510605}
+  m_CullTransparentMesh: 0
 --- !u!1001 &707389058
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16231,7 +16305,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.999997, y: 0}
+  m_AnchoredPosition: {x: -0.0000047683716, y: 0}
   m_SizeDelta: {x: -5, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1091099245
@@ -19418,9 +19492,9 @@ MonoBehaviour:
   narrationPanel: {fileID: 665512652}
   dialogueManager: {fileID: 1866537861}
   dialoguePanel: {fileID: 429908205}
+  levelMapPanel: {fileID: 2104847995}
   levelGenerator: {fileID: 2106410050}
   timerPanel: {fileID: 175905647}
-  mapUI: {fileID: 2104847995}
 --- !u!1 &1370755781
 GameObject:
   m_ObjectHideFlags: 0
@@ -32844,10 +32918,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2104847994}
-  - component: {fileID: 2104847995}
   - component: {fileID: 2104847997}
+  - component: {fileID: 2104847995}
   m_Layer: 5
-  m_Name: MapPanel
+  m_Name: LevelMapPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32869,6 +32943,7 @@ RectTransform:
   - {fileID: 1408144647}
   - {fileID: 7486258}
   - {fileID: 649403985}
+  - {fileID: 704510606}
   m_Father: {fileID: 1413430035}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -32886,10 +32961,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2104847993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20401813ab3f14e4d92152dcc5c8eb79, type: 3}
+  m_Script: {fileID: 11500000, guid: 410f5b741a546444faba286fa7a04dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapsprites:
+  wallSprites:
   - {fileID: 645411862609229670, guid: de9babb6cfe5c0f4a84f040d5918f70b, type: 3}
   - {fileID: -3276122099754389042, guid: de9babb6cfe5c0f4a84f040d5918f70b, type: 3}
   - {fileID: -135665275369439952, guid: de9babb6cfe5c0f4a84f040d5918f70b, type: 3}
@@ -32931,7 +33006,7 @@ MonoBehaviour:
   endSprite: {fileID: 1408144648}
   mapUIPrefab: {fileID: 1615601850945123623, guid: 9e08ccf792785bc4f9691b78f3e571b9,
     type: 3}
-  parent: {fileID: 982323719}
+  wallSpriteParent: {fileID: 982323719}
 --- !u!222 &2104847997
 CanvasRenderer:
   m_ObjectHideFlags: 0

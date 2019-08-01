@@ -68,13 +68,6 @@ namespace HackedDesign {
 
             }
 
-            public void SetPlayerLocation(Vector3 pos) 
-            {
-                var pos2d = level.ConvertWorldToLevelPos(pos);
-
-                locationSprite.transform.position = new Vector3(pos2d.x * 18 + 3f, (level.template.levelHeight - pos2d.y) * 18 + 9, 0) + this.transform.position;
-
-            }
 
             Sprite FindChunkObject (string corner, string wall1, string wall2) {
                 return mapsprites.First (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));

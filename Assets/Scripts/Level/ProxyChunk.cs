@@ -6,6 +6,8 @@ namespace HackedDesign {
             public bool isMainChain = false;
             public bool isNearEntry = false;
 
+            public bool visited = false;
+
             public Chunk.ChunkSide top;
             public Chunk.ChunkSide left;
             public Chunk.ChunkSide bottom;

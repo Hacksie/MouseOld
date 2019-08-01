@@ -9,47 +9,40 @@ namespace HackedDesign {
 		private Timer timer;
 		public Text timerText;
 
-		public void Initialize(Timer timer)
-		{
+		public void Initialize (Timer timer) {
 			this.timer = timer;
 		}
 
 		public void Repaint () {
 
-			if(timer == null)
-			{
+			if (timer == null) {
 				return;
 			}
 
-			if(!timer.running)
-			{
-				gameObject.SetActive(false);
+			if (!timer.running) {
+				gameObject.SetActive (false);
 				return;
 			}
 
-			if(timer.running)
-			{
-				if(!gameObject.activeInHierarchy)
-				{
-					gameObject.SetActive(true);
-				}
+			if (CoreGame.instance.state == GameState.PLAYING) {
 
-				float time = timer.maxTime - (Time.time - timer.startTime);
+				if (timer.running) {
+					if (!gameObject.activeInHierarchy) {
+						gameObject.SetActive (true);
+					}
 
-				if(time < timer.alertTime)
-				{
-					timerText.color = timer.alertColor;
-				}
-				else if (time < timer.warningTime) {
-					timerText.color = timer.warningColor;
-				}
-				else
-				{
-					timerText.color = timer.color;
-				}
+					float time = timer.maxTime - (Time.time - timer.startTime);
 
+					if (time < timer.alertTime) {
+						timerText.color = timer.alertColor;
+					} else if (time < timer.warningTime) {
+						timerText.color = timer.warningColor;
+					} else {
+						timerText.color = timer.color;
+					}
 
-				timerText.text = time.ToString("000");
+					timerText.text = time.ToString ("000");
+				}
 			}
 		}
 	}

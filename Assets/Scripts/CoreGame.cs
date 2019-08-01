@@ -42,11 +42,10 @@ namespace HackedDesign {
 		public Dialogue.DialogueManager dialogueManager;
 		public Dialogue.DialoguePanelPresenter dialoguePanel;
 
+		public Level.LevelMapPanelPresenter levelMapPanel;
 		public Level.LevelGenerator levelGenerator;
 
 		public TimerPanelPresenter timerPanel;
-
-		public Map.MapUI mapUI;
 
 		private List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
 		private List<NPC.BaseNPCController> npcList = new List<NPC.BaseNPCController> ();
@@ -60,8 +59,17 @@ namespace HackedDesign {
 		/// </summary>
 		void Start () {
 
+			CheckBindings();
 			Initialization ();
 
+		}
+
+		void CheckBindings()
+		{
+			if(levelMapPanel == null)
+			{
+				Debug.LogError("levelMapPanel not set");
+			}
 		}
 
 		/// <summary>
@@ -84,8 +92,8 @@ namespace HackedDesign {
 			worldMapPanel.Initialize (worldMapManager);
 			taskPanel.Initialize (taskManager);
 			infoPanel.Initialize (infoManager);
-			RepaintAll ();
 
+			RepaintAll ();
 
 			ShowPlayer (false);
 			MainMenu.gameObject.SetActive (true);
@@ -154,13 +162,14 @@ namespace HackedDesign {
 			levelGenerator.Initialize (environmentObj);
 
 			Level.Level level = levelGenerator.GenerateLevel (levelGenTemplate, length, height, width, difficulty, enemies);
+
+			levelMapPanel.Initialize (level);
+
 			player.transform.position = level.ConvertLevelPosToWorld (level.spawn);
 
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 
 			playerController = player.GetComponent<PlayerController> ();
-			mapUI.InitMapUI(level);
-
 
 			SceneTriggersInitialize ();
 			SceneNPCsInitialize (level);
@@ -190,6 +199,7 @@ namespace HackedDesign {
 			worldMapPanel.Show (false);
 			timerPanel.Repaint ();
 			mobileInputUI.gameObject.SetActive (false);
+			levelMapPanel.Repaint ();
 		}
 
 		void SceneTriggersInitialize () {
@@ -272,7 +282,6 @@ namespace HackedDesign {
 				case GameState.PLAYING:
 					PlayingUpdate ();
 					timer.UpdateTimer ();
-					timerPanel.Repaint ();
 
 					if (inputController.StartButtonUp ()) {
 						Debug.Log ("Show start menu");
@@ -316,6 +325,9 @@ namespace HackedDesign {
 					break;
 
 			}
+
+			levelMapPanel.Repaint();
+			timerPanel.Repaint ();
 		}
 
 		void LateUpdate () {
@@ -336,7 +348,7 @@ namespace HackedDesign {
 		}
 
 		void PlayingUpdate () {
-			
+
 			playerController.UpdateMovement (inputController);
 			PlayingNPCUpdate ();
 			PlayingTriggerUpdate ();
@@ -355,7 +367,7 @@ namespace HackedDesign {
 		}
 
 		void PlayingFixedUpdate () {
-			mapUI.SetPlayerLocation(player.transform.position);
+			//mapUI.SetPlayerLocation(player.transform.position);
 			playerController.UpdateTransform ();
 		}
 
