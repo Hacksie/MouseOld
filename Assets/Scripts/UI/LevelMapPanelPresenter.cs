@@ -80,7 +80,7 @@ namespace HackedDesign {
 
             public void Repaint () {
 
-                if (CoreGame.instance.state == GameState.PLAYING) {
+                if (CoreGame.instance.state.state == GameState.PLAYING) {
                     if(!this.gameObject.activeInHierarchy) {
                         this.gameObject.SetActive(true);
                     }

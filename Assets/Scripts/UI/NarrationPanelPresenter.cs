@@ -1,15 +1,15 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace HackedDesign {
     namespace Dialogue {
         public class NarrationPanelPresenter : MonoBehaviour {
 
             INarrationManager narrationManager;
-            public Text text; 
+            public Text text;
             public Button actionButton;
             public Image actionButtonImage;
             public Text speaker;
@@ -20,47 +20,52 @@ namespace HackedDesign {
 
             //public List<Character.Corp> corps = new List<Character.Corp>();
 
-            
             public void Initialize (INarrationManager narrationManager) {
                 this.narrationManager = narrationManager;
 
-                if(text == null) Debug.LogError("Text is null");
-                if(actionButton == null) Debug.LogError("Button is null");
-                if(actionButtonImage == null) Debug.LogError("Button sprite is null");
-            }  
+                if (text == null) Debug.LogError ("Text is null");
+                if (actionButton == null) Debug.LogError ("Button is null");
+                if (actionButtonImage == null) Debug.LogError ("Button sprite is null");
+            }
 
-            public void Show(bool flag) {
-                Debug.Log("Show narration " + flag);
-                Narration currentNarration = narrationManager.GetCurrentNarration ();              
+            public void Repaint () {
+                if (CoreGame.instance.state.state == GameState.NARRATION && !this.gameObject.activeInHierarchy) {
+                    Show (true);
+                } else {
+                    Show (false);
+                }
 
-                if(currentNarration == null)
-                {
-                    this.gameObject.SetActive(false);
+            }
+
+            private void Show (bool flag) {
+                Debug.Log ("Show narration " + flag);
+                Narration currentNarration = narrationManager.GetCurrentNarration ();
+
+                if (currentNarration == null) {
+                    this.gameObject.SetActive (false);
                     return;
                 }
 
-                this.gameObject.SetActive(flag);
+                this.gameObject.SetActive (flag);
 
-                if(!flag)
-                {
+                if (!flag) {
                     return;
                 }
-
 
                 speaker.text = currentNarration.speaker.fullName;
                 speakerHandle.text = currentNarration.speaker.handle;
                 speakerCorp.text = currentNarration.speaker.corp.name;
                 speakerCorp.color = currentNarration.speaker.corp.color;
-                speakerStatus.text = currentNarration.speaker.status.ToString();
+                speakerStatus.text = currentNarration.speaker.status.ToString ();
 
                 text.text = currentNarration.text;
                 //speaker.text = currentNarration.speaker.fullName + " / <color=cyan>\"" + currentNarration.speaker.handle + "\"</color> / <color="+ currentNarration.speaker.corp.color.ToString() + ">" + currentNarration.speaker.corp.name + "</color> / " + currentNarration.speaker.serial;
                 //avatar.sprite = currentNarration.speaker.avatar;
                 actionButtonImage.sprite = currentNarration.button;
-                EventSystem.current.SetSelectedGameObject(actionButton.gameObject);
+                EventSystem.current.SetSelectedGameObject (actionButton.gameObject);
                 //.text = currentNarration.button;
 
-            }    
+            }
         }
     }
 }

@@ -20,7 +20,17 @@ namespace HackedDesign {
 			this.taskPanel = taskPanel;
 		}
 
-		public void Show(bool flag) {
+		public void Repaint () {
+			if (CoreGame.instance.state.state == GameState.SELECTMENU && !this.gameObject.activeInHierarchy) {
+				Show (true);
+			} else if (CoreGame.instance.state.state != GameState.SELECTMENU && this.gameObject.activeInHierarchy) {
+				Show (false);
+			}
+			infoPanel.Repaint();
+			taskPanel.Repaint();
+		}		
+
+		private void Show(bool flag) {
 			Debug.Log("Repaint select");
 			HideAll();
 			this.gameObject.SetActive (flag);
@@ -32,11 +42,11 @@ namespace HackedDesign {
 			switch(selectMenuManager.GetMenuState())
 			{
 				case SelectMenuManager.SelectMenuState.INFO:
-				infoPanel.Show(true);
+				//infoPanel.Show(true);
 				break;
 
 				case SelectMenuManager.SelectMenuState.TASKS:
-				taskPanel.Show(true);
+				//taskPanel.Show(true);
 				break;
 
 				case SelectMenuManager.SelectMenuState.STASH:
@@ -50,11 +60,11 @@ namespace HackedDesign {
 		public void HideAll()
 		{
 			if(infoPanel != null) {
-				infoPanel.Show(false);
+				//infoPanel.Show(false);
 			}
 
 			if(taskPanel != null) {
-				taskPanel.Show(false);
+				//taskPanel.Show(false);
 			}
 			
 			if(StashPanel != null) {

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace HackedDesign {
-	public class MainMenu : MonoBehaviour {
+	public class MainMenuPresenter : MonoBehaviour {
 
 		public GameObject optionsPanel;
 		public GameObject creditsPanel;

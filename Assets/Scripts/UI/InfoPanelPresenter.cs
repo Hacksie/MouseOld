@@ -9,13 +9,26 @@ namespace HackedDesign {
 
             public Transform categoriesParent;
             InfoManager infoManager;
+            SelectMenuManager selectMenuManager;
 
-            public void Initialize (InfoManager infoManager) {
+            public void Initialize (InfoManager infoManager, SelectMenuManager selectMenuManager) {
                 this.infoManager = infoManager;
+                this.selectMenuManager = selectMenuManager;
                 //Hide ();
             }
 
-            public void Show (bool flag) {
+            public void Repaint()
+            {
+                if(CoreGame.instance.state.state == GameState.SELECTMENU && selectMenuManager.state == SelectMenuManager.SelectMenuState.INFO) {
+                    Show(true);
+                }
+                 else{
+                     Show(false);
+                 }
+ 
+            }            
+
+            private void Show (bool flag) {
                 Debug.Log ("Set Info Panel " + flag);
 
                 this.gameObject.SetActive (flag);

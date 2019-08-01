@@ -33,7 +33,16 @@ namespace HackedDesign {
                 this.dialogueManager = dialogueManager;
             }  
 
-            public void Show(bool flag) {
+            public void Repaint()
+            {
+                if (CoreGame.instance.state.state == GameState.DIALOGUE && !this.gameObject.activeInHierarchy) {
+                    Show (true);
+                } else {
+                    Show (false);
+                }                
+            }
+
+            private void Show(bool flag) {
                 Debug.Log("Show dialogue " + flag);
                 Dialogue currentDialogue = dialogueManager.GetCurrentDialogue ();
 
