@@ -29,9 +29,11 @@ namespace HackedDesign {
             }
 
             public void Repaint () {
-                if (CoreGame.instance.state.state == GameState.NARRATION && !this.gameObject.activeInHierarchy) {
+                if (CoreGame.instance.state.state == GameState.NARRATION) {
+                    if(!this.gameObject.activeInHierarchy) {
                     Show (true);
-                } else {
+                    }
+                } else if (this.gameObject.activeInHierarchy) {
                     Show (false);
                 }
 

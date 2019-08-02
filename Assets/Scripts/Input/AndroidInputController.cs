@@ -7,12 +7,12 @@ namespace HackedDesign {
 
 		public class AndroidInputController : IInputController {
 
-			MobileInputUI mobileInput;
+			MobileInputUIPresenter mobileInput;
 
 			bool startButtonDown;
 			bool selectButtonDown;
 
-			public AndroidInputController (MobileInputUI mobileInputUI) {
+			public AndroidInputController (MobileInputUIPresenter mobileInputUI) {
 				this.mobileInput = mobileInputUI;
 			}
 

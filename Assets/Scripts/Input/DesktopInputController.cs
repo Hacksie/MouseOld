@@ -7,7 +7,7 @@ namespace HackedDesign {
 
 		public class DesktopInputController : IInputController {
 
-			public void SetMobileInput(MobileInputUI mobileInputUI) 
+			public void SetMobileInput(MobileInputUIPresenter mobileInputUI) 
 			{
 				// do nothing;
 			}

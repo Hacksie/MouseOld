@@ -16,6 +16,7 @@ namespace HackedDesign {
 		public void Repaint () {
 
 			if (timer == null) {
+				gameObject.SetActive (false);
 				return;
 			}
 
@@ -43,6 +44,9 @@ namespace HackedDesign {
 
 					timerText.text = time.ToString ("000");
 				}
+			}
+			else {
+				gameObject.SetActive(false);
 			}
 		}
 	}

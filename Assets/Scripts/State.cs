@@ -1,17 +1,8 @@
 ﻿
 namespace HackedDesign {
 
-    public class State {
-        public GameState state = GameState.LOADING;
-
-        public State () {
-            this.state = GameState.LOADING;
-        }
-
-        public State (GameState startingState) {
-            this.state = startingState;
-        }
-
+    public struct State {
+        public GameState state; // = GameState.LOADING;
     }
 
 	public enum GameState {

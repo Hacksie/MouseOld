@@ -69,7 +69,7 @@ namespace HackedDesign {
 					//int seed = UnityEngine.Random.seed;
 					level = GenerateRandomLevel (genTemplate);
 				} else {
-					level = GenerateFixedLevel(genTemplate);
+					level = GenerateFixedLevel (genTemplate);
 				}
 
 				PopulateLevelTilemap (level);
@@ -79,7 +79,9 @@ namespace HackedDesign {
 				boxCollider.size = new Vector2 (genTemplate.levelWidth * 4, genTemplate.levelHeight * 4);
 				boxCollider.offset = (boxCollider.size / 2);
 
-				polyNav2D.GenerateMap ();
+				if (genTemplate.generateNavMesh) {
+					polyNav2D.GenerateMap ();
+				}
 
 				PopulateLevelDoors (level);
 				PopulateSecurityGuards (level);
@@ -106,13 +108,13 @@ namespace HackedDesign {
 			protected Level GenerateFixedLevel (LevelGenTemplate genTemplate) {
 				var level = new Level (genTemplate);
 				for (int y = 0; y < genTemplate.mapWallsRows.Count; y++) {
-					var columns = genTemplate.mapWallsRows[y].Split(',');
+					var columns = genTemplate.mapWallsRows[y].Split (',');
 
 					for (int x = 0; x < columns.Length; x++) {
 						var chunk = ChunkFromString (columns[x]);
 						level.proxyLevel[x, y] = chunk;
-						if(chunk != null && chunk.isEntry) {
-							level.spawn = new Vector2Int(x, y);
+						if (chunk != null && chunk.isEntry) {
+							level.spawn = new Vector2Int (x, y);
 						}
 					}
 				}
@@ -444,6 +446,11 @@ namespace HackedDesign {
 			}
 
 			ProxyChunk ChunkFromString (string str) {
+
+				if (string.IsNullOrWhiteSpace (str)) {
+					return null;
+				}
+
 				ProxyChunk response = new ProxyChunk ();
 				string[] splitString = str.Split ('_');
 

@@ -20,6 +20,7 @@ namespace HackedDesign
 			public string startingChunkString = "wdww";
 
 			public bool isRandom;
+			public bool generateNavMesh = true;
 
 			public GameObject floor;
 			//public LevelElements levelElements;   

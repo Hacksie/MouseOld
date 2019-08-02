@@ -36,6 +36,20 @@ namespace HackedDesign {
 			PopulateCorpTemplates();
 		}
 
+		public void Repaint()
+		{
+			if(CoreGame.instance.state.state == GameState.MAINMENU)
+			{
+				if(!this.gameObject.activeInHierarchy) {
+					this.gameObject.SetActive(true);
+				}
+			} else
+			{
+				this.gameObject.SetActive(false);
+			}
+
+		}
+
 		public void ShowOptionsPanel (bool show) {
 			if (optionsPanel != null) {
 				optionsPanel.SetActive (show);
@@ -111,14 +125,14 @@ namespace HackedDesign {
 			Application.Quit ();
 		}
 
-		public void HideMainMenu () {
-			gameObject.SetActive (false);
-		}
+		// public void HideMainMenu () {
+		// 	gameObject.SetActive (false);
+		// }
 
-		public void ShowMainMenu () {
-			Time.timeScale = 0;
-			gameObject.SetActive (true);
-		}
+		// public void ShowMainMenu () {
+		// 	Time.timeScale = 0;
+		// 	gameObject.SetActive (true);
+		// }
 
 		private void PopulateCorpTemplates() {
 			templateDropdown.ClearOptions();

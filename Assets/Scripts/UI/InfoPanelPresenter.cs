@@ -14,19 +14,18 @@ namespace HackedDesign {
             public void Initialize (InfoManager infoManager, SelectMenuManager selectMenuManager) {
                 this.infoManager = infoManager;
                 this.selectMenuManager = selectMenuManager;
-                //Hide ();
             }
 
-            public void Repaint()
-            {
-                if(CoreGame.instance.state.state == GameState.SELECTMENU && selectMenuManager.state == SelectMenuManager.SelectMenuState.INFO) {
-                    Show(true);
+            public void Repaint () {
+                if (CoreGame.instance.state.state == GameState.SELECTMENU && selectMenuManager.state == SelectMenuManager.SelectMenuState.INFO) {
+                    if (!this.gameObject.activeInHierarchy) {
+                        Show (true);
+                    }
+                } else if (this.gameObject.activeInHierarchy) {
+                    Show (false);
                 }
-                 else{
-                     Show(false);
-                 }
- 
-            }            
+
+            }
 
             private void Show (bool flag) {
                 Debug.Log ("Set Info Panel " + flag);

@@ -9,7 +9,6 @@ namespace HackedDesign {
 
 		WorldMapManager worldMapManager;
 
-		//public GameObject sectorButtonPrefab;
 		public Transform sectorButtonParent;
 		public Transform buildingButtonParent;
 		public Transform locationButtonParent;
@@ -20,28 +19,37 @@ namespace HackedDesign {
 			this.worldMapManager = worldMapManager;
 		}
 
-		public void Show (bool flag) {
+		public void Repaint () {
+			if (CoreGame.instance.state.state == GameState.WORLDMAP) {
+				if (!this.gameObject.activeInHierarchy) {
+					Show (true);
+				}
+			} else if (this.gameObject.activeInHierarchy) {
+				Show (false);
+			}
+
+		}
+
+		private void Show (bool flag) {
 			Debug.Log ("Set World map" + flag);
 
 			this.gameObject.SetActive (flag);
 
-			if(!flag) 
-			{
+			if (!flag) {
 				return;
 			}
 
-			Reset();
+			Reset ();
 			RepaintSectors (worldMapManager.GetSectors ());
 		}
 
-		private void Reset()
-		{
+		private void Reset () {
 			EventSystem.current.SetSelectedGameObject (null);
-			UpdateDescription("");
+			UpdateDescription ("");
 		}
 
 		private void RepaintSectors (List<Map.Sector> sectors) {
-			Debug.Log("Repaint sectors");
+			Debug.Log ("Repaint sectors");
 
 			if (sectorButtonParent == null) {
 				Debug.LogWarning ("No sector button parent found");
@@ -71,7 +79,7 @@ namespace HackedDesign {
 						t.color = Color.grey;
 					}
 
-					if (worldMapManager.GetSelectedSector() == currentSector) {
+					if (worldMapManager.GetSelectedSector () == currentSector) {
 						// if (EventSystem.current.currentSelectedGameObject == null) {
 						// 	EventSystem.current.SetSelectedGameObject (sbt.gameObject);
 						// }
@@ -86,7 +94,7 @@ namespace HackedDesign {
 		}
 
 		private void RepaintBuildings (List<Map.Building> buildings) {
-			Debug.Log("Repaint buildings");
+			Debug.Log ("Repaint buildings");
 
 			if (buildingButtonParent == null) {
 				Debug.LogWarning ("No building button parent found");
@@ -106,7 +114,7 @@ namespace HackedDesign {
 					Map.BuildingBehaviour bb = bbt.GetComponent<Map.BuildingBehaviour> ();
 					bb.building = currentBuilding;
 					t.text = currentBuilding.title;
-					if (worldMapManager.GetSelectedBuilding() == currentBuilding) {
+					if (worldMapManager.GetSelectedBuilding () == currentBuilding) {
 						// if (EventSystem.current.currentSelectedGameObject == null) {
 						// 	EventSystem.current.SetSelectedGameObject (bbt.gameObject);
 						// }
@@ -119,7 +127,7 @@ namespace HackedDesign {
 		}
 
 		private void RepaintLocations (List<Map.Location> locations) {
-			Debug.Log("Repaint locations");
+			Debug.Log ("Repaint locations");
 
 			if (locationButtonParent == null) {
 				Debug.LogWarning ("No location button parent found");
@@ -138,7 +146,7 @@ namespace HackedDesign {
 					Map.LocationBehaviour lb = lbt.GetComponent<Map.LocationBehaviour> ();
 					lb.location = currentLocation;
 					t.text = currentLocation.title;
-					if (worldMapManager.GetSelectedLocation() == currentLocation) {
+					if (worldMapManager.GetSelectedLocation () == currentLocation) {
 						if (EventSystem.current.currentSelectedGameObject == null) {
 							EventSystem.current.SetSelectedGameObject (lbt.gameObject);
 						}
