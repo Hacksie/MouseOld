@@ -8,10 +8,9 @@ namespace HackedDesign {
 	namespace Level {
 
 		public interface ILevelGenerator {
-            List<Vector2Int> PossibleMovementDirections (Vector2Int pos, ProxyChunk[, ] placeholderLevel);
+            List<Vector2Int> PossibleMovementDirections (Vector2Int pos, ProxyRoom[, ] placeholderLevel);
             Vector3 ConvertLevelPosToWorld(Vector2Int pos, LevelGenTemplate levelGenTemplate);
             LevelGenTemplate GetLevelGenTemplate();
-
         }
     }
 }

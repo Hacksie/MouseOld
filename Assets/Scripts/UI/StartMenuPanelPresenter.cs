@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace HackedDesign {
 	public class StartMenuPanelPresenter : MonoBehaviour {
@@ -10,6 +8,7 @@ namespace HackedDesign {
 		private void Show (bool flag) {
 			Debug.Log ("Set start menu " + flag);
 			this.gameObject.SetActive (flag);
+			//Cursor.visible = flag;
 		}
 
 		public void Repaint () {

@@ -42,10 +42,12 @@ namespace HackedDesign {
 			{
 				if(!this.gameObject.activeInHierarchy) {
 					this.gameObject.SetActive(true);
+					//Cursor.visible = true;
 				}
 			} else
 			{
 				this.gameObject.SetActive(false);
+				//Cursor.visible = false;
 			}
 
 		}

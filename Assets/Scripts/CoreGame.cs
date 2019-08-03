@@ -21,13 +21,27 @@ namespace HackedDesign {
 		[Header("Player")]
 		[SerializeField]
 		private GameObject player;
-		private PlayerController playerController;		
+		private PlayerController playerController;
+
+		[Header("Level")]
+		[SerializeField]
+		private Level.LevelGenerator levelGenerator;
+		[SerializeField]		
+		private Level.LevelRenderer levelRenderer;
+		[SerializeField]
+		private GameObject levelParent;
+		[SerializeField]
+		private GameObject npcParent;
+		[SerializeField]
+		private PolyNav.PolyNav2D polyNav2D;
 
 		[Header("Mobile UI")]
 		[SerializeField]
 		private Input.MobileInputUIPresenter mobileInputUI;
 
 		[Header("UI")]
+		[SerializeField]
+		private CursorPresenter cursorPresenter;
 		[SerializeField]
 		private MainMenuPresenter mainMenu;		
 		[SerializeField]
@@ -61,8 +75,7 @@ namespace HackedDesign {
 
 		[SerializeField]
 		private Level.LevelMapPanelPresenter levelMapPanel;
-		[SerializeField]
-		private Level.LevelGenerator levelGenerator;
+
 
 		// [SerializeField]
 		// private TimerPanelPresenter timerPanel;
@@ -87,6 +100,11 @@ namespace HackedDesign {
 		}
 
 		void CheckBindings () {
+			if (cursorPresenter == null)
+			{
+				Debug.LogError("cursorPresenter not set");
+			}
+
 			if (levelMapPanel == null) {
 				Debug.LogError ("levelMapPanel not set");
 			}
@@ -135,27 +153,30 @@ namespace HackedDesign {
 		}
 
 		public void LoadNewGame () {
-			CoreGame.instance.Initialization ();
-			//CoreGame.instance.SceneInitialize ("Jennifer's Room", "Jennifer's Room");
-			CoreGame.instance.SceneInitialize ("Easy Magenta Lab", 7, 10, 10, 0, 2);
+			state.state = GameState.LOADING;
+			//CoreGame.instance.Initialization ();
+			state.level = levelGenerator.GenerateLevel ("Victoria's Room", 1, 1, 2, 0, 0);
+			CoreGame.instance.SceneInitialize ();
+			//CoreGame.instance.SceneInitialize ("Easy Magenta Lab", 7, 10, 10, 0, 2);
 		}
 
 		public void LoadRandomGame (string template, int length, int height, int width, int difficulty, int enemies) {
-			CoreGame.instance.SceneInitialize (template, length, height, width, difficulty, enemies);
+			state.state = GameState.LOADING;
+
+			// Move this out of SceneInitialize, and into caller, so we can handle save states
+			state.level = levelGenerator.GenerateLevel (template, length, height, width, difficulty, enemies);
+
+			CoreGame.instance.SceneInitialize ();
 		}
 
 		public void EndGame () {
 			state.state = GameState.MAINMENU;
 			RepaintAll ();
-			levelGenerator.DestroyLevel ();
+			levelRenderer.DestroyLevel ();
 			npcList.Clear ();
 			ShowPlayer (false);
 
 			Time.timeScale = 0;
-		}
-
-		public void SceneInitialize (string levelGenTemplate) {
-			SceneInitialize (levelGenTemplate, 0, 0, 0, 0, 0);
 		}
 
 		private void ShowPlayer (bool flag) {
@@ -164,34 +185,34 @@ namespace HackedDesign {
 			}
 		}
 
+
 		/// <summary>
 		/// Run this each time the scene is changed
 		/// </summary>
-		public void SceneInitialize (string levelGenTemplate, int length, int height, int width, int difficulty, int enemies) {
-			state.state = GameState.LOADING;
+		public void SceneInitialize () {
+			
 			Debug.Log ("Scene Initialization");
 
 			ShowPlayer (true);
-			//player = GameObject.FindWithTag (TagManager.PLAYER);
 
-			GameObject environmentObj = GameObject.FindWithTag (TagManager.ENVIRONMENT);
-			levelGenerator.Initialize (environmentObj);
 
-			Level.Level level = levelGenerator.GenerateLevel (levelGenTemplate, length, height, width, difficulty, enemies);
 
-			levelMapPanel.Initialize (level);
 
-			player.transform.position = level.ConvertLevelPosToWorld (level.spawn);
+			levelRenderer.Initialize (levelParent, npcParent, polyNav2D);
+			levelRenderer.Render();
+
+			levelMapPanel.Initialize (state.level);
+
+			player.transform.position = state.level.ConvertLevelPosToWorld (state.level.spawn);
 
 			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 
 			playerController = player.GetComponent<PlayerController> ();
 
 			SceneTriggersInitialize ();
-			SceneNPCsInitialize (level);
+			SceneNPCsInitialize ();
 
-			RepaintAll ();
-			SetResume ();
+
 
 			if (sceneStoriesObj != null) {
 
@@ -204,7 +225,9 @@ namespace HackedDesign {
 				Debug.LogWarning ("No starting stories set");
 			}
 
-			//timer.Start ();
+			RepaintAll ();
+			SetResume();			
+
 		}
 
 		void RepaintAll () {
@@ -219,6 +242,7 @@ namespace HackedDesign {
 			worldMapPanel.Repaint();
 			//timerPanel.Repaint ();
 			mobileInputUI.Repaint();
+			cursorPresenter.Repaint();
 		}
 
 		void SceneTriggersInitialize () {
@@ -235,14 +259,19 @@ namespace HackedDesign {
 			}
 		}
 
-		void SceneNPCsInitialize (Level.Level level) {
+		void SceneNPCsInitialize () {
 			npcList.Clear ();
+
+			if(state.level == null) {
+				Debug.LogError("Level not loaded");
+				return;
+			}
 
 			foreach (GameObject npcObject in GameObject.FindGameObjectsWithTag ("NPC")) {
 				NPC.BaseNPCController npc = npcObject.GetComponent<NPC.BaseNPCController> ();
 				if (npc != null) {
 					npcList.Add (npc);
-					npc.Initialize (level, levelGenerator.polyNav2D);
+					npc.Initialize (state.level, polyNav2D);
 				}
 			}
 		}
@@ -258,15 +287,13 @@ namespace HackedDesign {
 
 		public void SetResume () {
 			Debug.Log ("State set to RESUME");
-			Time.timeScale = 1;
-			
+			Time.timeScale = 1;	
 			state.state = GameState.PLAYING;
 		}
 
 		public void SetDialogue () {
 			Debug.Log ("State set to DIALOGUE");
 			Time.timeScale = 0;
-			//dialoguePanel.Show (true);
 			state.state = GameState.DIALOGUE;
 			//Cursor.visible = true;
 		}
@@ -293,13 +320,11 @@ namespace HackedDesign {
 
 					if (inputController.StartButtonUp ()) {
 						Debug.Log ("Show start menu");
-						Cursor.visible = true;
 						state.state = GameState.STARTMENU;
 					}
 
 					if (inputController.SelectButtonUp ()) {
 						Debug.Log ("Show select menu");
-						Cursor.visible = true;
 						state.state = GameState.SELECTMENU;
 					}
 
@@ -308,7 +333,6 @@ namespace HackedDesign {
 				case GameState.STARTMENU:
 					if (inputController.StartButtonUp ()) {
 						Debug.Log ("Hide start menu");
-						state.state = GameState.PLAYING;
 						SetResume ();
 					}
 					break;
@@ -316,7 +340,6 @@ namespace HackedDesign {
 				case GameState.SELECTMENU:
 					if (inputController.SelectButtonUp ()) {
 						Debug.Log ("Hide select menu");
-						state.state = GameState.PLAYING;
 						SetResume ();
 					}
 					break;

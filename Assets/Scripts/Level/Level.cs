@@ -8,16 +8,17 @@ namespace HackedDesign {
 	namespace Level {
 		public class Level {
             public LevelGenTemplate template;
-            public ProxyChunk[, ] proxyLevel;
+            public ProxyRoom[, ] proxyLevel;
             public int length;
 			public Vector2Int spawn;
+			public List<Vector2Int> enemySpawnLocationList;
 
             public Level(LevelGenTemplate template)
             {
                 this.template = template;
                 this.length = CapLevelLength(template.levelLength, template.levelWidth, template.levelHeight);
                 Debug.Log("Level length: " + length);
-                proxyLevel = new ProxyChunk[template.levelWidth, template.levelHeight];
+                proxyLevel = new ProxyRoom[template.levelWidth, template.levelHeight];
             }
 
 			int CapLevelLength (int levelLength, int levelWidth, int levelHeight) {
@@ -39,33 +40,33 @@ namespace HackedDesign {
 			}			 
 
 			public List<Vector2Int> PossibleMovementDirections (Vector2Int pos) {
-				ProxyChunk chunk = proxyLevel[pos.x, pos.y];
+				ProxyRoom room = proxyLevel[pos.x, pos.y];
 
 				List<Vector2Int> results = new List<Vector2Int> ();
 
 
 
-				if (chunk.left == Chunk.ChunkSide.Door || chunk.left == Chunk.ChunkSide.Open) {
+				if (room.left == RoomSide.Door || room.left == RoomSide.Open) {
 					var leftPos = new Vector2Int (pos.x - 1, pos.y);
 
 					results.Add (leftPos);
 				}
 
-				if (chunk.top == Chunk.ChunkSide.Door || chunk.top == Chunk.ChunkSide.Open) {
+				if (room.top == RoomSide.Door || room.top == RoomSide.Open) {
 					var upPos = new Vector2Int (pos.x, pos.y - 1);
 
 					results.Add (upPos);
 
 				}
 
-				if (chunk.bottom == Chunk.ChunkSide.Door || chunk.bottom == Chunk.ChunkSide.Open) {
+				if (room.bottom == RoomSide.Door || room.bottom == RoomSide.Open) {
 					var bottomPos = new Vector2Int (pos.x, pos.y + 1);
 
 					results.Add (bottomPos);
 
 				}
 
-				if (chunk.right == Chunk.ChunkSide.Door || chunk.right == Chunk.ChunkSide.Open) {
+				if (room.right == RoomSide.Door || room.right == RoomSide.Open) {
 					var rightPos = new Vector2Int (pos.x + 1, pos.y);
 
 					results.Add (rightPos);

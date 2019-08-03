@@ -1,8 +1,10 @@
 ﻿
 namespace HackedDesign {
 
-    public struct State {
-        public GameState state; // = GameState.LOADING;
+    public class State {
+		public int gameSlot;
+        public GameState state; 
+		public Level.Level level;
     }
 
 	public enum GameState {

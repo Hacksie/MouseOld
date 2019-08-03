@@ -17,7 +17,7 @@ namespace HackedDesign
 
 			public bool generateDoors = true;
 
-			public string startingChunkString = "wdww";
+			public string startingRoomString = "wdww";
 
 			public bool isRandom;
 			public bool generateNavMesh = true;
