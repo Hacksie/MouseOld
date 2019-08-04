@@ -205,28 +205,24 @@ namespace HackedDesign {
 
 			player.transform.position = state.level.ConvertLevelPosToWorld (state.level.spawn);
 
-			GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
+			//GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 
 			playerController = player.GetComponent<PlayerController> ();
 
 			SceneTriggersInitialize ();
 			SceneNPCsInitialize ();
 
+			SetResume();
 
 
-			if (sceneStoriesObj != null) {
-
-				Story.StoryEventTransition[] stories = sceneStoriesObj.GetComponents<Story.StoryEventTransition> ();
-
-				for (int i = 0; i < stories.Length; i++) {
-					stories[i].Invoke ();
-				}
-			} else {
-				Debug.LogWarning ("No starting stories set");
+			if(!string.IsNullOrWhiteSpace(state.level.template.startingAction))
+			{
+				Story.ActionManager.instance.Invoke(state.level.template.startingAction);
 			}
 
+
 			RepaintAll ();
-			SetResume();			
+					
 
 		}
 
@@ -302,6 +298,7 @@ namespace HackedDesign {
 			Debug.Log ("State set to NARRATION");
 			Time.timeScale = 0;
 			state.state = GameState.NARRATION;
+			RepaintAll();
 		}
 
 		public void SetWorldMap () {

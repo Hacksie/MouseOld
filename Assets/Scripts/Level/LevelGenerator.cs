@@ -205,7 +205,7 @@ namespace HackedDesign {
 
 			ProxyRoom GenerateEntryRoom (Level level) {
 
-				string start = string.IsNullOrEmpty (level.template.startingRoomString) ? DEFAULT_ROOM_START : level.template.startingRoomString;
+				string start = string.IsNullOrEmpty (level.template.startingRoomString) ? level.template.startingRoomString : DEFAULT_ROOM_START;
 
 				ProxyRoom res = RoomFromString (start);
 				res.isEntry = true;

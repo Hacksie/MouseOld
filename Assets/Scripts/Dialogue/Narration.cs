@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace HackedDesign {
 
@@ -9,7 +10,7 @@ namespace HackedDesign {
 			[TextArea]
 			public string text;
 			public Sprite button;
-			public NarrationAction narrationAction;
+			public string narrationAction;
 		}
 	}
 

@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
   m_Name: Victoria's Room
   m_EditorClassIdentifier: 
-  levelLength: 10
-  levelWidth: 10
-  levelHeight: 10
+  levelLength: 1
+  levelWidth: 2
+  levelHeight: 1
   enemies: 0
   generateDoors: 1
-  startingChunkString: 
+  startingRoomString: weww
+  startingAction: Prelude1
+  exitAction: PreludeExit
   isRandom: 0
   generateNavMesh: 0
   floor: {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
@@ -66,5 +68,5 @@ MonoBehaviour:
   - {fileID: 3124142144086319021, guid: 7dd2b6b267b9f524e90f544b451839d9, type: 3}
   randomProps: []
   mapWallsRows:
-  - wdww_entry
+  - weww_entry
   mapPropsRows: []

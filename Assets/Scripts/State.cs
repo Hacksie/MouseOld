@@ -1,11 +1,19 @@
 ﻿
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace HackedDesign {
 
-    public class State {
+	public class State {
 		public int gameSlot;
-        public GameState state; 
+		public GameState state;
 		public Level.Level level;
-    }
+		public List<Story.Task> taskList = new List<Story.Task> ();
+
+		public Story.Task selectedTask;
+
+	}
 
 	public enum GameState {
 		MAINMENU,
@@ -19,5 +27,5 @@ namespace HackedDesign {
 		SELECTMENU,
 		GAMEOVER
 
-	}    
+	}
 }

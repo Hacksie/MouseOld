@@ -23,32 +23,33 @@ namespace HackedDesign {
 			}
 
 			public void ShowNarration (Narration narration) {
-				//input.ResetInput();
+				input.ResetInput();
 				//Input.ResetInputAxes();
 				if (narration != null) {
+					Debug.Log("Show narration " + narration.name);
 					currentNarration = narration;
 					CoreGame.instance.SetNarration ();
 				} else {
-					Debug.LogError ("No dialogue to show");
+					Debug.LogError ("No narration to show");
 				}
 			}
 
 			public void ShowNarration (string name) {
-				ShowNarration (narrationList.FirstOrDefault (e => e.name == name));
+				ShowNarration (narrationList.FirstOrDefault (e => e != null && e.name == name));
 			}
 
 			public void NarrationButtonEvent () {
 				Debug.Log ("Narration Button Event");
 
-				//currentNarration = null;
-				//CoreGame.instance.SetResume ();
-
-				if (currentNarration.narrationAction != null) {
-					NarrationAction narrationAction = currentNarration.narrationAction;
-					currentNarration = null;
-					CoreGame.instance.SetResume ();
-					narrationAction.Invoke ();
+				string nextAction = "";
+				if (!string.IsNullOrWhiteSpace (currentNarration.narrationAction)) {
+					nextAction = currentNarration.narrationAction;
 				}
+
+				currentNarration = null;
+				CoreGame.instance.SetResume ();
+
+				Story.ActionManager.instance.Invoke (nextAction);
 
 				// if(currentDialogue.nextDialogue == null)
 				// {

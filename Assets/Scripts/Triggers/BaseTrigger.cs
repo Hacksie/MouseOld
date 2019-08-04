@@ -5,13 +5,32 @@ using UnityEngine.Events;
 
 namespace HackedDesign {
 	namespace Triggers {
-		public abstract class BaseTrigger : MonoBehaviour, ITrigger {
+		public class BaseTrigger : MonoBehaviour, ITrigger {
 
 			protected Input.IInputController inputController;
 			protected new Collider2D collider;
 			public new bool enabled = true;
 
-			public void Initialize (Input.IInputController inputController) {
+			[Header("Trigger settings")]
+			public bool requireInteraction = false;
+			public bool allowRepeatTriggers = false;
+
+			[Header("Trigger actions")]
+			public string triggerAction;
+			public string leaveAction;
+
+			[Header("Trigger state")]
+			public bool hasBeenTriggered = false;
+			public bool hasBeenLeft = false;			
+
+			public void Start()
+			{
+				if(this.tag != TagManager.TRIGGER) {
+					Debug.LogError("Trigger is not tagged: " + this.name);
+				}
+			}
+
+			public virtual void Initialize (Input.IInputController inputController) {
 				this.inputController = inputController;
 				collider = GetComponent<Collider2D> ();
 				if (enabled) {
@@ -34,9 +53,53 @@ namespace HackedDesign {
 				}
 			}
 
-			public abstract void UpdateTrigger ();
+			public virtual void UpdateTrigger () 
+			{
 
-			public abstract void Invoke (); 
+			}
+
+			public virtual void Invoke () {
+				Debug.Log("Invoking trigger action: " + triggerAction);
+				Story.ActionManager.instance.Invoke(triggerAction);
+			}
+
+			public virtual void Leave() {
+				Story.ActionManager.instance.Invoke(leaveAction);
+			}
+
+			// TODO: Make door close trigger
+			protected virtual void OnTriggerStay2D (Collider2D other) {
+
+				if(!enabled)
+					return;
+
+				if (requireInteraction && inputController == null) {
+					Debug.LogError ("Trigger has no inputController");
+					return;
+				}
+
+				if (!requireInteraction || (requireInteraction && inputController.InteractButtonUp ())) {
+					if (!hasBeenTriggered || (allowRepeatTriggers && hasBeenTriggered)) {
+						hasBeenTriggered = true;
+						Invoke ();
+					}
+				}
+			}
+
+			protected virtual void OnTriggerExit2D (Collider2D other) {
+				if(!enabled)
+					return;
+
+				if(hasBeenTriggered && !hasBeenLeft)
+				{
+					Leave();
+					if(!allowRepeatTriggers) {
+						hasBeenLeft = true;
+					}
+				}
+
+			}
+
 		}
 	}
 }

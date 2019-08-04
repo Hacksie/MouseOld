@@ -31,6 +31,7 @@
 		public const string ENVIRONMENT = "Environment";
 		public const string LEVELGEN = "LevelGen";
 		public const string MAINMENU = "MainMenu";
+		public const string TRIGGER = "Trigger";
 
 	}
 }

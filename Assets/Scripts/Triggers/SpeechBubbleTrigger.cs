@@ -39,8 +39,6 @@ namespace HackedDesign {
 
 			// Update is called once per frame
 			public override void UpdateTrigger () {
-				//Debug.Log("Update trigger");
-
 
 				if (textField.gameObject.activeInHierarchy) {
 				 	textField.rectTransform.position = Camera.main.WorldToScreenPoint (transform.position + offset);
@@ -49,7 +47,6 @@ namespace HackedDesign {
 				 		textField.gameObject.SetActive (false);
 				 	}
 				}
-
 			}
 
 			public override void Invoke () {
@@ -63,17 +60,6 @@ namespace HackedDesign {
 				}
 			}
 
-			private void OnTriggerStay2D (Collider2D other) {
-				//textField.text = text;
-				if (inputController == null) {
-					Debug.LogWarning ("Trigger isn't tagged as a trigger");
-					return;
-				}
-
-				if (inputController.InteractButtonUp ()) {
-					Invoke ();
-				}
-			}
 		}
 	}
 }

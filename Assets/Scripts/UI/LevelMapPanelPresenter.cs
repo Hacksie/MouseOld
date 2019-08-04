@@ -39,6 +39,10 @@ namespace HackedDesign {
             }
 
             private void PopulateWallSprites () {
+
+                entrySprite.gameObject.SetActive(false);
+                endSprite.gameObject.SetActive(false);
+
                 for (int i = 0; i < level.template.levelHeight; i++) {
                     for (int j = 0; j < level.template.levelWidth; j++) {
 
@@ -58,10 +62,12 @@ namespace HackedDesign {
 
                             if (level.proxyLevel[j, i].isEntry) {
                                 entrySprite.transform.position = new Vector3 (j * 18 + 3f, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position;
+                                entrySprite.gameObject.SetActive(true);
                             }
 
                             if (level.proxyLevel[j, i].isEnd) {
                                 endSprite.transform.position = new Vector3 (j * 18 + 3f, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position;
+                                endSprite.gameObject.SetActive(true);
                             }
 
                             goBL.sprite = blSprite;
@@ -111,6 +117,10 @@ namespace HackedDesign {
                     Debug.Log ("Invalid sprite name");
                     return false;
                 }
+
+                // Hack to deal with exits
+                wall1 = wall1.Replace('e','d');
+                wall2 = wall2.Replace('e','d');
 
                 return (nameSplit[0] == corner.ToLower () &&
                     (wall1.ToLower () == nameSplit[1].Substring (0, 1) && wall2.ToLower () == nameSplit[1].Substring (1, 1)));

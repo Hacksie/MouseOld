@@ -8,6 +8,7 @@ namespace HackedDesign {
     namespace Dialogue {
         public class NarrationPanelPresenter : MonoBehaviour {
 
+            public Narration currentNarration;
             INarrationManager narrationManager;
             public Text text;
             public Button actionButton;
@@ -30,7 +31,7 @@ namespace HackedDesign {
 
             public void Repaint () {
                 if (CoreGame.instance.state.state == GameState.NARRATION) {
-                    if(!this.gameObject.activeInHierarchy) {
+                    if(!this.gameObject.activeInHierarchy || currentNarration != narrationManager.GetCurrentNarration ()) {
                     Show (true);
                     }
                 } else if (this.gameObject.activeInHierarchy) {
@@ -41,7 +42,7 @@ namespace HackedDesign {
 
             private void Show (bool flag) {
                 Debug.Log ("Show narration " + flag);
-                Narration currentNarration = narrationManager.GetCurrentNarration ();
+                currentNarration = narrationManager.GetCurrentNarration ();
 
                 if (currentNarration == null) {
                     this.gameObject.SetActive (false);

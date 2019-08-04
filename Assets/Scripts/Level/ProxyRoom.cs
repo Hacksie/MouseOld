@@ -27,7 +27,8 @@ namespace HackedDesign {
         public enum RoomSide {
             Wall = 'w',
             Open = 'o',
-            Door = 'd'
+            Door = 'd',
+            Exit = 'e'
         }   
 
     }

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e3796c84e8e0744f9da802e8c3841a1, type: 3}
+  m_Name: Prelude2
+  m_EditorClassIdentifier: 
+  speaker: {fileID: 11400000, guid: 1366536d38d42804c8c99d9aa88423ba, type: 2}
+  text: 'My laptop glows with a new message. Manager Lyon said he''d be sending through
+    the details of the next run soon. I guess there''s no rest for the wicked. '
+  button: {fileID: 21300000, guid: 3d46142ff1f954c09929f8b43f28b79f, type: 3}
+  narrationAction: 

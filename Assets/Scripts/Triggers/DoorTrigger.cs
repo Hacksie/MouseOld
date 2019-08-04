@@ -12,12 +12,13 @@ namespace HackedDesign {
             public Animator animator;
             bool open = false;
 
-            public void Initialize (Input.IInputController inputController) {
+            public override void Initialize (Input.IInputController inputController) {
                 base.Initialize(inputController);
                 Debug.Log ("Initialize door trigger");
                 base.Activate();
                 
                 animator = GetComponent<Animator>();
+                allowRepeatTriggers = true;
 
             }
 
@@ -33,22 +34,9 @@ namespace HackedDesign {
                 open = true;            
             }
 
-            // TODO: Make door close trigger
-            private void OnTriggerStay2D (Collider2D other) {
-                
-                if (inputController == null) {
-                    Debug.LogWarning ("Trigger isn't tagged as a trigger");
-                    return;
-                }
-
-                //if (inputController.InteractButtonUp ()) {
-                    Invoke ();
-                //}
-            }
-
-            private void OnTriggerExit2D (Collider2D other) {
-                open = false;         
-            }          
+            public override void Leave() {
+                open = false;
+            }     
 		}
 	}
 }

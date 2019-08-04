@@ -15,6 +15,8 @@ namespace HackedDesign {
 
 			public GameObject doorewPrefab;
 			public GameObject doornsPrefab;
+			public GameObject exitewPrefab;
+			public GameObject exitnsPrefab;
 
 			private GameObject levelParent;
 			private GameObject npcParent;
@@ -182,6 +184,7 @@ namespace HackedDesign {
 				string open = "oaxy";
 				string door = "daxz";
 				string wall = "wayz";
+				string exit = "edaxy";
 
 				string first = nameSplit[3].Substring (0, 1);
 				string second = nameSplit[3].Substring (1, 1);
@@ -189,10 +192,13 @@ namespace HackedDesign {
 				return (nameSplit[2] == corner.ToLower () &&
 					((wall1.ToLower () == "o" && open.IndexOf (first) >= 0) ||
 						(wall1.ToLower () == "d" && door.IndexOf (first) >= 0) ||
-						(wall1.ToLower () == "w" && wall.IndexOf (first) >= 0)) &&
+						(wall1.ToLower () == "w" && wall.IndexOf (first) >= 0) ||
+						(wall1.ToLower() == "e" && exit.IndexOf(first) >= 0)) &&
 					((wall2.ToLower () == "o" && open.IndexOf (second) >= 0) ||
 						(wall2.ToLower () == "d" && door.IndexOf (second) >= 0) ||
-						(wall2.ToLower () == "w" && wall.IndexOf (second) >= 0)));
+						(wall2.ToLower () == "w" && wall.IndexOf (second) >= 0) ||
+						(wall2.ToLower () == "e" && exit.IndexOf (second) >= 0))						
+						);
 			}
 
 			void PopulateLevelDoors (Level level) {
@@ -215,6 +221,18 @@ namespace HackedDesign {
 								Vector3 pos = new Vector3 (j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
 								GameObject.Instantiate (doornsPrefab, pos, Quaternion.identity, levelParent.transform);
 							}
+
+							if (placeholder.top == RoomSide.Exit) {
+								Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+								GameObject.Instantiate (exitewPrefab, pos, Quaternion.identity, levelParent.transform);
+							}
+
+							if (placeholder.left == RoomSide.Exit) {
+								Vector3 pos = new Vector3 (j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
+								GameObject.Instantiate (exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
+							}							
+
+							
 
 						}
 					}
