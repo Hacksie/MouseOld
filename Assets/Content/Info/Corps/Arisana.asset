@@ -4,13 +4,17 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f415c5ee8cff24a41938f470eb0ddd35, type: 3}
   m_Name: Arisana
   m_EditorClassIdentifier: 
+  available: 0
+  parentInfoCategory: Corporations
+  title: 
   description: 
   color: {r: 0.8396226, g: 0.0039604935, b: 0.8191155, a: 1}
   logo: {fileID: 0}

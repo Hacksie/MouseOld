@@ -17,6 +17,7 @@ namespace HackedDesign {
             public Text speakerHandle;
             public Text speakerCorp;
             public Text speakerStatus;
+            public Image avatarSprite;
             //public Image avatar;
 
             //public List<Character.Corp> corps = new List<Character.Corp>();
@@ -31,8 +32,8 @@ namespace HackedDesign {
 
             public void Repaint () {
                 if (CoreGame.instance.state.state == GameState.NARRATION) {
-                    if(!this.gameObject.activeInHierarchy || currentNarration != narrationManager.GetCurrentNarration ()) {
-                    Show (true);
+                    if (!this.gameObject.activeInHierarchy || currentNarration != narrationManager.GetCurrentNarration ()) {
+                        Show (true);
                     }
                 } else if (this.gameObject.activeInHierarchy) {
                     Show (false);
@@ -60,6 +61,9 @@ namespace HackedDesign {
                 speakerCorp.text = currentNarration.speaker.corp.name;
                 speakerCorp.color = currentNarration.speaker.corp.color;
                 speakerStatus.text = currentNarration.speaker.status.ToString ();
+                if (currentNarration.speaker.avatar != null) {
+                    avatarSprite.sprite = currentNarration.speaker.avatar;
+                }
 
                 text.text = currentNarration.text;
                 //speaker.text = currentNarration.speaker.fullName + " / <color=cyan>\"" + currentNarration.speaker.handle + "\"</color> / <color="+ currentNarration.speaker.corp.color.ToString() + ">" + currentNarration.speaker.corp.name + "</color> / " + currentNarration.speaker.serial;

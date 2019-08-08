@@ -4,13 +4,18 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cc82cac66d06f043abddc533af266d6, type: 3}
   m_Name: SnowOwl
   m_EditorClassIdentifier: 
+  available: 1
+  unread: 0
+  parentInfoCategory: Contractors
+  description: 
   fullName: Tahlia Keyes
   handle: Snow Owl
   corp: {fileID: 11400000, guid: 9e176034839282f488981c2ada900e44, type: 2}

@@ -10,14 +10,16 @@ namespace HackedDesign {
 		// Inject these in
 		private Story.InfoPanelPresenter infoPanel;
 		private Story.TaskPanelPresenter taskPanel;
+		private Level.LevelMapPanelPresenter levelMapPanel;
 		private GameObject StashPanel;
 		private GameObject PsychPanel;
 
-		public void Initialize(SelectMenuManager selectMenuManager, Story.InfoPanelPresenter infoPanel, Story.TaskPanelPresenter taskPanel)
+		public void Initialize(SelectMenuManager selectMenuManager, Story.InfoPanelPresenter infoPanel, Story.TaskPanelPresenter taskPanel, Level.LevelMapPanelPresenter levelMapPanel)
 		{
 			this.selectMenuManager = selectMenuManager;
 			this.infoPanel = infoPanel;
 			this.taskPanel = taskPanel;
+			this.levelMapPanel = levelMapPanel;
 		}
 
 		public void Repaint () {
@@ -28,6 +30,7 @@ namespace HackedDesign {
 			}
 			infoPanel.Repaint();
 			taskPanel.Repaint();
+			levelMapPanel.Repaint();
 		}		
 
 		private void Show(bool flag) {
@@ -40,22 +43,22 @@ namespace HackedDesign {
 				return;
 			}
 
-			switch(selectMenuManager.GetMenuState())
-			{
-				case SelectMenuManager.SelectMenuState.INFO:
-				//infoPanel.Show(true);
-				break;
+			// switch(selectMenuManager.GetMenuState())
+			// {
+			// 	case SelectMenuManager.SelectMenuState.INFO:
+			// 	//infoPanel.Show(true);
+			// 	break;
 
-				case SelectMenuManager.SelectMenuState.TASKS:
-				//taskPanel.Show(true);
-				break;
+			// 	case SelectMenuManager.SelectMenuState.TASKS:
+			// 	//taskPanel.Show(true);
+			// 	break;
 
-				case SelectMenuManager.SelectMenuState.STASH:
-				break;
+			// 	case SelectMenuManager.SelectMenuState.STASH:
+			// 	break;
 
-				case SelectMenuManager.SelectMenuState.PSYCH:
-				break;
-			}
+			// 	case SelectMenuManager.SelectMenuState.PSYCH:
+			// 	break;
+			// }
 		}
 
 		public void HideAll()
@@ -76,6 +79,10 @@ namespace HackedDesign {
 				PsychPanel.SetActive(false);
 			}
 		}
+
+		public void ResumeClickEvent () {
+			CoreGame.instance.SetResume ();
+		}		
 	
 		public void InfoClickEvent()
 		{
@@ -90,5 +97,14 @@ namespace HackedDesign {
 			selectMenuManager.SetMenuState(SelectMenuManager.SelectMenuState.TASKS);
 			Show(true);
 		}
+
+		public void MapClickEvent()
+		{
+			Debug.Log("Select Menu Task Clicked");
+			selectMenuManager.SetMenuState(SelectMenuManager.SelectMenuState.MAP);
+			Show(true);
+		}		
+
+
 	}
 }

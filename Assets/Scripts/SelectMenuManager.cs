@@ -18,15 +18,16 @@ namespace HackedDesign {
 			return state;
 		}
 
-		public void ResumeEvent () {
-			CoreGame.instance.SetResume ();
-		}
+
+
+		
 
 		public enum SelectMenuState {
 			INFO,
 			TASKS,
 			STASH,
-			PSYCH
+			PSYCH,
+			MAP
 		}
 	}
 }

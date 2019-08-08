@@ -6,8 +6,7 @@ namespace HackedDesign {
 	namespace Story {
 		[CreateAssetMenu (fileName = "InfoCategory", menuName = "Mouse/Story/Category")]
 		public class InfoCategory : ScriptableObject {
-			public InfoEntity[] entities;
-
+			public bool available;
 		}
 	}
 }

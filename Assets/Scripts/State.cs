@@ -9,9 +9,12 @@ namespace HackedDesign {
 		public int gameSlot;
 		public GameState state;
 		public Level.Level level;
+
+
 		public List<Story.Task> taskList = new List<Story.Task> ();
 
 		public Story.Task selectedTask;
+
 
 	}
 

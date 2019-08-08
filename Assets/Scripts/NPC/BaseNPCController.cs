@@ -44,7 +44,9 @@ namespace HackedDesign {
 				this.player = CoreGame.instance.GetPlayer ().transform;
 				this.level = level;
 				FaceDirection (direction);
-				this.polyNavAgent.map = polyNav2D;
+				if (this.polyNavAgent != null && this.polyNavAgent.isActiveAndEnabled) {
+					this.polyNavAgent.map = polyNav2D;
+				}
 			}
 
 			public void Activate () {
@@ -86,13 +88,13 @@ namespace HackedDesign {
 
 			}
 
-			public void FaceDirection (Vector2 direction) {
+			public virtual void FaceDirection (Vector2 direction) {
 
 				if (anim != null) {
 					anim.SetFloat ("directionX", direction.x);
 					anim.SetFloat ("directionY", direction.y);
 
-					if (polyNavAgent.currentSpeed > 0.01f) {
+					if (this.polyNavAgent != null && this.polyNavAgent.currentSpeed > 0.01f) {
 						anim.SetBool ("isMoving", true);
 					}
 				}

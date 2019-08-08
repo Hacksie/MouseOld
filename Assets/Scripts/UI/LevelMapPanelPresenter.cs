@@ -9,6 +9,8 @@ namespace HackedDesign {
         public class LevelMapPanelPresenter : MonoBehaviour {
             // Start is called before the first frame update
 
+            private SelectMenuManager selectMenuManager;
+
             public List<Sprite> wallSprites;
             public Image locationSprite;
             public Image entrySprite;
@@ -24,7 +26,8 @@ namespace HackedDesign {
                 }
             }
 
-            public void Initialize (Level level) {
+            public void Initialize (SelectMenuManager selectMenuManager, Level level) {
+                this.selectMenuManager = selectMenuManager;
                 this.level = level;
 
                 DestroyWallSprites ();
@@ -86,7 +89,7 @@ namespace HackedDesign {
 
             public void Repaint () {
 
-                if (CoreGame.instance.state.state == GameState.PLAYING) {
+                if (CoreGame.instance.state.state == GameState.SELECTMENU && selectMenuManager.state == SelectMenuManager.SelectMenuState.MAP) {
                     if(!this.gameObject.activeInHierarchy) {
                         this.gameObject.SetActive(true);
                     }

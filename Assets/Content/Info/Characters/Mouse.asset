@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc82cac66d06f043abddc533af266d6, type: 3}
   m_Name: Mouse
   m_EditorClassIdentifier: 
+  available: 1
+  unread: 0
+  parentInfoCategory: Contractors
+  description: 
   fullName: Victoria Ives
   handle: '"Mouse"'
   corp: {fileID: 11400000, guid: 9e176034839282f488981c2ada900e44, type: 2}
   serial: BA5B C182 4F89
-  avatar: {fileID: 0}
+  avatar: {fileID: 1372822643794956104, guid: 6f297c28536185d4286d778bdb13e331, type: 3}
   status: 0

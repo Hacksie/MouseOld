@@ -126,7 +126,7 @@ namespace HackedDesign {
 			infoPanel.Initialize (infoManager, selectMenuManager);
 			taskPanel.Initialize (taskManager, selectMenuManager);
 			startMenuPanel.Initialize (startMenuManager);
-			selectMenuPanel.Initialize (selectMenuManager, infoPanel, taskPanel);
+			selectMenuPanel.Initialize (selectMenuManager, infoPanel, taskPanel, levelMapPanel);
 			narrationPanel.Initialize (narrationManager);
 			dialoguePanel.Initialize (dialogueManager);
 			worldMapPanel.Initialize (worldMapManager);
@@ -201,7 +201,7 @@ namespace HackedDesign {
 			levelRenderer.Initialize (levelParent, npcParent, polyNav2D);
 			levelRenderer.Render();
 
-			levelMapPanel.Initialize (state.level);
+			levelMapPanel.Initialize (selectMenuManager, state.level);
 
 			player.transform.position = state.level.ConvertLevelPosToWorld (state.level.spawn);
 

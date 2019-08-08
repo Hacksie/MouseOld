@@ -6,13 +6,20 @@ namespace HackedDesign {
 	namespace Story {
 		public class InfoManager : MonoBehaviour {
 
-			public List<InfoCategory> categories = new List<InfoCategory> ();
-			public InfoCategory selectedCategory;
-			//public Map.Building selectedBuilding;
-			//public Map.Location selectedLocation;
+			public InfoManager instance;
 
-			public List<InfoCategory> GetCategories()
-			{
+
+
+			[Header("Config")]
+			public List<InfoCategory> categories = new List<InfoCategory> ();
+			public List<InfoEntity> entities = new List<InfoEntity>();
+
+
+
+			public string selectedInfoCategory;
+			public string selectedInfoEntity;
+
+			public List<InfoCategory> GetCategories () {
 				return categories;
 			}
 

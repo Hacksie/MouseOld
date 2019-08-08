@@ -3,7 +3,7 @@ using UnityEngine;
 namespace HackedDesign {
 	namespace Story {
 		[CreateAssetMenu (fileName = "Story", menuName = "Mouse/Story/Character")]
-		public class Character : ScriptableObject {
+		public class Character : InfoEntity {
 			public string fullName;
 			public string handle;
 			public Corp corp;
