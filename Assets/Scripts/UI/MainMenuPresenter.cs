@@ -24,6 +24,7 @@ namespace HackedDesign {
 		public UnityEngine.UI.Slider widthSlider;
 		public UnityEngine.UI.Dropdown difficultyDropdown;
 		public UnityEngine.UI.Slider enemiesSlider;
+		public UnityEngine.UI.Slider camerasSlider;
 
 		public Level.LevelGenTemplate[] templates;
 
