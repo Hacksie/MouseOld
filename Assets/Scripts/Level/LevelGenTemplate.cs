@@ -14,6 +14,7 @@ namespace HackedDesign
 			public int levelWidth = 10;
 			public int levelHeight = 10;
 			public int enemies = 0;
+			public int cameras = 0;
 
 			public bool generateDoors = true;
 

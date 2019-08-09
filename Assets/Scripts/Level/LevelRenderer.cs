@@ -23,6 +23,7 @@ namespace HackedDesign {
 			private PolyNav.PolyNav2D polyNav2D;
 
 			public List<GameObject> securityGuardEasyPrefabs;
+			public List<GameObject> securityCameraPrefabs;
 
 			public void Initialize (GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D) {
 				this.levelParent = levelParent;
@@ -47,6 +48,7 @@ namespace HackedDesign {
 
 				PopulateLevelDoors (level);
 				PopulateEnemySpawns (level);
+				PopulateCameraSpawns (level);
 
 			}
 
@@ -247,17 +249,29 @@ namespace HackedDesign {
 				}
 
 				for (int i = 0; i < level.enemySpawnLocationList.Count; i++) {
-					if (i >= level.template.enemies) {
-						break;
-					}
 
 					int rand = UnityEngine.Random.Range (0, securityGuardEasyPrefabs.Count);
 
 					GameObject sggo = securityGuardEasyPrefabs[rand];
 					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.enemySpawnLocationList[i]), Quaternion.identity, npcParent.transform);
-
 				}
 			}
+
+			// Move first half back to generator
+			void PopulateCameraSpawns (Level level) {
+
+				if (securityCameraPrefabs.Count <= 0) {
+					return;
+				}
+
+				for (int i = 0; i < level.cameraSpawnLocationList.Count; i++) {
+
+					int rand = UnityEngine.Random.Range (0, securityCameraPrefabs.Count);
+
+					GameObject sggo = securityCameraPrefabs[rand];
+					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.cameraSpawnLocationList[i]), Quaternion.identity, npcParent.transform);
+				}
+			}			
 
 			enum RoomObjectType {
 				Walls,

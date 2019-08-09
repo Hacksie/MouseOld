@@ -15,10 +15,10 @@ namespace HackedDesign {
 
 
 			public Level GenerateLevel (string template) {
-				return GenerateLevel (template, 0, 0, 0, 0, 0);
+				return GenerateLevel (template, 0, 0, 0, 0, 0, 0);
 			}
 
-			public Level GenerateLevel (string template, int length, int height, int width, int difficulty, int enemies) {
+			public Level GenerateLevel (string template, int length, int height, int width, int difficulty, int enemies, int cameras) {
 				Debug.Log ("Generating Level");
 
 				if (string.IsNullOrEmpty (template)) {
@@ -48,6 +48,7 @@ namespace HackedDesign {
 				}
 
 				genTemplate.enemies = enemies;
+				genTemplate.cameras = cameras;
 
 				if (genTemplate == null) {
 					Debug.LogError ("No level gen template found: " + template);
@@ -63,7 +64,9 @@ namespace HackedDesign {
 					level = GenerateFixedLevel (genTemplate);
 				}
 
+				GenerateCameraSpawns(level);
 				GenerateEnemySpawns(level);
+				
 
 				level.Print ();
 
@@ -214,12 +217,6 @@ namespace HackedDesign {
 
 				return res;
 			}
-
-
-
-		
-
-
 
 			ProxyRoom RoomFromString (string str) {
 
@@ -442,26 +439,40 @@ namespace HackedDesign {
 			}
 
 			void GenerateEnemySpawns(Level level){
-				level.enemySpawnLocationList = new List<Vector2Int> ();
-
+				List<Vector2Int> candidates = new List<Vector2Int> ();
 
 				for (int i = 0; i < level.template.levelHeight; i++) {
 					for (int j = 0; j < level.template.levelWidth; j++) {
 						if (level.proxyLevel[j, i] != null && !level.proxyLevel[j, i].isNearEntry) {
 							//Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 2, 0);
-							level.enemySpawnLocationList.Add (new Vector2Int (j, i));
+							candidates.Add (new Vector2Int (j, i));
 						}
 					}
 				}
 
+				candidates.Randomize();
+
+				level.enemySpawnLocationList = candidates.Take(level.template.enemies).ToList();
+
 				level.enemySpawnLocationList.Randomize ();
-
-
 			}
 
+			void GenerateCameraSpawns(Level level){
+				List<Vector2Int> candidates = new List<Vector2Int> ();
+				
+				for (int i = 0; i < level.template.levelHeight; i++) {
+					for (int j = 0; j < level.template.levelWidth; j++) {
+						if (level.proxyLevel[j, i] != null && !level.proxyLevel[j, i].isNearEntry) {
+							//Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 2, 0);
+							candidates.Add (new Vector2Int (j, i));
+						}
+					}
+				}
 
+				candidates.Randomize();
+				level.cameraSpawnLocationList = candidates.Take(level.template.cameras).ToList();
+			}
 		}
-
 	}
 
 }

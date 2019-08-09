@@ -155,16 +155,16 @@ namespace HackedDesign {
 		public void LoadNewGame () {
 			state.state = GameState.LOADING;
 			//CoreGame.instance.Initialization ();
-			state.level = levelGenerator.GenerateLevel ("Victoria's Room", 1, 1, 2, 0, 0);
+			state.level = levelGenerator.GenerateLevel ("Victoria's Room", 1, 1, 2, 0, 0, 0);
 			CoreGame.instance.SceneInitialize ();
 			//CoreGame.instance.SceneInitialize ("Easy Magenta Lab", 7, 10, 10, 0, 2);
 		}
 
-		public void LoadRandomGame (string template, int length, int height, int width, int difficulty, int enemies) {
+		public void LoadRandomGame (string template, int length, int height, int width, int difficulty, int enemies, int cameras) {
 			state.state = GameState.LOADING;
 
 			// Move this out of SceneInitialize, and into caller, so we can handle save states
-			state.level = levelGenerator.GenerateLevel (template, length, height, width, difficulty, enemies);
+			state.level = levelGenerator.GenerateLevel (template, length, height, width, difficulty, enemies, cameras);
 
 			CoreGame.instance.SceneInitialize ();
 		}

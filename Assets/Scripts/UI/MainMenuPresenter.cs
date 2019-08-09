@@ -106,8 +106,7 @@ namespace HackedDesign {
 			ShowOptionsPanel (false);
 			ShowRandomPanel (false);
 			Debug.Log (templateDropdown.options[templateDropdown.value].text);
-			CoreGame.instance.LoadRandomGame (templateDropdown.options[templateDropdown.value].text, (int) lengthSlider.value, (int) heightSlider.value, (int) widthSlider.value, difficultyDropdown.value, (int) enemiesSlider.value);
-		}
+			CoreGame.instance.LoadRandomGame (templateDropdown.options[templateDropdown.value].text, (int) lengthSlider.value, (int) heightSlider.value, (int) widthSlider.value, difficultyDropdown.value, (int) enemiesSlider.value, (int) camerasSlider.value);		}
 
 		public void OptionsEvent () {
 			Debug.Log ("Options Event");

@@ -12,6 +12,7 @@ namespace HackedDesign {
             public int length;
 			public Vector2Int spawn;
 			public List<Vector2Int> enemySpawnLocationList;
+			public List<Vector2Int> cameraSpawnLocationList;
 
             public Level(LevelGenTemplate template)
             {
