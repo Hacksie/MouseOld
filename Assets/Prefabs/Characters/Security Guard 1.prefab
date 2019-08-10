@@ -33,7 +33,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 604005695514098900}
+  - {fileID: 6653725784068743768}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -123,15 +123,16 @@ MonoBehaviour:
   polyNavAgent: {fileID: 1809079235}
   layerMask:
     serializedVersion: 2
-    m_Bits: 257
-  patrolSpeed: 0.5
-  huntSpeed: 1.1
+    m_Bits: 769
+  patrolWait: 7
+  patrolSpeed: 0.75
+  huntSpeed: 1
   patrolLastCheck: 0
   currentDirection: {x: 0, y: 0}
   currentDirections: []
   huntingLastSeen: 0
   seekTime: 5
-  fightDistance: 0.5
+  fightDistance: 1.5
   lastKnownLocation: {x: 0, y: 0, z: 0}
   state: 1
 --- !u!61 &1949999324
@@ -211,7 +212,7 @@ MonoBehaviour:
   restrict: 0
   closerPointOnInvalid: 1
   debugPath: 1
---- !u!1 &6591034055871704517
+--- !u!1 &7454720562416811584
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,22 +220,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 604005695514098900}
-  - component: {fileID: 4681858303072440973}
-  m_Layer: 9
-  m_Name: Point Light 2D
+  - component: {fileID: 6653725784068743768}
+  - component: {fileID: 4904521313318629274}
+  m_Layer: 0
+  m_Name: Parametric Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &604005695514098900
+--- !u!4 &6653725784068743768
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6591034055871704517}
+  m_GameObject: {fileID: 7454720562416811584}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -242,25 +243,25 @@ Transform:
   m_Father: {fileID: 4656454341915974}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4681858303072440973
+--- !u!114 &4904521313318629274
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6591034055871704517}
+  m_GameObject: {fileID: 7454720562416811584}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LightType: 3
+  m_LightType: 0
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.75
+  m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 0.75
+  m_Intensity: 0.1
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 6b08fb8100000000231218f2
+  m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
@@ -271,10 +272,10 @@ MonoBehaviour:
   m_PointLightOuterRadius: 1
   m_PointLightDistance: 3
   m_PointLightQuality: 1
-  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricSides: 16
   m_ShapeLightParametricAngleOffset: 0
-  m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightParametricRadius: 0.5
+  m_ShapeLightFalloffSize: 1
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
   - {x: -0.5, y: -0.5, z: 0}

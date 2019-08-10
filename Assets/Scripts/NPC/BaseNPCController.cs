@@ -93,7 +93,7 @@ namespace HackedDesign {
 				}
 			}
 
-			public void OnTriggerStay2D (Collider2D other) {
+			public virtual void OnTriggerStay2D (Collider2D other) {
 
 			}
 

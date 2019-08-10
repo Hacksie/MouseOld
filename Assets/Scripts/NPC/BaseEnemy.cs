@@ -6,8 +6,9 @@ namespace HackedDesign {
     namespace NPC {
         public class BaseEnemy : BaseNPCController {
 
-            public float patrolSpeed = 0.5f;
-            public float huntSpeed = 1.2f;
+            public float patrolWait = 6.0f;
+            public float patrolSpeed = 0.75f;
+            public float huntSpeed = 1f;
             public float patrolLastCheck = 0;
             public Vector2Int currentDirection;
             public List<Vector2Int> currentDirections;
@@ -75,10 +76,7 @@ namespace HackedDesign {
                         }
                     }
 
-                    if (polyNavAgent.remainingDistance < 0.01f || ((Time.time - patrolLastCheck) > (patrolSpeed * 8))) {
-
-                        
-
+                    if ((Time.time - patrolLastCheck) > (patrolWait)) {
 
                         patrolLastCheck = Time.time;
                         // Keep patrolling
