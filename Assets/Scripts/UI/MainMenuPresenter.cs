@@ -90,9 +90,7 @@ namespace HackedDesign {
 
 		public void RandomGameEvent () {
 			Debug.Log ("Random Game Event");
-
 			UnityEngine.Random.InitState (UnityEngine.Random.seed);
-
 			seedInput.text = UnityEngine.Random.seed.ToString ();
 			ShowCreditsPanel (false);
 			ShowOptionsPanel (false);

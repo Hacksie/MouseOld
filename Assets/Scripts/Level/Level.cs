@@ -7,20 +7,21 @@ using UnityEngine;
 namespace HackedDesign {
 	namespace Level {
 		public class Level {
-            public LevelGenTemplate template;
-            public ProxyRoom[, ] proxyLevel;
-            public int length;
+			public LevelGenTemplate template;
+			public ProxyRoom[, ] proxyLevel;
+			public int length;
 			public Vector2Int spawn;
 			public List<Vector2Int> enemySpawnLocationList;
-			public List<Vector2Int> cameraSpawnLocationList;
+			public List<Vector2Int> trapSpawnLocationList;
 
-            public Level(LevelGenTemplate template)
-            {
-                this.template = template;
-                this.length = CapLevelLength(template.levelLength, template.levelWidth, template.levelHeight);
-                Debug.Log("Level length: " + length);
-                proxyLevel = new ProxyRoom[template.levelWidth, template.levelHeight];
-            }
+			//public Vector2Int? alert;
+
+			public Level (LevelGenTemplate template) {
+				this.template = template;
+				this.length = CapLevelLength (template.levelLength, template.levelWidth, template.levelHeight);
+				Debug.Log ("Level length: " + length);
+				proxyLevel = new ProxyRoom[template.levelWidth, template.levelHeight];
+			}
 
 			int CapLevelLength (int levelLength, int levelWidth, int levelHeight) {
 				// Seems like a sensible limit
@@ -33,19 +34,17 @@ namespace HackedDesign {
 				}
 
 				return levelLength;
-			}           
+			}
 
 			public List<Vector2Int> MovementDirections (Vector2Int pos, bool entryAllowed, bool endAllowed) {
-				var results = PossibleMovementDirections(pos);
-				return results.TakeWhile(r => (!proxyLevel[r.x, r.y].isEnd && !proxyLevel[r.x, r.y].isEntry) || (proxyLevel[r.x, r.y].isEnd && endAllowed) || (proxyLevel[r.x, r.y].isEntry && entryAllowed)).ToList();
-			}			 
+				var results = PossibleMovementDirections (pos);
+				return results.TakeWhile (r => (!proxyLevel[r.x, r.y].isEnd && !proxyLevel[r.x, r.y].isEntry) || (proxyLevel[r.x, r.y].isEnd && endAllowed) || (proxyLevel[r.x, r.y].isEntry && entryAllowed)).ToList ();
+			}
 
 			public List<Vector2Int> PossibleMovementDirections (Vector2Int pos) {
 				ProxyRoom room = proxyLevel[pos.x, pos.y];
 
 				List<Vector2Int> results = new List<Vector2Int> ();
-
-
 
 				if (room.left == RoomSide.Door || room.left == RoomSide.Open) {
 					var leftPos = new Vector2Int (pos.x - 1, pos.y);
@@ -75,7 +74,7 @@ namespace HackedDesign {
 				}
 				return results;
 
-			} 
+			}
 
 			public List<Vector2Int> ConstructRandomPatrolPath (Vector2Int pos, int length) {
 				if (length <= 1) {
@@ -93,18 +92,31 @@ namespace HackedDesign {
 				} else {
 					return new List<Vector2Int> () { pos };
 				}
-			}     
+			}
 
 			public Vector3 ConvertLevelPosToWorld (Vector2Int pos) {
 				return new Vector3 (pos.x * 4 + 2, pos.y * -4 + ((template.levelHeight - 1) * 4) + 2);
-			}  
+			}
 
-			public Vector2Int ConvertWorldToLevelPos(Vector3 pos) {
+			public Vector2Int ConvertWorldToLevelPos (Vector3 pos) {
 
 				//i * -4 + ((level.template.levelHeight - 1) * 4)
 
-				return new Vector2Int((int)((pos.x) / 4), (int)( (template.levelHeight)  -  (pos.y / 4))); 
+				return new Vector2Int ((int) ((pos.x) / 4), (int) ((template.levelHeight) - (pos.y / 4)));
 			}
+
+
+
+			// public void SetAlert (Vector3? pos) {
+
+			// 	Debug.Log("Level alert set to: " + pos);
+			// 	if (pos != null) {
+			// 		this.alert = ConvertWorldToLevelPos (pos.Value);
+			// 	} else
+			// 	{
+			// 		this.alert = null;
+			// 	}
+			// }
 
 			public void Print () {
 				Debug.Log ("Printing level");
@@ -132,7 +144,7 @@ namespace HackedDesign {
 
 					Debug.Log (line);
 				}
-			}                                        
-        }
-    }
+			}
+		}
+	}
 }

@@ -470,7 +470,7 @@ namespace HackedDesign {
 				}
 
 				candidates.Randomize();
-				level.cameraSpawnLocationList = candidates.Take(level.template.cameras).ToList();
+				level.trapSpawnLocationList = candidates.Take(level.template.cameras).ToList();
 			}
 		}
 	}

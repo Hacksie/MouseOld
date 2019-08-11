@@ -22,8 +22,8 @@ namespace HackedDesign {
 			private GameObject npcParent;
 			private PolyNav.PolyNav2D polyNav2D;
 
-			public List<GameObject> securityGuardEasyPrefabs;
-			public List<GameObject> securityCameraPrefabs;
+			public List<GameObject> enemyEasyPrefabs;
+			public List<GameObject> trapPrefabs;
 
 			public void Initialize (GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D) {
 				this.levelParent = levelParent;
@@ -47,8 +47,8 @@ namespace HackedDesign {
 				}
 
 				PopulateLevelDoors (level);
-				PopulateEnemySpawns (level);
-				PopulateCameraSpawns (level);
+				//PopulateEnemySpawns (level);
+				//PopulateCameraSpawns (level);
 
 			}
 
@@ -195,12 +195,12 @@ namespace HackedDesign {
 					((wall1.ToLower () == "o" && open.IndexOf (first) >= 0) ||
 						(wall1.ToLower () == "d" && door.IndexOf (first) >= 0) ||
 						(wall1.ToLower () == "w" && wall.IndexOf (first) >= 0) ||
-						(wall1.ToLower() == "e" && exit.IndexOf(first) >= 0)) &&
+						(wall1.ToLower () == "e" && exit.IndexOf (first) >= 0)) &&
 					((wall2.ToLower () == "o" && open.IndexOf (second) >= 0) ||
 						(wall2.ToLower () == "d" && door.IndexOf (second) >= 0) ||
 						(wall2.ToLower () == "w" && wall.IndexOf (second) >= 0) ||
-						(wall2.ToLower () == "e" && exit.IndexOf (second) >= 0))						
-						);
+						(wall2.ToLower () == "e" && exit.IndexOf (second) >= 0))
+				);
 			}
 
 			void PopulateLevelDoors (Level level) {
@@ -232,46 +232,59 @@ namespace HackedDesign {
 							if (placeholder.left == RoomSide.Exit) {
 								Vector3 pos = new Vector3 (j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
 								GameObject.Instantiate (exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
-							}							
-
-							
+							}
 
 						}
 					}
 				}
 			}
 
-			// Move first half back to generator
-			void PopulateEnemySpawns (Level level) {
+			public List<Entity.BaseEnemy> PopulateEnemySpawns () {
+				Level level = CoreGame.instance.state.level;
 
-				if (securityGuardEasyPrefabs.Count <= 0) {
-					return;
+				List<Entity.BaseEnemy> results = new List<Entity.BaseEnemy> ();
+
+				if (enemyEasyPrefabs.Count <= 0) {
+					return results;
 				}
 
 				for (int i = 0; i < level.enemySpawnLocationList.Count; i++) {
 
-					int rand = UnityEngine.Random.Range (0, securityGuardEasyPrefabs.Count);
+					int rand = UnityEngine.Random.Range (0, enemyEasyPrefabs.Count);
 
-					GameObject sggo = securityGuardEasyPrefabs[rand];
+					GameObject sggo = enemyEasyPrefabs[rand];
 					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.enemySpawnLocationList[i]), Quaternion.identity, npcParent.transform);
+					Entity.BaseEnemy npc = go.GetComponent<Entity.BaseEnemy> ();
+					npc.Initialize(polyNav2D);
+					results.Add (npc);
 				}
+
+				return results;
 			}
 
 			// Move first half back to generator
-			void PopulateCameraSpawns (Level level) {
+			public List<Entity.BaseTrap> PopulateTrapSpawns () {
+				Level level = CoreGame.instance.state.level;
 
-				if (securityCameraPrefabs.Count <= 0) {
-					return;
+				List<Entity.BaseTrap> results = new List<Entity.BaseTrap> ();
+
+				if (trapPrefabs.Count <= 0) {
+					return results;
 				}
 
-				for (int i = 0; i < level.cameraSpawnLocationList.Count; i++) {
+				for (int i = 0; i < level.trapSpawnLocationList.Count; i++) {
 
-					int rand = UnityEngine.Random.Range (0, securityCameraPrefabs.Count);
+					int rand = UnityEngine.Random.Range (0, trapPrefabs.Count);
 
-					GameObject sggo = securityCameraPrefabs[rand];
-					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.cameraSpawnLocationList[i]), Quaternion.identity, npcParent.transform);
+					GameObject sggo = trapPrefabs[rand];
+					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.trapSpawnLocationList[i]), Quaternion.identity, npcParent.transform);
+					Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
+					npc.Initialize();
+					results.Add(npc);
 				}
-			}			
+
+				return results;
+			}
 
 			enum RoomObjectType {
 				Walls,

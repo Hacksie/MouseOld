@@ -12,21 +12,21 @@ namespace HackedDesign {
 
 		public Input.IInputController inputController;
 
-		[Header("Test Flags")]
+		[Header ("Test Flags")]
 		[SerializeField]
 		private RuntimePlatform testPlatform;
 		[SerializeField]
 		private bool testPlatformFlag;
 
-		[Header("Player")]
+		[Header ("Player")]
 		[SerializeField]
 		private GameObject player;
 		private PlayerController playerController;
 
-		[Header("Level")]
+		[Header ("Level")]
 		[SerializeField]
 		private Level.LevelGenerator levelGenerator;
-		[SerializeField]		
+		[SerializeField]
 		private Level.LevelRenderer levelRenderer;
 		[SerializeField]
 		private GameObject levelParent;
@@ -35,15 +35,15 @@ namespace HackedDesign {
 		[SerializeField]
 		private PolyNav.PolyNav2D polyNav2D;
 
-		[Header("Mobile UI")]
+		[Header ("Mobile UI")]
 		[SerializeField]
 		private Input.MobileInputUIPresenter mobileInputUI;
 
-		[Header("UI")]
+		[Header ("UI")]
 		[SerializeField]
 		private CursorPresenter cursorPresenter;
 		[SerializeField]
-		private MainMenuPresenter mainMenu;		
+		private MainMenuPresenter mainMenu;
 		[SerializeField]
 		private StartMenuManager startMenuManager;
 		[SerializeField]
@@ -62,7 +62,7 @@ namespace HackedDesign {
 		private Story.InfoPanelPresenter infoPanel;
 		[SerializeField]
 		private Story.TaskManager taskManager;
-		[SerializeField]		
+		[SerializeField]
 		private Story.TaskPanelPresenter taskPanel;
 		[SerializeField]
 		private Dialogue.NarrationManager narrationManager;
@@ -76,14 +76,14 @@ namespace HackedDesign {
 		[SerializeField]
 		private Level.LevelMapPanelPresenter levelMapPanel;
 
-
 		// [SerializeField]
 		// private TimerPanelPresenter timerPanel;
 		// [SerializeField]
 		// private Timer timer;
 
-		private List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
-		private List<NPC.BaseNPCController> npcList = new List<NPC.BaseNPCController> ();
+		
+
+		
 
 		CoreGame () {
 			instance = this;
@@ -100,9 +100,8 @@ namespace HackedDesign {
 		}
 
 		void CheckBindings () {
-			if (cursorPresenter == null)
-			{
-				Debug.LogError("cursorPresenter not set");
+			if (cursorPresenter == null) {
+				Debug.LogError ("cursorPresenter not set");
 			}
 
 			if (levelMapPanel == null) {
@@ -130,7 +129,6 @@ namespace HackedDesign {
 			narrationPanel.Initialize (narrationManager);
 			dialoguePanel.Initialize (dialogueManager);
 			worldMapPanel.Initialize (worldMapManager);
-			
 
 			RepaintAll ();
 
@@ -154,18 +152,13 @@ namespace HackedDesign {
 
 		public void LoadNewGame () {
 			state.state = GameState.LOADING;
-			//CoreGame.instance.Initialization ();
 			state.level = levelGenerator.GenerateLevel ("Victoria's Room", 1, 1, 2, 0, 0, 0);
 			CoreGame.instance.SceneInitialize ();
-			//CoreGame.instance.SceneInitialize ("Easy Magenta Lab", 7, 10, 10, 0, 2);
 		}
 
 		public void LoadRandomGame (string template, int length, int height, int width, int difficulty, int enemies, int cameras) {
 			state.state = GameState.LOADING;
-
-			// Move this out of SceneInitialize, and into caller, so we can handle save states
 			state.level = levelGenerator.GenerateLevel (template, length, height, width, difficulty, enemies, cameras);
-
 			CoreGame.instance.SceneInitialize ();
 		}
 
@@ -173,7 +166,7 @@ namespace HackedDesign {
 			state.state = GameState.MAINMENU;
 			RepaintAll ();
 			levelRenderer.DestroyLevel ();
-			npcList.Clear ();
+			state.entityList.Clear ();
 			ShowPlayer (false);
 
 			Time.timeScale = 0;
@@ -185,21 +178,19 @@ namespace HackedDesign {
 			}
 		}
 
-
 		/// <summary>
 		/// Run this each time the scene is changed
 		/// </summary>
 		public void SceneInitialize () {
-			
+
 			Debug.Log ("Scene Initialization");
 
 			ShowPlayer (true);
 
-
-
-
 			levelRenderer.Initialize (levelParent, npcParent, polyNav2D);
-			levelRenderer.Render();
+			levelRenderer.Render ();
+			this.state.entityList.AddRange(levelRenderer.PopulateEnemySpawns());
+			this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns());
 
 			levelMapPanel.Initialize (selectMenuManager, state.level);
 
@@ -210,64 +201,42 @@ namespace HackedDesign {
 			playerController = player.GetComponent<PlayerController> ();
 
 			SceneTriggersInitialize ();
-			SceneNPCsInitialize ();
 
-			SetResume();
+			SetResume ();
 
-
-			if(!string.IsNullOrWhiteSpace(state.level.template.startingAction))
-			{
-				Story.ActionManager.instance.Invoke(state.level.template.startingAction);
+			if (!string.IsNullOrWhiteSpace (state.level.template.startingAction)) {
+				Story.ActionManager.instance.Invoke (state.level.template.startingAction);
 			}
 
-
 			RepaintAll ();
-					
 
 		}
 
 		void RepaintAll () {
 
-			mainMenu.Repaint();
+			mainMenu.Repaint ();
 			dialoguePanel.Repaint ();
 			narrationPanel.Repaint ();
 			selectMenuPanel.Repaint ();
 			startMenuPanel.Repaint ();
 
 			levelMapPanel.Repaint ();
-			worldMapPanel.Repaint();
+			worldMapPanel.Repaint ();
 			//timerPanel.Repaint ();
-			mobileInputUI.Repaint();
-			cursorPresenter.Repaint();
+			mobileInputUI.Repaint ();
+			cursorPresenter.Repaint ();
 		}
 
 		void SceneTriggersInitialize () {
-			triggerList.Clear ();
+			state.triggerList.Clear ();
 			Debug.Log ("Initializing triggers, count " + GameObject.FindGameObjectsWithTag ("Trigger").Length);
 
 			foreach (GameObject triggerObject in GameObject.FindGameObjectsWithTag ("Trigger")) {
 				Debug.Log ("Initializing trigger " + triggerObject.name);
 				Triggers.ITrigger trigger = triggerObject.GetComponent<Triggers.ITrigger> ();
 				if (trigger != null) {
-					triggerList.Add (trigger);
+					state.triggerList.Add (trigger);
 					trigger.Initialize (inputController);
-				}
-			}
-		}
-
-		void SceneNPCsInitialize () {
-			npcList.Clear ();
-
-			if(state.level == null) {
-				Debug.LogError("Level not loaded");
-				return;
-			}
-
-			foreach (GameObject npcObject in GameObject.FindGameObjectsWithTag ("NPC")) {
-				NPC.BaseNPCController npc = npcObject.GetComponent<NPC.BaseNPCController> ();
-				if (npc != null) {
-					npcList.Add (npc);
-					npc.Initialize (state.level, polyNav2D);
 				}
 			}
 		}
@@ -283,7 +252,7 @@ namespace HackedDesign {
 
 		public void SetResume () {
 			Debug.Log ("State set to RESUME");
-			Time.timeScale = 1;	
+			Time.timeScale = 1;
 			state.state = GameState.PLAYING;
 		}
 
@@ -298,13 +267,23 @@ namespace HackedDesign {
 			Debug.Log ("State set to NARRATION");
 			Time.timeScale = 0;
 			state.state = GameState.NARRATION;
-			RepaintAll();
+			RepaintAll ();
 		}
 
 		public void SetWorldMap () {
 			Debug.Log ("State set to WORLDMAP");
 			Time.timeScale = 0;
 			state.state = GameState.WORLDMAP;
+		}
+
+		public void SetAlert (Entity.BaseTrap trap) {
+			Debug.Log ("Level alert set");
+			this.state.alertTrap = trap;
+
+		}
+
+		public void ClearAlert () {
+			this.state.alertTrap = null;
 		}
 
 		void Update () {
@@ -347,8 +326,7 @@ namespace HackedDesign {
 
 			}
 
-			RepaintAll();
-
+			RepaintAll ();
 
 		}
 
@@ -377,13 +355,13 @@ namespace HackedDesign {
 		}
 
 		void PlayingTriggerUpdate () {
-			foreach (Triggers.ITrigger trigger in triggerList) {
+			foreach (Triggers.ITrigger trigger in state.triggerList) {
 				trigger.UpdateTrigger ();
 			}
 		}
 
 		void PlayingNPCUpdate () {
-			foreach (NPC.BaseNPCController npc in npcList) {
+			foreach (Entity.BaseEntity npc in state.entityList) {
 				npc.UpdateBehaviour ();
 			}
 		}

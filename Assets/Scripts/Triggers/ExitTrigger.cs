@@ -10,7 +10,7 @@ namespace HackedDesign {
             //public GameObject doorObject;
             public Collider2D doorCollider;
             public Animator animator;
-            bool open = false;
+            //bool open = false;
 
             public override void Initialize (Input.IInputController inputController) {
                 base.Initialize(inputController);

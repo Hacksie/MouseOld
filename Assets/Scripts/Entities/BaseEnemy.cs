@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HackedDesign {
-    namespace NPC {
-        public class BaseEnemy : BaseNPCController {
+    namespace Entity {
+        public class BaseEnemy : BaseEntity {
+
+			public PolyNav.PolyNavAgent polyNavAgent;            
 
             public float patrolWait = 6.0f;
             public float patrolSpeed = 0.75f;
@@ -22,10 +24,37 @@ namespace HackedDesign {
 
             public EnemyState state = EnemyState.PATROLLING;
 
-            public override void UpdateBehaviour () {
-                if (anim == null) {
-                    return;
+            void start () {
+                if (polyNavAgent == null) {
+                    Debug.LogError ("Enemy without polyNavAgent set: " + this.name);
                 }
+
+                if (anim == null) {
+                    Debug.LogError ("Enemy without animator set: " + this.name);
+                }
+            }
+
+			public void Initialize (PolyNav.PolyNav2D polyNav2D) {
+				this.player = CoreGame.instance.GetPlayer ().transform;
+				FaceDirection (direction);
+				if (this.polyNavAgent != null && this.polyNavAgent.isActiveAndEnabled) {
+					this.polyNavAgent.map = polyNav2D;
+				}
+			}       
+
+			public virtual void FaceDirection (Vector2 direction) {
+
+				if (anim != null) {
+					anim.SetFloat ("directionX", direction.x);
+					anim.SetFloat ("directionY", direction.y);
+
+					if (this.polyNavAgent != null && this.polyNavAgent.currentSpeed > 0.01f) {
+						anim.SetBool ("isMoving", true);
+					}
+				}
+			}                 
+
+            public override void UpdateBehaviour () {
 
                 switch (state) {
                     case EnemyState.STANDING:
@@ -37,6 +66,9 @@ namespace HackedDesign {
                     case EnemyState.SEEKING:
                         UpdateSeeking ();
                         break;
+                    case EnemyState.RESPONDING:
+                        UpdateResponding ();
+                        break;
                     case EnemyState.HUNTING:
                         UpdateHunting ();
                         break;
@@ -47,53 +79,100 @@ namespace HackedDesign {
             }
 
             public void UpdateStanding () {
-                if (polyNavAgent != null) {
 
-                    RaycastHit2D hit = CanSeePlayer ();
+                RaycastHit2D hit = CanSeePlayer ();
 
-                    if (hit.transform != null) {
-                        if (hit.transform.gameObject.tag == TagManager.PLAYER) {
-                            state = EnemyState.HUNTING;
-                        }
+                if (hit.transform != null) {
+                    if (hit.transform.gameObject.tag == TagManager.PLAYER) {
+                        state = EnemyState.HUNTING;
                     }
                 }
+
             }
 
             public void UpdatePatrolling () {
 
-                if (polyNavAgent != null) {
+                polyNavAgent.maxSpeed = patrolSpeed;
 
-                    polyNavAgent.maxSpeed = patrolSpeed;
-                    
-                    RaycastHit2D hit = CanSeePlayer ();
+                RaycastHit2D hit = CanSeePlayer ();
 
-                    if (hit.transform != null) {
-                        //Debug.Log(hit.transform.gameObject.tag);
+                if (hit.transform != null) {
+                    //Debug.Log(hit.transform.gameObject.tag);
 
-                        if (hit.transform.gameObject.tag == TagManager.PLAYER) {
-                            state = EnemyState.HUNTING;
-                            return;
-                        }
-                    }
-
-                    if ((Time.time - patrolLastCheck) > (patrolWait)) {
-
-                        patrolLastCheck = Time.time;
-                        // Keep patrolling
-                        var location = level.ConvertWorldToLevelPos (transform.position);
-
-                        currentDirections = level.MovementDirections (location, false, false);
-                        currentDirections.Randomize ();
-
-                        if (currentDirections.Count > 0) {
-                            currentDirection = currentDirections[0];
-
-                            polyNavAgent.SetDestination (level.ConvertLevelPosToWorld (currentDirection));
-                            
-                        }
-                        FaceDirection (level.ConvertLevelPosToWorld (currentDirection) - transform.position);
+                    if (hit.transform.gameObject.tag == TagManager.PLAYER) {
+                        state = EnemyState.HUNTING;
+                        return;
                     }
                 }
+
+                if (CoreGame.instance.state.alertTrap != null) {
+                    Debug.Log("Enemy is responding to alert: " + this.name);
+                    state = EnemyState.RESPONDING;
+                    return;
+                }
+
+                if ((Time.time - patrolLastCheck) > (patrolWait)) {
+
+                    patrolLastCheck = Time.time;
+                    // Keep patrolling
+                    var location = CoreGame.instance.state.level.ConvertWorldToLevelPos (transform.position);
+
+                    var currentDirections = CoreGame.instance.state.level.MovementDirections (location, false, false);
+                    currentDirections.Randomize ();
+
+                    if (currentDirections.Count > 0) {
+                        currentDirection = currentDirections[0];
+
+                        polyNavAgent.SetDestination (CoreGame.instance.state.level.ConvertLevelPosToWorld (currentDirection));
+
+                    }
+                    // Change this to look at the actual current direction
+                    FaceDirection (CoreGame.instance.state.level.ConvertLevelPosToWorld (currentDirection) - transform.position);
+                }
+
+            }
+
+            public void UpdateResponding () {
+                
+                RaycastHit2D hit = CanSeePlayer ();
+
+                if (hit.transform != null) {
+                    //Debug.Log(hit.transform.gameObject.tag);
+
+                    if (hit.transform.gameObject.tag == TagManager.PLAYER) {
+                        state = EnemyState.HUNTING;
+                        return;
+                    }
+                }
+
+                if(CoreGame.instance.state.alertTrap == null)
+                {
+                    Debug.Log("Alert camera cleared: " + this.name);
+                    CoreGame.instance.ClearAlert();
+                    state = EnemyState.PATROLLING;
+                    return;                    
+                }
+
+                if (CoreGame.instance.state.level.ConvertWorldToLevelPos(this.transform.position) == CoreGame.instance.state.level.ConvertWorldToLevelPos(CoreGame.instance.state.alertTrap.transform.position) ) {
+                    Debug.Log("Enemy is clearing alert: " + this.name);
+                    CoreGame.instance.ClearAlert();
+                    state = EnemyState.PATROLLING;
+                    return;
+                }
+
+                if (CoreGame.instance.state.alertTrap != null) {
+
+                    Vector3 pos = CoreGame.instance.state.alertTrap.transform.position;
+                    if (polyNavAgent.primeGoal != new Vector2 (pos.x, pos.y)) {
+                        polyNavAgent.SetDestination (pos);
+
+                    }
+
+                    FaceDirection (pos - transform.position);
+                } else {
+
+                }
+
             }
 
             public void UpdateHunting () {
@@ -116,6 +195,7 @@ namespace HackedDesign {
                             lastKnownLocation = player.position;
                             polyNavAgent.SetDestination (lastKnownLocation);
 
+                            // Change this to look at the actual current direction
                             FaceDirection (lastKnownLocation - transform.position);
                             return;
                         } else {
@@ -152,7 +232,7 @@ namespace HackedDesign {
             }
 
             public void OnCollisionEnter2D (Collision2D collision) {
-                if (collision.gameObject.tag == "Player") {
+                if (collision.gameObject.tag == TagManager.PLAYER) {
                     state = EnemyState.FIGHTING;
                     return;
                 }
@@ -171,7 +251,6 @@ namespace HackedDesign {
                 //             debugColor = Color.yellow;
                 //         }
                 //     }
-                
 
                 //     Debug.DrawRay (transform.position, (player.position - transform.position), debugColor);
 
@@ -186,6 +265,7 @@ namespace HackedDesign {
                 STANDING,
                 PATROLLING,
                 SEEKING,
+                RESPONDING,
                 HUNTING,
                 FIGHTING,
                 STUNNED

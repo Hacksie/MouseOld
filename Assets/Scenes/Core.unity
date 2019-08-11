@@ -4329,7 +4329,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 267615343}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -10, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1542490995}
@@ -7384,10 +7384,10 @@ MonoBehaviour:
     type: 3}
   exitnsPrefab: {fileID: 1168148214712842, guid: 8b1be33b99e321f438a2dcdd90a3f7e6,
     type: 3}
-  securityGuardEasyPrefabs:
+  enemyEasyPrefabs:
   - {fileID: 1187276860767636, guid: 83c8a34da9c35ee479ecc2d667c61d9b, type: 3}
   - {fileID: 8417252535235355735, guid: 51faf55eecae3b54d9aa51699ea02ebf, type: 3}
-  securityCameraPrefabs:
+  trapPrefabs:
   - {fileID: 6797104490100697780, guid: ecf5fbd55c4786c43afaada007f25fd4, type: 3}
   - {fileID: 8387367927353284284, guid: 0133037e36f623a48a2ff29e12716aa6, type: 3}
 --- !u!1 &459611209
@@ -18093,7 +18093,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.999998, y: 0}
+  m_AnchoredPosition: {x: 0.0000019073486, y: 0}
   m_SizeDelta: {x: -5, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1091099245
@@ -38155,6 +38155,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1170381602}
     m_Modifications:
+    - target: {fileID: 6797104490100697780, guid: ecf5fbd55c4786c43afaada007f25fd4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3860849059233831230, guid: ecf5fbd55c4786c43afaada007f25fd4,
         type: 3}
       propertyPath: m_RootOrder
