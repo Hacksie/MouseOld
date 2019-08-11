@@ -51,7 +51,7 @@ namespace HackedDesign {
 				}
 
 				genTemplate.enemies = enemies;
-				genTemplate.cameras = cameras;
+				genTemplate.traps = cameras;
 
 				if (genTemplate == null) {
 					Debug.LogError ("No level gen template found: " + template);
@@ -67,11 +67,9 @@ namespace HackedDesign {
 					level = GenerateFixedLevel (genTemplate);
 				}
 
-
-				GenerateTrapSpawns(level);
-				GenerateEnemySpawns(level);
-				GenerateEntities (level);				
-				
+				//GenerateTrapSpawns(level);
+				GenerateEntities (level);
+				GenerateEnemySpawns (level);
 
 				level.Print ();
 
@@ -473,7 +471,7 @@ namespace HackedDesign {
 				}
 
 				candidates.Randomize ();
-				level.trapSpawnLocationList = candidates.Take (level.template.cameras).ToList ();
+				level.trapSpawnLocationList = candidates.Take (level.template.traps).ToList ();
 			}
 
 			void GenerateEntities (Level level) {
@@ -488,70 +486,128 @@ namespace HackedDesign {
 								GenerateRoomEntities (level.proxyLevel[j, i], RoomObjectType.Entry, level.template, false);
 							} else if (level.proxyLevel[j, i].isEnd) {
 								GenerateRoomEntities (level.proxyLevel[j, i], RoomObjectType.End, level.template, false);
-							} 
-							else {
+							} else {
+
 								GenerateRoomEntities (level.proxyLevel[j, i], RoomObjectType.Random, level.template, true);
+
 							}
 
 						}
 					}
 				}
-
 			}
 
-			void GenerateRoomEntities (ProxyRoom proxyRoom, RoomObjectType type, LevelGenTemplate template, bool allowEmpty) {
+			void GenerateRoomEntities (ProxyRoom proxyRoom, RoomObjectType type, LevelGenTemplate template, bool allowTraps) {
 				string roomString = proxyRoom.AsPrintableString ();
-
+				List<GameObject> goBLList;
+				List<GameObject> goBRList;
+				List<GameObject> goTLList;
+				List<GameObject> goTRList;
 				// TL
-				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
+				if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
 
-					List<GameObject> goTLList = FindRoomObject (TOPLEFT, roomString.Substring (0, 1), roomString.Substring (1, 1), type, template).ToList ();
+					goTLList = FindRoomObject (TOPLEFT, roomString.Substring (0, 1), roomString.Substring (1, 1), RoomObjectType.Trap, template).ToList ();
+					goTLList.Randomize ();
 
+					if (goTLList.FirstOrDefault () != null) {
+						proxyRoom.topLeft.Add (
+							new Corner () {
+								type = RoomObjectType.Trap,
+									name = goTLList[0].name,
+									isTrap = true
+							});
+					}
+
+				} else {
+
+					goTLList = FindRoomObject (TOPLEFT, roomString.Substring (0, 1), roomString.Substring (1, 1), type, template).ToList ();
 					goTLList.Randomize ();
 
 					if (goTLList.FirstOrDefault () != null) {
 						proxyRoom.topLeft.Add (
 							new Corner () {
 								type = type,
-									name = goTLList[0].name
+									name = goTLList[0].name,
+									isTrap = false
 							});
 					}
 				}
 
 				// TR
-
-				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
-					List<GameObject> goTRList = FindRoomObject (TOPRIGHT, roomString.Substring (3, 1), roomString.Substring (1, 1), type, template).ToList ();
+				if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
+					goTRList = FindRoomObject (TOPRIGHT, roomString.Substring (3, 1), roomString.Substring (1, 1), RoomObjectType.Trap, template).ToList ();
 					goTRList.Randomize ();
 
 					if (goTRList.FirstOrDefault () != null) {
+						proxyRoom.topRight.Add (
+							new Corner () {
+								type = RoomObjectType.Trap,
+									name = goTRList[0].name,
+									isTrap = true
+							});
+					}
 
+				} else {
+					goTRList = FindRoomObject (TOPRIGHT, roomString.Substring (3, 1), roomString.Substring (1, 1), type, template).ToList ();
+					goTRList.Randomize ();
+
+					if (goTRList.FirstOrDefault () != null) {
 						proxyRoom.topRight.Add (
 							new Corner () {
 								type = type,
-									name = goTRList[0].name
+									name = goTRList[0].name,
+									isTrap = false
 							});
-
 					}
+
 				}
 
 				// BL
-				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
-					List<GameObject> goBLList = FindRoomObject (BOTTOMLEFT, roomString.Substring (0, 1), roomString.Substring (2, 1), type, template).ToList ();
+				if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
+					goBLList = FindRoomObject (BOTTOMLEFT, roomString.Substring (0, 1), roomString.Substring (2, 1), RoomObjectType.Trap, template).ToList ();
+					goBLList.Randomize ();
+
+					if (goBLList.FirstOrDefault () != null) {
+						proxyRoom.bottomLeft.Add (
+							new Corner () {
+								type = RoomObjectType.Trap,
+									name = goBLList[0].name,
+									isTrap = true
+							});
+					}
+
+				} else {
+					goBLList = FindRoomObject (BOTTOMLEFT, roomString.Substring (0, 1), roomString.Substring (2, 1), type, template).ToList ();
 					goBLList.Randomize ();
 
 					if (goBLList.FirstOrDefault () != null) {
 						proxyRoom.bottomLeft.Add (
 							new Corner () {
 								type = type,
-									name = goBLList[0].name
+									name = goBLList[0].name,
+									isTrap = false
 							});
 					}
+
 				}
 
 				// BR
-				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
-					List<GameObject> goBRList = FindRoomObject (BOTTOMRIGHT, roomString.Substring (3, 1), roomString.Substring (2, 1), type, template).ToList ();
+
+				if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
+					goBRList = FindRoomObject (BOTTOMRIGHT, roomString.Substring (3, 1), roomString.Substring (2, 1), RoomObjectType.Trap, template).ToList ();
+					goBRList.Randomize ();
+
+					if (goBRList.FirstOrDefault () != null) {
+
+						proxyRoom.bottomRight.Add (
+							new Corner () {
+								type = RoomObjectType.Trap,
+									name = goBRList[0].name,
+									isTrap = true
+							});
+					}
+				} else {
+					goBRList = FindRoomObject (BOTTOMRIGHT, roomString.Substring (3, 1), roomString.Substring (2, 1), type, template).ToList ();
 					goBRList.Randomize ();
 
 					if (goBRList.FirstOrDefault () != null) {
@@ -559,10 +615,13 @@ namespace HackedDesign {
 						proxyRoom.bottomRight.Add (
 							new Corner () {
 								type = type,
-									name = goBRList[0].name
+									name = goBRList[0].name,
+									isTrap = false
 							});
 					}
+
 				}
+
 			}
 
 			IEnumerable<GameObject> FindRoomObject (string corner, string wall1, string wall2, RoomObjectType type, LevelGenTemplate levelGenTemplate) {
@@ -576,17 +635,25 @@ namespace HackedDesign {
 
 					case RoomObjectType.Entry:
 						results = levelGenTemplate.startProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-						if (results.Count () == 0) {
-							results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-						}
+						// if (results.Count () == 0) {
+						// 	results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						// }
 
 						break;
 
 					case RoomObjectType.End:
 						results = levelGenTemplate.endProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-						if (results.Count () == 0) {
-							results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-						}
+						// if (results.Count () == 0) {
+						// 	results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						// }
+
+						break;
+
+					case RoomObjectType.Trap:
+						results = levelGenTemplate.trapProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						// if (results.Count () == 0) {
+						// 	results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						// }
 
 						break;
 

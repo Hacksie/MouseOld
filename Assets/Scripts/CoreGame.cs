@@ -190,9 +190,10 @@ namespace HackedDesign {
 			ShowPlayer (true);
 
 			levelRenderer.Initialize (levelParent, npcParent, polyNav2D);
+			this.state.entityList.Clear();
 			levelRenderer.Render ();
-			this.state.entityList.AddRange(levelRenderer.PopulateEnemySpawns());
-			this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns());
+			//this.state.entityList.AddRange(levelRenderer.PopulateEnemySpawns());
+			//this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns());
 
 			levelMapPanel.Initialize (selectMenuManager, state.level);
 
@@ -278,7 +279,7 @@ namespace HackedDesign {
 			state.state = GameState.WORLDMAP;
 		}
 
-		public void SetAlert (Entity.BaseTrap trap) {
+		public void SetAlert (GameObject trap) {
 			Debug.Log ("Level alert set");
 			this.state.alertTrap = trap;
 

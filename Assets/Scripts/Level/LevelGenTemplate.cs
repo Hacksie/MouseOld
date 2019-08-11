@@ -14,7 +14,7 @@ namespace HackedDesign
 			public int levelWidth = 10;
 			public int levelHeight = 10;
 			public int enemies = 0;
-			public int cameras = 0;
+			public int traps = 0;
 
 			public bool generateDoors = true;
 
@@ -31,6 +31,7 @@ namespace HackedDesign
 			public List<GameObject> endProps;
 			public List<GameObject> startProps;
 			public List<GameObject> randomProps;
+			public List<GameObject> trapProps;
 
 			public List<string> mapWallsRows;
 			public List<string> mapPropsRows;

@@ -16,6 +16,8 @@ namespace HackedDesign {
             private float triggerStart = 0;
 
             public void Start () {
+
+                //alertLight = GetComponent()
                 if (alertLight != null) {
                     alertLight.SetActive (false);
                 }
@@ -26,7 +28,12 @@ namespace HackedDesign {
             }
 
             public override void UpdateBehaviour () {
-                alertLight.SetActive (CoreGame.instance.state.alertTrap != null && CoreGame.instance.state.alertTrap == this);
+                Debug.Log("Updatebehaviour" + this.name);
+                alertLight.gameObject.SetActive(true);
+                // if (CoreGame.instance.state.alertTrap != null && CoreGame.instance.state.alertTrap.gameObject == this.gameObject) {
+                //     Debug.Log ("Update trap behaviour" + CoreGame.instance.state.alertTrap.name + "|" + this.gameObject.name);
+                //     alertLight.SetActive (CoreGame.instance.state.alertTrap != null && CoreGame.instance.state.alertTrap.gameObject == this.gameObject);
+                // }
             }
 
             public override void OnTriggerStay2D (Collider2D other) {
@@ -39,7 +46,7 @@ namespace HackedDesign {
 
                 if (flagged && (Time.time - triggerStart) > alertTimer) {
 
-                    CoreGame.instance.SetAlert (this);
+                    CoreGame.instance.SetAlert (this.gameObject);
 
                     flagged = false;
                     Debug.Log ("Security Camera Triggered " + Time.time);

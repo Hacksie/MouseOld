@@ -15,10 +15,12 @@ MonoBehaviour:
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
-  enemies: 2
+  enemies: 0
+  traps: 20
   generateDoors: 1
   startingRoomString: wdww
   startingAction: 
+  exitAction: 
   isRandom: 1
   generateNavMesh: 1
   floor: {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
@@ -78,7 +80,6 @@ MonoBehaviour:
   - {fileID: 263712817877705658, guid: c8e05abc5c4f6c64aba7f49fc12b2ab7, type: 3}
   - {fileID: 4439504413792347066, guid: b2c782756be425542bbf0c2606409d76, type: 3}
   - {fileID: 6222125329021162493, guid: 6e66541098f2b594bbfca78477e777a9, type: 3}
-  - {fileID: 4401192100937394312, guid: 986d2d50ebb11674d82522328c144d0e, type: 3}
   - {fileID: 3185315198051266118, guid: 7c596606b558dd1488c58ca6aa049fdc, type: 3}
   - {fileID: 3689515345853292961, guid: 451cbc7d599187e43b82b32e3836a5b0, type: 3}
   - {fileID: 1997564668863456238, guid: 0da3ba4de9a32564f8d36248caba5c90, type: 3}
@@ -121,7 +122,6 @@ MonoBehaviour:
   - {fileID: 5362505408898949897, guid: 33176e75377184d4188dc033b3b6a760, type: 3}
   - {fileID: 8241167547979027237, guid: 4a58a8fb8400c5249bc888d91404eabb, type: 3}
   - {fileID: 8437450464153619284, guid: 6bad2a591457b234798d574c53b1dbe0, type: 3}
-  - {fileID: 3332574624240829944, guid: 51588826a5a70e34f8cb9c5f396ae33e, type: 3}
   - {fileID: 8904752644895947881, guid: bf013c6249bfdc743b9fb7e2bdead0c0, type: 3}
   - {fileID: 8417203842298959810, guid: d7664ea6c91e0614ba92df772e33ad45, type: 3}
   - {fileID: 3290662793205757629, guid: 62da5b177c2439b42a0b452c414e1c5a, type: 3}
@@ -131,5 +131,9 @@ MonoBehaviour:
   - {fileID: 8068417926489242112, guid: 2a5ebb1e79b73d4489d43f349f94d436, type: 3}
   - {fileID: 225918763317360614, guid: fb7252953706d604dbf62885f793bed9, type: 3}
   - {fileID: 1288505886861467702, guid: dc1a36f8ac514d645b342afcdfed6c5d, type: 3}
+  trapProps:
+  - {fileID: 6797104490100697780, guid: ecf5fbd55c4786c43afaada007f25fd4, type: 3}
+  - {fileID: 8387367927353284284, guid: 0133037e36f623a48a2ff29e12716aa6, type: 3}
+  - {fileID: 711273498542693366, guid: 75d5d60b999108642af797ee515cccaf, type: 3}
   mapWallsRows: []
   mapPropsRows: []

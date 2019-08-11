@@ -21,7 +21,7 @@ namespace HackedDesign {
 		public Story.Task selectedTask;
 
 		
-		public Entity.BaseTrap alertTrap; // move this to state		
+		public GameObject alertTrap; // move this to state		
 
 		public List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
 		public List<Entity.BaseEntity> entityList = new List<Entity.BaseEntity> ();

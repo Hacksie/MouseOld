@@ -47,6 +47,7 @@ namespace HackedDesign {
 			}
 
 			public virtual void UpdateBehaviour () {
+				Debug.Log("update base entity");
 				// FIXME: This happens because this can be called before the scene finishes loading
 				// if(CoreGame.instance.state.state != GameState.PLAYING)
 				// {
