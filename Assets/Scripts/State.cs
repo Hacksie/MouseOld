@@ -6,14 +6,21 @@ namespace HackedDesign {
 
 	public class State {
 		public int gameSlot;
+
+		[Header("Game State")]
 		public GameState state;
+
+		[Header("Player State")]
+		public Character.PlayerState player;
+
+		[Header("Level State")]
 		public Level.Level level;
 
 		public List<Story.Task> taskList = new List<Story.Task> ();
 
 		public Story.Task selectedTask;
 
-		[Header("Game State")]
+		
 		public Entity.BaseTrap alertTrap; // move this to state		
 
 		public List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();

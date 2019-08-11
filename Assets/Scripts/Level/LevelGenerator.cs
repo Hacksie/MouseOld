@@ -10,9 +10,12 @@ namespace HackedDesign {
 
 			const string DEFAULT_ROOM_START = "wdww_entry";
 
+			const string TOPLEFT = "tl";
+			const string TOPRIGHT = "tr";
+			const string BOTTOMLEFT = "bl";
+			const string BOTTOMRIGHT = "br";
 
 			public LevelGenTemplate[] levelGenTemplates;
-
 
 			public Level GenerateLevel (string template) {
 				return GenerateLevel (template, 0, 0, 0, 0, 0, 0);
@@ -64,8 +67,10 @@ namespace HackedDesign {
 					level = GenerateFixedLevel (genTemplate);
 				}
 
-				GenerateCameraSpawns(level);
+
+				GenerateTrapSpawns(level);
 				GenerateEnemySpawns(level);
+				GenerateEntities (level);				
 				
 
 				level.Print ();
@@ -438,7 +443,7 @@ namespace HackedDesign {
 				return (!(level.proxyLevel[pos.x, pos.y] == null));
 			}
 
-			void GenerateEnemySpawns(Level level){
+			void GenerateEnemySpawns (Level level) {
 				List<Vector2Int> candidates = new List<Vector2Int> ();
 
 				for (int i = 0; i < level.template.levelHeight; i++) {
@@ -450,16 +455,14 @@ namespace HackedDesign {
 					}
 				}
 
-				candidates.Randomize();
-
-				level.enemySpawnLocationList = candidates.Take(level.template.enemies).ToList();
-
+				candidates.Randomize ();
+				level.enemySpawnLocationList = candidates.Take (level.template.enemies).ToList ();
 				level.enemySpawnLocationList.Randomize ();
 			}
 
-			void GenerateCameraSpawns(Level level){
+			void GenerateTrapSpawns (Level level) {
 				List<Vector2Int> candidates = new List<Vector2Int> ();
-				
+
 				for (int i = 0; i < level.template.levelHeight; i++) {
 					for (int j = 0; j < level.template.levelWidth; j++) {
 						if (level.proxyLevel[j, i] != null && !level.proxyLevel[j, i].isNearEntry) {
@@ -469,9 +472,164 @@ namespace HackedDesign {
 					}
 				}
 
-				candidates.Randomize();
-				level.trapSpawnLocationList = candidates.Take(level.template.cameras).ToList();
+				candidates.Randomize ();
+				level.trapSpawnLocationList = candidates.Take (level.template.cameras).ToList ();
 			}
+
+			void GenerateEntities (Level level) {
+				for (int i = 0; i < level.template.levelHeight; i++) {
+					for (int j = 0; j < level.template.levelWidth; j++) {
+						Vector3 pos = new Vector3 (j * 4, i * -4 + ((level.template.levelHeight - 1) * 4), 0);
+
+						if (level.proxyLevel[j, i] != null) {
+
+							GenerateRoomEntities (level.proxyLevel[j, i], RoomObjectType.Walls, level.template, false);
+							if (level.proxyLevel[j, i].isEntry) {
+								GenerateRoomEntities (level.proxyLevel[j, i], RoomObjectType.Entry, level.template, false);
+							} else if (level.proxyLevel[j, i].isEnd) {
+								GenerateRoomEntities (level.proxyLevel[j, i], RoomObjectType.End, level.template, false);
+							} 
+							else {
+								GenerateRoomEntities (level.proxyLevel[j, i], RoomObjectType.Random, level.template, true);
+							}
+
+						}
+					}
+				}
+
+			}
+
+			void GenerateRoomEntities (ProxyRoom proxyRoom, RoomObjectType type, LevelGenTemplate template, bool allowEmpty) {
+				string roomString = proxyRoom.AsPrintableString ();
+
+				// TL
+				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
+
+					List<GameObject> goTLList = FindRoomObject (TOPLEFT, roomString.Substring (0, 1), roomString.Substring (1, 1), type, template).ToList ();
+
+					goTLList.Randomize ();
+
+					if (goTLList.FirstOrDefault () != null) {
+						proxyRoom.topLeft.Add (
+							new Corner () {
+								type = type,
+									name = goTLList[0].name
+							});
+					}
+				}
+
+				// TR
+
+				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
+					List<GameObject> goTRList = FindRoomObject (TOPRIGHT, roomString.Substring (3, 1), roomString.Substring (1, 1), type, template).ToList ();
+					goTRList.Randomize ();
+
+					if (goTRList.FirstOrDefault () != null) {
+
+						proxyRoom.topRight.Add (
+							new Corner () {
+								type = type,
+									name = goTRList[0].name
+							});
+
+					}
+				}
+
+				// BL
+				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
+					List<GameObject> goBLList = FindRoomObject (BOTTOMLEFT, roomString.Substring (0, 1), roomString.Substring (2, 1), type, template).ToList ();
+					goBLList.Randomize ();
+
+					if (goBLList.FirstOrDefault () != null) {
+						proxyRoom.bottomLeft.Add (
+							new Corner () {
+								type = type,
+									name = goBLList[0].name
+							});
+					}
+				}
+
+				// BR
+				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
+					List<GameObject> goBRList = FindRoomObject (BOTTOMRIGHT, roomString.Substring (3, 1), roomString.Substring (2, 1), type, template).ToList ();
+					goBRList.Randomize ();
+
+					if (goBRList.FirstOrDefault () != null) {
+
+						proxyRoom.bottomRight.Add (
+							new Corner () {
+								type = type,
+									name = goBRList[0].name
+							});
+					}
+				}
+			}
+
+			IEnumerable<GameObject> FindRoomObject (string corner, string wall1, string wall2, RoomObjectType type, LevelGenTemplate levelGenTemplate) {
+
+				IEnumerable<GameObject> results = null;
+
+				switch (type) {
+					case RoomObjectType.Walls:
+						results = levelGenTemplate.levelElements.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						break;
+
+					case RoomObjectType.Entry:
+						results = levelGenTemplate.startProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						if (results.Count () == 0) {
+							results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						}
+
+						break;
+
+					case RoomObjectType.End:
+						results = levelGenTemplate.endProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						if (results.Count () == 0) {
+							results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						}
+
+						break;
+
+					case RoomObjectType.Random:
+
+						results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+
+						break;
+
+				}
+
+				return results;
+
+			}
+
+			bool MatchSpriteName (string name, string corner, string wall1, string wall2) {
+				string[] nameSplit = name.ToLower ().Split ('_');
+
+				if (nameSplit.Length != 4) {
+					Debug.Log ("Invalid sprite name");
+					return false;
+				}
+
+				string open = "oaxy";
+				string door = "daxz";
+				string wall = "wayz";
+				string exit = "edaxy";
+
+				string first = nameSplit[3].Substring (0, 1);
+				string second = nameSplit[3].Substring (1, 1);
+
+				return (nameSplit[2] == corner.ToLower () &&
+					((wall1.ToLower () == "o" && open.IndexOf (first) >= 0) ||
+						(wall1.ToLower () == "d" && door.IndexOf (first) >= 0) ||
+						(wall1.ToLower () == "w" && wall.IndexOf (first) >= 0) ||
+						(wall1.ToLower () == "e" && exit.IndexOf (first) >= 0)) &&
+					((wall2.ToLower () == "o" && open.IndexOf (second) >= 0) ||
+						(wall2.ToLower () == "d" && door.IndexOf (second) >= 0) ||
+						(wall2.ToLower () == "w" && wall.IndexOf (second) >= 0) ||
+						(wall2.ToLower () == "e" && exit.IndexOf (second) >= 0))
+				);
+			}
+
 		}
 	}
 

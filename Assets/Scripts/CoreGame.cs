@@ -153,12 +153,14 @@ namespace HackedDesign {
 		public void LoadNewGame () {
 			state.state = GameState.LOADING;
 			state.level = levelGenerator.GenerateLevel ("Victoria's Room", 1, 1, 2, 0, 0, 0);
+			state.player = new Character.PlayerState();
 			CoreGame.instance.SceneInitialize ();
 		}
 
-		public void LoadRandomGame (string template, int length, int height, int width, int difficulty, int enemies, int cameras) {
+		public void LoadRandomGame (string template, int length, int height, int width, int difficulty, int enemies, int traps) {
 			state.state = GameState.LOADING;
-			state.level = levelGenerator.GenerateLevel (template, length, height, width, difficulty, enemies, cameras);
+			state.level = levelGenerator.GenerateLevel (template, length, height, width, difficulty, enemies, traps);
+			state.player = new Character.PlayerState();
 			CoreGame.instance.SceneInitialize ();
 		}
 

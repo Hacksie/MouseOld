@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace HackedDesign {
 	namespace Character {
-		[CreateAssetMenu (fileName = "PlayerAttributes", menuName = "Mouse/Character/PlayerAttributes")]
-		public class PlayerAttributes : ScriptableObject {
+		public class PlayerState  {
+			public int movementAugments = 0;
 			public int charisma = 0;
 			public int intimidation = 0;
 			public int software = 0;

@@ -10,12 +10,12 @@ namespace HackedDesign {
 
 		[Range (0.0f, 10.0f)]
 		[Tooltip ("The movement speed of the controller.")]
-		public float moveSpeed = 5.0f;
+		public float baseMovementSpeed = 1.0f;
 		private Vector2 moveVector; //The vector used to apply movement to the controller.		
 		private Animator anim; //The parent animator.
 		//public CharacterAnimator anim;
 
-		public bool lyingDown = false;
+
 
 		// Use this for initialization
 		void Start () {
@@ -30,13 +30,6 @@ namespace HackedDesign {
 		// Update is called once per frame
 		public void UpdateMovement (Input.IInputController inputController) {
 
-			if (lyingDown) {
-
-				return;
-			}
-
-			//StandUp();
-
 			moveVector = inputController.GetMovementAxis ();
 
 			//If horizontal or vertical axis is above the threshold value (moveSense), set the move state to Walk.
@@ -48,7 +41,6 @@ namespace HackedDesign {
 				anim.SetFloat ("directionY", moveVector.y);
 				anim.SetBool ("isMoving", true);
 
-				//transform.Translate (moveVector * moveSpeed * Time.deltaTime);
 
 			} else {
 				//If there's no input, set the state to stand again and change Animator's isMoving to false.
@@ -61,19 +53,8 @@ namespace HackedDesign {
 			}
 		}
 
-		public void LieDown () {
-			lyingDown = true;
-			//anim.SetBool ("isMoving", false);
-			//anim.Play ("Dead");
-		}
-
-		public void StandUp () {
-			lyingDown = false;
-			//anim.Play ("Stand Tree");
-		}
-
 		public void UpdateTransform () {
-			transform.Translate (moveVector * moveSpeed * Time.fixedDeltaTime);
+			transform.Translate (moveVector * (baseMovementSpeed + (CoreGame.instance.state.player.movementAugments / 10.0f)) * Time.fixedDeltaTime);
 		}
 
 		private void OnCollisionEnter2D (Collision2D other) {

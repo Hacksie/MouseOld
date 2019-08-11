@@ -77,130 +77,89 @@ namespace HackedDesign {
 								GameObject.Instantiate (level.template.floor, pos, Quaternion.identity, levelParent.transform);
 							}
 
-							PopulateRoomSprites (level.proxyLevel[j, i], pos, levelParent.transform, RoomObjectType.Walls, level.template, false);
-							if (level.proxyLevel[j, i].isEntry) {
-								PopulateRoomSprites (level.proxyLevel[j, i], pos, levelParent.transform, RoomObjectType.Entry, level.template, false);
-							} else if (level.proxyLevel[j, i].isEnd) {
-								PopulateRoomSprites (level.proxyLevel[j, i], pos, levelParent.transform, RoomObjectType.End, level.template, false);
-							} else {
-								PopulateRoomSprites (level.proxyLevel[j, i], pos, levelParent.transform, RoomObjectType.Random, level.template, true);
+							// BL
+							for (int e = 0; e < level.proxyLevel[j, i].bottomLeft.Count; e++) {
+
+
+								var go = FindRoomEntity(level.proxyLevel[j, i].bottomLeft[e].type, level.proxyLevel[j, i].bottomLeft[e].name, level.template);
+								if(go == null)
+								{
+									Debug.LogError("null go");
+								}
+								GameObject.Instantiate (go, pos, Quaternion.identity, levelParent.transform);
 							}
 
+							// BR
+							for (int e = 0; e < level.proxyLevel[j, i].bottomRight.Count; e++) {
+
+
+								var go = FindRoomEntity(level.proxyLevel[j, i].bottomRight[e].type, level.proxyLevel[j, i].bottomRight[e].name, level.template);
+								if(go == null)
+								{
+									Debug.LogError("null go");
+								}
+								GameObject.Instantiate (go, pos, Quaternion.identity, levelParent.transform);
+							}							
+
+
+							// TL
+							for (int e = 0; e < level.proxyLevel[j, i].topLeft.Count; e++) {
+
+
+								var go = FindRoomEntity(level.proxyLevel[j, i].topLeft[e].type, level.proxyLevel[j, i].topLeft[e].name, level.template);
+								if(go == null)
+								{
+									Debug.LogError("null go");
+								}
+								GameObject.Instantiate (go, pos, Quaternion.identity, levelParent.transform);
+							}
+
+							//TR
+							for (int e = 0; e < level.proxyLevel[j, i].topRight.Count; e++) {
+								var go = FindRoomEntity(level.proxyLevel[j, i].topRight[e].type, level.proxyLevel[j, i].topRight[e].name, level.template);
+								if(go == null)
+								{
+									Debug.LogError("null go");
+								}
+								GameObject.Instantiate (go, pos, Quaternion.identity, levelParent.transform);
+							}							
 						}
 					}
 				}
 			}
 
-			void PopulateRoomSprites (ProxyRoom proxyRoom, Vector3 pos, Transform parent, RoomObjectType type, LevelGenTemplate template, bool allowEmpty) {
-				string roomString = proxyRoom.AsPrintableString ();
-
-				// TL
-				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
-
-					List<GameObject> goTLList = FindRoomObject (TOPLEFT, roomString.Substring (0, 1), roomString.Substring (1, 1), type, template).ToList ();
-
-					goTLList.Randomize ();
-
-					if (goTLList.FirstOrDefault () != null) {
-						GameObject.Instantiate (goTLList[0], pos, Quaternion.identity, parent.transform);
-					}
-				}
-
-				// TR
-
-				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
-					List<GameObject> goTRList = FindRoomObject (TOPRIGHT, roomString.Substring (3, 1), roomString.Substring (1, 1), type, template).ToList ();
-					goTRList.Randomize ();
-
-					if (goTRList.FirstOrDefault () != null) {
-						GameObject.Instantiate (goTRList[0], pos, Quaternion.identity, parent.transform);
-					}
-				}
-
-				// BL
-				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
-					List<GameObject> goBList = FindRoomObject (BOTTOMLEFT, roomString.Substring (0, 1), roomString.Substring (2, 1), type, template).ToList ();
-					goBList.Randomize ();
-
-					if (goBList.FirstOrDefault () != null) {
-						GameObject.Instantiate (goBList[0], pos, Quaternion.identity, parent.transform);
-					}
-				}
-
-				// BR
-				if (!allowEmpty || (UnityEngine.Random.Range (0, 2) == 0)) {
-					List<GameObject> goBRist = FindRoomObject (BOTTOMRIGHT, roomString.Substring (3, 1), roomString.Substring (2, 1), type, template).ToList ();
-					goBRist.Randomize ();
-
-					if (goBRist.FirstOrDefault () != null) {
-						GameObject.Instantiate (goBRist[0], pos, Quaternion.identity, parent.transform);
-					}
-				}
-			}
-
-			IEnumerable<GameObject> FindRoomObject (string corner, string wall1, string wall2, RoomObjectType type, LevelGenTemplate levelGenTemplate) {
-
-				IEnumerable<GameObject> results = null;
+			GameObject FindRoomEntity(RoomObjectType type, string name, LevelGenTemplate levelGenTemplate)
+			{
+				GameObject result = null;
 
 				switch (type) {
 					case RoomObjectType.Walls:
-						results = levelGenTemplate.levelElements.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-						break;
+						return levelGenTemplate.levelElements.FirstOrDefault (g => g != null && g.name == name);
+
 
 					case RoomObjectType.Entry:
-						results = levelGenTemplate.startProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-						if (results.Count () == 0) {
-							results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						result = levelGenTemplate.startProps.FirstOrDefault (g => g != null && g.name == name);
+						
+						if (result == null) {
+							return levelGenTemplate.randomProps.FirstOrDefault (g => g != null && g.name == name);
 						}
 
 						break;
 
 					case RoomObjectType.End:
-						results = levelGenTemplate.endProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-						if (results.Count () == 0) {
-							results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
+						result = levelGenTemplate.endProps.FirstOrDefault (g => g != null && g.name == name);
+						if (result == null) {
+							return levelGenTemplate.randomProps.FirstOrDefault (g => g != null && g.name == name);
 						}
 
 						break;
 
 					case RoomObjectType.Random:
-
-						results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-
-						break;
-
+						return levelGenTemplate.randomProps.FirstOrDefault (g => g != null && g.name == name);
 				}
 
-				return results;
+				return result;
 
-			}
-
-			bool MatchSpriteName (string name, string corner, string wall1, string wall2) {
-				string[] nameSplit = name.ToLower ().Split ('_');
-
-				if (nameSplit.Length != 4) {
-					Debug.Log ("Invalid sprite name");
-					return false;
-				}
-
-				string open = "oaxy";
-				string door = "daxz";
-				string wall = "wayz";
-				string exit = "edaxy";
-
-				string first = nameSplit[3].Substring (0, 1);
-				string second = nameSplit[3].Substring (1, 1);
-
-				return (nameSplit[2] == corner.ToLower () &&
-					((wall1.ToLower () == "o" && open.IndexOf (first) >= 0) ||
-						(wall1.ToLower () == "d" && door.IndexOf (first) >= 0) ||
-						(wall1.ToLower () == "w" && wall.IndexOf (first) >= 0) ||
-						(wall1.ToLower () == "e" && exit.IndexOf (first) >= 0)) &&
-					((wall2.ToLower () == "o" && open.IndexOf (second) >= 0) ||
-						(wall2.ToLower () == "d" && door.IndexOf (second) >= 0) ||
-						(wall2.ToLower () == "w" && wall.IndexOf (second) >= 0) ||
-						(wall2.ToLower () == "e" && exit.IndexOf (second) >= 0))
-				);
 			}
 
 			void PopulateLevelDoors (Level level) {
@@ -211,25 +170,25 @@ namespace HackedDesign {
 
 				for (int i = 0; i < level.template.levelHeight; i++) {
 					for (int j = 0; j < level.template.levelWidth; j++) {
-						ProxyRoom placeholder = level.proxyLevel[j, i];
+						ProxyRoom room = level.proxyLevel[j, i];
 
-						if (placeholder != null) {
-							if (placeholder.top == RoomSide.Door) {
+						if (room != null) {
+							if (room.top == RoomSide.Door) {
 								Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
 								GameObject.Instantiate (doorewPrefab, pos, Quaternion.identity, levelParent.transform);
 							}
 
-							if (placeholder.left == RoomSide.Door) {
+							if (room.left == RoomSide.Door) {
 								Vector3 pos = new Vector3 (j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
 								GameObject.Instantiate (doornsPrefab, pos, Quaternion.identity, levelParent.transform);
 							}
 
-							if (placeholder.top == RoomSide.Exit) {
+							if (room.top == RoomSide.Exit) {
 								Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
 								GameObject.Instantiate (exitewPrefab, pos, Quaternion.identity, levelParent.transform);
 							}
 
-							if (placeholder.left == RoomSide.Exit) {
+							if (room.left == RoomSide.Exit) {
 								Vector3 pos = new Vector3 (j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
 								GameObject.Instantiate (exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
 							}
@@ -255,7 +214,7 @@ namespace HackedDesign {
 					GameObject sggo = enemyEasyPrefabs[rand];
 					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.enemySpawnLocationList[i]), Quaternion.identity, npcParent.transform);
 					Entity.BaseEnemy npc = go.GetComponent<Entity.BaseEnemy> ();
-					npc.Initialize(polyNav2D);
+					npc.Initialize (polyNav2D);
 					results.Add (npc);
 				}
 
@@ -279,18 +238,11 @@ namespace HackedDesign {
 					GameObject sggo = trapPrefabs[rand];
 					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.trapSpawnLocationList[i]), Quaternion.identity, npcParent.transform);
 					Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
-					npc.Initialize();
-					results.Add(npc);
+					npc.Initialize ();
+					results.Add (npc);
 				}
 
 				return results;
-			}
-
-			enum RoomObjectType {
-				Walls,
-				Entry,
-				End,
-				Random
 			}
 
 		}
