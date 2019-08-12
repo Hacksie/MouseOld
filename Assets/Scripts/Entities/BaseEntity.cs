@@ -36,7 +36,9 @@ namespace HackedDesign {
 
 			}
 
-
+			public void Initialize() {
+				this.player = CoreGame.instance.GetPlayer ().transform;
+			}
 
 			public void Activate () {
 				//gameObject.SetActive(true);

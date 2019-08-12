@@ -8,7 +8,7 @@ namespace HackedDesign {
 
             public Collider2D trigger;
 
-            public GameObject alertLight;
+            //public GameObject alertLight;
 
             public float alertTimer = 5.0f;
 
@@ -18,23 +18,12 @@ namespace HackedDesign {
             public void Start () {
 
                 //alertLight = GetComponent()
-                if (alertLight != null) {
-                    alertLight.SetActive (false);
-                }
-            }
-
-            public void Initialize () {
-
-            }
-
-            public override void UpdateBehaviour () {
-                Debug.Log("Updatebehaviour" + this.name);
-                alertLight.gameObject.SetActive(true);
-                // if (CoreGame.instance.state.alertTrap != null && CoreGame.instance.state.alertTrap.gameObject == this.gameObject) {
-                //     Debug.Log ("Update trap behaviour" + CoreGame.instance.state.alertTrap.name + "|" + this.gameObject.name);
-                //     alertLight.SetActive (CoreGame.instance.state.alertTrap != null && CoreGame.instance.state.alertTrap.gameObject == this.gameObject);
+                // if (alertLight != null) {
+                //     alertLight.SetActive (false);
                 // }
             }
+
+            public override void UpdateBehaviour () {}
 
             public override void OnTriggerStay2D (Collider2D other) {
                 if (!flagged && other.tag == TagManager.PLAYER) {

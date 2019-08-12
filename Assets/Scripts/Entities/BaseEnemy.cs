@@ -35,7 +35,7 @@ namespace HackedDesign {
             }
 
 			public void Initialize (PolyNav.PolyNav2D polyNav2D) {
-				this.player = CoreGame.instance.GetPlayer ().transform;
+				base.Initialize();
 				FaceDirection (direction);
 				if (this.polyNavAgent != null && this.polyNavAgent.isActiveAndEnabled) {
 					this.polyNavAgent.map = polyNav2D;

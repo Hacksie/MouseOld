@@ -23,7 +23,6 @@ namespace HackedDesign {
 			private PolyNav.PolyNav2D polyNav2D;
 
 			public List<GameObject> enemyEasyPrefabs;
-			public List<GameObject> trapPrefabs;
 
 			public void Initialize (GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D) {
 				this.levelParent = levelParent;
@@ -31,13 +30,9 @@ namespace HackedDesign {
 				this.polyNav2D = polyNav2D;
 			}
 
-			public void Render () {
-				DestroyLevel ();
-				Level level = CoreGame.instance.state.level;
-
-
+			public void Render (Level level) {
 				PopulateLevelTilemap (level);
-				PopulateEnemySpawns (level);
+				//PopulateEnemySpawns (level);
 
 
 				PopulateLevelDoors (level);
@@ -229,12 +224,12 @@ namespace HackedDesign {
 				}
 			}
 
-			private void PopulateEnemySpawns (Level level) {
+			public List<Entity.BaseEnemy> PopulateEnemySpawns (Level level) {
 	
-				//List<Entity.BaseEnemy> results = new List<Entity.BaseEnemy> ();
+				List<Entity.BaseEnemy> results = new List<Entity.BaseEnemy> ();
 
 				if (enemyEasyPrefabs.Count <= 0) {
-					return;
+					return results;
 				}
 
 				for (int i = 0; i < level.enemySpawnLocationList.Count; i++) {
@@ -245,35 +240,37 @@ namespace HackedDesign {
 					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.enemySpawnLocationList[i]), Quaternion.identity, npcParent.transform);
 					Entity.BaseEnemy npc = go.GetComponent<Entity.BaseEnemy> ();
 					npc.Initialize (polyNav2D);
-					CoreGame.instance.state.entityList.Add(npc);
-					//results.Add (npc);
+					//CoreGame.instance.state.entityList.Add(npc);
+					results.Add (npc);
 				}
+
+				return results;
 
 			}
 
 			// // Move first half back to generator
-			// public List<Entity.BaseTrap> PopulateTrapSpawns () {
-			// 	Level level = CoreGame.instance.state.level;
+			public List<Entity.BaseTrap> PopulateTrapSpawns (Level level) {
+				//Level level = CoreGame.instance.state.level;
 
-			// 	List<Entity.BaseTrap> results = new List<Entity.BaseTrap> ();
+				List<Entity.BaseTrap> results = new List<Entity.BaseTrap> ();
 
-			// 	if (trapPrefabs.Count <= 0) {
-			// 		return results;
-			// 	}
+				if (level.template.trapProps.Count <= 0) {
+					return results;
+				}
 
-			// 	for (int i = 0; i < level.trapSpawnLocationList.Count; i++) {
+				for (int i = 0; i < level.trapSpawnLocationList.Count; i++) {
 
-			// 		int rand = UnityEngine.Random.Range (0, trapPrefabs.Count);
+					int rand = UnityEngine.Random.Range (0, level.template.trapProps.Count);
 
-			// 		GameObject sggo = trapPrefabs[rand];
-			// 		var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.trapSpawnLocationList[i]), Quaternion.identity, npcParent.transform);
-			// 		Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
-			// 		npc.Initialize ();
-			// 		results.Add (npc);
-			// 	}
+					GameObject sggo = level.template.trapProps[rand];
+					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.trapSpawnLocationList[i]), Quaternion.identity, npcParent.transform);
+					Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
+					npc.Initialize ();
+					results.Add (npc);
+				}
 
-			// 	return results;
-			// }
+				return results;
+			}
 
 		}
 	}

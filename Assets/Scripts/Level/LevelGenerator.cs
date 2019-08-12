@@ -67,9 +67,10 @@ namespace HackedDesign {
 					level = GenerateFixedLevel (genTemplate);
 				}
 
-				//GenerateTrapSpawns(level);
+				
 				GenerateEntities (level);
 				GenerateEnemySpawns (level);
+				GenerateTrapSpawns(level);
 
 				level.Print ();
 
@@ -504,21 +505,21 @@ namespace HackedDesign {
 				List<GameObject> goTLList;
 				List<GameObject> goTRList;
 				// TL
-				if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
+				// if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
 
-					goTLList = FindRoomObject (TOPLEFT, roomString.Substring (0, 1), roomString.Substring (1, 1), RoomObjectType.Trap, template).ToList ();
-					goTLList.Randomize ();
+				// 	goTLList = FindRoomObject (TOPLEFT, roomString.Substring (0, 1), roomString.Substring (1, 1), RoomObjectType.Trap, template).ToList ();
+				// 	goTLList.Randomize ();
 
-					if (goTLList.FirstOrDefault () != null) {
-						proxyRoom.topLeft.Add (
-							new Corner () {
-								type = RoomObjectType.Trap,
-									name = goTLList[0].name,
-									isTrap = true
-							});
-					}
+				// 	if (goTLList.FirstOrDefault () != null) {
+				// 		proxyRoom.topLeft.Add (
+				// 			new Corner () {
+				// 				type = RoomObjectType.Trap,
+				// 					name = goTLList[0].name,
+				// 					isTrap = true
+				// 			});
+				// 	}
 
-				} else {
+				// } else {
 
 					goTLList = FindRoomObject (TOPLEFT, roomString.Substring (0, 1), roomString.Substring (1, 1), type, template).ToList ();
 					goTLList.Randomize ();
@@ -531,23 +532,23 @@ namespace HackedDesign {
 									isTrap = false
 							});
 					}
-				}
+				//}
 
 				// TR
-				if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
-					goTRList = FindRoomObject (TOPRIGHT, roomString.Substring (3, 1), roomString.Substring (1, 1), RoomObjectType.Trap, template).ToList ();
-					goTRList.Randomize ();
+				// if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
+				// 	goTRList = FindRoomObject (TOPRIGHT, roomString.Substring (3, 1), roomString.Substring (1, 1), RoomObjectType.Trap, template).ToList ();
+				// 	goTRList.Randomize ();
 
-					if (goTRList.FirstOrDefault () != null) {
-						proxyRoom.topRight.Add (
-							new Corner () {
-								type = RoomObjectType.Trap,
-									name = goTRList[0].name,
-									isTrap = true
-							});
-					}
+				// 	if (goTRList.FirstOrDefault () != null) {
+				// 		proxyRoom.topRight.Add (
+				// 			new Corner () {
+				// 				type = RoomObjectType.Trap,
+				// 					name = goTRList[0].name,
+				// 					isTrap = true
+				// 			});
+				// 	}
 
-				} else {
+				// } else {
 					goTRList = FindRoomObject (TOPRIGHT, roomString.Substring (3, 1), roomString.Substring (1, 1), type, template).ToList ();
 					goTRList.Randomize ();
 
@@ -560,23 +561,23 @@ namespace HackedDesign {
 							});
 					}
 
-				}
+				//}
 
 				// BL
-				if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
-					goBLList = FindRoomObject (BOTTOMLEFT, roomString.Substring (0, 1), roomString.Substring (2, 1), RoomObjectType.Trap, template).ToList ();
-					goBLList.Randomize ();
+				// if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
+				// 	goBLList = FindRoomObject (BOTTOMLEFT, roomString.Substring (0, 1), roomString.Substring (2, 1), RoomObjectType.Trap, template).ToList ();
+				// 	goBLList.Randomize ();
 
-					if (goBLList.FirstOrDefault () != null) {
-						proxyRoom.bottomLeft.Add (
-							new Corner () {
-								type = RoomObjectType.Trap,
-									name = goBLList[0].name,
-									isTrap = true
-							});
-					}
+				// 	if (goBLList.FirstOrDefault () != null) {
+				// 		proxyRoom.bottomLeft.Add (
+				// 			new Corner () {
+				// 				type = RoomObjectType.Trap,
+				// 					name = goBLList[0].name,
+				// 					isTrap = true
+				// 			});
+				// 	}
 
-				} else {
+				// } else {
 					goBLList = FindRoomObject (BOTTOMLEFT, roomString.Substring (0, 1), roomString.Substring (2, 1), type, template).ToList ();
 					goBLList.Randomize ();
 
@@ -589,24 +590,23 @@ namespace HackedDesign {
 							});
 					}
 
-				}
+				//}
 
 				// BR
+				// if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
+				// 	goBRList = FindRoomObject (BOTTOMRIGHT, roomString.Substring (3, 1), roomString.Substring (2, 1), RoomObjectType.Trap, template).ToList ();
+				// 	goBRList.Randomize ();
 
-				if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
-					goBRList = FindRoomObject (BOTTOMRIGHT, roomString.Substring (3, 1), roomString.Substring (2, 1), RoomObjectType.Trap, template).ToList ();
-					goBRList.Randomize ();
+				// 	if (goBRList.FirstOrDefault () != null) {
 
-					if (goBRList.FirstOrDefault () != null) {
-
-						proxyRoom.bottomRight.Add (
-							new Corner () {
-								type = RoomObjectType.Trap,
-									name = goBRList[0].name,
-									isTrap = true
-							});
-					}
-				} else {
+				// 		proxyRoom.bottomRight.Add (
+				// 			new Corner () {
+				// 				type = RoomObjectType.Trap,
+				// 					name = goBRList[0].name,
+				// 					isTrap = true
+				// 			});
+				// 	}
+				// } else {
 					goBRList = FindRoomObject (BOTTOMRIGHT, roomString.Substring (3, 1), roomString.Substring (2, 1), type, template).ToList ();
 					goBRList.Randomize ();
 
@@ -620,7 +620,7 @@ namespace HackedDesign {
 							});
 					}
 
-				}
+				//}
 
 			}
 
