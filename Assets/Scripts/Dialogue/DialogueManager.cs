@@ -43,7 +43,7 @@ namespace HackedDesign {
 				if (currentDialogue.dialogueAction1 != null) {
 					DialogueAction dialogueAction = currentDialogue.dialogueAction1;
 					currentDialogue = null;
-					CoreGame.instance.SetResume ();
+					CoreGame.instance.SetPlaying ();
 					dialogueAction.Invoke ();
 				}
 			}
@@ -54,7 +54,7 @@ namespace HackedDesign {
 				if (currentDialogue.dialogueAction2 != null) {
 					DialogueAction dialogueAction = currentDialogue.dialogueAction2;
 					currentDialogue = null;
-					CoreGame.instance.SetResume ();
+					CoreGame.instance.SetPlaying ();
 					dialogueAction.Invoke ();
 				}
 			}			
@@ -65,7 +65,7 @@ namespace HackedDesign {
 				if (currentDialogue.dialogueAction3 != null) {
 					DialogueAction dialogueAction = currentDialogue.dialogueAction3;
 					currentDialogue = null;
-					CoreGame.instance.SetResume ();
+					CoreGame.instance.SetPlaying ();
 					dialogueAction.Invoke ();
 				}
 			}		
@@ -76,7 +76,7 @@ namespace HackedDesign {
 				if (currentDialogue.dialogueAction4 != null) {
 					DialogueAction dialogueAction = currentDialogue.dialogueAction4;
 					currentDialogue = null;
-					CoreGame.instance.SetResume ();
+					CoreGame.instance.SetPlaying ();
 					dialogueAction.Invoke ();
 				}
 			}						

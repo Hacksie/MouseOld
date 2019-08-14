@@ -36,7 +36,9 @@ namespace HackedDesign {
 
 			}
 
-
+			public void Initialize() {
+				this.player = CoreGame.instance.GetPlayer ().transform;
+			}
 
 			public void Activate () {
 				//gameObject.SetActive(true);
@@ -47,6 +49,7 @@ namespace HackedDesign {
 			}
 
 			public virtual void UpdateBehaviour () {
+				Debug.Log("update base entity");
 				// FIXME: This happens because this can be called before the scene finishes loading
 				// if(CoreGame.instance.state.state != GameState.PLAYING)
 				// {

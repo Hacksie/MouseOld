@@ -35,6 +35,10 @@ namespace HackedDesign {
 		[SerializeField]
 		private PolyNav.PolyNav2D polyNav2D;
 
+		[SerializeField]
+		private GameObject roomAlertPrefab;
+		private GameObject roomAlert;
+
 		[Header ("Mobile UI")]
 		[SerializeField]
 		private Input.MobileInputUIPresenter mobileInputUI;
@@ -129,6 +133,7 @@ namespace HackedDesign {
 			narrationPanel.Initialize (narrationManager);
 			dialoguePanel.Initialize (dialogueManager);
 			worldMapPanel.Initialize (worldMapManager);
+			levelRenderer.Initialize (levelParent, npcParent, polyNav2D);
 
 			RepaintAll ();
 
@@ -189,10 +194,11 @@ namespace HackedDesign {
 
 			ShowPlayer (true);
 
-			levelRenderer.Initialize (levelParent, npcParent, polyNav2D);
-			levelRenderer.Render ();
-			this.state.entityList.AddRange(levelRenderer.PopulateEnemySpawns());
-			this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns());
+			
+			levelRenderer.Render (this.state.level);
+			this.state.entityList.Clear();
+			this.state.entityList.AddRange(levelRenderer.PopulateEnemySpawns(this.state.level));
+			this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.state.level));
 
 			levelMapPanel.Initialize (selectMenuManager, state.level);
 
@@ -203,8 +209,9 @@ namespace HackedDesign {
 			playerController = player.GetComponent<PlayerController> ();
 
 			SceneTriggersInitialize ();
-
-			SetResume ();
+			CreateAlert();
+	
+			SetPlaying ();
 
 			if (!string.IsNullOrWhiteSpace (state.level.template.startingAction)) {
 				Story.ActionManager.instance.Invoke (state.level.template.startingAction);
@@ -252,8 +259,8 @@ namespace HackedDesign {
 			state.state = GameState.GAMEOVER;
 		}
 
-		public void SetResume () {
-			Debug.Log ("State set to RESUME");
+		public void SetPlaying () {
+			Debug.Log ("State set to PLAYING");
 			Time.timeScale = 1;
 			state.state = GameState.PLAYING;
 		}
@@ -278,14 +285,23 @@ namespace HackedDesign {
 			state.state = GameState.WORLDMAP;
 		}
 
-		public void SetAlert (Entity.BaseTrap trap) {
+		public void CreateAlert(){
+			this.roomAlert = GameObject.Instantiate(roomAlertPrefab, Vector3.zero, Quaternion.identity, levelParent.transform);
+			ClearAlert();
+			
+		}
+
+		public void SetAlert (GameObject trap) {
 			Debug.Log ("Level alert set");
 			this.state.alertTrap = trap;
+			this.roomAlert.transform.position = trap.transform.position;
+			this.roomAlert.SetActive(true);
 
 		}
 
 		public void ClearAlert () {
 			this.state.alertTrap = null;
+			this.roomAlert.SetActive(false);
 		}
 
 		void Update () {
@@ -311,14 +327,14 @@ namespace HackedDesign {
 				case GameState.STARTMENU:
 					if (inputController.StartButtonUp ()) {
 						Debug.Log ("Hide start menu");
-						SetResume ();
+						SetPlaying ();
 					}
 					break;
 
 				case GameState.SELECTMENU:
 					if (inputController.SelectButtonUp ()) {
 						Debug.Log ("Hide select menu");
-						SetResume ();
+						SetPlaying ();
 					}
 					break;
 

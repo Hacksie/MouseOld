@@ -8,7 +8,7 @@ namespace HackedDesign {
 
             public Collider2D trigger;
 
-            public GameObject alertLight;
+            //public GameObject alertLight;
 
             public float alertTimer = 5.0f;
 
@@ -16,18 +16,14 @@ namespace HackedDesign {
             private float triggerStart = 0;
 
             public void Start () {
-                if (alertLight != null) {
-                    alertLight.SetActive (false);
-                }
+
+                //alertLight = GetComponent()
+                // if (alertLight != null) {
+                //     alertLight.SetActive (false);
+                // }
             }
 
-            public void Initialize () {
-
-            }
-
-            public override void UpdateBehaviour () {
-                alertLight.SetActive (CoreGame.instance.state.alertTrap != null && CoreGame.instance.state.alertTrap == this);
-            }
+            public override void UpdateBehaviour () {}
 
             public override void OnTriggerStay2D (Collider2D other) {
                 if (!flagged && other.tag == TagManager.PLAYER) {
@@ -39,10 +35,10 @@ namespace HackedDesign {
 
                 if (flagged && (Time.time - triggerStart) > alertTimer) {
 
-                    CoreGame.instance.SetAlert (this);
+                    CoreGame.instance.SetAlert (this.gameObject);
 
                     flagged = false;
-                    Debug.Log ("Security Camera Triggered " + Time.time);
+                    Debug.Log ("Trap Triggered " + Time.time);
                 }
             }
 

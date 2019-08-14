@@ -23,7 +23,6 @@ namespace HackedDesign {
 			private PolyNav.PolyNav2D polyNav2D;
 
 			public List<GameObject> enemyEasyPrefabs;
-			public List<GameObject> trapPrefabs;
 
 			public void Initialize (GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D) {
 				this.levelParent = levelParent;
@@ -31,11 +30,14 @@ namespace HackedDesign {
 				this.polyNav2D = polyNav2D;
 			}
 
-			public void Render () {
-				DestroyLevel ();
-				Level level = CoreGame.instance.state.level;
-
+			public void Render (Level level) {
 				PopulateLevelTilemap (level);
+				//PopulateEnemySpawns (level);
+
+
+				PopulateLevelDoors (level);
+				
+				//PopulateCameraSpawns (level);
 
 				BoxCollider2D boxCollider = levelParent.GetComponent<BoxCollider2D> ();
 
@@ -44,12 +46,9 @@ namespace HackedDesign {
 
 				if (level.template.generateNavMesh) {
 					polyNav2D.GenerateMap ();
-				}
+				}			
 
-				PopulateLevelDoors (level);
-				//PopulateEnemySpawns (level);
-				//PopulateCameraSpawns (level);
-
+	
 			}
 
 			public void DestroyLevel () {
@@ -65,6 +64,8 @@ namespace HackedDesign {
 			}
 
 			void PopulateLevelTilemap (Level level) {
+
+				//List<Entity.BaseEntity> results = new List<Entity.BaseEntity> ();
 				DestroyLevel ();
 
 				for (int i = 0; i < level.template.levelHeight; i++) {
@@ -79,67 +80,89 @@ namespace HackedDesign {
 
 							// BL
 							for (int e = 0; e < level.proxyLevel[j, i].bottomLeft.Count; e++) {
-
-
-								var go = FindRoomEntity(level.proxyLevel[j, i].bottomLeft[e].type, level.proxyLevel[j, i].bottomLeft[e].name, level.template);
-								if(go == null)
-								{
-									Debug.LogError("null go");
+								var go = FindRoomEntity (level.proxyLevel[j, i].bottomLeft[e].type, level.proxyLevel[j, i].bottomLeft[e].name, level.template);
+								if (go == null) {
+									Debug.LogError ("null go");
 								}
 								GameObject.Instantiate (go, pos, Quaternion.identity, levelParent.transform);
+
+								if (level.proxyLevel[j, i].bottomLeft[e].isTrap) {
+									Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
+									npc.Initialize ();
+									CoreGame.instance.state.entityList.Add(npc);
+									//results.Add (npc);
+								}
+
+								// 		Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
+								// 		npc.Initialize ();
+								// 		results.Add (npc);
 							}
 
 							// BR
 							for (int e = 0; e < level.proxyLevel[j, i].bottomRight.Count; e++) {
-
-
-								var go = FindRoomEntity(level.proxyLevel[j, i].bottomRight[e].type, level.proxyLevel[j, i].bottomRight[e].name, level.template);
-								if(go == null)
-								{
-									Debug.LogError("null go");
+								var go = FindRoomEntity (level.proxyLevel[j, i].bottomRight[e].type, level.proxyLevel[j, i].bottomRight[e].name, level.template);
+								if (go == null) {
+									Debug.LogError ("null go");
 								}
 								GameObject.Instantiate (go, pos, Quaternion.identity, levelParent.transform);
-							}							
-
+								if (level.proxyLevel[j, i].bottomRight[e].isTrap) {
+									Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
+									npc.Initialize ();
+									CoreGame.instance.state.entityList.Add(npc);
+									//results.Add (npc);
+								}								
+							}
 
 							// TL
 							for (int e = 0; e < level.proxyLevel[j, i].topLeft.Count; e++) {
 
-
-								var go = FindRoomEntity(level.proxyLevel[j, i].topLeft[e].type, level.proxyLevel[j, i].topLeft[e].name, level.template);
-								if(go == null)
-								{
-									Debug.LogError("null go");
+								var go = FindRoomEntity (level.proxyLevel[j, i].topLeft[e].type, level.proxyLevel[j, i].topLeft[e].name, level.template);
+								if (go == null) {
+									Debug.LogError ("null go");
 								}
 								GameObject.Instantiate (go, pos, Quaternion.identity, levelParent.transform);
+
+								if (level.proxyLevel[j, i].topLeft[e].isTrap) {
+									Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
+									npc.Initialize ();
+									CoreGame.instance.state.entityList.Add(npc);
+									//results.Add (npc);
+								}								
 							}
 
 							//TR
 							for (int e = 0; e < level.proxyLevel[j, i].topRight.Count; e++) {
-								var go = FindRoomEntity(level.proxyLevel[j, i].topRight[e].type, level.proxyLevel[j, i].topRight[e].name, level.template);
-								if(go == null)
-								{
-									Debug.LogError("null go");
+								var go = FindRoomEntity (level.proxyLevel[j, i].topRight[e].type, level.proxyLevel[j, i].topRight[e].name, level.template);
+								if (go == null) {
+									Debug.LogError ("null go");
 								}
 								GameObject.Instantiate (go, pos, Quaternion.identity, levelParent.transform);
-							}							
+
+								if (level.proxyLevel[j, i].topRight[e].isTrap) {
+									Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
+									npc.Initialize ();
+									CoreGame.instance.state.entityList.Add(npc);
+									//results.Add (npc);
+								}								
+							}
 						}
 					}
+
+					
 				}
+				
 			}
 
-			GameObject FindRoomEntity(RoomObjectType type, string name, LevelGenTemplate levelGenTemplate)
-			{
+			GameObject FindRoomEntity (RoomObjectType type, string name, LevelGenTemplate levelGenTemplate) {
 				GameObject result = null;
 
 				switch (type) {
 					case RoomObjectType.Walls:
 						return levelGenTemplate.levelElements.FirstOrDefault (g => g != null && g.name == name);
 
-
 					case RoomObjectType.Entry:
 						result = levelGenTemplate.startProps.FirstOrDefault (g => g != null && g.name == name);
-						
+
 						if (result == null) {
 							return levelGenTemplate.randomProps.FirstOrDefault (g => g != null && g.name == name);
 						}
@@ -153,6 +176,9 @@ namespace HackedDesign {
 						}
 
 						break;
+
+					case RoomObjectType.Trap:
+						return levelGenTemplate.trapProps.FirstOrDefault (g => g != null && g.name == name);
 
 					case RoomObjectType.Random:
 						return levelGenTemplate.randomProps.FirstOrDefault (g => g != null && g.name == name);
@@ -198,9 +224,8 @@ namespace HackedDesign {
 				}
 			}
 
-			public List<Entity.BaseEnemy> PopulateEnemySpawns () {
-				Level level = CoreGame.instance.state.level;
-
+			public List<Entity.BaseEnemy> PopulateEnemySpawns (Level level) {
+	
 				List<Entity.BaseEnemy> results = new List<Entity.BaseEnemy> ();
 
 				if (enemyEasyPrefabs.Count <= 0) {
@@ -215,27 +240,29 @@ namespace HackedDesign {
 					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.enemySpawnLocationList[i]), Quaternion.identity, npcParent.transform);
 					Entity.BaseEnemy npc = go.GetComponent<Entity.BaseEnemy> ();
 					npc.Initialize (polyNav2D);
+					//CoreGame.instance.state.entityList.Add(npc);
 					results.Add (npc);
 				}
 
 				return results;
+
 			}
 
-			// Move first half back to generator
-			public List<Entity.BaseTrap> PopulateTrapSpawns () {
-				Level level = CoreGame.instance.state.level;
+			// // Move first half back to generator
+			public List<Entity.BaseTrap> PopulateTrapSpawns (Level level) {
+				//Level level = CoreGame.instance.state.level;
 
 				List<Entity.BaseTrap> results = new List<Entity.BaseTrap> ();
 
-				if (trapPrefabs.Count <= 0) {
+				if (level.template.trapProps.Count <= 0) {
 					return results;
 				}
 
 				for (int i = 0; i < level.trapSpawnLocationList.Count; i++) {
 
-					int rand = UnityEngine.Random.Range (0, trapPrefabs.Count);
+					int rand = UnityEngine.Random.Range (0, level.template.trapProps.Count);
 
-					GameObject sggo = trapPrefabs[rand];
+					GameObject sggo = level.template.trapProps[rand];
 					var go = GameObject.Instantiate (sggo, level.ConvertLevelPosToWorld (level.trapSpawnLocationList[i]), Quaternion.identity, npcParent.transform);
 					Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
 					npc.Initialize ();

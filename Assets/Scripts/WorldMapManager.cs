@@ -13,7 +13,7 @@ namespace HackedDesign {
 		public Map.Location selectedLocation;
 
 		public void CancelEvent () {
-			CoreGame.instance.SetResume ();
+			CoreGame.instance.SetPlaying ();
 		}
 
 		public void LocationClickEvent () {

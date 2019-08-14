@@ -47,7 +47,7 @@ namespace HackedDesign {
 				}
 
 				currentNarration = null;
-				CoreGame.instance.SetResume ();
+				CoreGame.instance.SetPlaying ();
 
 				Story.ActionManager.instance.Invoke (nextAction);
 
