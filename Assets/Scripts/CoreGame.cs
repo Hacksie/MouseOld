@@ -211,7 +211,7 @@ namespace HackedDesign {
 			SceneTriggersInitialize ();
 			CreateAlert();
 	
-			SetResume ();
+			SetPlaying ();
 
 			if (!string.IsNullOrWhiteSpace (state.level.template.startingAction)) {
 				Story.ActionManager.instance.Invoke (state.level.template.startingAction);
@@ -259,8 +259,8 @@ namespace HackedDesign {
 			state.state = GameState.GAMEOVER;
 		}
 
-		public void SetResume () {
-			Debug.Log ("State set to RESUME");
+		public void SetPlaying () {
+			Debug.Log ("State set to PLAYING");
 			Time.timeScale = 1;
 			state.state = GameState.PLAYING;
 		}
@@ -327,14 +327,14 @@ namespace HackedDesign {
 				case GameState.STARTMENU:
 					if (inputController.StartButtonUp ()) {
 						Debug.Log ("Hide start menu");
-						SetResume ();
+						SetPlaying ();
 					}
 					break;
 
 				case GameState.SELECTMENU:
 					if (inputController.SelectButtonUp ()) {
 						Debug.Log ("Hide select menu");
-						SetResume ();
+						SetPlaying ();
 					}
 					break;
 

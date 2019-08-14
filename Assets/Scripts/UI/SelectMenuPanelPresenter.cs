@@ -81,7 +81,7 @@ namespace HackedDesign {
 		}
 
 		public void ResumeClickEvent () {
-			CoreGame.instance.SetResume ();
+			CoreGame.instance.SetPlaying ();
 		}		
 	
 		public void InfoClickEvent()

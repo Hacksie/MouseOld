@@ -145,7 +145,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 150
-  m_Sprite: {fileID: 21300176, guid: adfdbd2ad1fbed24faea3e6339757cae, type: 3}
+  m_Sprite: {fileID: -8223254783290569919, guid: 6e38264caf774ea44b9c0f9f0c8ecc86,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -189,10 +190,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facePlayer: 1
   direction: {x: 0, y: 0}
-  polyNavAgent: {fileID: 4151145355520224925}
   layerMask:
     serializedVersion: 2
     m_Bits: 257
+  polyNavAgent: {fileID: 4151145355520224925}
   patrolWait: 10
   patrolSpeed: 0.75
   huntSpeed: 1.2
@@ -251,7 +252,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.71875, y: 1}
+    oldSize: {x: 0.53125, y: 0.90625}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

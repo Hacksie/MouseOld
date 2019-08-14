@@ -7,7 +7,7 @@ namespace HackedDesign {
 	public class StartMenuManager : MonoBehaviour {
 
 		public void ResumeEvent () {
-			CoreGame.instance.SetResume ();
+			CoreGame.instance.SetPlaying ();
 		}
 
 		public void QuitEvent () {

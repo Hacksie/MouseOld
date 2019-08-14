@@ -38,7 +38,7 @@ namespace HackedDesign {
                     CoreGame.instance.SetAlert (this.gameObject);
 
                     flagged = false;
-                    Debug.Log ("Security Camera Triggered " + Time.time);
+                    Debug.Log ("Trap Triggered " + Time.time);
                 }
             }
 
