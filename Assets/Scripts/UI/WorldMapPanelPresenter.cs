@@ -20,7 +20,7 @@ namespace HackedDesign {
 		}
 
 		public void Repaint () {
-			if (CoreGame.instance.state.state == GameState.WORLDMAP) {
+			if (CoreGame.Instance.CoreState.state == GameState.WORLDMAP) {
 				if (!this.gameObject.activeInHierarchy) {
 					Show (true);
 				}

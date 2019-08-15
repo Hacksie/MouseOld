@@ -105,7 +105,7 @@ namespace HackedDesign {
                     }
                 }
 
-                if (CoreGame.instance.state.alertTrap != null) {
+                if (CoreGame.Instance.CoreState.alertTrap != null) {
                     Debug.Log("Enemy is responding to alert: " + this.name);
                     state = EnemyState.RESPONDING;
                     return;
@@ -115,19 +115,19 @@ namespace HackedDesign {
 
                     patrolLastCheck = Time.time;
                     // Keep patrolling
-                    var location = CoreGame.instance.state.level.ConvertWorldToLevelPos (transform.position);
+                    var location = CoreGame.Instance.CoreState.level.ConvertWorldToLevelPos (transform.position);
 
-                    var currentDirections = CoreGame.instance.state.level.MovementDirections (location, false, false);
+                    var currentDirections = CoreGame.Instance.CoreState.level.MovementDirections (location, false, false);
                     currentDirections.Randomize ();
 
                     if (currentDirections.Count > 0) {
                         currentDirection = currentDirections[0];
 
-                        polyNavAgent.SetDestination (CoreGame.instance.state.level.ConvertLevelPosToWorld (currentDirection));
+                        polyNavAgent.SetDestination (CoreGame.Instance.CoreState.level.ConvertLevelPosToWorld (currentDirection));
 
                     }
                     // Change this to look at the actual current direction
-                    FaceDirection (CoreGame.instance.state.level.ConvertLevelPosToWorld (currentDirection) - transform.position);
+                    FaceDirection (CoreGame.Instance.CoreState.level.ConvertLevelPosToWorld (currentDirection) - transform.position);
                 }
 
             }
@@ -145,24 +145,24 @@ namespace HackedDesign {
                     }
                 }
 
-                if(CoreGame.instance.state.alertTrap == null)
+                if(CoreGame.Instance.CoreState.alertTrap == null)
                 {
                     Debug.Log("Alert camera cleared: " + this.name);
-                    CoreGame.instance.ClearAlert();
+                    CoreGame.Instance.ClearAlert();
                     state = EnemyState.PATROLLING;
                     return;                    
                 }
 
-                if (CoreGame.instance.state.level.ConvertWorldToLevelPos(this.transform.position) == CoreGame.instance.state.level.ConvertWorldToLevelPos(CoreGame.instance.state.alertTrap.transform.position) ) {
+                if (CoreGame.Instance.CoreState.level.ConvertWorldToLevelPos(this.transform.position) == CoreGame.Instance.CoreState.level.ConvertWorldToLevelPos(CoreGame.Instance.CoreState.alertTrap.transform.position) ) {
                     Debug.Log("Enemy is clearing alert: " + this.name);
-                    CoreGame.instance.ClearAlert();
+                    CoreGame.Instance.ClearAlert();
                     state = EnemyState.PATROLLING;
                     return;
                 }
 
-                if (CoreGame.instance.state.alertTrap != null) {
+                if (CoreGame.Instance.CoreState.alertTrap != null) {
 
-                    Vector3 pos = CoreGame.instance.state.alertTrap.transform.position;
+                    Vector3 pos = CoreGame.Instance.CoreState.alertTrap.transform.position;
                     if (polyNavAgent.primeGoal != new Vector2 (pos.x, pos.y)) {
                         polyNavAgent.SetDestination (pos);
 
@@ -228,7 +228,7 @@ namespace HackedDesign {
 
             public void UpdateFighting () {
                 //FaceDirection (player.position - transform.position);
-                CoreGame.instance.GameOver ();
+                CoreGame.Instance.GameOver ();
             }
 
             public void OnCollisionEnter2D (Collision2D collision) {

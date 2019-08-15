@@ -89,12 +89,12 @@ namespace HackedDesign {
 
             public void Repaint () {
 
-                if (CoreGame.instance.state.state == GameState.SELECTMENU && selectMenuManager.state == SelectMenuManager.SelectMenuState.MAP) {
+                if (CoreGame.Instance.CoreState.state == GameState.SELECTMENU && selectMenuManager.state == SelectMenuManager.SelectMenuState.MAP) {
                     if(!this.gameObject.activeInHierarchy) {
                         this.gameObject.SetActive(true);
                     }
 
-                    var pos2d = level.ConvertWorldToLevelPos (CoreGame.instance.GetPlayer ().transform.position);
+                    var pos2d = level.ConvertWorldToLevelPos (CoreGame.Instance.GetPlayer ().transform.position);
 
                     locationSprite.transform.position = new Vector3 (pos2d.x * 18 + 3f, (level.template.levelHeight - pos2d.y) * 18 + 9, 0) + this.transform.position;
                 } else {

@@ -35,7 +35,7 @@ namespace HackedDesign {
 
                 if (flagged && (Time.time - triggerStart) > alertTimer) {
 
-                    CoreGame.instance.SetAlert (this.gameObject);
+                    CoreGame.Instance.SetAlert (this.gameObject);
 
                     flagged = false;
                     Debug.Log ("Trap Triggered " + Time.time);

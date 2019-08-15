@@ -6,47 +6,31 @@ namespace HackedDesign {
 
 	public class PlayerController : MonoBehaviour {
 
-		private float moveSense = 0.2f; //An axis value above this is considered movement.		
+		private float movementEpsilon = 0.2f; //An axis value above this is considered movement.		
 
 		[Range (0.0f, 10.0f)]
 		[Tooltip ("The movement speed of the controller.")]
-		public float baseMovementSpeed = 1.0f;
-		private Vector2 moveVector; //The vector used to apply movement to the controller.		
-		private Animator anim; //The parent animator.
-		//public CharacterAnimator anim;
+		[SerializeField]
+		private float baseMovementSpeed = 1.0f;
 
+		private Vector2 movementVector; 
+		private Animator anim; 
 
-
-		// Use this for initialization
+		
 		void Start () {
 			anim = transform.GetComponent<Animator> ();
-			//var anim = GetComponent<CharacterAnimator>();
-
-			//AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo (0); //could replace 0 by any other animation layer index
-			//anim.Play (state.fullPathHash, -1, Random.Range (0f, 1f));
-
 		}
 
-		// Update is called once per frame
 		public void UpdateMovement (Input.IInputController inputController) {
 
-			moveVector = inputController.GetMovementAxis ();
+			movementVector = inputController.GetMovementAxis ();
 
-			//If horizontal or vertical axis is above the threshold value (moveSense), set the move state to Walk.
-			if (moveVector.sqrMagnitude > (moveSense * moveSense)) {
-
-				//moveState = MoveState.Walk;
-				//Pass the moveVector axes to the animators move variables and set animator's isMoving to true.
-				anim.SetFloat ("directionX", moveVector.x);
-				anim.SetFloat ("directionY", moveVector.y);
+			if (movementVector.sqrMagnitude > (movementEpsilon * movementEpsilon)) {
+				anim.SetFloat ("directionX", movementVector.x);
+				anim.SetFloat ("directionY", movementVector.y);
 				anim.SetBool ("isMoving", true);
-
-
 			} else {
-				//If there's no input, set the state to stand again and change Animator's isMoving to false.
-				//moveState = MoveState.Stand;
-				moveVector = Vector2.zero;
-				//anim.SetMoving(false);
+				movementVector = Vector2.zero;
 				if (anim != null) {
 					anim.SetBool ("isMoving", false);
 				}
@@ -54,12 +38,8 @@ namespace HackedDesign {
 		}
 
 		public void UpdateTransform () {
-			transform.Translate (moveVector * (baseMovementSpeed + (CoreGame.instance.state.player.movementAugments / 10.0f)) * Time.fixedDeltaTime);
-		}
-
-		private void OnCollisionEnter2D (Collision2D other) {
-			//Debug.Log(other.gameObject.name);
-
+			// Movement augments (0 - 10) are reduced by a factor of 10
+			transform.Translate (movementVector * (baseMovementSpeed + (CoreGame.Instance.CoreState.player.movementAugments / 10.0f)) * Time.fixedDeltaTime);
 		}
 	}
 }

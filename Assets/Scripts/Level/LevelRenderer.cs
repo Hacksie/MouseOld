@@ -89,7 +89,7 @@ namespace HackedDesign {
 								if (level.proxyLevel[j, i].bottomLeft[e].isTrap) {
 									Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
 									npc.Initialize ();
-									CoreGame.instance.state.entityList.Add(npc);
+									CoreGame.Instance.CoreState.entityList.Add(npc);
 									//results.Add (npc);
 								}
 
@@ -108,7 +108,7 @@ namespace HackedDesign {
 								if (level.proxyLevel[j, i].bottomRight[e].isTrap) {
 									Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
 									npc.Initialize ();
-									CoreGame.instance.state.entityList.Add(npc);
+									CoreGame.Instance.CoreState.entityList.Add(npc);
 									//results.Add (npc);
 								}								
 							}
@@ -125,7 +125,7 @@ namespace HackedDesign {
 								if (level.proxyLevel[j, i].topLeft[e].isTrap) {
 									Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
 									npc.Initialize ();
-									CoreGame.instance.state.entityList.Add(npc);
+									CoreGame.Instance.CoreState.entityList.Add(npc);
 									//results.Add (npc);
 								}								
 							}
@@ -141,7 +141,7 @@ namespace HackedDesign {
 								if (level.proxyLevel[j, i].topRight[e].isTrap) {
 									Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
 									npc.Initialize ();
-									CoreGame.instance.state.entityList.Add(npc);
+									CoreGame.Instance.CoreState.entityList.Add(npc);
 									//results.Add (npc);
 								}								
 							}

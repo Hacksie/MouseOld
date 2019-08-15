@@ -37,7 +37,7 @@ namespace HackedDesign {
 			}
 
 			public void Initialize() {
-				this.player = CoreGame.instance.GetPlayer ().transform;
+				this.player = CoreGame.Instance.GetPlayer ().transform;
 			}
 
 			public void Activate () {

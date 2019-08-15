@@ -25,7 +25,7 @@ namespace HackedDesign {
 				return;
 			}
 
-			if (CoreGame.instance.state.state == GameState.PLAYING) {
+			if (CoreGame.Instance.CoreState.state == GameState.PLAYING) {
 
 				if (timer.running) {
 					if (!gameObject.activeInHierarchy) {

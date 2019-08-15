@@ -39,7 +39,7 @@ namespace HackedDesign {
 
 		public void Repaint()
 		{
-			if(CoreGame.instance.state.state == GameState.MAINMENU)
+			if(CoreGame.Instance.CoreState.state == GameState.MAINMENU)
 			{
 				if(!this.gameObject.activeInHierarchy) {
 					this.gameObject.SetActive(true);
@@ -84,7 +84,7 @@ namespace HackedDesign {
 			ShowCreditsPanel (false);
 			ShowOptionsPanel (false);
 			ShowRandomPanel (false);
-			CoreGame.instance.LoadNewGame ();
+			CoreGame.Instance.LoadNewGame ();
 			//StartCoroutine (LoadNewGameScenes ( "IntroRoom", "IntroRoom"));
 		}
 
@@ -104,7 +104,7 @@ namespace HackedDesign {
 			ShowOptionsPanel (false);
 			ShowRandomPanel (false);
 			Debug.Log (templateDropdown.options[templateDropdown.value].text);
-			CoreGame.instance.LoadRandomGame (templateDropdown.options[templateDropdown.value].text, (int) lengthSlider.value, (int) heightSlider.value, (int) widthSlider.value, difficultyDropdown.value, (int) enemiesSlider.value, (int) camerasSlider.value);		}
+			CoreGame.Instance.LoadRandomGame (templateDropdown.options[templateDropdown.value].text, (int) lengthSlider.value, (int) heightSlider.value, (int) widthSlider.value, difficultyDropdown.value, (int) enemiesSlider.value, (int) camerasSlider.value);		}
 
 		public void OptionsEvent () {
 			Debug.Log ("Options Event");

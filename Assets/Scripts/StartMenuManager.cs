@@ -7,12 +7,12 @@ namespace HackedDesign {
 	public class StartMenuManager : MonoBehaviour {
 
 		public void ResumeEvent () {
-			CoreGame.instance.SetPlaying ();
+			CoreGame.Instance.SetPlaying ();
 		}
 
 		public void QuitEvent () {
 			//FIXME: Ask for save?
-			CoreGame.instance.EndGame();
+			CoreGame.Instance.EndGame();
 			//SceneManager.LoadScene ("MainMenu");
 		}
 

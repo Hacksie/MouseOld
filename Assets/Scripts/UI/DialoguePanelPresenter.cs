@@ -33,7 +33,7 @@ namespace HackedDesign {
             }
 
             public void Repaint () {
-                if (CoreGame.instance.state.state == GameState.DIALOGUE) {
+                if (CoreGame.Instance.CoreState.state == GameState.DIALOGUE) {
                     if (!this.gameObject.activeInHierarchy) {
                         Show (true);
                     }

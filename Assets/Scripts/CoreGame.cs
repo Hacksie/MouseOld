@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 namespace HackedDesign {
 	public class CoreGame : MonoBehaviour {
 
-		public static CoreGame instance;
+		public static CoreGame Instance { get; private set; }
 
-		public State state = new State ();
+		public State CoreState {get; private set; } = new State ();
 
 		public Input.IInputController inputController;
 
@@ -90,7 +90,7 @@ namespace HackedDesign {
 		
 
 		CoreGame () {
-			instance = this;
+			Instance = this;
 		}
 
 		/// <summary>
@@ -117,7 +117,7 @@ namespace HackedDesign {
 		/// Run only once
 		/// </summary>
 		public void Initialization () {
-			state.state = GameState.MAINMENU;
+			CoreState.state = GameState.MAINMENU;
 			Debug.Log ("Initialization");
 
 			SetPlatformInput ();
@@ -156,24 +156,24 @@ namespace HackedDesign {
 		}
 
 		public void LoadNewGame () {
-			state.state = GameState.LOADING;
-			state.level = levelGenerator.GenerateLevel ("Victoria's Room", 1, 1, 2, 0, 0, 0);
-			state.player = new Character.PlayerState();
-			CoreGame.instance.SceneInitialize ();
+			CoreState.state = GameState.LOADING;
+			CoreState.level = levelGenerator.GenerateLevel ("Victoria's Room", 1, 1, 2, 0, 0, 0);
+			CoreState.player = new Character.PlayerState();
+			CoreGame.Instance.SceneInitialize ();
 		}
 
 		public void LoadRandomGame (string template, int length, int height, int width, int difficulty, int enemies, int traps) {
-			state.state = GameState.LOADING;
-			state.level = levelGenerator.GenerateLevel (template, length, height, width, difficulty, enemies, traps);
-			state.player = new Character.PlayerState();
-			CoreGame.instance.SceneInitialize ();
+			CoreState.state = GameState.LOADING;
+			CoreState.level = levelGenerator.GenerateLevel (template, length, height, width, difficulty, enemies, traps);
+			CoreState.player = new Character.PlayerState();
+			CoreGame.Instance.SceneInitialize ();
 		}
 
 		public void EndGame () {
-			state.state = GameState.MAINMENU;
+			CoreState.state = GameState.MAINMENU;
 			RepaintAll ();
 			levelRenderer.DestroyLevel ();
-			state.entityList.Clear ();
+			CoreState.entityList.Clear ();
 			ShowPlayer (false);
 
 			Time.timeScale = 0;
@@ -195,14 +195,14 @@ namespace HackedDesign {
 			ShowPlayer (true);
 
 			
-			levelRenderer.Render (this.state.level);
-			this.state.entityList.Clear();
-			this.state.entityList.AddRange(levelRenderer.PopulateEnemySpawns(this.state.level));
-			this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.state.level));
+			levelRenderer.Render (this.CoreState.level);
+			this.CoreState.entityList.Clear();
+			this.CoreState.entityList.AddRange(levelRenderer.PopulateEnemySpawns(this.CoreState.level));
+			this.CoreState.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.CoreState.level));
 
-			levelMapPanel.Initialize (selectMenuManager, state.level);
+			levelMapPanel.Initialize (selectMenuManager, CoreState.level);
 
-			player.transform.position = state.level.ConvertLevelPosToWorld (state.level.spawn);
+			player.transform.position = CoreState.level.ConvertLevelPosToWorld (CoreState.level.spawn);
 
 			//GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 
@@ -213,8 +213,8 @@ namespace HackedDesign {
 	
 			SetPlaying ();
 
-			if (!string.IsNullOrWhiteSpace (state.level.template.startingAction)) {
-				Story.ActionManager.instance.Invoke (state.level.template.startingAction);
+			if (!string.IsNullOrWhiteSpace (CoreState.level.template.startingAction)) {
+				Story.ActionManager.instance.Invoke (CoreState.level.template.startingAction);
 			}
 
 			RepaintAll ();
@@ -237,14 +237,14 @@ namespace HackedDesign {
 		}
 
 		void SceneTriggersInitialize () {
-			state.triggerList.Clear ();
+			CoreState.triggerList.Clear ();
 			Debug.Log ("Initializing triggers, count " + GameObject.FindGameObjectsWithTag ("Trigger").Length);
 
 			foreach (GameObject triggerObject in GameObject.FindGameObjectsWithTag ("Trigger")) {
 				Debug.Log ("Initializing trigger " + triggerObject.name);
 				Triggers.ITrigger trigger = triggerObject.GetComponent<Triggers.ITrigger> ();
 				if (trigger != null) {
-					state.triggerList.Add (trigger);
+					CoreState.triggerList.Add (trigger);
 					trigger.Initialize (inputController);
 				}
 			}
@@ -256,33 +256,33 @@ namespace HackedDesign {
 
 		public void GameOver () {
 			Debug.Log ("GameOver");
-			state.state = GameState.GAMEOVER;
+			CoreState.state = GameState.GAMEOVER;
 		}
 
 		public void SetPlaying () {
 			Debug.Log ("State set to PLAYING");
 			Time.timeScale = 1;
-			state.state = GameState.PLAYING;
+			CoreState.state = GameState.PLAYING;
 		}
 
 		public void SetDialogue () {
 			Debug.Log ("State set to DIALOGUE");
 			Time.timeScale = 0;
-			state.state = GameState.DIALOGUE;
+			CoreState.state = GameState.DIALOGUE;
 			//Cursor.visible = true;
 		}
 
 		public void SetNarration () {
 			Debug.Log ("State set to NARRATION");
 			Time.timeScale = 0;
-			state.state = GameState.NARRATION;
+			CoreState.state = GameState.NARRATION;
 			RepaintAll ();
 		}
 
 		public void SetWorldMap () {
 			Debug.Log ("State set to WORLDMAP");
 			Time.timeScale = 0;
-			state.state = GameState.WORLDMAP;
+			CoreState.state = GameState.WORLDMAP;
 		}
 
 		public void CreateAlert(){
@@ -293,20 +293,20 @@ namespace HackedDesign {
 
 		public void SetAlert (GameObject trap) {
 			Debug.Log ("Level alert set");
-			this.state.alertTrap = trap;
+			this.CoreState.alertTrap = trap;
 			this.roomAlert.transform.position = trap.transform.position;
 			this.roomAlert.SetActive(true);
 
 		}
 
 		public void ClearAlert () {
-			this.state.alertTrap = null;
+			this.CoreState.alertTrap = null;
 			this.roomAlert.SetActive(false);
 		}
 
 		void Update () {
 
-			switch (state.state) {
+			switch (CoreState.state) {
 
 				case GameState.PLAYING:
 					PlayingUpdate ();
@@ -314,12 +314,12 @@ namespace HackedDesign {
 
 					if (inputController.StartButtonUp ()) {
 						Debug.Log ("Show start menu");
-						state.state = GameState.STARTMENU;
+						CoreState.state = GameState.STARTMENU;
 					}
 
 					if (inputController.SelectButtonUp ()) {
 						Debug.Log ("Show select menu");
-						state.state = GameState.SELECTMENU;
+						CoreState.state = GameState.SELECTMENU;
 					}
 
 					break;
@@ -350,7 +350,7 @@ namespace HackedDesign {
 
 		void LateUpdate () {
 
-			switch (state.state) {
+			switch (CoreState.state) {
 				case GameState.NARRATION:
 					//narrationPanel.Repaint ();
 					break;
@@ -358,7 +358,7 @@ namespace HackedDesign {
 		}
 
 		void FixedUpdate () {
-			switch (state.state) {
+			switch (CoreState.state) {
 				case GameState.PLAYING:
 					PlayingFixedUpdate ();
 					break;
@@ -373,13 +373,13 @@ namespace HackedDesign {
 		}
 
 		void PlayingTriggerUpdate () {
-			foreach (Triggers.ITrigger trigger in state.triggerList) {
+			foreach (Triggers.ITrigger trigger in CoreState.triggerList) {
 				trigger.UpdateTrigger ();
 			}
 		}
 
 		void PlayingNPCUpdate () {
-			foreach (Entity.BaseEntity npc in state.entityList) {
+			foreach (Entity.BaseEntity npc in CoreState.entityList) {
 				npc.UpdateBehaviour ();
 			}
 		}

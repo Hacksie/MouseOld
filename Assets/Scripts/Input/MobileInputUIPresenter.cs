@@ -13,7 +13,7 @@ namespace HackedDesign {
             public bool mobileSelect;
 
             public void Repaint () {
-                if (CoreGame.instance.state.state == GameState.PLAYING && CoreGame.instance.inputController.ShowMobileInput ()) {
+                if (CoreGame.Instance.CoreState.state == GameState.PLAYING && CoreGame.Instance.inputController.ShowMobileInput ()) {
                     if (!this.gameObject.activeInHierarchy) {
                         this.gameObject.SetActive (true);
                     }

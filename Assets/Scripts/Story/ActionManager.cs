@@ -36,19 +36,19 @@ namespace HackedDesign {
 
             public void PreludeLaptop () {
 
-                if (!CoreGame.instance.state.taskList.Exists (t => t.title == "Milk Run")) {
+                if (!CoreGame.Instance.CoreState.taskList.Exists (t => t.title == "Milk Run")) {
                     Story.Task t = (Story.Task)ScriptableObject.CreateInstance(typeof(Story.Task));
                     
                     t.title = "Milk Run";
                     t.description = "Milk Run Description";
 
-                    CoreGame.instance.state.taskList.Add (t);
-                    CoreGame.instance.state.selectedTask = t;
+                    CoreGame.Instance.CoreState.taskList.Add (t);
+                    CoreGame.Instance.CoreState.selectedTask = t;
                 }
             }
 
             public void PreludeExit () {
-                if (CoreGame.instance.state.taskList.Exists (t => t.title == "Milk Run"))
+                if (CoreGame.Instance.CoreState.taskList.Exists (t => t.title == "Milk Run"))
                 {
                     Debug.Log ("Can exit");
                 }

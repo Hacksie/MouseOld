@@ -4,7 +4,7 @@ namespace HackedDesign {
     public class CursorPresenter : MonoBehaviour {
 
         public void Repaint () {
-            switch (CoreGame.instance.state.state) {
+            switch (CoreGame.Instance.CoreState.state) {
                 case GameState.MAINMENU:
                 case GameState.DIALOGUE:
                 case GameState.NARRATION:
