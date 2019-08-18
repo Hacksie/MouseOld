@@ -10,7 +10,7 @@ namespace HackedDesign {
 
 		public State CoreState {get; private set; } = new State ();
 
-		public Input.IInputController inputController;
+		private Input.IInputController inputController;
 
 		[Header ("Test Flags")]
 		[SerializeField]
@@ -85,10 +85,6 @@ namespace HackedDesign {
 		// [SerializeField]
 		// private Timer timer;
 
-		
-
-		
-
 		CoreGame () {
 			Instance = this;
 		}
@@ -97,10 +93,8 @@ namespace HackedDesign {
 		/// Run in editor
 		/// </summary>
 		void Start () {
-
 			CheckBindings ();
 			Initialization ();
-
 		}
 
 		void CheckBindings () {
@@ -123,6 +117,7 @@ namespace HackedDesign {
 			SetPlatformInput ();
 
 			//timerPanel.Initialize (this.timer);
+			mobileInputUI.Initialize(inputController);
 
 			narrationManager.Initialize (inputController);
 			dialogueManager.Initialize (inputController);
@@ -157,7 +152,7 @@ namespace HackedDesign {
 
 		public void LoadNewGame () {
 			CoreState.state = GameState.LOADING;
-			CoreState.level = levelGenerator.GenerateLevel ("Victoria's Room", 1, 1, 2, 0, 0, 0);
+			CoreState.level = levelGenerator.GenerateLevel ("Olivia's Room", 1, 1, 1, 0, 0, 0);
 			CoreState.player = new Character.PlayerState();
 			CoreGame.Instance.SceneInitialize ();
 		}

@@ -6,21 +6,7 @@ using UnityEngine.SceneManagement;
 namespace HackedDesign {
 	public class SelectMenuManager : MonoBehaviour {
 
-		public SelectMenuState state = SelectMenuState.INFO;
-
-		public void SetMenuState(SelectMenuState state)
-		{
-			this.state = state;
-		}
-
-		public SelectMenuState GetMenuState()
-		{
-			return state;
-		}
-
-
-
-		
+		public SelectMenuState MenuState { get; set; } = SelectMenuState.INFO;
 
 		public enum SelectMenuState {
 			INFO,

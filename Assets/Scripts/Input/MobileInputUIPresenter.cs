@@ -11,9 +11,15 @@ namespace HackedDesign {
             public bool mobileDown;
             public bool mobileStart;
             public bool mobileSelect;
+            private Input.IInputController inputController;
+
+            public void Initialize(Input.IInputController inputController)
+            {
+                this.inputController = inputController;
+            }
 
             public void Repaint () {
-                if (CoreGame.Instance.CoreState.state == GameState.PLAYING && CoreGame.Instance.inputController.ShowMobileInput ()) {
+                if (CoreGame.Instance.CoreState.state == GameState.PLAYING && inputController.ShowMobileInput ()) {
                     if (!this.gameObject.activeInHierarchy) {
                         this.gameObject.SetActive (true);
                     }

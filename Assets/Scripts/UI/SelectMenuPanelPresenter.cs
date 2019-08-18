@@ -87,21 +87,21 @@ namespace HackedDesign {
 		public void InfoClickEvent()
 		{
 			Debug.Log("Select Menu Info Clicked");
-			selectMenuManager.SetMenuState(SelectMenuManager.SelectMenuState.INFO);
+			selectMenuManager.MenuState = SelectMenuManager.SelectMenuState.INFO;
 			Show(true);
 		}
 
 		public void TaskClickEvent()
 		{
 			Debug.Log("Select Menu Task Clicked");
-			selectMenuManager.SetMenuState(SelectMenuManager.SelectMenuState.TASKS);
+			selectMenuManager.MenuState = SelectMenuManager.SelectMenuState.TASKS;
 			Show(true);
 		}
 
 		public void MapClickEvent()
 		{
 			Debug.Log("Select Menu Task Clicked");
-			selectMenuManager.SetMenuState(SelectMenuManager.SelectMenuState.MAP);
+			selectMenuManager.MenuState =SelectMenuManager.SelectMenuState.MAP;
 			Show(true);
 		}		
 

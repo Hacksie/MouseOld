@@ -27,8 +27,8 @@ namespace HackedDesign {
                 for (int i = 0; i < level.template.levelHeight; i++) {
                     for (int j = 0; j < level.template.levelWidth; j++) {
 
-                        if (level.proxyLevel[j, i] != null) {
-                            string chunkString = level.proxyLevel[j, i].AsPrintableString ();
+                        if (level.map[i].rooms[j] != null) {
+                            string chunkString = level.map[i].rooms[j].AsPrintableString ();
 
                             Sprite blSprite = FindChunkObject ("bl", chunkString.Substring (0, 1), chunkString.Substring (2, 1));
                             Sprite brSprite = FindChunkObject ("br", chunkString.Substring (3, 1), chunkString.Substring (2, 1));
@@ -41,11 +41,11 @@ namespace HackedDesign {
                             Image goTL = GameObject.Instantiate<Image> (mapUIPrefab, new Vector3 (j * 18, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position, Quaternion.identity, parent.transform);
                             Image goTR = GameObject.Instantiate<Image> (mapUIPrefab, new Vector3 (j * 18 + 9, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position, Quaternion.identity, parent.transform);
 
-                            if(level.proxyLevel[j, i].isEntry) {
+                            if(level.map[i].rooms[j].isEntry) {
                                 entrySprite.transform.position = new Vector3(j * 18 + 3f, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position;
                             }
 
-                            if(level.proxyLevel[j, i].isEnd) {
+                            if(level.map[i].rooms[j].isEnd) {
                                 endSprite.transform.position = new Vector3(j * 18 + 3f, (level.template.levelHeight - i) * 18 + 9, 0) + this.transform.position;
                             }                            
 

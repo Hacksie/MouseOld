@@ -10,16 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
-  m_Name: Victoria's Room
+  m_Name: Olivia's Room
   m_EditorClassIdentifier: 
   levelLength: 1
-  levelWidth: 2
+  levelWidth: 1
   levelHeight: 1
   enemies: 0
+  traps: 0
   generateDoors: 1
   startingRoomString: weww
   startingAction: Prelude1
   exitAction: PreludeExit
+  levelResource: OliviasRoom
   isRandom: 0
   generateNavMesh: 0
   floor: {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
@@ -67,6 +69,7 @@ MonoBehaviour:
   - {fileID: 3776611046914585506, guid: 68fa458c605f09349884c21a8c9aa1de, type: 3}
   - {fileID: 3124142144086319021, guid: 7dd2b6b267b9f524e90f544b451839d9, type: 3}
   randomProps: []
+  trapProps: []
   mapWallsRows:
   - weww_entry
   mapPropsRows: []
