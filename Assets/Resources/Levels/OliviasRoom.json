@@ -1,21 +1,37 @@
 {
-    "floor": "floor1",
+    "length": 1,
     "map": [
         {
-            "row": [
+            "rooms": [
                 {
-                    "walls": "weww_entry",
-                    "topleft": [
-                        "oliviasroom_1_tl_aa"
+                    "left": "w",
+                    "top": "e",
+                    "bottom": "w",
+                    "right": "w",
+                    "isEntry": true,
+                    "bottomLeft": [
+                        {
+                            "type": "e",
+                            "name": "oliviasroom_1_bl_aa"
+                        }
                     ],
-                    "topright": [
-                        "oliviasroom_1_tr_aa"
+                    "bottomRight": [
+                        {
+                            "type": "e",
+                            "name": "oliviasroom_1_br_aa"
+                        }
                     ],
-                    "bottomleft": [
-                        "oliviasroom_1_bl_aa"
+                    "topLeft": [
+                        {
+                            "type": "e",
+                            "name": "oliviasroom_1_tl_aa"
+                        }
                     ],
-                    "bottomright": [
-                        "oliviasroom_1_br_aa"
+                    "topRight": [
+                        {
+                            "type": "e",
+                            "name": "oliviasroom_1_tr_aa"
+                        }
                     ]
                 }
             ]

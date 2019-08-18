@@ -73,7 +73,7 @@ namespace HackedDesign
 
                 if (!string.IsNullOrWhiteSpace(genTemplate.levelResource))
                 {
-					level = LoadLevelFromFile(genTemplate);
+                    level = LoadLevelFromFile(genTemplate);
                 }
                 else if (genTemplate.isRandom)
                 {
@@ -98,20 +98,22 @@ namespace HackedDesign
 
             protected Level LoadLevelFromFile(LevelGenTemplate genTemplate)
             {
-				Level result = null;
-				Debug.Log(@"Loading level from file: Levels/" + genTemplate.levelResource + @".json");
+                Level level = new Level(genTemplate);
+                Debug.Log(@"Loading level from file: Levels/" + genTemplate.levelResource + @".json");
                 var jsonTextFile = Resources.Load<TextAsset>(@"Levels/" + genTemplate.levelResource);
-				if(jsonTextFile == null) {
-					Debug.LogError("File not loaded");
-					return null;
-				}
+                if (jsonTextFile == null)
+                {
+                    Debug.LogError("File not loaded");
+                    return null;
+                }
 
-				LevelJson levelJson = JsonUtility.FromJson<LevelJson>(jsonTextFile.text);
-				Debug.Log(levelJson.floor);
+                JsonUtility.FromJsonOverwrite(jsonTextFile.text, level);
 
-				
+                //Debug.Log(levelJson.map[0].row[0].bottomLeft[0].name);
 
-				return result;
+
+
+                return level;
 
             }
 
@@ -127,7 +129,7 @@ namespace HackedDesign
                         Debug.Log(columns[x]);
                         var room = RoomFromString(columns[x]);
                         Debug.Log(room.AsPrintableString());
-                        level.proxyLevel[x, y] = room;
+                        level.map[y].rooms[x] = room;
                         if (room != null && room.isEntry)
                         {
                             level.spawn = new Vector2Int(x, y);
@@ -170,7 +172,7 @@ namespace HackedDesign
                 // This is important!				
                 // It also means the player starts at the bottom and plays upwards, which is ideal
                 Vector2Int position = new Vector2Int((level.template.levelWidth - 1) / 2, (level.template.levelHeight - 1));
-                level.proxyLevel[position.x, position.y] = GenerateEntryRoom(level);
+                level.map[position.y].rooms[position.x] = GenerateEntryRoom(level);
                 level.spawn = position;
                 return position;
             }
@@ -189,12 +191,12 @@ namespace HackedDesign
                 {
                     Debug.Log("End of main chain");
 
-                    level.proxyLevel[newLocation.x, newLocation.y] = GenerateRoom(newLocation, new List<RoomSide>() { RoomSide.Wall }, true, level); // Place a new tile here
-                    level.proxyLevel[newLocation.x, newLocation.y].isEnd = true;
+                    level.map[newLocation.y].rooms[newLocation.x] = GenerateRoom(newLocation, new List<string>() { ProxyRoom.WALL }, true, level); // Place a new tile here
+                    level.map[newLocation.y].rooms[newLocation.x].isEnd = true;
                     return true;
                 }
 
-                level.proxyLevel[newLocation.x, newLocation.y] = GenerateRoom(newLocation, new List<RoomSide>() { RoomSide.Open, RoomSide.Door }, true, level); // Place a new tile here 
+                level.map[newLocation.y].rooms[newLocation.x] = GenerateRoom(newLocation, new List<string>() { ProxyRoom.OPEN, ProxyRoom.DOOR }, true, level); // Place a new tile here 
 
                 List<Vector2Int> directions = PossibleBuildDirections(newLocation, level);
 
@@ -226,11 +228,11 @@ namespace HackedDesign
 
             List<Vector2Int> PossibleBuildDirections(Vector2Int pos, Level level)
             {
-                ProxyRoom room = level.proxyLevel[pos.x, pos.y];
+                ProxyRoom room = level.map[pos.y].rooms[pos.x];
 
                 List<Vector2Int> results = new List<Vector2Int>();
 
-                if (room.left == RoomSide.Door || room.left == RoomSide.Open)
+                if (room.left == ProxyRoom.DOOR || room.left == ProxyRoom.OPEN)
                 {
                     var leftPos = new Vector2Int(pos.x - 1, pos.y);
                     if (!PositionHasRoom(leftPos, level))
@@ -239,7 +241,7 @@ namespace HackedDesign
                     }
                 }
 
-                if (room.top == RoomSide.Door || room.top == RoomSide.Open)
+                if (room.top == ProxyRoom.DOOR || room.top == ProxyRoom.OPEN)
                 {
                     var upPos = new Vector2Int(pos.x, pos.y - 1);
                     if (!PositionHasRoom(upPos, level))
@@ -248,7 +250,7 @@ namespace HackedDesign
                     }
                 }
 
-                if (room.bottom == RoomSide.Door || room.bottom == RoomSide.Open)
+                if (room.bottom == ProxyRoom.DOOR || room.bottom == ProxyRoom.OPEN)
                 {
                     var bottomPos = new Vector2Int(pos.x, pos.y + 1);
                     if (!PositionHasRoom(bottomPos, level))
@@ -257,7 +259,7 @@ namespace HackedDesign
                     }
                 }
 
-                if (room.right == RoomSide.Door || room.right == RoomSide.Open)
+                if (room.right == ProxyRoom.DOOR || room.right == ProxyRoom.OPEN)
                 {
                     var rightPos = new Vector2Int(pos.x + 1, pos.y);
                     if (!PositionHasRoom(rightPos, level))
@@ -301,10 +303,10 @@ namespace HackedDesign
                 if (splitString.Length > 0)
                 {
 
-                    response.left = SideFromChar(splitString[0][0]);
-                    response.top = SideFromChar(splitString[0][1]);
-                    response.bottom = SideFromChar(splitString[0][2]);
-                    response.right = SideFromChar(splitString[0][3]);
+                    response.left = splitString[0].Substring(0, 1);
+                    response.top = splitString[0].Substring(1, 1);
+                    response.bottom = splitString[0].Substring(2, 1);
+                    response.right = splitString[0].Substring(3, 1);
                 }
 
                 if (splitString.Length > 1)
@@ -316,11 +318,11 @@ namespace HackedDesign
                 return response;
             }
 
-            RoomSide SideFromChar(char ch)
-            {
+            // RoomSide SideFromChar(char ch)
+            // {
 
-                return (RoomSide)Enum.ToObject(typeof(RoomSide), ch);
-            }
+            //     return (RoomSide)Enum.ToObject(typeof(RoomSide), ch);
+            // }
 
             void GenerateAuxRooms(Level level)
             {
@@ -336,7 +338,7 @@ namespace HackedDesign
                     {
                         for (int j = 0; j < level.template.levelWidth; j++)
                         {
-                            if ((level.proxyLevel[j, i] != null))
+                            if ((level.map[i].rooms[j] != null))
                             {
                                 Vector2Int pos = new Vector2Int(j, i);
                                 List<Vector2Int> dirs = PossibleBuildDirections(pos, level);
@@ -344,8 +346,9 @@ namespace HackedDesign
                                 foreach (Vector2Int location in dirs)
                                 {
                                     newRooms = true;
-                                    level.proxyLevel[location.x, location.y] = GenerateRoom(location, new List<RoomSide>() {
-                                        RoomSide.Open, RoomSide.Door, RoomSide.Wall, RoomSide.Wall, RoomSide.Wall, RoomSide.Wall
+                                    level.map[location.y].rooms[location.x] = GenerateRoom(location, new List<string>() {
+                                        ProxyRoom.OPEN, ProxyRoom.DOOR, ProxyRoom.WALL, ProxyRoom.WALL,ProxyRoom.WALL
+
                                     }, false, level);
                                 }
                             }
@@ -354,13 +357,13 @@ namespace HackedDesign
                 }
             }
 
-            ProxyRoom GenerateRoom(Vector2Int location, List<RoomSide> freeChoiceSides, bool isMainChain, Level level)
+            ProxyRoom GenerateRoom(Vector2Int location, List<string> freeChoiceSides, bool isMainChain, Level level)
             {
                 // Get Top Side
-                List<RoomSide> tops = PossibleTopSides(location, freeChoiceSides, level);
-                List<RoomSide> lefts = PossibleLeftSides(location, freeChoiceSides, level);
-                List<RoomSide> bottoms = PossibleBottomSides(location, freeChoiceSides, level);
-                List<RoomSide> rights = PossibleRightSides(location, freeChoiceSides, level);
+                List<string> tops = PossibleTopSides(location, freeChoiceSides, level);
+                List<string> lefts = PossibleLeftSides(location, freeChoiceSides, level);
+                List<string> bottoms = PossibleBottomSides(location, freeChoiceSides, level);
+                List<string> rights = PossibleRightSides(location, freeChoiceSides, level);
 
                 tops.Randomize();
                 lefts.Randomize();
@@ -411,10 +414,10 @@ namespace HackedDesign
                         continue;
 
                     // Check for a room
-                    if (level.proxyLevel[surround[i].x, surround[i].y] == null)
+                    if (level.map[surround[i].y].rooms[surround[i].x] == null)
                         continue;
 
-                    if (level.proxyLevel[surround[i].x, surround[i].y].isEntry)
+                    if (level.map[surround[i].y].rooms[surround[i].x].isEntry)
                         return true;
 
                 }
@@ -423,19 +426,19 @@ namespace HackedDesign
 
             }
 
-            List<RoomSide> PossibleTopSides(Vector2Int pos, List<RoomSide> freeChoice, Level level)
+            List<string> PossibleTopSides(Vector2Int pos, List<string> freeChoice, Level level)
             {
-                List<RoomSide> sides = new List<RoomSide>();
+                List<string> sides = new List<string>();
 
                 // If the side would lead out of the level, the side has to be wall
                 if (pos.y <= 0)
                 {
-                    sides.Add(RoomSide.Wall);
+                    sides.Add(ProxyRoom.WALL);
                     return sides;
                 }
 
                 // Get what's at the position 
-                ProxyRoom room = level.proxyLevel[pos.x, pos.y - 1];
+                ProxyRoom room = level.map[pos.y - 1].rooms[pos.x];
 
                 // If there's nothing then we're free to do anything
                 if (room == null)
@@ -448,19 +451,19 @@ namespace HackedDesign
                 return sides;
             }
 
-            List<RoomSide> PossibleBottomSides(Vector2Int pos, List<RoomSide> freeChoice, Level level)
+            List<string> PossibleBottomSides(Vector2Int pos, List<string> freeChoice, Level level)
             {
-                List<RoomSide> sides = new List<RoomSide>();
+                List<string> sides = new List<string>();
 
                 // If the side would lead out of the level, the side has to be wall
                 if (pos.y >= (level.template.levelHeight - 1))
                 {
-                    sides.Add(RoomSide.Wall);
+                    sides.Add(ProxyRoom.WALL);
                     return sides;
                 }
 
                 // Get what's at the position 
-                ProxyRoom room = level.proxyLevel[pos.x, pos.y + 1];
+                ProxyRoom room = level.map[pos.y + 1].rooms[pos.x];
 
                 // If there's nothing then we're free to do anything
                 if (room == null)
@@ -473,19 +476,19 @@ namespace HackedDesign
                 return sides;
             }
 
-            List<RoomSide> PossibleLeftSides(Vector2Int pos, List<RoomSide> freeChoice, Level level)
+            List<string> PossibleLeftSides(Vector2Int pos, List<string> freeChoice, Level level)
             {
-                List<RoomSide> sides = new List<RoomSide>();
+                List<string> sides = new List<string>();
 
                 // If the side would lead out of the level, the side has to be wall
                 if (pos.x <= 0)
                 {
-                    sides.Add(RoomSide.Wall);
+                    sides.Add(ProxyRoom.WALL);
                     return sides;
                 }
 
                 // Get what's at the position 
-                ProxyRoom room = level.proxyLevel[pos.x - 1, pos.y];
+                ProxyRoom room = level.map[pos.y].rooms[pos.x - 1];
 
                 // If there's nothing then we're free to do anything
                 if (room == null)
@@ -498,19 +501,19 @@ namespace HackedDesign
                 return sides;
             }
 
-            List<RoomSide> PossibleRightSides(Vector2Int position, List<RoomSide> freeChoice, Level level)
+            List<string> PossibleRightSides(Vector2Int position, List<string> freeChoice, Level level)
             {
-                List<RoomSide> sides = new List<RoomSide>();
+                List<String> sides = new List<string>();
 
                 // If the side would lead out of the level, the side has to be wall
                 if (position.x >= (level.template.levelWidth - 1))
                 {
-                    sides.Add(RoomSide.Wall);
+                    sides.Add(ProxyRoom.WALL);
                     return sides;
                 }
 
                 // Get what's at the position 
-                ProxyRoom room = level.proxyLevel[position.x + 1, position.y];
+                ProxyRoom room = level.map[position.y].rooms[position.x + 1];
 
                 // If there's nothing then we're free to do anything
                 if (room == null)
@@ -529,7 +532,7 @@ namespace HackedDesign
                 {
                     return true; // If we go outside the level, pretend we already put a room here
                 }
-                return (!(level.proxyLevel[pos.x, pos.y] == null));
+                return (!(level.map[pos.y].rooms[pos.x] == null));
             }
 
             void GenerateEnemySpawns(Level level)
@@ -540,7 +543,7 @@ namespace HackedDesign
                 {
                     for (int j = 0; j < level.template.levelWidth; j++)
                     {
-                        if (level.proxyLevel[j, i] != null && !level.proxyLevel[j, i].isNearEntry)
+                        if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
                         {
                             //Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 2, 0);
                             candidates.Add(new Vector2Int(j, i));
@@ -561,7 +564,7 @@ namespace HackedDesign
                 {
                     for (int j = 0; j < level.template.levelWidth; j++)
                     {
-                        if (level.proxyLevel[j, i] != null && !level.proxyLevel[j, i].isNearEntry)
+                        if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
                         {
                             //Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 2, 0);
                             candidates.Add(new Vector2Int(j, i));
@@ -577,26 +580,38 @@ namespace HackedDesign
             {
                 for (int i = 0; i < level.template.levelHeight; i++)
                 {
+                    if (level.map.Count() < level.template.levelHeight)
+                    {
+                        break;
+                    }
+
                     for (int j = 0; j < level.template.levelWidth; j++)
                     {
+                        if (level.map[i].rooms.Count() < level.template.levelWidth)
+                        {
+                            break;
+                        }
+
                         Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4), 0);
 
-                        if (level.proxyLevel[j, i] != null)
+                        Debug.Log(level.map.Count() + ":" + level.map[i].rooms.Count() + i + j);
+
+                        if (level.map[i].rooms[j] != null)
                         {
 
-                            GenerateRoomEntities(level.proxyLevel[j, i], RoomObjectType.Walls, level.template, false);
-                            if (level.proxyLevel[j, i].isEntry)
+                            GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_WALLS, level.template, false);
+                            if (level.map[i].rooms[j].isEntry)
                             {
-                                GenerateRoomEntities(level.proxyLevel[j, i], RoomObjectType.Entry, level.template, false);
+                                GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_ENTRY, level.template, false);
                             }
-                            else if (level.proxyLevel[j, i].isEnd)
+                            else if (level.map[i].rooms[j].isEnd)
                             {
-                                GenerateRoomEntities(level.proxyLevel[j, i], RoomObjectType.End, level.template, false);
+                                GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_END, level.template, false);
                             }
                             else
                             {
 
-                                GenerateRoomEntities(level.proxyLevel[j, i], RoomObjectType.Random, level.template, true);
+                                GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_RANDOM, level.template, true);
 
                             }
 
@@ -605,7 +620,7 @@ namespace HackedDesign
                 }
             }
 
-            void GenerateRoomEntities(ProxyRoom proxyRoom, RoomObjectType type, LevelGenTemplate template, bool allowTraps)
+            void GenerateRoomEntities(ProxyRoom proxyRoom, string type, LevelGenTemplate template, bool allowTraps)
             {
                 string roomString = proxyRoom.AsPrintableString();
                 List<GameObject> goBLList;
@@ -740,18 +755,18 @@ namespace HackedDesign
 
             }
 
-            IEnumerable<GameObject> FindRoomObject(string corner, string wall1, string wall2, RoomObjectType type, LevelGenTemplate levelGenTemplate)
+            IEnumerable<GameObject> FindRoomObject(string corner, string wall1, string wall2, string type, LevelGenTemplate levelGenTemplate)
             {
 
                 IEnumerable<GameObject> results = null;
 
                 switch (type)
                 {
-                    case RoomObjectType.Walls:
+                    case ProxyRoom.OBJ_TYPE_WALLS:
                         results = levelGenTemplate.levelElements.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
                         break;
 
-                    case RoomObjectType.Entry:
+                    case ProxyRoom.OBJ_TYPE_ENTRY:
                         results = levelGenTemplate.startProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
                         // if (results.Count () == 0) {
                         // 	results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
@@ -759,7 +774,7 @@ namespace HackedDesign
 
                         break;
 
-                    case RoomObjectType.End:
+                    case ProxyRoom.OBJ_TYPE_END:
                         results = levelGenTemplate.endProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
                         // if (results.Count () == 0) {
                         // 	results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
@@ -767,7 +782,7 @@ namespace HackedDesign
 
                         break;
 
-                    case RoomObjectType.Trap:
+                    case ProxyRoom.OBJ_TYPE_TRAP:
                         results = levelGenTemplate.trapProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
                         // if (results.Count () == 0) {
                         // 	results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
@@ -775,7 +790,7 @@ namespace HackedDesign
 
                         break;
 
-                    case RoomObjectType.Random:
+                    case ProxyRoom.OBJ_TYPE_RANDOM:
 
                         results = levelGenTemplate.randomProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
 
