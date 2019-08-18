@@ -145,10 +145,10 @@ namespace HackedDesign
             public void Print()
             {
                 Debug.Log("Printing level");
-                for (int i = 0; i < template.levelHeight; i++)
+                for (int i = 0; i < map.Count(); i++)
                 {
                     string line = "";
-                    for (int j = 0; j < template.levelWidth; j++)
+                    for (int j = 0; j < map[i].rooms.Count(); j++)
                     {
                         if (map[i].rooms[j] != null)
                         {

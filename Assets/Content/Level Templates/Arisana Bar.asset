@@ -15,12 +15,13 @@ MonoBehaviour:
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
-  enemies: 0
-  traps: 0
+  enemies: 2
+  traps: 2
   generateDoors: 1
   startingRoomString: weww
   startingAction: 
   exitAction: 
+  levelResource: ArisanaBar
   isRandom: 0
   generateNavMesh: 1
   floor: {fileID: 2321086600638492910, guid: c409cac4fd99a674ba575458284fb178, type: 3}

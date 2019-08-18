@@ -11,8 +11,6 @@ namespace HackedDesign {
             public bool isMainChain = false;
             public bool isNearEntry = false;
 
-            public bool visited = false;
-
             public string top;
             public string left;
             public string bottom;
@@ -24,11 +22,11 @@ namespace HackedDesign {
             public const string DOOR = "d";
             public const string EXIT = "e"; 
 
-            public const string OBJ_TYPE_WALLS = "w";
-            public const string OBJ_TYPE_ENTRY = "e";
-            public const string OBJ_TYPE_END = "x";
-            public const string OBJ_TYPE_TRAP = "t";
-            public const string OBJ_TYPE_RANDOM = "r";
+            public const string OBJ_TYPE_WALL = "wall";
+            public const string OBJ_TYPE_ENTRY = "entry";
+            public const string OBJ_TYPE_END = "end";
+            public const string OBJ_TYPE_TRAP = "trap";
+            public const string OBJ_TYPE_RANDOM = "random";
 
                         
 
@@ -36,6 +34,9 @@ namespace HackedDesign {
             public List<Corner> bottomRight = new List<Corner> ();
             public List<Corner> topLeft = new List<Corner> ();
             public List<Corner> topRight = new List<Corner> ();
+
+            // Set at runtime    
+            //public bool visited = false;            
 
             public string AsPrintableString () {
                 string s = "" + left + top + bottom + right;

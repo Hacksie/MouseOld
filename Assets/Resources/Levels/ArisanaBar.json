@@ -1,0 +1,49 @@
+{
+    "map": [
+        {
+            "rooms": [
+                {
+                    "left": "w",
+                    "top": "e",
+                    "bottom": "o",
+                    "right": "o",
+                    "isEntry": true
+                },
+                {
+                    "left": "o",
+                    "top": "w",
+                    "bottom": "o",
+                    "right": "w"
+                },
+                {
+                    "left": "w",
+                    "top": "w",
+                    "bottom": "d",
+                    "right": "w"
+                }
+            ]
+        },
+        {
+            "rooms": [
+                {
+                    "left": "w",
+                    "top": "o",
+                    "bottom": "w",
+                    "right": "o"
+                },
+                {
+                    "left": "o",
+                    "top": "o",
+                    "bottom": "w",
+                    "right": "o"
+                },
+                {
+                    "left": "o",
+                    "top": "d",
+                    "bottom": "w",
+                    "right": "w"
+                }
+            ]
+        }
+    ]
+}

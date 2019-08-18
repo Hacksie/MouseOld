@@ -46,8 +46,8 @@ namespace HackedDesign {
                 entrySprite.gameObject.SetActive(false);
                 endSprite.gameObject.SetActive(false);
 
-                for (int i = 0; i < level.template.levelHeight; i++) {
-                    for (int j = 0; j < level.template.levelWidth; j++) {
+                for (int i = 0; i < level.map.Count(); i++) {
+                    for (int j = 0; j < level.map[i].rooms.Count(); j++) {
 
                         if (level.map[i].rooms[j] != null) {
                             string chunkString = level.map[i].rooms[j].AsPrintableString ();

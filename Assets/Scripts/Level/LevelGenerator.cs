@@ -539,10 +539,12 @@ namespace HackedDesign
             {
                 List<Vector2Int> candidates = new List<Vector2Int>();
 
-                for (int i = 0; i < level.template.levelHeight; i++)
+                for (int i = 0; i < level.map.Count(); i++)
                 {
-                    for (int j = 0; j < level.template.levelWidth; j++)
+                    for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
+                        Debug.Log(level.map[i].rooms[j] != null && level.map[i].rooms[j].isNearEntry);
+
                         if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
                         {
                             //Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 2, 0);
@@ -560,9 +562,9 @@ namespace HackedDesign
             {
                 List<Vector2Int> candidates = new List<Vector2Int>();
 
-                for (int i = 0; i < level.template.levelHeight; i++)
+                for (int i = 0; i < level.map.Count(); i++)
                 {
-                    for (int j = 0; j < level.template.levelWidth; j++)
+                    for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
                         if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
                         {
@@ -578,28 +580,19 @@ namespace HackedDesign
 
             void GenerateEntities(Level level)
             {
-                for (int i = 0; i < level.template.levelHeight; i++)
+                for (int i = 0; i < level.map.Count(); i++)
                 {
-                    if (level.map.Count() < level.template.levelHeight)
+                    for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
-                        break;
-                    }
-
-                    for (int j = 0; j < level.template.levelWidth; j++)
-                    {
-                        if (level.map[i].rooms.Count() < level.template.levelWidth)
-                        {
-                            break;
-                        }
 
                         Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4), 0);
 
-                        Debug.Log(level.map.Count() + ":" + level.map[i].rooms.Count() + i + j);
+                        //Debug.Log(level.map.Count() + ":" + level.map[i].rooms.Count() + i + j);
 
                         if (level.map[i].rooms[j] != null)
                         {
 
-                            GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_WALLS, level.template, false);
+                            GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_WALL, level.template, false);
                             if (level.map[i].rooms[j].isEntry)
                             {
                                 GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_ENTRY, level.template, false);
@@ -762,7 +755,7 @@ namespace HackedDesign
 
                 switch (type)
                 {
-                    case ProxyRoom.OBJ_TYPE_WALLS:
+                    case ProxyRoom.OBJ_TYPE_WALL:
                         results = levelGenTemplate.levelElements.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
                         break;
 

@@ -68,20 +68,8 @@ namespace HackedDesign {
 				//List<Entity.BaseEntity> results = new List<Entity.BaseEntity> ();
 				DestroyLevel ();
 
-				for (int i = 0; i < level.template.levelHeight; i++) {
-
-                    if (level.map.Count() < level.template.levelHeight)
-                    {
-                        break;
-                    }
-
-
-					for (int j = 0; j < level.template.levelWidth; j++) {
-
-                        if (level.map[i].rooms.Count() < level.template.levelWidth)
-                        {
-                            break;
-                        }
+				for (int i = 0; i < level.map.Count(); i++) {
+					for (int j = 0; j < level.map[i].rooms.Count(); j++) {
 
 						Vector3 pos = new Vector3 (j * 4, i * -4 + ((level.template.levelHeight - 1) * 4), 0);
 
@@ -173,8 +161,7 @@ namespace HackedDesign {
 				
 
 				switch (type) {
-					case ProxyRoom.OBJ_TYPE_WALLS:
-						Debug.Log("Find " + type + name);
+					case ProxyRoom.OBJ_TYPE_WALL:
 						return levelGenTemplate.levelElements.FirstOrDefault (g => g != null && g.name == name);
 
 					case ProxyRoom.OBJ_TYPE_ENTRY:
@@ -211,8 +198,8 @@ namespace HackedDesign {
 					return;
 				}
 
-				for (int i = 0; i < level.template.levelHeight; i++) {
-					for (int j = 0; j < level.template.levelWidth; j++) {
+				for (int i = 0; i < level.map.Count(); i++) {
+					for (int j = 0; j < level.map[i].rooms.Count(); j++) {
 						ProxyRoom room = level.map[i].rooms[j];
 
 						if (room != null) {
