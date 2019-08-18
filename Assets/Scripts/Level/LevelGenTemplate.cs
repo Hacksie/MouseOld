@@ -22,6 +22,8 @@ namespace HackedDesign
 			public string startingAction;
 			public string exitAction;
 
+			public string levelResource;
+
 			public bool isRandom;
 			public bool generateNavMesh = true;
 
@@ -32,6 +34,8 @@ namespace HackedDesign
 			public List<GameObject> startProps;
 			public List<GameObject> randomProps;
 			public List<GameObject> trapProps;
+
+			
 
 			public List<string> mapWallsRows;
 			public List<string> mapPropsRows;

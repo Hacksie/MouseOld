@@ -152,7 +152,7 @@ namespace HackedDesign {
 
 		public void LoadNewGame () {
 			CoreState.state = GameState.LOADING;
-			CoreState.level = levelGenerator.GenerateLevel ("Victoria's Room", 1, 1, 2, 0, 0, 0);
+			CoreState.level = levelGenerator.GenerateLevel ("Olivia's Room", 1, 1, 2, 0, 0, 0);
 			CoreState.player = new Character.PlayerState();
 			CoreGame.Instance.SceneInitialize ();
 		}
