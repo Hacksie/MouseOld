@@ -1,4 +1,16 @@
 {
+    "playerSpawn": {
+        "type": "player",
+        "name": "mouse",
+        "levelPosition": {
+            "x": 0,
+            "y": 0
+        },
+        "offset": {
+            "x": 0,
+            "y": 0            
+        }
+    },
     "map": [
         {
             "rooms": [
@@ -7,19 +19,26 @@
                     "top": "e",
                     "bottom": "o",
                     "right": "o",
-                    "isEntry": true
+                    "isEntry": true,
+                    "topLeft": [
+                        {
+                            "type": "fixed",
+                            "name": "securitycam_1_tl_aa"
+                        }
+                    ]                    
                 },
                 {
                     "left": "o",
-                    "top": "w",
+                    "top": "e",
                     "bottom": "o",
-                    "right": "w"
-                },
-                {
-                    "left": "w",
-                    "top": "w",
-                    "bottom": "d",
-                    "right": "w"
+                    "right": "w",
+                    "isEnd": true,
+                    "topLeft": [
+                        {
+                            "type": "fixed",
+                            "name": "bar_1_tl_az"
+                        }
+                    ]
                 }
             ]
         },
@@ -31,15 +50,10 @@
                     "bottom": "w",
                     "right": "o"
                 },
-                {
+                 {
+                    "floor": "Floor3",
                     "left": "o",
                     "top": "o",
-                    "bottom": "w",
-                    "right": "o"
-                },
-                {
-                    "left": "o",
-                    "top": "d",
                     "bottom": "w",
                     "right": "w"
                 }

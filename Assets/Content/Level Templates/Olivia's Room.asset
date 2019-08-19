@@ -22,9 +22,9 @@ MonoBehaviour:
   startingAction: Prelude1
   exitAction: PreludeExit
   levelResource: OliviasRoom
-  isRandom: 0
   generateNavMesh: 0
-  floor: {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
+  floors:
+  - {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
   levelElements:
   - {fileID: 1873802445332644, guid: 1836e21abf55f0b4399a60ea4c8e8523, type: 3}
   - {fileID: 1996918847672242, guid: 4f588a18087ef534387d0244e321a69a, type: 3}
@@ -70,6 +70,4 @@ MonoBehaviour:
   - {fileID: 3124142144086319021, guid: 7dd2b6b267b9f524e90f544b451839d9, type: 3}
   randomProps: []
   trapProps: []
-  mapWallsRows:
-  - weww_entry
-  mapPropsRows: []
+  fixedProps: []

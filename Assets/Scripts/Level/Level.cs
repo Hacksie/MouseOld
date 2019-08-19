@@ -8,18 +8,22 @@ namespace HackedDesign
 {
     namespace Level
     {
-		[System.Serializable]
+        [System.Serializable]
         public class Level
         {
             public LevelGenTemplate template;
             public ProxyRow[] map;
             //public ProxyRoom[,] proxyLevel;
             public int length;
-            public Vector2Int spawn;
-            public List<Vector2Int> enemySpawnLocationList;
-            public List<Vector2Int> trapSpawnLocationList;
+            public Spawn playerSpawn;
+            public List<Vector2Int> npcSpawnLocationList;
+            public List<Spawn> enemySpawnLocationList;
+            public List<Spawn> trapSpawnLocationList;
 
-            //public Vector2Int? alert;
+            public const string ENTITY_TYPE_PLAYER = "player";
+            public const string ENTITY_TYPE_NPC = "npc";
+            public const string ENTITY_TYPE_ENEMY = "enemy";
+            public const string ENTITY_TYPE_TRAP = "trap";
 
             public Level(LevelGenTemplate template)
             {
@@ -28,17 +32,17 @@ namespace HackedDesign
                 Debug.Log("Level length: " + length);
 
 
-				
+
                 map = new ProxyRow[template.levelHeight];
                 for (int row = 0; row < template.levelHeight; row++)
                 {
-					map[row] = new ProxyRow();
-					map[row].rooms = new ProxyRoom[template.levelWidth];
+                    map[row] = new ProxyRow();
+                    map[row].rooms = new ProxyRoom[template.levelWidth];
 
-					for(int col = 0; col < template.levelWidth; col++)
-					{
-					 	map[row].rooms[col] = null;
-					}
+                    for (int col = 0; col < template.levelWidth; col++)
+                    {
+                        map[row].rooms[col] = null;
+                    }
                 }
                 //proxyLevel = new ProxyRoom[template.levelWidth, template.levelHeight];
             }
@@ -182,6 +186,14 @@ namespace HackedDesign
                     Debug.Log(line);
                 }
             }
+        }
+
+        [System.Serializable]
+        public class Spawn {
+            public string type;
+            public string name;
+            public Vector2Int levelPosition;
+            public Vector2 offset;
         }
     }
 }

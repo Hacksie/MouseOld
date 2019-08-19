@@ -98,8 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b16388774442a478ba1cd7669e16fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
-  lyingDown: 0
+  baseMovementSpeed: 1
 --- !u!50 &50778832188729100
 Rigidbody2D:
   serializedVersion: 4
@@ -215,7 +214,7 @@ MonoBehaviour:
   m_Color: {r: 0.9558824, g: 0.14057095, b: 0.3598618, a: 1}
   m_Intensity: 0.1
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 00000000afba2450
+  m_ApplyToSortingLayers: 00000000afba245025b6858de128ad10
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0

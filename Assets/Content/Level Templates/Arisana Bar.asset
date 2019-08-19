@@ -15,8 +15,8 @@ MonoBehaviour:
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
-  enemies: 2
-  traps: 2
+  enemies: 0
+  traps: 0
   generateDoors: 1
   startingRoomString: weww
   startingAction: 
@@ -24,7 +24,9 @@ MonoBehaviour:
   levelResource: ArisanaBar
   isRandom: 0
   generateNavMesh: 1
-  floor: {fileID: 2321086600638492910, guid: c409cac4fd99a674ba575458284fb178, type: 3}
+  floors:
+  - {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
+  - {fileID: 2321086600638492910, guid: c409cac4fd99a674ba575458284fb178, type: 3}
   levelElements:
   - {fileID: 1873802445332644, guid: 1836e21abf55f0b4399a60ea4c8e8523, type: 3}
   - {fileID: 1996918847672242, guid: 4f588a18087ef534387d0244e321a69a, type: 3}
@@ -62,10 +64,14 @@ MonoBehaviour:
   - {fileID: 1658733296911224, guid: cbf04eaa75169c643b09e2d83b1e9f30, type: 3}
   - {fileID: 1834760793944152, guid: 5d1e8dfc66da141489e9afaa22749005, type: 3}
   - {fileID: 1329331660628060, guid: 7f65d19f8f237544f89149d6436bc325, type: 3}
-  endProps: []
+  endProps:
+  - {fileID: 5792379278400333503, guid: fed6d37af7f8d9446b610bbd8bfad85b, type: 3}
   startProps: []
   randomProps: []
   trapProps: []
+  fixedProps:
+  - {fileID: 3711464213400231449, guid: c59812193b89b7e43b7b33b88157e577, type: 3}
+  - {fileID: 5792379278400333503, guid: fed6d37af7f8d9446b610bbd8bfad85b, type: 3}
   mapWallsRows:
   - weoo_entry,owow,wwdw
   - wowo,oowo,odww

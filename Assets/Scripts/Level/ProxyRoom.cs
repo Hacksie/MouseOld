@@ -11,6 +11,7 @@ namespace HackedDesign {
             public bool isMainChain = false;
             public bool isNearEntry = false;
 
+            public string floor;
             public string top;
             public string left;
             public string bottom;
@@ -27,6 +28,7 @@ namespace HackedDesign {
             public const string OBJ_TYPE_END = "end";
             public const string OBJ_TYPE_TRAP = "trap";
             public const string OBJ_TYPE_RANDOM = "random";
+            public const string OBJ_TYPE_FIXED = "fixed";
 
                         
 

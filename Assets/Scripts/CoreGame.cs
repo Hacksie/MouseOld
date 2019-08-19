@@ -23,6 +23,8 @@ namespace HackedDesign {
 		private GameObject player;
 		private PlayerController playerController;
 
+
+
 		[Header ("Level")]
 		[SerializeField]
 		private Level.LevelGenerator levelGenerator;
@@ -44,6 +46,8 @@ namespace HackedDesign {
 		private Input.MobileInputUIPresenter mobileInputUI;
 
 		[Header ("UI")]
+		[SerializeField]
+		private GameObject UI;
 		[SerializeField]
 		private CursorPresenter cursorPresenter;
 		[SerializeField]
@@ -113,6 +117,8 @@ namespace HackedDesign {
 		public void Initialization () {
 			CoreState.state = GameState.MAINMENU;
 			Debug.Log ("Initialization");
+
+			UI.SetActive(true);
 
 			SetPlatformInput ();
 
@@ -197,7 +203,7 @@ namespace HackedDesign {
 
 			levelMapPanel.Initialize (selectMenuManager, CoreState.level);
 
-			player.transform.position = CoreState.level.ConvertLevelPosToWorld (CoreState.level.spawn);
+			player.transform.position = CoreState.level.ConvertLevelPosToWorld (CoreState.level.playerSpawn.levelPosition);
 
 			//GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 

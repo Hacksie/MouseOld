@@ -18,6 +18,9 @@ namespace HackedDesign
             const string BOTTOMLEFT = "bl";
             const string BOTTOMRIGHT = "br";
 
+            [SerializeField]
+            private Entity.EntityManager entityManager;
+
             public LevelGenTemplate[] levelGenTemplates;
 
             public Level GenerateLevel(string template)
@@ -75,20 +78,15 @@ namespace HackedDesign
                 {
                     level = LoadLevelFromFile(genTemplate);
                 }
-                else if (genTemplate.isRandom)
-                {
-                    //int seed = UnityEngine.Random.seed;
-                    level = GenerateRandomLevel(genTemplate);
-                }
                 else
                 {
-                    level = GenerateFixedLevel(genTemplate);
+                    level = GenerateRandomLevel(genTemplate);
+                    GenerateEnemySpawns(level);
+                    GenerateTrapSpawns(level);
                 }
 
-
                 GenerateEntities(level);
-                GenerateEnemySpawns(level);
-                GenerateTrapSpawns(level);
+
 
                 level.Print();
 
@@ -115,29 +113,6 @@ namespace HackedDesign
 
                 return level;
 
-            }
-
-            protected Level GenerateFixedLevel(LevelGenTemplate genTemplate)
-            {
-                var level = new Level(genTemplate);
-                for (int y = 0; y < genTemplate.mapWallsRows.Count; y++)
-                {
-                    var columns = genTemplate.mapWallsRows[y].Split(',');
-
-                    for (int x = 0; x < columns.Length; x++)
-                    {
-                        Debug.Log(columns[x]);
-                        var room = RoomFromString(columns[x]);
-                        Debug.Log(room.AsPrintableString());
-                        level.map[y].rooms[x] = room;
-                        if (room != null && room.isEntry)
-                        {
-                            level.spawn = new Vector2Int(x, y);
-                        }
-                    }
-                }
-
-                return level;
             }
 
             protected Level GenerateRandomLevel(LevelGenTemplate genTemplate)
@@ -173,7 +148,12 @@ namespace HackedDesign
                 // It also means the player starts at the bottom and plays upwards, which is ideal
                 Vector2Int position = new Vector2Int((level.template.levelWidth - 1) / 2, (level.template.levelHeight - 1));
                 level.map[position.y].rooms[position.x] = GenerateEntryRoom(level);
-                level.spawn = position;
+                level.playerSpawn = new Spawn()
+                {
+                    type = Level.ENTITY_TYPE_PLAYER,
+                    name = "Mouse",
+                    levelPosition = position
+                };
                 return position;
             }
 
@@ -538,6 +518,7 @@ namespace HackedDesign
             void GenerateEnemySpawns(Level level)
             {
                 List<Vector2Int> candidates = new List<Vector2Int>();
+                level.enemySpawnLocationList = new List<Spawn>();
 
                 for (int i = 0; i < level.map.Count(); i++)
                 {
@@ -547,20 +528,34 @@ namespace HackedDesign
 
                         if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
                         {
-                            //Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 2, 0);
                             candidates.Add(new Vector2Int(j, i));
                         }
                     }
                 }
 
                 candidates.Randomize();
-                level.enemySpawnLocationList = candidates.Take(level.template.enemies).ToList();
-                level.enemySpawnLocationList.Randomize();
+
+                foreach (var candidate in candidates.Take(level.template.enemies))
+                {
+
+                    int rand = UnityEngine.Random.Range(0, entityManager.enemies.Count);
+
+                    level.enemySpawnLocationList.Add(
+                        new Spawn()
+                        {
+                            type = Level.ENTITY_TYPE_ENEMY,
+                            name = entityManager.enemies[UnityEngine.Random.Range(0, entityManager.enemies.Count)].name,
+                            levelPosition = candidate,
+                            offset = Vector2.zero
+                        }
+                    );
+                }
             }
 
             void GenerateTrapSpawns(Level level)
             {
                 List<Vector2Int> candidates = new List<Vector2Int>();
+                level.trapSpawnLocationList = new List<Spawn>();
 
                 for (int i = 0; i < level.map.Count(); i++)
                 {
@@ -568,14 +563,28 @@ namespace HackedDesign
                     {
                         if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
                         {
-                            //Vector3 pos = new Vector3 (j * 4 + 2, i * -4 + ((levelGenTemplate.levelHeight - 1) * 4) + 2, 0);
                             candidates.Add(new Vector2Int(j, i));
                         }
                     }
                 }
 
                 candidates.Randomize();
-                level.trapSpawnLocationList = candidates.Take(level.template.traps).ToList();
+
+                foreach (var candidate in candidates.Take(level.template.enemies))
+                {
+
+                    int rand = UnityEngine.Random.Range(0, entityManager.enemies.Count);
+
+                    level.trapSpawnLocationList.Add(
+                        new Spawn()
+                        {
+                            type = Level.ENTITY_TYPE_TRAP,
+                            name = entityManager.enemies[UnityEngine.Random.Range(0, entityManager.enemies.Count)].name,
+                            levelPosition = candidate,
+                            offset = Vector2.zero
+                        }
+                    );
+                }
             }
 
             void GenerateEntities(Level level)
@@ -584,10 +593,7 @@ namespace HackedDesign
                 {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
-
                         Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4), 0);
-
-                        //Debug.Log(level.map.Count() + ":" + level.map[i].rooms.Count() + i + j);
 
                         if (level.map[i].rooms[j] != null)
                         {
@@ -603,10 +609,10 @@ namespace HackedDesign
                             }
                             else
                             {
-
                                 GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_RANDOM, level.template, true);
-
                             }
+
+                            //GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_FIXED, level.template, true);
 
                         }
                     }
@@ -620,23 +626,8 @@ namespace HackedDesign
                 List<GameObject> goBRList;
                 List<GameObject> goTLList;
                 List<GameObject> goTRList;
+
                 // TL
-                // if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
-
-                // 	goTLList = FindRoomObject (TOPLEFT, roomString.Substring (0, 1), roomString.Substring (1, 1), RoomObjectType.Trap, template).ToList ();
-                // 	goTLList.Randomize ();
-
-                // 	if (goTLList.FirstOrDefault () != null) {
-                // 		proxyRoom.topLeft.Add (
-                // 			new Corner () {
-                // 				type = RoomObjectType.Trap,
-                // 					name = goTLList[0].name,
-                // 					isTrap = true
-                // 			});
-                // 	}
-
-                // } else {
-
                 goTLList = FindRoomObject(TOPLEFT, roomString.Substring(0, 1), roomString.Substring(1, 1), type, template).ToList();
                 goTLList.Randomize();
 
@@ -650,23 +641,8 @@ namespace HackedDesign
                             isTrap = false
                         });
                 }
-                //}
 
                 // TR
-                // if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
-                // 	goTRList = FindRoomObject (TOPRIGHT, roomString.Substring (3, 1), roomString.Substring (1, 1), RoomObjectType.Trap, template).ToList ();
-                // 	goTRList.Randomize ();
-
-                // 	if (goTRList.FirstOrDefault () != null) {
-                // 		proxyRoom.topRight.Add (
-                // 			new Corner () {
-                // 				type = RoomObjectType.Trap,
-                // 					name = goTRList[0].name,
-                // 					isTrap = true
-                // 			});
-                // 	}
-
-                // } else {
                 goTRList = FindRoomObject(TOPRIGHT, roomString.Substring(3, 1), roomString.Substring(1, 1), type, template).ToList();
                 goTRList.Randomize();
 
@@ -681,23 +657,7 @@ namespace HackedDesign
                         });
                 }
 
-                //}
-
                 // BL
-                // if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
-                // 	goBLList = FindRoomObject (BOTTOMLEFT, roomString.Substring (0, 1), roomString.Substring (2, 1), RoomObjectType.Trap, template).ToList ();
-                // 	goBLList.Randomize ();
-
-                // 	if (goBLList.FirstOrDefault () != null) {
-                // 		proxyRoom.bottomLeft.Add (
-                // 			new Corner () {
-                // 				type = RoomObjectType.Trap,
-                // 					name = goBLList[0].name,
-                // 					isTrap = true
-                // 			});
-                // 	}
-
-                // } else {
                 goBLList = FindRoomObject(BOTTOMLEFT, roomString.Substring(0, 1), roomString.Substring(2, 1), type, template).ToList();
                 goBLList.Randomize();
 
@@ -712,23 +672,7 @@ namespace HackedDesign
                         });
                 }
 
-                //}
-
                 // BR
-                // if (allowTraps && UnityEngine.Random.Range (0, 100) < template.traps) {
-                // 	goBRList = FindRoomObject (BOTTOMRIGHT, roomString.Substring (3, 1), roomString.Substring (2, 1), RoomObjectType.Trap, template).ToList ();
-                // 	goBRList.Randomize ();
-
-                // 	if (goBRList.FirstOrDefault () != null) {
-
-                // 		proxyRoom.bottomRight.Add (
-                // 			new Corner () {
-                // 				type = RoomObjectType.Trap,
-                // 					name = goBRList[0].name,
-                // 					isTrap = true
-                // 			});
-                // 	}
-                // } else {
                 goBRList = FindRoomObject(BOTTOMRIGHT, roomString.Substring(3, 1), roomString.Substring(2, 1), type, template).ToList();
                 goBRList.Randomize();
 
@@ -743,9 +687,6 @@ namespace HackedDesign
                             isTrap = false
                         });
                 }
-
-                //}
-
             }
 
             IEnumerable<GameObject> FindRoomObject(string corner, string wall1, string wall2, string type, LevelGenTemplate levelGenTemplate)
@@ -761,38 +702,27 @@ namespace HackedDesign
 
                     case ProxyRoom.OBJ_TYPE_ENTRY:
                         results = levelGenTemplate.startProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
-                        // if (results.Count () == 0) {
-                        // 	results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-                        // }
-
                         break;
 
                     case ProxyRoom.OBJ_TYPE_END:
                         results = levelGenTemplate.endProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
-                        // if (results.Count () == 0) {
-                        // 	results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-                        // }
-
                         break;
 
                     case ProxyRoom.OBJ_TYPE_TRAP:
                         results = levelGenTemplate.trapProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
-                        // if (results.Count () == 0) {
-                        // 	results = levelGenTemplate.randomProps.Where (g => g != null && MatchSpriteName (g.name, corner, wall1, wall2));
-                        // }
-
                         break;
 
                     case ProxyRoom.OBJ_TYPE_RANDOM:
-
                         results = levelGenTemplate.randomProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
+                        break;
 
+                    case ProxyRoom.OBJ_TYPE_FIXED:
+                        results = levelGenTemplate.fixedProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
                         break;
 
                 }
 
                 return results;
-
             }
 
             bool MatchSpriteName(string name, string corner, string wall1, string wall2)

@@ -24,22 +24,17 @@ namespace HackedDesign
 
 			public string levelResource;
 
-			public bool isRandom;
 			public bool generateNavMesh = true;
 
-			public GameObject floor;
+			public List<GameObject> floors;
 			//public LevelElements levelElements;   
 			public List<GameObject> levelElements;     
 			public List<GameObject> endProps;
 			public List<GameObject> startProps;
 			public List<GameObject> randomProps;
 			public List<GameObject> trapProps;
-
-			
-
-			public List<string> mapWallsRows;
-			public List<string> mapPropsRows;
-			                
+			public List<GameObject> fixedProps;
+		                
         }
     }
 }
