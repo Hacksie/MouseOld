@@ -127,7 +127,7 @@ namespace HackedDesign {
 
                     }
                     // Change this to look at the actual current direction
-                    FaceDirection (CoreGame.Instance.CoreState.level.ConvertLevelPosToWorld (currentDirection) - transform.position);
+                    FaceDirection (CoreGame.Instance.CoreState.level.ConvertLevelPosToWorld (currentDirection) - (Vector2)transform.position);
                 }
 
             }

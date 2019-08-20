@@ -16,14 +16,11 @@ namespace HackedDesign
             //public ProxyRoom[,] proxyLevel;
             public int length;
             public Spawn playerSpawn;
-            public List<Vector2Int> npcSpawnLocationList;
+            public List<Spawn> npcSpawnLocationList;
             public List<Spawn> enemySpawnLocationList;
             public List<Spawn> trapSpawnLocationList;
 
-            public const string ENTITY_TYPE_PLAYER = "player";
-            public const string ENTITY_TYPE_NPC = "npc";
-            public const string ENTITY_TYPE_ENEMY = "enemy";
-            public const string ENTITY_TYPE_TRAP = "trap";
+
 
             public Level(LevelGenTemplate template)
             {
@@ -132,16 +129,15 @@ namespace HackedDesign
                 }
             }
 
-            public Vector3 ConvertLevelPosToWorld(Vector2Int pos)
+            public Vector2 ConvertLevelPosToWorld(Vector2Int pos)
             {
-                return new Vector3(pos.x * 4 + 2, pos.y * -4 + ((template.levelHeight - 1) * 4) + 2);
+                return new Vector2(pos.x * 4 + 2, pos.y * -4 + ((template.levelHeight - 1) * 4) + 2);
             }
 
-            public Vector2Int ConvertWorldToLevelPos(Vector3 pos)
+            public Vector2Int ConvertWorldToLevelPos(Vector2 pos)
             {
 
                 //i * -4 + ((level.template.levelHeight - 1) * 4)
-
                 return new Vector2Int((int)((pos.x) / 4), (int)((template.levelHeight) - (pos.y / 4)));
             }
 
@@ -189,11 +185,16 @@ namespace HackedDesign
         }
 
         [System.Serializable]
-        public class Spawn {
+        public struct Spawn {
+            public const string ENTITY_TYPE_PLAYER = "player";
+            public const string ENTITY_TYPE_NPC = "npc";
+            public const string ENTITY_TYPE_ENEMY = "enemy";
+            public const string ENTITY_TYPE_TRAP = "trap";     
+
             public string type;
             public string name;
-            public Vector2Int levelPosition;
-            public Vector2 offset;
+            public Vector2Int levelLocation;
+            public Vector2 worldOffset;
         }
     }
 }

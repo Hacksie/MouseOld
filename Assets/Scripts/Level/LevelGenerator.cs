@@ -150,9 +150,9 @@ namespace HackedDesign
                 level.map[position.y].rooms[position.x] = GenerateEntryRoom(level);
                 level.playerSpawn = new Spawn()
                 {
-                    type = Level.ENTITY_TYPE_PLAYER,
+                    type = Spawn.ENTITY_TYPE_PLAYER,
                     name = "Mouse",
-                    levelPosition = position
+                    levelLocation = position
                 };
                 return position;
             }
@@ -515,77 +515,7 @@ namespace HackedDesign
                 return (!(level.map[pos.y].rooms[pos.x] == null));
             }
 
-            void GenerateEnemySpawns(Level level)
-            {
-                List<Vector2Int> candidates = new List<Vector2Int>();
-                level.enemySpawnLocationList = new List<Spawn>();
-
-                for (int i = 0; i < level.map.Count(); i++)
-                {
-                    for (int j = 0; j < level.map[i].rooms.Count(); j++)
-                    {
-                        Debug.Log(level.map[i].rooms[j] != null && level.map[i].rooms[j].isNearEntry);
-
-                        if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
-                        {
-                            candidates.Add(new Vector2Int(j, i));
-                        }
-                    }
-                }
-
-                candidates.Randomize();
-
-                foreach (var candidate in candidates.Take(level.template.enemies))
-                {
-
-                    int rand = UnityEngine.Random.Range(0, entityManager.enemies.Count);
-
-                    level.enemySpawnLocationList.Add(
-                        new Spawn()
-                        {
-                            type = Level.ENTITY_TYPE_ENEMY,
-                            name = entityManager.enemies[UnityEngine.Random.Range(0, entityManager.enemies.Count)].name,
-                            levelPosition = candidate,
-                            offset = Vector2.zero
-                        }
-                    );
-                }
-            }
-
-            void GenerateTrapSpawns(Level level)
-            {
-                List<Vector2Int> candidates = new List<Vector2Int>();
-                level.trapSpawnLocationList = new List<Spawn>();
-
-                for (int i = 0; i < level.map.Count(); i++)
-                {
-                    for (int j = 0; j < level.map[i].rooms.Count(); j++)
-                    {
-                        if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
-                        {
-                            candidates.Add(new Vector2Int(j, i));
-                        }
-                    }
-                }
-
-                candidates.Randomize();
-
-                foreach (var candidate in candidates.Take(level.template.enemies))
-                {
-
-                    int rand = UnityEngine.Random.Range(0, entityManager.enemies.Count);
-
-                    level.trapSpawnLocationList.Add(
-                        new Spawn()
-                        {
-                            type = Level.ENTITY_TYPE_TRAP,
-                            name = entityManager.enemies[UnityEngine.Random.Range(0, entityManager.enemies.Count)].name,
-                            levelPosition = candidate,
-                            offset = Vector2.zero
-                        }
-                    );
-                }
-            }
+        
 
             void GenerateEntities(Level level)
             {
@@ -755,7 +685,77 @@ namespace HackedDesign
                 );
             }
 
+            void GenerateEnemySpawns(Level level)
+            {
+                List<Vector2Int> candidates = new List<Vector2Int>();
+                level.enemySpawnLocationList = new List<Spawn>();
+
+                for (int i = 0; i < level.map.Count(); i++)
+                {
+                    for (int j = 0; j < level.map[i].rooms.Count(); j++)
+                    {
+                        Debug.Log(level.map[i].rooms[j] != null && level.map[i].rooms[j].isNearEntry);
+
+                        if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
+                        {
+                            candidates.Add(new Vector2Int(j, i));
+                        }
+                    }
+                }
+
+                candidates.Randomize();
+
+                foreach (var candidate in candidates.Take(level.template.enemies))
+                {
+
+                    int rand = UnityEngine.Random.Range(0, entityManager.enemies.Count);
+
+                    level.enemySpawnLocationList.Add(
+                        new Spawn()
+                        {
+                            type = Spawn.ENTITY_TYPE_ENEMY,
+                            name = entityManager.enemies[UnityEngine.Random.Range(0, entityManager.enemies.Count)].name,
+                            levelLocation = candidate,
+                            worldOffset = Vector2.zero
+                        }
+                    );
+                }
+            }
+
+            void GenerateTrapSpawns(Level level)
+            {
+                List<Vector2Int> candidates = new List<Vector2Int>();
+                level.trapSpawnLocationList = new List<Spawn>();
+
+                for (int i = 0; i < level.map.Count(); i++)
+                {
+                    for (int j = 0; j < level.map[i].rooms.Count(); j++)
+                    {
+                        if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
+                        {
+                            candidates.Add(new Vector2Int(j, i));
+                        }
+                    }
+                }
+
+                candidates.Randomize();
+
+                foreach (var candidate in candidates.Take(level.template.enemies))
+                {
+
+                    int rand = UnityEngine.Random.Range(0, entityManager.enemies.Count);
+
+                    level.trapSpawnLocationList.Add(
+                        new Spawn()
+                        {
+                            type = Spawn.ENTITY_TYPE_TRAP,
+                            name = entityManager.enemies[UnityEngine.Random.Range(0, entityManager.enemies.Count)].name,
+                            levelLocation = candidate,
+                            worldOffset = Vector2.zero
+                        }
+                    );
+                }
+            }              
         }
     }
-
 }

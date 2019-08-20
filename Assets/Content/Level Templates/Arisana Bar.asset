@@ -22,10 +22,9 @@ MonoBehaviour:
   startingAction: 
   exitAction: 
   levelResource: ArisanaBar
-  isRandom: 0
   generateNavMesh: 1
   floors:
-  - {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
+  - {fileID: 4937735997437958247, guid: 0a46feb4b424d7049bb1b03dfa14b514, type: 3}
   - {fileID: 2321086600638492910, guid: c409cac4fd99a674ba575458284fb178, type: 3}
   levelElements:
   - {fileID: 1873802445332644, guid: 1836e21abf55f0b4399a60ea4c8e8523, type: 3}
@@ -72,7 +71,5 @@ MonoBehaviour:
   fixedProps:
   - {fileID: 3711464213400231449, guid: c59812193b89b7e43b7b33b88157e577, type: 3}
   - {fileID: 5792379278400333503, guid: fed6d37af7f8d9446b610bbd8bfad85b, type: 3}
-  mapWallsRows:
-  - weoo_entry,owow,wwdw
-  - wowo,oowo,odww
-  mapPropsRows: []
+  - {fileID: 788860819135116519, guid: 3ae86adc72753504784160b1b47a1f71, type: 3}
+  - {fileID: 4805527732719881932, guid: f7ea890466185c54180e7cac6d57e2c7, type: 3}

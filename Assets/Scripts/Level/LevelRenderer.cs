@@ -102,10 +102,7 @@ namespace HackedDesign
                                 {
                                     GameObject.Instantiate(level.template.floors[0], pos, Quaternion.identity, levelParent.transform);
                                 }
-
                             }
-
-
 
                             // BL
                             for (int e = 0; e < level.map[i].rooms[j].bottomLeft.Count; e++)
@@ -118,13 +115,13 @@ namespace HackedDesign
                                 }
                                 GameObject.Instantiate(go, pos, Quaternion.identity, levelParent.transform);
 
-                                if (level.map[i].rooms[j].bottomLeft[e].isTrap)
-                                {
-                                    Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
-                                    npc.Initialize();
-                                    CoreGame.Instance.CoreState.entityList.Add(npc);
-                                    //results.Add (npc);
-                                }
+                                // if (level.map[i].rooms[j].bottomLeft[e].isTrap)
+                                // {
+                                //     Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
+                                //     npc.Initialize();
+                                //     CoreGame.Instance.CoreState.entityList.Add(npc);
+                                //     //results.Add (npc);
+                                // }
 
                                 // 		Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
                                 // 		npc.Initialize ();
@@ -140,13 +137,13 @@ namespace HackedDesign
                                     Debug.LogError("null go");
                                 }
                                 GameObject.Instantiate(go, pos, Quaternion.identity, levelParent.transform);
-                                if (level.map[i].rooms[j].bottomRight[e].isTrap)
-                                {
-                                    Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
-                                    npc.Initialize();
-                                    CoreGame.Instance.CoreState.entityList.Add(npc);
-                                    //results.Add (npc);
-                                }
+                                // if (level.map[i].rooms[j].bottomRight[e].isTrap)
+                                // {
+                                //     Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
+                                //     npc.Initialize();
+                                //     CoreGame.Instance.CoreState.entityList.Add(npc);
+                                //     //results.Add (npc);
+                                // }
                             }
 
                             // TL
@@ -160,13 +157,13 @@ namespace HackedDesign
                                 }
                                 GameObject.Instantiate(go, pos, Quaternion.identity, levelParent.transform);
 
-                                if (level.map[i].rooms[j].topLeft[e].isTrap)
-                                {
-                                    Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
-                                    npc.Initialize();
-                                    CoreGame.Instance.CoreState.entityList.Add(npc);
-                                    //results.Add (npc);
-                                }
+                                // if (level.map[i].rooms[j].topLeft[e].isTrap)
+                                // {
+                                //     Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
+                                //     npc.Initialize();
+                                //     CoreGame.Instance.CoreState.entityList.Add(npc);
+                                //     //results.Add (npc);
+                                // }
                             }
 
                             //TR
@@ -179,27 +176,22 @@ namespace HackedDesign
                                 }
                                 GameObject.Instantiate(go, pos, Quaternion.identity, levelParent.transform);
 
-                                if (level.map[i].rooms[j].topRight[e].isTrap)
-                                {
-                                    Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
-                                    npc.Initialize();
-                                    CoreGame.Instance.CoreState.entityList.Add(npc);
-                                    //results.Add (npc);
-                                }
+                                // if (level.map[i].rooms[j].topRight[e].isTrap)
+                                // {
+                                //     Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
+                                //     npc.Initialize();
+                                //     CoreGame.Instance.CoreState.entityList.Add(npc);
+                                //     //results.Add (npc);
+                                // }
                             }
                         }
                     }
-
-
                 }
-
             }
 
             GameObject FindRoomEntity(string type, string name, LevelGenTemplate levelGenTemplate)
             {
                 GameObject result = null;
-
-
 
                 switch (type)
                 {
@@ -294,10 +286,10 @@ namespace HackedDesign
                     return results;
                 }
 
-				if(level.enemySpawnLocationList == null)
-				{
-					return results;
-				}
+                if (level.enemySpawnLocationList == null)
+                {
+                    return results;
+                }
 
                 for (int i = 0; i < level.enemySpawnLocationList.Count; i++)
                 {
@@ -308,11 +300,14 @@ namespace HackedDesign
 
                     if (enemyGameObj != null)
                     {
-                        var go = GameObject.Instantiate(enemyGameObj, level.ConvertLevelPosToWorld(level.enemySpawnLocationList[i].levelPosition), Quaternion.identity, npcParent.transform);
+                        var go = GameObject.Instantiate(enemyGameObj, level.ConvertLevelPosToWorld(level.enemySpawnLocationList[i].levelLocation) + level.enemySpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
                         Entity.BaseEnemy npc = go.GetComponent<Entity.BaseEnemy>();
-                        npc.Initialize(polyNav2D);
-                        //CoreGame.instance.state.entityList.Add(npc);
-                        results.Add(npc);
+                        if (npc != null)
+                        {
+                            npc.Initialize(polyNav2D);
+                            //CoreGame.instance.state.entityList.Add(npc);
+                            results.Add(npc);
+                        }
                     }
                 }
 
@@ -320,18 +315,18 @@ namespace HackedDesign
 
             }
 
-            // // Move first half back to generator
+
             public List<Entity.BaseTrap> PopulateTrapSpawns(Level level)
             {
-				List<Entity.BaseTrap> results = new List<Entity.BaseTrap>();
+                List<Entity.BaseTrap> results = new List<Entity.BaseTrap>();
 
                 //Level level = CoreGame.instance.state.level;
-				if(level.enemySpawnLocationList == null)
-				{
-					return results;
-				}				
+                if (level.trapSpawnLocationList == null)
+                {
+                    return results;
+                }
 
-                
+
 
                 if (entityManager.traps.Count <= 0)
                 {
@@ -345,12 +340,51 @@ namespace HackedDesign
 
                     if (trapGameObj != null)
                     {
-                        var go = GameObject.Instantiate(trapGameObj, level.ConvertLevelPosToWorld(level.trapSpawnLocationList[i].levelPosition), Quaternion.identity, npcParent.transform);
+                        var go = GameObject.Instantiate(trapGameObj, level.ConvertLevelPosToWorld(level.trapSpawnLocationList[i].levelLocation) + level.trapSpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
                         Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
-                        npc.Initialize();
-                        //CoreGame.instance.state.entityList.Add(npc);
-                        results.Add(npc);
-                    }					  
+                        if (npc != null)
+                        {
+                            npc.Initialize();
+                            //CoreGame.instance.state.entityList.Add(npc);
+                            results.Add(npc);
+                        }
+                    }
+                }
+
+                return results;
+            }
+
+            public List<Entity.BaseEntity> PopulateNPCSpawns(Level level)
+            {
+                List<Entity.BaseEntity> results = new List<Entity.BaseEntity>();
+
+                //Level level = CoreGame.instance.state.level;
+                if (level.npcSpawnLocationList == null)
+                {
+                    return results;
+                }
+
+                if (entityManager.npcs.Count <= 0)
+                {
+                    return results;
+                }
+
+                for (int i = 0; i < level.npcSpawnLocationList.Count; i++)
+                {
+
+                    GameObject npcGameObj = entityManager.npcs.FirstOrDefault(g => g != null && g.name == level.npcSpawnLocationList[i].name);
+
+                    if (npcGameObj != null)
+                    {
+                        var go = GameObject.Instantiate(npcGameObj, level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
+                        Entity.BaseEntity npc = go.GetComponent<Entity.BaseEntity>();
+                        if (npc != null)
+                        {
+                            npc.Initialize();
+                            //CoreGame.instance.state.entityList.Add(npc);
+                            results.Add(npc);
+                        }
+                    }
                 }
 
                 return results;

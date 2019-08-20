@@ -2,15 +2,41 @@
     "playerSpawn": {
         "type": "player",
         "name": "mouse",
-        "levelPosition": {
+        "levelLocation": {
             "x": 0,
             "y": 0
         },
-        "offset": {
+        "worldOffset": {
             "x": 0,
             "y": 0            
         }
     },
+    "npcSpawnLocationList": [
+        {
+            "type": "npc",
+            "name": "Bouncer",
+            "levelLocation": {
+                "x": 0,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": 1,
+                "y": 1            
+            }            
+        },
+        {
+            "type": "npc",
+            "name": "Bouncer",
+            "levelLocation": {
+                "x": 1,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": 1,
+                "y": 1            
+            }            
+        }        
+    ],
     "map": [
         {
             "rooms": [
@@ -25,6 +51,12 @@
                             "type": "fixed",
                             "name": "securitycam_1_tl_aa"
                         }
+                    ],
+                    "topRight": [
+                        {
+                            "type": "fixed",
+                            "name": "sign_1_tr_az"
+                        }  
                     ]                    
                 },
                 {

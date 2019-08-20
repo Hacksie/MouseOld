@@ -10,7 +10,8 @@ namespace HackedDesign
         {
             [Header("Prefabs")]
             public List<GameObject> enemies;
-            public List<GameObject> traps;            
+            public List<GameObject> traps;  
+            public List<GameObject> npcs;          
         }
     }
 }

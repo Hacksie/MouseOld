@@ -198,12 +198,14 @@ namespace HackedDesign {
 			
 			levelRenderer.Render (this.CoreState.level);
 			this.CoreState.entityList.Clear();
+			this.CoreState.entityList.AddRange(levelRenderer.PopulateNPCSpawns(this.CoreState.level));
 			this.CoreState.entityList.AddRange(levelRenderer.PopulateEnemySpawns(this.CoreState.level));
 			this.CoreState.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.CoreState.level));
 
 			levelMapPanel.Initialize (selectMenuManager, CoreState.level);
 
-			player.transform.position = CoreState.level.ConvertLevelPosToWorld (CoreState.level.playerSpawn.levelPosition);
+			player.transform.position = CoreState.level.ConvertLevelPosToWorld (CoreState.level.playerSpawn.levelLocation) + CoreState.level.playerSpawn.worldOffset;
+			
 
 			//GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 
