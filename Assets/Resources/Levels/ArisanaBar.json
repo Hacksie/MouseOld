@@ -8,7 +8,7 @@
         },
         "worldOffset": {
             "x": 0,
-            "y": 0            
+            "y": 0
         }
     },
     "npcSpawnLocationList": [
@@ -21,20 +21,44 @@
             },
             "worldOffset": {
                 "x": 1,
-                "y": 1            
-            }            
+                "y": 1
+            }
         },
         {
             "type": "npc",
-            "name": "Bouncer",
+            "name": "Bartender1",
             "levelLocation": {
                 "x": 1,
                 "y": 0
             },
             "worldOffset": {
+                "x": 0.5,
+                "y": 1
+            }
+        },
+        {
+            "type": "npc",
+            "name": "Bartender2",
+            "levelLocation": {
                 "x": 1,
-                "y": 1            
-            }            
+                "y": 0
+            },
+            "worldOffset": {
+                "x": -1,
+                "y": 1
+            }
+        },
+        {
+            "type": "npc",
+            "name": "SnowOwl",
+            "levelLocation": {
+                "x": 0,
+                "y": 1
+            },
+            "worldOffset": {
+                "x": 1.5,
+                "y": 2
+            }
         }        
     ],
     "map": [
@@ -56,8 +80,8 @@
                         {
                             "type": "fixed",
                             "name": "sign_1_tr_az"
-                        }  
-                    ]                    
+                        }
+                    ]
                 },
                 {
                     "left": "o",
@@ -82,12 +106,19 @@
                     "bottom": "w",
                     "right": "o"
                 },
-                 {
+                {
                     "floor": "Floor3",
                     "left": "o",
                     "top": "o",
                     "bottom": "w",
-                    "right": "w"
+                    "right": "w",
+                    "topLeft": [
+                        {
+                            "type": "fixed",
+                            "name": "lights_1_tl_aa"
+                        }
+                    ]                    
+
                 }
             ]
         }
