@@ -85,7 +85,7 @@
                 },
                 {
                     "left": "o",
-                    "top": "e",
+                    "top": "w",
                     "bottom": "o",
                     "right": "w",
                     "isEnd": true,
@@ -104,7 +104,31 @@
                     "left": "w",
                     "top": "o",
                     "bottom": "w",
-                    "right": "o"
+                    "right": "o",
+                    "topLeft": [
+                        {
+                            "type": "fixed",
+                            "name": "table_1_tl_aa"
+                        }
+                    ],
+                    "topRight": [
+                        {
+                            "type": "fixed",
+                            "name": "table_1_tr_aa"
+                        }
+                    ],
+                    "bottomLeft": [
+                        {
+                            "type": "fixed",
+                            "name": "table_1_bl_aa"
+                        }
+                    ],
+                    "bottomRight": [
+                        {
+                            "type": "fixed",
+                            "name": "table_1_br_aa"
+                        }
+                    ]                       
                 },
                 {
                     "floor": "Floor3",
