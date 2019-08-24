@@ -18,6 +18,10 @@ namespace HackedDesign {
 		[SerializeField]
 		private bool testPlatformFlag;
 
+		[Header("Game")]
+		[SerializeField]
+		private Entity.EntityManager entityManager;
+
 		[Header ("Player")]
 		[SerializeField]
 		private GameObject player;
@@ -52,6 +56,10 @@ namespace HackedDesign {
 		private CursorPresenter cursorPresenter;
 		[SerializeField]
 		private MainMenuPresenter mainMenu;
+		[SerializeField]
+		private Story.ActionManager actionManager;		
+		[SerializeField]
+		private ActionConsolePresenter actionConsolePanel;
 		[SerializeField]
 		private StartMenuManager startMenuManager;
 		[SerializeField]
@@ -102,6 +110,9 @@ namespace HackedDesign {
 		}
 
 		void CheckBindings () {
+			if(entityManager == null) {
+				Debug.LogError(this.name +": entityManager not set");
+			}
 			if (cursorPresenter == null) {
 				Debug.LogError ("cursorPresenter not set");
 			}
@@ -116,7 +127,7 @@ namespace HackedDesign {
 		/// </summary>
 		public void Initialization () {
 			CoreState.state = GameState.MAINMENU;
-			Debug.Log ("Initialization");
+			Debug.Log (this.name + ": Initialization");
 
 			UI.SetActive(true);
 
@@ -124,7 +135,7 @@ namespace HackedDesign {
 
 			//timerPanel.Initialize (this.timer);
 			mobileInputUI.Initialize(inputController);
-
+			actionConsolePanel.Initialize(actionManager);
 			narrationManager.Initialize (inputController);
 			dialogueManager.Initialize (inputController);
 			infoPanel.Initialize (infoManager, selectMenuManager);
@@ -134,7 +145,7 @@ namespace HackedDesign {
 			narrationPanel.Initialize (narrationManager);
 			dialoguePanel.Initialize (dialogueManager);
 			worldMapPanel.Initialize (worldMapManager);
-			levelRenderer.Initialize (levelParent, npcParent, polyNav2D);
+			levelRenderer.Initialize (entityManager, levelParent, npcParent, polyNav2D);
 
 			RepaintAll ();
 
@@ -144,11 +155,11 @@ namespace HackedDesign {
 		private void SetPlatformInput () {
 			switch (testPlatformFlag ? testPlatform : Application.platform) {
 				case RuntimePlatform.Android:
-					Debug.Log ("Android");
+					Debug.Log (this.name + ": input platform Android");
 					inputController = new Input.AndroidInputController (mobileInputUI);
 					break;
 				default:
-					Debug.Log ("Default platform");
+					Debug.Log (this.name + ": input platform Default");
 					//inputController = new Input.AndroidInputController (mobileInputUI);
 					inputController = new Input.DesktopInputController ();
 					break;
@@ -157,9 +168,13 @@ namespace HackedDesign {
 		}
 
 		public void LoadNewGame () {
+			Debug.Log(this.name + ": loading new game");
 			CoreState.state = GameState.LOADING;
+			
+			entityManager.Initialize(npcParent);
 			CoreState.level = levelGenerator.GenerateLevel ("Olivia's Room", 1, 1, 1, 0, 0, 0);
 			CoreState.player = new Character.PlayerState();
+			
 			CoreGame.Instance.SceneInitialize ();
 		}
 
@@ -167,6 +182,7 @@ namespace HackedDesign {
 			CoreState.state = GameState.LOADING;
 			CoreState.level = levelGenerator.GenerateLevel (template, length, height, width, difficulty, enemies, traps);
 			CoreState.player = new Character.PlayerState();
+			entityManager.Initialize(npcParent);
 			CoreGame.Instance.SceneInitialize ();
 		}
 
@@ -191,7 +207,7 @@ namespace HackedDesign {
 		/// </summary>
 		public void SceneInitialize () {
 
-			Debug.Log ("Scene Initialization");
+			Debug.Log (this.name + ": scene initialization");
 
 			ShowPlayer (true);
 
@@ -227,6 +243,7 @@ namespace HackedDesign {
 		void RepaintAll () {
 
 			mainMenu.Repaint ();
+			actionConsolePanel.Repaint();
 			dialoguePanel.Repaint ();
 			narrationPanel.Repaint ();
 			selectMenuPanel.Repaint ();
@@ -241,10 +258,10 @@ namespace HackedDesign {
 
 		void SceneTriggersInitialize () {
 			CoreState.triggerList.Clear ();
-			Debug.Log ("Initializing triggers, count " + GameObject.FindGameObjectsWithTag ("Trigger").Length);
+			Debug.Log (this.name + ": initializing triggers, count " + GameObject.FindGameObjectsWithTag ("Trigger").Length);
 
 			foreach (GameObject triggerObject in GameObject.FindGameObjectsWithTag ("Trigger")) {
-				Debug.Log ("Initializing trigger " + triggerObject.name);
+				Debug.Log (this.name + ": initializing trigger " + triggerObject.name);
 				Triggers.ITrigger trigger = triggerObject.GetComponent<Triggers.ITrigger> ();
 				if (trigger != null) {
 					CoreState.triggerList.Add (trigger);
@@ -258,32 +275,32 @@ namespace HackedDesign {
 		}
 
 		public void GameOver () {
-			Debug.Log ("GameOver");
+			Debug.Log (this.name + ": GameOver");
 			CoreState.state = GameState.GAMEOVER;
 		}
 
 		public void SetPlaying () {
-			Debug.Log ("State set to PLAYING");
+			Debug.Log (this.name + ": state set to PLAYING");
 			Time.timeScale = 1;
 			CoreState.state = GameState.PLAYING;
 		}
 
 		public void SetDialogue () {
-			Debug.Log ("State set to DIALOGUE");
+			Debug.Log (this.name + ": state set to DIALOGUE");
 			Time.timeScale = 0;
 			CoreState.state = GameState.DIALOGUE;
 			//Cursor.visible = true;
 		}
 
 		public void SetNarration () {
-			Debug.Log ("State set to NARRATION");
+			Debug.Log (this.name + ": state set to NARRATION");
 			Time.timeScale = 0;
 			CoreState.state = GameState.NARRATION;
 			RepaintAll ();
 		}
 
 		public void SetWorldMap () {
-			Debug.Log ("State set to WORLDMAP");
+			Debug.Log (this.name + ": state set to WORLDMAP");
 			Time.timeScale = 0;
 			CoreState.state = GameState.WORLDMAP;
 		}
@@ -295,7 +312,7 @@ namespace HackedDesign {
 		}
 
 		public void SetAlert (GameObject trap) {
-			Debug.Log ("Level alert set");
+			Debug.Log (this.name + ": level alert set");
 			this.CoreState.alertTrap = trap;
 			this.roomAlert.transform.position = trap.transform.position;
 			this.roomAlert.SetActive(true);
@@ -316,12 +333,12 @@ namespace HackedDesign {
 					//timer.UpdateTimer ();
 
 					if (inputController.StartButtonUp ()) {
-						Debug.Log ("Show start menu");
+						Debug.Log (this.name + ": show start menu");
 						CoreState.state = GameState.STARTMENU;
 					}
 
 					if (inputController.SelectButtonUp ()) {
-						Debug.Log ("Show select menu");
+						Debug.Log (this.name + ": show select menu");
 						CoreState.state = GameState.SELECTMENU;
 					}
 
@@ -329,14 +346,14 @@ namespace HackedDesign {
 
 				case GameState.STARTMENU:
 					if (inputController.StartButtonUp ()) {
-						Debug.Log ("Hide start menu");
+						Debug.Log (this.name + ": hide start menu");
 						SetPlaying ();
 					}
 					break;
 
 				case GameState.SELECTMENU:
 					if (inputController.SelectButtonUp ()) {
-						Debug.Log ("Hide select menu");
+						Debug.Log (this.name + ": hide select menu");
 						SetPlaying ();
 					}
 					break;

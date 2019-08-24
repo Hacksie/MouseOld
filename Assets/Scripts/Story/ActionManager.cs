@@ -7,8 +7,18 @@ namespace HackedDesign {
         public class ActionManager : MonoBehaviour {
             public static ActionManager instance;
 
+            public Queue<ActionMessage> console = new Queue<ActionMessage>();
+
             ActionManager () {
                 instance = this;
+            }
+
+            public void AddActionMessage(string message)
+            {
+                console.Enqueue(new ActionMessage() {
+                    time = Time.time,
+                    message = message
+                });
             }
 
             //Twas the night before christmas, when all through the city, all the creatures were stirring. Even a Mouse... God please kill that alarm. I'm getting too old for this. If I had my way, I'd leave the creatures to their stirring and go back to sleep. No chance for that tonight.
@@ -18,11 +28,13 @@ namespace HackedDesign {
             public void Invoke (string eventName) {
                 switch (eventName) {
                     case "Prelude1":
-                        Debug.Log ("Invoke Prelude1");
+                        Debug.Log (this.name + ": invoke Prelude1");
+                        InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Arisana"));
+                        InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kari"));
                         Dialogue.NarrationManager.instance.ShowNarration ("Prelude1");
                         break;
                     case "Prelude2":
-                        Debug.Log ("Invoke Prelude2");
+                        Debug.Log (this.name + ": invoke Prelude2");
                         Dialogue.NarrationManager.instance.ShowNarration ("Prelude2");
                         break;
                     case "PreludeLaptop":
@@ -58,6 +70,11 @@ namespace HackedDesign {
                     }
             }
 
+        }
+
+        public class ActionMessage {
+            public float time;
+            public string message;
         }
     }
 }

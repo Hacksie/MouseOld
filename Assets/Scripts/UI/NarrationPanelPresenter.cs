@@ -42,7 +42,7 @@ namespace HackedDesign {
             }
 
             private void Show (bool flag) {
-                Debug.Log ("Show narration " + flag);
+                Debug.Log (this.name + ": show narration " + flag);
                 currentNarration = narrationManager.GetCurrentNarration ();
 
                 if (currentNarration == null) {

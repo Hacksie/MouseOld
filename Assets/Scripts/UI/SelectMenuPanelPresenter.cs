@@ -34,7 +34,7 @@ namespace HackedDesign {
 		}		
 
 		private void Show(bool flag) {
-			Debug.Log("Repaint select");
+			Debug.Log(this.name + ": repaint");
 			HideAll();
 			this.gameObject.SetActive (flag);
 			//Cursor.visible = flag;

@@ -6,7 +6,7 @@ namespace HackedDesign {
 	namespace Story {
 		public class InfoManager : MonoBehaviour {
 
-			public InfoManager instance;
+			public static InfoManager instance;
 
 
 
@@ -14,13 +14,29 @@ namespace HackedDesign {
 			public List<InfoCategory> categories = new List<InfoCategory> ();
 			public List<InfoEntity> entities = new List<InfoEntity>();
 
+			[Header("State")]
+			public List<InfoEntity> knownEntities = new List<InfoEntity>();
 
 
 			public string selectedInfoCategory;
 			public string selectedInfoEntity;
 
+			public InfoManager()
+			{
+				instance = this;
+			}
+
 			public List<InfoCategory> GetCategories () {
 				return categories;
+			}
+
+			public void AddToKnownEntities(InfoEntity entity) {
+				if(!knownEntities.Contains(entity))
+				{
+					Debug.Log(this.name + ": adding entity " + entity.name + " to known entities");
+					knownEntities.Add(entity);
+					ActionManager.instance.AddActionMessage("Added '" + entity.name + "' entry to knowledgebase");
+				}
 			}
 
 		}

@@ -179,7 +179,7 @@ namespace HackedDesign
                         }
                     }
 
-                    Debug.Log(line);
+                    Debug.Log("Level: " + line);
                 }
             }
         }

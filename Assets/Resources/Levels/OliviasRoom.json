@@ -10,7 +10,21 @@
             "x": 0,
             "y": 0            
         }
-    },    
+    },   
+    "npcSpawnLocationList": [
+        {
+            "type": "npc",
+            "name": "Kari",
+            "levelLocation": {
+                "x": 0,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": -1,
+                "y": 0
+            }
+        }
+    ],     
     "map": [
         {
             "rooms": [

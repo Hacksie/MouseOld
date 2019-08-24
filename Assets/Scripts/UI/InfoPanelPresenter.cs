@@ -112,7 +112,7 @@ namespace HackedDesign {
 
             public void RepaintEntities () {
 
-                var entities = infoManager.entities.Where (e => e.parentInfoCategory == infoManager.selectedInfoCategory && e.available).ToList ();
+                var entities = infoManager.knownEntities.Where (e => e.parentInfoCategory == infoManager.selectedInfoCategory).ToList ();
 
                 for (int i = 0; i < infoEntitiesParent.childCount; i++) {
                     Transform cbt = infoEntitiesParent.GetChild (i);

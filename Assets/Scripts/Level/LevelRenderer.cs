@@ -16,9 +16,6 @@ namespace HackedDesign
             const string BOTTOMLEFT = "bl";
             const string BOTTOMRIGHT = "br";
 
-            [SerializeField]
-            private Entity.EntityManager entityManager;
-
             public GameObject doorewPrefab;
             public GameObject doornsPrefab;
             public GameObject exitewPrefab;
@@ -28,11 +25,14 @@ namespace HackedDesign
             private GameObject npcParent;
             private PolyNav.PolyNav2D polyNav2D;
 
-            public void Initialize(GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
+            private Entity.EntityManager entityManager;
+
+            public void Initialize(Entity.EntityManager entityManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
             {
                 this.levelParent = levelParent;
                 this.npcParent = npcParent;
                 this.polyNav2D = polyNav2D;
+                this.entityManager = entityManager;
             }
 
             public void Render(Level level)
@@ -62,10 +62,10 @@ namespace HackedDesign
             public void DestroyLevel()
             {
                 // Destroy NPCs
-                for (int i = 0; i < npcParent.transform.childCount; i++)
-                {
-                    GameObject.Destroy(npcParent.transform.GetChild(i).gameObject);
-                }
+                // for (int i = 0; i < npcParent.transform.childCount; i++)
+                // {
+                //     GameObject.Destroy(npcParent.transform.GetChild(i).gameObject);
+                // }
 
                 // Destroy Tiles
                 for (int k = 0; k < levelParent.transform.childCount; k++)
@@ -358,32 +358,25 @@ namespace HackedDesign
             {
                 List<Entity.BaseEntity> results = new List<Entity.BaseEntity>();
 
-                //Level level = CoreGame.instance.state.level;
                 if (level.npcSpawnLocationList == null)
-                {
-                    return results;
-                }
-
-                if (entityManager.npcs.Count <= 0)
                 {
                     return results;
                 }
 
                 for (int i = 0; i < level.npcSpawnLocationList.Count; i++)
                 {
+                    Debug.Log(this.name + ": attempting to spawn " + level.npcSpawnLocationList[i].name);
+                    Entity.BaseEntity npc = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
 
-                    GameObject npcGameObj = entityManager.npcs.FirstOrDefault(g => g != null && g.name == level.npcSpawnLocationList[i].name);
-
-                    if (npcGameObj != null)
+                    //GameObject npcGameObj = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
+                    if (npc != null)
                     {
-                        var go = GameObject.Instantiate(npcGameObj, level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
-                        Entity.BaseEntity npc = go.GetComponent<Entity.BaseEntity>();
-                        if (npc != null)
-                        {
-                            npc.Initialize();
-                            //CoreGame.instance.state.entityList.Add(npc);
-                            results.Add(npc);
-                        }
+                        Debug.Log(this.name + ": moving " + level.npcSpawnLocationList[i].name);
+                        npc.transform.position = level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset;
+                        npc.gameObject.SetActive(true);
+                        npc.Initialize();
+                        results.Add(npc);
+
                     }
                 }
 

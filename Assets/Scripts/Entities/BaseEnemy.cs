@@ -42,7 +42,7 @@ namespace HackedDesign {
 				}
 			}       
 
-			public virtual void FaceDirection (Vector2 direction) {
+			public override void FaceDirection (Vector2 direction) {
 
 				if (anim != null) {
 					anim.SetFloat ("directionX", direction.x);

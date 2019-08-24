@@ -8,13 +8,13 @@
         },
         "worldOffset": {
             "x": 0,
-            "y": 0
+            "y": 1
         }
     },
     "npcSpawnLocationList": [
         {
             "type": "npc",
-            "name": "Bouncer",
+            "name": "BouncerJoe",
             "levelLocation": {
                 "x": 0,
                 "y": 0
@@ -28,12 +28,12 @@
             "type": "npc",
             "name": "Bartender1",
             "levelLocation": {
-                "x": 1,
-                "y": 0
+                "x": 0,
+                "y": 1
             },
             "worldOffset": {
-                "x": 0.5,
-                "y": 1
+                "x": 0.75,
+                "y": 1.75
             }
         },
         {
@@ -41,18 +41,18 @@
             "name": "Bartender2",
             "levelLocation": {
                 "x": 1,
-                "y": 0
+                "y": 1
             },
             "worldOffset": {
                 "x": -1,
-                "y": 1
+                "y": 1.75
             }
         },
         {
             "type": "npc",
             "name": "SnowOwl",
             "levelLocation": {
-                "x": 0,
+                "x": 1,
                 "y": 1
             },
             "worldOffset": {
@@ -70,6 +70,7 @@
                     "bottom": "o",
                     "right": "o",
                     "isEntry": true,
+                    "isEnd": true,
                     "topLeft": [
                         {
                             "type": "fixed",
@@ -87,14 +88,7 @@
                     "left": "o",
                     "top": "w",
                     "bottom": "o",
-                    "right": "w",
-                    "isEnd": true,
-                    "topLeft": [
-                        {
-                            "type": "fixed",
-                            "name": "bar_1_tl_az"
-                        }
-                    ]
+                    "right": "w"
                 }
             ]
         },
@@ -108,23 +102,15 @@
                     "topLeft": [
                         {
                             "type": "fixed",
-                            "name": "seats_1_tl_aa"
+                            "name": "bar_1_tl_aa"
                         }
-                    ]
-                },
+                    ]                    
+                 },
                 {
-                    "floor": "Floor3",
                     "left": "o",
                     "top": "o",
                     "bottom": "w",
-                    "right": "w",
-                    "topLeft": [
-                        {
-                            "type": "fixed",
-                            "name": "lights_1_tl_aa"
-                        }
-                    ]                    
-
+                    "right": "w"               
                 }
             ]
         }
