@@ -10,6 +10,13 @@ namespace HackedDesign
         {
 
             public const string UNKNOWN_STRING = @"???";
+
+            [SerializeField]
+            SpriteRenderer actionBubble;
+            
+            [SerializeField]
+            Collider2D actionTriggerCollider;
+
             [SerializeField]
             Story.Character character;
 

@@ -3270,6 +3270,12 @@ MonoBehaviour:
   narrationList:
   - {fileID: 11400000, guid: d2a36e2d831acb643ba8b54f483b25d3, type: 2}
   - {fileID: 11400000, guid: 649de1301cbe0224d98ec814b0c3b9a9, type: 2}
+  - {fileID: 11400000, guid: c4b694b3033212d438093eca1a9ef4c7, type: 2}
+  - {fileID: 11400000, guid: 5d1e4716f22d2254faf85c24546195fe, type: 2}
+  - {fileID: 11400000, guid: a69de217c1242884f83fa3dfb636dbd2, type: 2}
+  - {fileID: 11400000, guid: 1edc465474e048d4bb1ed183209ec0b1, type: 2}
+  - {fileID: 11400000, guid: 0f59937e0fa86a6439ee58bad4d2d11f, type: 2}
+  - {fileID: 11400000, guid: 0bd16917ae286884f85ecb48329cd294, type: 2}
 --- !u!1 &196954937
 GameObject:
   m_ObjectHideFlags: 0
@@ -8098,7 +8104,7 @@ GameObject:
   - component: {fileID: 438438739}
   - component: {fileID: 438438738}
   m_Layer: 5
-  m_Name: DialogueSpeakerStatus
+  m_Name: DialogueSpeakerClass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20680,7 +20686,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.0000005, y: 0}
+  m_AnchoredPosition: {x: 4.999998, y: 0}
   m_SizeDelta: {x: -5, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1091099245
@@ -24269,7 +24275,7 @@ GameObject:
   - component: {fileID: 1343684993}
   - component: {fileID: 1343684992}
   m_Layer: 5
-  m_Name: DialogueSpeakerStatusLabel
+  m_Name: DialogueSpeakerClassLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24327,7 +24333,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Status
+  m_Text: Class
 --- !u!222 &1343684993
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -40387,6 +40393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5231ee0312db8541b87f958a72527ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeOut: 5
 --- !u!4 &2078199807
 Transform:
   m_ObjectHideFlags: 0
@@ -43416,7 +43423,7 @@ PrefabInstance:
     - target: {fileID: 8019494709021927743, guid: dde33f55cc810d34ca14901126883b71,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8024934211731268077, guid: dde33f55cc810d34ca14901126883b71,
         type: 3}

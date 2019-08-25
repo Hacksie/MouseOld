@@ -60,7 +60,7 @@ namespace HackedDesign {
                 speakerHandle.text = currentNarration.speaker.handle;
                 speakerCorp.text = currentNarration.speaker.corp.name;
                 speakerCorp.color = currentNarration.speaker.corp.color;
-                speakerStatus.text = currentNarration.speaker.status.ToString ();
+                speakerStatus.text = currentNarration.speaker.@class.ToString ();
                 if (currentNarration.speaker.avatar != null) {
                     avatarSprite.sprite = currentNarration.speaker.avatar;
                 }

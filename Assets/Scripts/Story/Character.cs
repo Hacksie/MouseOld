@@ -9,7 +9,7 @@ namespace HackedDesign {
 			public Corp corp;
 			public string serial;
 			public Sprite avatar;
-			public CharacterStatus status;
+			public CharacterStatus @class;
 
 			public enum CharacterStatus {
 				Contractor,

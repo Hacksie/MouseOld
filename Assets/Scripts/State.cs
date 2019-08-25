@@ -2,41 +2,52 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HackedDesign {
+namespace HackedDesign
+{
 
-	public class State {
-		public int gameSlot;
+    public class State
+    {
+        public int gameSlot;
 
-		[Header("Game State")]
-		public GameState state;
+        [Header("Game State")]
+        public GameState state;
 
-		[Header("Player State")]
-		public Character.PlayerState player;
+        [Header("Player State")]
+        public Character.PlayerState player;
 
-		[Header("Level State")]
-		public Level.Level level;
+        [Header("Story State")]
+		public StoryState story = new StoryState();
 
-		public List<Story.Task> taskList = new List<Story.Task> ();
+        [Header("Level State")]
+        public Level.Level level;
 
-		public Story.Task selectedTask;
+        public List<Story.Task> taskList = new List<Story.Task>();
 
-		
-		public GameObject alertTrap; // move this to state		
+        public Story.Task selectedTask;
 
-		public List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger> ();
-		public List<Entity.BaseEntity> entityList = new List<Entity.BaseEntity> ();
+
+        public GameObject alertTrap; // move this to state		
+
+        public List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger>();
+        public List<Entity.BaseEntity> entityList = new List<Entity.BaseEntity>();
+    }
+
+	public class StoryState {
+		public bool prelude_kari_talk = false;
+		public bool prelude_laptop = false;
 	}
 
-	public enum GameState {
-		MAINMENU,
-		CUTSCENE,
-		PLAYING,
-		LOADING,
-		NARRATION,
-		DIALOGUE,
-		WORLDMAP,
-		STARTMENU,
-		SELECTMENU,
-		GAMEOVER
-	}
+    public enum GameState
+    {
+        MAINMENU,
+        CUTSCENE,
+        PLAYING,
+        LOADING,
+        NARRATION,
+        DIALOGUE,
+        WORLDMAP,
+        STARTMENU,
+        SELECTMENU,
+        GAMEOVER
+    }
 }

@@ -2,35 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HackedDesign {
-	namespace Triggers {
-		public class TriggerFeedback : MonoBehaviour {
+namespace HackedDesign
+{
+    namespace Triggers
+    {
+        public class TriggerFeedback : MonoBehaviour
+        {
 
-			public SpriteRenderer sprite;
+            public SpriteRenderer sprite;
 
-			private void Start()
-			{
-				if(sprite != null && sprite.gameObject.activeInHierarchy)
-				{
-					sprite.gameObject.SetActive(false);
-				}				
-			}
+            private void Start()
+            {
+                if (sprite != null && sprite.gameObject.activeInHierarchy)
+                {
+                    sprite.gameObject.SetActive(false);
+                }
+            }
 
 
-			private void OnTriggerStay2D (Collider2D other) {
-				if(sprite != null && !sprite.gameObject.activeInHierarchy)
-				{
-					sprite.gameObject.SetActive(true);
-				}
-			}
+            private void OnTriggerStay2D(Collider2D other)
+            {
+                if (other.tag == TagManager.PLAYER && sprite != null && !sprite.gameObject.activeInHierarchy)
+                {
+                    sprite.gameObject.SetActive(true);
+                }
+            }
 
-			private void OnTriggerExit2D (Collider2D other) {
-				if(sprite != null && sprite.gameObject.activeInHierarchy)
-				{
-					sprite.gameObject.SetActive(false);
-				}
-			}			
-		}
+            private void OnTriggerExit2D(Collider2D other)
+            {
+                if (other.tag == TagManager.PLAYER && sprite != null && sprite.gameObject.activeInHierarchy)
+                {
+                    sprite.gameObject.SetActive(false);
+                }
+            }
+        }
 
-	}
+    }
 }

@@ -63,7 +63,7 @@ namespace HackedDesign {
                 speakerHandle.text = currentDialogue.speaker.handle;
                 speakerCorp.text = currentDialogue.speaker.corp.name;
                 speakerCorp.color = currentDialogue.speaker.corp.color;
-                speakerStatus.text = currentDialogue.speaker.status.ToString ();
+                speakerStatus.text = currentDialogue.speaker.@class.ToString ();
 
                 EventSystem.current.SetSelectedGameObject (null);
                 if (currentDialogue.button1text != "") {

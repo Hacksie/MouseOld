@@ -52,6 +52,7 @@ namespace HackedDesign
                     case "Prelude1":
                         Debug.Log(this.name + ": invoke Prelude1");
                         InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Arisana"));
+                        InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Manager Lyon"));
                         InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kari"));
                         Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
                         break;
@@ -59,9 +60,37 @@ namespace HackedDesign
                         Debug.Log(this.name + ": invoke Prelude2");
                         Dialogue.NarrationManager.instance.ShowNarration("Prelude2");
                         break;
+                    case "Prelude3":
+                        Debug.Log(this.name + ": invoke Prelude3");
+                        Dialogue.NarrationManager.instance.ShowNarration("Prelude3");
+                        break;
                     case "PreludeLaptop":
                         PreludeLaptop();
                         break;
+                    case "Prelude4":
+                        Debug.Log(this.name + ": invoke Prelude4");
+                        Dialogue.NarrationManager.instance.ShowNarration("Prelude4");
+                        break;
+                    case "Prelude5":
+                        Debug.Log(this.name + ": invoke Prelude5");
+                        Dialogue.NarrationManager.instance.ShowNarration("Prelude5");
+                        break;
+                    case "Prelude6":
+                        Debug.Log(this.name + ": invoke Prelude6");
+                        Dialogue.NarrationManager.instance.ShowNarration("Prelude6");
+                        SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
+                        CoreGame.Instance.CoreState.state = GameState.SELECTMENU;
+
+                        //.SelectMenuState = SelectMenuManager.SelectMenuState.TASKS;
+
+                        break;
+                    case "PreludeKari1":
+                        PreludeKari();
+                        break;
+                    case "PreludeKari2":
+                        Dialogue.NarrationManager.instance.ShowNarration("PreludeKari2");
+                        break;                        
+
                     case "PreludeExit":
                         PreludeExit();
                         break;
@@ -70,7 +99,12 @@ namespace HackedDesign
 
             public void PreludeLaptop()
             {
+                Debug.Log(this.name + ": prelude laptop");
+                CoreGame.Instance.CoreState.story.prelude_laptop = true;
+                AddActionMessage("Task 'Milk Run' added to AI");
+                Invoke("Prelude4");
 
+                /*
                 if (!CoreGame.Instance.CoreState.taskList.Exists(t => t.title == "Milk Run"))
                 {
                     Story.Task t = (Story.Task)ScriptableObject.CreateInstance(typeof(Story.Task));
@@ -80,8 +114,17 @@ namespace HackedDesign
 
                     CoreGame.Instance.CoreState.taskList.Add(t);
                     CoreGame.Instance.CoreState.selectedTask = t;
-                }
+                }*/
             }
+
+            public void PreludeKari()
+            {
+                Debug.Log(this.name + ": prelude kari");
+                CoreGame.Instance.CoreState.story.prelude_kari_talk = true;
+                Dialogue.NarrationManager.instance.ShowNarration("PreludeKari1");
+
+            }
+
 
             public void PreludeExit()
             {

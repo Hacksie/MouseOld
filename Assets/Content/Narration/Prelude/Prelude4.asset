@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e3796c84e8e0744f9da802e8c3841a1, type: 3}
+  m_Name: Prelude4
+  m_EditorClassIdentifier: 
+  speaker: {fileID: 11400000, guid: 4360418afad5fb948b341e537ea8e0e3, type: 2}
+  text: 'Miss Ives. As discussed previously, I have a task I need you to do. I''ve
+    sent details to your A.I. I also had a new contractor starting working for me
+    recently. I''d like you to take her along and observe how she handles herself. '
+  button: {fileID: 0}
+  narrationAction: Prelude5

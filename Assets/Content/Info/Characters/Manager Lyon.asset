@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc82cac66d06f043abddc533af266d6, type: 3}
   m_Name: Manager Lyon
   m_EditorClassIdentifier: 
-  available: 1
-  unread: 0
+  known: 0
   parentInfoCategory: Managers
   description: Your boss
   fullName: Manager Lyon
   handle: Lyon
   corp: {fileID: 11400000, guid: 9e176034839282f488981c2ada900e44, type: 2}
   serial: '-'
-  avatar: {fileID: 0}
-  status: 1
+  avatar: {fileID: 8188274691229062057, guid: c360a1a8e855e3044b4c6b32fc4ac3e2, type: 3}
+  class: 0
