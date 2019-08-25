@@ -32,8 +32,6 @@ namespace HackedDesign
 
         private void Show(bool flag)
         {
-            Debug.Log(this.name + ": show narration " + flag);
-
             this.gameObject.SetActive(flag);
 
             if (!flag)

@@ -369,7 +369,7 @@ namespace HackedDesign {
 		}
 
 		void LateUpdate () {
-
+			actionManager.UpdateBehaviour();
 			switch (CoreState.state) {
 				case GameState.NARRATION:
 					//narrationPanel.Repaint ();
@@ -386,7 +386,7 @@ namespace HackedDesign {
 		}
 
 		void PlayingUpdate () {
-
+			
 			playerController.UpdateMovement (inputController);
 			PlayingNPCUpdate ();
 			PlayingTriggerUpdate ();

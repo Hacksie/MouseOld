@@ -28,7 +28,7 @@ namespace HackedDesign
             protected float visibilityDistance = 3.2f;
 
             // Use this for initialization
-            void Start()
+            protected void Start()
             {
                 anim = transform.GetComponent<Animator>();
                 sprites.Add(GetComponent<SpriteRenderer>());
@@ -68,7 +68,7 @@ namespace HackedDesign
 
             public virtual void UpdateBehaviour()
             {
-                //Debug.Log("update base entity");
+                //Debug.Log(this.name + ": update base entity");
                 // FIXME: This happens because this can be called before the scene finishes loading
                 // if(CoreGame.instance.state.state != GameState.PLAYING)
                 // {

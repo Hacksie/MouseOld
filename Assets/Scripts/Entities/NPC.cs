@@ -19,8 +19,9 @@ namespace HackedDesign
             [SerializeField]
             UnityEngine.UI.Text text;
 
-            void Start()
+            new void Start()
             {
+                base.Start();
                 if(character == null)
                 {
                     Debug.Log(this.name + ": character is null");
@@ -39,6 +40,7 @@ namespace HackedDesign
 
             public override void UpdateBehaviour ()
             {
+                base.UpdateBehaviour();
                 SetHandleText();
             }
 

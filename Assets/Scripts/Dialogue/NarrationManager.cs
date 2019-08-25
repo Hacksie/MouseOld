@@ -26,11 +26,11 @@ namespace HackedDesign {
 				input.ResetInput();
 				//Input.ResetInputAxes();
 				if (narration != null) {
-					Debug.Log("Show narration " + narration.name);
+					Debug.Log(this.name + ": show narration " + narration.name);
 					currentNarration = narration;
 					CoreGame.Instance.SetNarration ();
 				} else {
-					Debug.LogError ("No narration to show");
+					Debug.LogError (this.name + ": no narration to show");
 				}
 			}
 
@@ -39,7 +39,7 @@ namespace HackedDesign {
 			}
 
 			public void NarrationButtonEvent () {
-				Debug.Log ("Narration Button Event");
+				Debug.Log (this.name + ": narration button event");
 
 				string nextAction = "";
 				if (!string.IsNullOrWhiteSpace (currentNarration.narrationAction)) {
