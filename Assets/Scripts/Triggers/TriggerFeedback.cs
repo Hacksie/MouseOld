@@ -8,11 +8,13 @@ namespace HackedDesign
     {
         public class TriggerFeedback : MonoBehaviour
         {
-
+            public BaseTrigger trigger;
             public SpriteRenderer sprite;
 
             private void Start()
             {
+                trigger = GetComponent<BaseTrigger>();
+
                 if (sprite != null && sprite.gameObject.activeInHierarchy)
                 {
                     sprite.gameObject.SetActive(false);
@@ -22,7 +24,7 @@ namespace HackedDesign
 
             private void OnTriggerStay2D(Collider2D other)
             {
-                if (other.tag == TagManager.PLAYER && sprite != null && !sprite.gameObject.activeInHierarchy)
+                if (trigger != null && trigger.enabled && other.tag == TagManager.PLAYER && sprite != null && !sprite.gameObject.activeInHierarchy)
                 {
                     sprite.gameObject.SetActive(true);
                 }
@@ -30,7 +32,7 @@ namespace HackedDesign
 
             private void OnTriggerExit2D(Collider2D other)
             {
-                if (other.tag == TagManager.PLAYER && sprite != null && sprite.gameObject.activeInHierarchy)
+                if (trigger != null && trigger.enabled && other.tag == TagManager.PLAYER && sprite != null && sprite.gameObject.activeInHierarchy)
                 {
                     sprite.gameObject.SetActive(false);
                 }

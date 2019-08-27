@@ -78,6 +78,10 @@ namespace HackedDesign
                     case "Prelude6":
                         Debug.Log(this.name + ": invoke Prelude6");
                         Dialogue.NarrationManager.instance.ShowNarration("Prelude6");
+                        break;                        
+                    case "Prelude7":
+                        Debug.Log(this.name + ": invoke Prelude7");
+                        Dialogue.NarrationManager.instance.ShowNarration("Prelude7");
                         SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
                         CoreGame.Instance.CoreState.state = GameState.SELECTMENU;
 
@@ -102,7 +106,7 @@ namespace HackedDesign
                 Debug.Log(this.name + ": prelude laptop");
                 CoreGame.Instance.CoreState.story.prelude_laptop = true;
                 AddActionMessage("Task 'Milk Run' added to AI");
-                Invoke("Prelude4");
+                Invoke("Prelude5");
 
                 /*
                 if (!CoreGame.Instance.CoreState.taskList.Exists(t => t.title == "Milk Run"))
@@ -130,11 +134,11 @@ namespace HackedDesign
             {
                 if (CoreGame.Instance.CoreState.taskList.Exists(t => t.title == "Milk Run"))
                 {
-                    Debug.Log("Can exit");
+                    Debug.Log(this.name + ": can exit");
                 }
                 else
                 {
-                    Debug.Log("Can't exit, haven't received mission");
+                    Debug.Log(this.name + ": can't exit, haven't received mission");
                 }
             }
 
