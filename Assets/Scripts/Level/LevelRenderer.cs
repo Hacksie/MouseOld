@@ -107,11 +107,11 @@ namespace HackedDesign
                             // BL
                             for (int e = 0; e < level.map[i].rooms[j].bottomLeft.Count; e++)
                             {
-                                Debug.Log(level.map[i].rooms[j].bottomLeft[e].type + level.map[i].rooms[j].bottomLeft[e].name + level.template.name);
+                                //Debug.Log(level.map[i].rooms[j].bottomLeft[e].type + level.map[i].rooms[j].bottomLeft[e].name + level.template.name);
                                 var go = FindRoomEntity(level.map[i].rooms[j].bottomLeft[e].type, level.map[i].rooms[j].bottomLeft[e].name, level.template);
                                 if (go == null)
                                 {
-                                    Debug.LogError("null go");
+                                    Debug.LogError(this.name + ": null game object returned from FindRoomEntity");
                                 }
                                 GameObject.Instantiate(go, pos, Quaternion.identity, levelParent.transform);
 

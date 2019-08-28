@@ -72,7 +72,7 @@ namespace HackedDesign {
 		}
 
 		public void ContinueEvent () {
-			Debug.Log ("Continue Event");
+			Debug.Log (this.name + ": Continue Event");
 			ShowCreditsPanel (false);
 			ShowOptionsPanel (false);
 			ShowRandomPanel (false);
@@ -80,7 +80,7 @@ namespace HackedDesign {
 		}
 
 		public void NewGameEvent () {
-			Debug.Log ("New Game Event");
+			Debug.Log (this.name + ": New Game Event");
 			ShowCreditsPanel (false);
 			ShowOptionsPanel (false);
 			ShowRandomPanel (false);
@@ -89,7 +89,7 @@ namespace HackedDesign {
 		}
 
 		public void RandomGameEvent () {
-			Debug.Log ("Random Game Event");
+			Debug.Log (this.name + ": Random Game Event");
 			UnityEngine.Random.InitState (UnityEngine.Random.seed);
 			seedInput.text = UnityEngine.Random.seed.ToString ();
 			ShowCreditsPanel (false);

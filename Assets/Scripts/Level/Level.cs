@@ -144,7 +144,7 @@ namespace HackedDesign
 
             public void Print()
             {
-                Debug.Log("Printing level");
+                Debug.Log("Level: printing level");
                 for (int i = 0; i < map.Count(); i++)
                 {
                     string line = "";

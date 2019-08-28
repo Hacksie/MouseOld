@@ -27,7 +27,7 @@ namespace HackedDesign {
 
 			public new void Initialize (Input.IInputController inputController) {
 				base.Initialize(inputController);
-				Debug.Log ("Initialize speech bubble");
+				Debug.Log (this.name + ": initialize speech bubble");
 				
 				canvas = GameObject.Instantiate (textFieldPrefab);
 				canvas.transform.SetParent (this.transform);

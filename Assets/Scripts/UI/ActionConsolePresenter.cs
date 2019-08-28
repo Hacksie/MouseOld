@@ -9,8 +9,11 @@ namespace HackedDesign
 {
     public class ActionConsolePresenter : MonoBehaviour
     {
-        Story.ActionManager actionManager;
+        public RectTransform panel;
         public Text[] line;
+
+        Story.ActionManager actionManager;
+
 
         public void Initialize(Story.ActionManager actionManager)
         {
@@ -27,7 +30,6 @@ namespace HackedDesign
             {
                 Show(false);
             }
-
         }
 
         private void Show(bool flag)
@@ -39,12 +41,15 @@ namespace HackedDesign
                 return;
             }
 
+            panel.sizeDelta = new Vector2(panel.sizeDelta.x, 0);
+
             var console = this.actionManager.console.Reverse().Take(6).Reverse().ToArray();
             for (int i = 0; i < 6; i++)
             {
                 if (i < console.Count())
                 {
                     line[i].text = console[i].message;
+                    panel.sizeDelta = new Vector2(panel.sizeDelta.x, panel.sizeDelta.y + line[i].rectTransform.sizeDelta.y);
                 }
                 else
                 {
@@ -53,5 +58,4 @@ namespace HackedDesign
             }
         }
     }
-
 }

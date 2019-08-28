@@ -14,6 +14,9 @@ namespace HackedDesign
             protected new Collider2D collider;
             public new bool enabled = true;
 
+            [Header("")]
+            public SpriteRenderer sprite;
+
             [Header("Trigger settings")]
             public bool requireInteraction = false;
             public bool allowRepeatTriggers = false;
@@ -31,6 +34,11 @@ namespace HackedDesign
                 if (this.tag != TagManager.TRIGGER)
                 {
                     Debug.LogError(this.name + ": trigger is not tagged: " + this.name);
+                }
+
+                if (sprite != null && sprite.gameObject.activeInHierarchy)
+                {
+                    sprite.gameObject.SetActive(false);
                 }
             }
 
@@ -86,7 +94,9 @@ namespace HackedDesign
             {
 
                 if (!enabled)
+                {
                     return;
+                }
 
                 if (requireInteraction && inputController == null)
                 {
@@ -94,29 +104,47 @@ namespace HackedDesign
                     return;
                 }
 
-                if (!requireInteraction || (requireInteraction && inputController.InteractButtonUp()))
+                if (other.tag == TagManager.PLAYER && !hasBeenTriggered || (allowRepeatTriggers && hasBeenTriggered))
                 {
-                    if (!hasBeenTriggered || (allowRepeatTriggers && hasBeenTriggered))
+                    if (sprite != null && !sprite.gameObject.activeInHierarchy)
+                    {
+                        sprite.gameObject.SetActive(true);
+                    }
+
+                    if (!requireInteraction || (requireInteraction && inputController.InteractButtonUp()))
                     {
                         hasBeenTriggered = true;
                         Invoke();
                     }
+
                 }
             }
 
             protected virtual void OnTriggerExit2D(Collider2D other)
             {
                 if (!enabled)
-                    return;
-
-                if (hasBeenTriggered && !hasBeenLeft)
                 {
-                    Leave();
-                    if (!allowRepeatTriggers)
+                    return;
+                }
+
+                if (other.tag == TagManager.PLAYER)
+                {
+                    if (sprite != null && sprite.gameObject.activeInHierarchy)
                     {
-                        hasBeenLeft = true;
+                        sprite.gameObject.SetActive(false);
+                    }
+
+                    if (hasBeenTriggered && !hasBeenLeft)
+                    {
+                        Leave();
+                        if (!allowRepeatTriggers)
+                        {
+                            hasBeenLeft = true;
+                        }
                     }
                 }
+
+
             }
         }
     }

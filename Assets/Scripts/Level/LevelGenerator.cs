@@ -10,9 +10,7 @@ namespace HackedDesign
     {
         public class LevelGenerator : MonoBehaviour
         {
-
             const string DEFAULT_ROOM_START = "wdww_entry";
-
             const string TOPLEFT = "tl";
             const string TOPRIGHT = "tr";
             const string BOTTOMLEFT = "bl";
@@ -30,21 +28,21 @@ namespace HackedDesign
 
             public Level GenerateLevel(string template, int length, int height, int width, int difficulty, int enemies, int cameras)
             {
-                Debug.Log("Generating Level");
+                Debug.Log(this.name + ": generating Level");
 
                 if (string.IsNullOrEmpty(template))
                 {
-                    Debug.LogError("No level template set");
+                    Debug.LogError(this.name + ": no level template set");
                     return null;
                 }
 
                 if (string.IsNullOrEmpty(name))
                 {
-                    Debug.LogError("No level name set");
+                    Debug.LogError(this.name + ": no level name set");
                     return null;
                 }
 
-                Debug.Log(template);
+                Debug.Log(this.name + ": using template - " + template);
 
                 var genTemplate = GetLevelGenTemplate(template);
 
@@ -68,7 +66,7 @@ namespace HackedDesign
 
                 if (genTemplate == null)
                 {
-                    Debug.LogError("No level gen template found: " + template);
+                    Debug.LogError(this.name + ": no level gen template found: " + template);
                     return null;
                 }
 
@@ -97,11 +95,11 @@ namespace HackedDesign
             protected Level LoadLevelFromFile(LevelGenTemplate genTemplate)
             {
                 Level level = new Level(genTemplate);
-                Debug.Log(@"Loading level from file: Levels/" + genTemplate.levelResource + @".json");
+                Debug.Log(this.name + ": loading level from file: Levels/" + genTemplate.levelResource + @".json");
                 var jsonTextFile = Resources.Load<TextAsset>(@"Levels/" + genTemplate.levelResource);
                 if (jsonTextFile == null)
                 {
-                    Debug.LogError("File not loaded");
+                    Debug.LogError(this.name + ": file not loaded");
                     return null;
                 }
 
@@ -141,7 +139,7 @@ namespace HackedDesign
 
             Vector2Int GenerateStartingLocation(Level level)
             {
-                Debug.Log("Generating Starting Location");
+                Debug.Log(this.name + ": generating Starting Location");
 
                 // Starting at the bottom and going up means we should never create a chain that fails completely and rolls all the way back to the entry
                 // This is important!				
@@ -164,12 +162,12 @@ namespace HackedDesign
                     return true;
                 }
 
-                Debug.Log("Generating Main Chain");
+                Debug.Log(this.name + ": generating main chain");
 
                 // The end room is considered special
                 if (lengthRemaining == 1)
                 {
-                    Debug.Log("End of main chain");
+                    Debug.Log(this.name + ": end of main chain");
 
                     level.map[newLocation.y].rooms[newLocation.x] = GenerateRoom(newLocation, new List<string>() { ProxyRoom.WALL }, true, level); // Place a new tile here
                     level.map[newLocation.y].rooms[newLocation.x].isEnd = true;
@@ -200,7 +198,7 @@ namespace HackedDesign
                 // Fixme: we probably have to change a side because of this
                 if (!result)
                 {
-                    Debug.Log("Abandoning chain, roll back one step");
+                    Debug.Log(this.name + ": abandoning chain, roll back one step");
                 }
 
                 return result;
@@ -306,7 +304,7 @@ namespace HackedDesign
 
             void GenerateAuxRooms(Level level)
             {
-                Debug.Log("Generating Aux Rooms");
+                Debug.Log(this.name + ": generating Aux Rooms");
                 bool newRooms = true;
 
                 // iterate through every position, checking for neighbours and creating rooms accordingly. 
@@ -661,7 +659,7 @@ namespace HackedDesign
 
                 if (nameSplit.Length != 4)
                 {
-                    Debug.Log("Invalid sprite name");
+                    Debug.LogError(this.name + ": invalid sprite name");
                     return false;
                 }
 

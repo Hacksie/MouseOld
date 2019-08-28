@@ -9,6 +9,8 @@ namespace HackedDesign
         public class ActionManager : MonoBehaviour
         {
             public static ActionManager instance;
+            public Entity.EntityManager entityManager;
+            public TaskDefinitionManager taskManager;
 
             [SerializeField]
             private float timeOut = 5.0f;
@@ -19,6 +21,13 @@ namespace HackedDesign
             {
                 instance = this;
             }
+
+            public void Initialize(Entity.EntityManager entityManager, TaskDefinitionManager taskManager)
+            {
+                this.entityManager = entityManager;
+                this.taskManager = taskManager;
+            }
+
 
             public void AddActionMessage(string message)
             {
@@ -89,10 +98,10 @@ namespace HackedDesign
 
                         break;
                     case "PreludeKari1":
-                        PreludeKari();
+                        PreludeKari1();
                         break;
                     case "PreludeKari2":
-                        Dialogue.NarrationManager.instance.ShowNarration("PreludeKari2");
+                        PreludeKari2();                        
                         break;                        
 
                     case "PreludeExit":
@@ -106,27 +115,34 @@ namespace HackedDesign
                 Debug.Log(this.name + ": prelude laptop");
                 CoreGame.Instance.CoreState.story.prelude_laptop = true;
                 AddActionMessage("Task 'Milk Run' added to AI");
-                Invoke("Prelude5");
+                //taskManager.selectedTask = 
+                
 
-                /*
+                
                 if (!CoreGame.Instance.CoreState.taskList.Exists(t => t.title == "Milk Run"))
                 {
-                    Story.Task t = (Story.Task)ScriptableObject.CreateInstance(typeof(Story.Task));
+                    var task = TaskDefinitionManager.instance.GetTaskInstance("Milk Run");
+                    CoreGame.Instance.CoreState.taskList.Add(task);
+                    CoreGame.Instance.CoreState.selectedTask = task;
+                }
 
-                    t.title = "Milk Run";
-                    t.description = "Milk Run Description";
-
-                    CoreGame.Instance.CoreState.taskList.Add(t);
-                    CoreGame.Instance.CoreState.selectedTask = t;
-                }*/
+                Invoke("Prelude5");
             }
 
-            public void PreludeKari()
+            public void PreludeKari1()
             {
                 Debug.Log(this.name + ": prelude kari");
                 CoreGame.Instance.CoreState.story.prelude_kari_talk = true;
                 Dialogue.NarrationManager.instance.ShowNarration("PreludeKari1");
 
+            }
+
+            public void PreludeKari2()
+            {
+                Dialogue.NarrationManager.instance.ShowNarration("PreludeKari2");
+                var kari = entityManager.GetPooledNPC("Kari");
+                //var trigger = kari.GetComponent<Triggers.BaseTrigger>();
+                //trigger.enabled = false;
             }
 
 
