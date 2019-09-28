@@ -12,9 +12,9 @@ namespace HackedDesign {
 		}
 
 		public void Repaint () {
-			if (CoreGame.Instance.CoreState.state == GameState.STARTMENU && !this.gameObject.activeInHierarchy) {
+			if (CoreGame.Instance.State.state == GameStateEnum.STARTMENU && !this.gameObject.activeInHierarchy) {
 				Show (true);
-			} else if (CoreGame.Instance.CoreState.state != GameState.STARTMENU && this.gameObject.activeInHierarchy) {
+			} else if (CoreGame.Instance.State.state != GameStateEnum.STARTMENU && this.gameObject.activeInHierarchy) {
 				Show (false);
 			}
 		}

@@ -15,10 +15,10 @@ namespace HackedDesign {
 			public string button4text;
 
 			//public Sprite button;
-			public DialogueAction dialogueAction1;
-			public DialogueAction dialogueAction2;
-			public DialogueAction dialogueAction3;
-			public DialogueAction dialogueAction4;
+			public string dialogueAction1;
+			public string dialogueAction2;
+			public string dialogueAction3;
+			public string dialogueAction4;
 		}
 	}
 

@@ -17,9 +17,10 @@ namespace HackedDesign
             const string BOTTOMRIGHT = "br";
 
             [SerializeField]
-            private Entity.EntityManager entityManager;
+            private Entity.EntityManager entityManager = null;
 
-            public LevelGenTemplate[] levelGenTemplates;
+            [SerializeField]
+            private LevelGenTemplate[] levelGenTemplates;
 
             public Level GenerateLevel(string template)
             {

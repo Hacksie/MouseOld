@@ -19,7 +19,7 @@ namespace HackedDesign {
             }
 
             public void Repaint () {
-                if (CoreGame.Instance.CoreState.state == GameState.PLAYING && inputController.ShowMobileInput ()) {
+                if (CoreGame.Instance.State.state == GameStateEnum.PLAYING && inputController.ShowMobileInput ()) {
                     if (!this.gameObject.activeInHierarchy) {
                         this.gameObject.SetActive (true);
                     }

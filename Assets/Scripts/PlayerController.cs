@@ -39,7 +39,7 @@ namespace HackedDesign {
 
 		public void UpdateTransform () {
 			// Movement augments (0 - 10) are reduced by a factor of 10
-			transform.Translate (movementVector * (baseMovementSpeed + (CoreGame.Instance.CoreState.player.movementAugments / 10.0f)) * Time.fixedDeltaTime);
+			transform.Translate (movementVector * (baseMovementSpeed + (CoreGame.Instance.State.player.movementAugments / 10.0f)) * Time.fixedDeltaTime);
 		}
 	}
 }

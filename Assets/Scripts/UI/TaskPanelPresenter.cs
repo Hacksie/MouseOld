@@ -22,7 +22,7 @@ namespace HackedDesign
 
             public void Repaint()
             {
-                if (CoreGame.Instance.CoreState.state == GameState.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.TASKS)
+                if (CoreGame.Instance.State.state == GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.TASKS)
                 {
                     if (!this.gameObject.activeInHierarchy)
                     {
@@ -49,28 +49,28 @@ namespace HackedDesign
                     GameObject.Destroy(taskButtonParent.transform.GetChild(i).gameObject);
                 }
 
-                for (int i = 0; i < CoreGame.Instance.CoreState.taskList.Count; i++)
+                for (int i = 0; i < CoreGame.Instance.State.taskList.Count; i++)
                 {
 
                     var go = GameObject.Instantiate(taskButtonPrefab, Vector3.zero, Quaternion.identity, taskButtonParent.transform);
                     var goText = go.GetComponentInChildren<UnityEngine.UI.Text>();
-                    goText.text = CoreGame.Instance.CoreState.taskList[i].title;
+                    goText.text = CoreGame.Instance.State.taskList[i].title;
                 }
 
-                RepaintTaskDescription(CoreGame.Instance.CoreState.selectedTask);
+                RepaintTaskDescription(CoreGame.Instance.State.selectedTask);
             }
 
             public void RepaintTaskDescription(Task selectedTask)
             {
 
-                if (CoreGame.Instance.CoreState.selectedTask == null)
+                if (CoreGame.Instance.State.selectedTask == null)
                 {
                     taskDescription.text = "";
 
                 }
                 else
                 {
-                    taskDescription.text = CoreGame.Instance.CoreState.selectedTask.description;
+                    taskDescription.text = CoreGame.Instance.State.selectedTask.description;
                 }
             }
 

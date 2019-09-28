@@ -23,9 +23,9 @@ namespace HackedDesign {
 		}
 
 		public void Repaint () {
-			if (CoreGame.Instance.CoreState.state == GameState.SELECTMENU && !this.gameObject.activeInHierarchy) {
+			if (CoreGame.Instance.State.state == GameStateEnum.SELECTMENU && !this.gameObject.activeInHierarchy) {
 				Show (true);
-			} else if (CoreGame.Instance.CoreState.state != GameState.SELECTMENU && this.gameObject.activeInHierarchy) {
+			} else if (CoreGame.Instance.State.state != GameStateEnum.SELECTMENU && this.gameObject.activeInHierarchy) {
 				Show (false);
 			}
 			infoPanel.Repaint();

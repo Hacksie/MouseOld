@@ -4,32 +4,34 @@ using UnityEngine;
 
 namespace HackedDesign
 {
-
-    public class State
+    [System.Serializable]
+    public class GameState
     {
-        public int gameSlot;
+        public int gameVersion = 0; 
+        public int gameSlot = 0;
 
         [Header("Game State")]
-        public GameState state;
+        public GameStateEnum state = GameStateEnum.GAMEOVER;
 
         [Header("Player State")]
-        public Character.PlayerState player;
+        public Character.PlayerState player = null;
 
         [Header("Story State")]
 		public StoryState story = new StoryState();
 
         [Header("Level State")]
-        public Level.Level level;
+        public Level.Level currentLevel = null;
 
         public List<Story.Task> taskList = new List<Story.Task>();
 
-        public Story.Task selectedTask;
+        public Story.Task selectedTask = null;
 
-
-        public GameObject alertTrap; // move this to state		
+        public GameObject alertTrap = null; // move this to state		
 
         public List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger>();
         public List<Entity.BaseEntity> entityList = new List<Entity.BaseEntity>();
+
+        
     }
 
 	public class StoryState {
@@ -37,7 +39,7 @@ namespace HackedDesign
 		public bool prelude_laptop = false;
 	}
 
-    public enum GameState
+    public enum GameStateEnum
     {
         MAINMENU,
         CUTSCENE,

@@ -22,7 +22,7 @@ namespace HackedDesign
 
         public void Repaint()
         {
-            if (CoreGame.Instance.CoreState.state == GameState.PLAYING)
+            if (CoreGame.Instance.State.state == GameStateEnum.PLAYING)
             {
                 Show(true);
             }

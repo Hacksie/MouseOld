@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace HackedDesign {
-    namespace Story {
+namespace HackedDesign.Story {
+    
         public class InfoPanelPresenter : MonoBehaviour {
 
             public Transform infoCategoriesParent;
@@ -38,7 +38,7 @@ namespace HackedDesign {
             }
 
             public void Repaint () {
-                if (CoreGame.Instance.CoreState.state == GameState.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.INFO) {
+                if (CoreGame.Instance.State.state == GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.INFO) {
                     if (!this.gameObject.activeInHierarchy) {
                         Show (true);
                     }
@@ -153,5 +153,5 @@ namespace HackedDesign {
 
             }
         }
-    }
+    //}
 }

@@ -9,7 +9,7 @@ namespace HackedDesign
     {
         public class EntityManager : MonoBehaviour
         {
-
+            public static EntityManager instance;
 
             [Header("Prefabs")]
             public List<GameObject> enemies;
@@ -19,6 +19,11 @@ namespace HackedDesign
 
             private List<Entity.BaseEntity> npcPool = new List<Entity.BaseEntity>();
 
+
+            EntityManager()
+            {
+                instance = this;
+            }
 
 
 
