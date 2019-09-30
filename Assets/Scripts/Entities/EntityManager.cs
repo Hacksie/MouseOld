@@ -12,10 +12,10 @@ namespace HackedDesign
             public static EntityManager instance;
 
             [Header("Prefabs")]
-            public List<GameObject> enemies;
-            public List<GameObject> traps;
+            public List<GameObject> enemies = null;
+            public List<GameObject> traps = null;
             [SerializeField]
-            private List<GameObject> npcPrefabList;
+            private List<GameObject> npcPrefabList = null;
 
             private List<Entity.BaseEntity> npcPool = new List<Entity.BaseEntity>();
 

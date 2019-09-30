@@ -8,11 +8,11 @@ namespace HackedDesign {
 		SelectMenuManager selectMenuManager;
 
 		// Inject these in
-		private Story.InfoPanelPresenter infoPanel;
-		private Story.TaskPanelPresenter taskPanel;
-		private Level.LevelMapPanelPresenter levelMapPanel;
-		private GameObject StashPanel;
-		private GameObject PsychPanel;
+		private Story.InfoPanelPresenter infoPanel = null;
+		private Story.TaskPanelPresenter taskPanel = null;
+		private Level.LevelMapPanelPresenter levelMapPanel = null;
+		private GameObject StashPanel = null;
+		private GameObject PsychPanel = null;
 
 		public void Initialize(SelectMenuManager selectMenuManager, Story.InfoPanelPresenter infoPanel, Story.TaskPanelPresenter taskPanel, Level.LevelMapPanelPresenter levelMapPanel)
 		{

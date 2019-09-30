@@ -13,7 +13,8 @@ namespace HackedDesign {
             public Text text;
             public Button actionButton;
             public Image actionButtonImage;
-            public Text speaker;
+            public Text speakerTitle;
+            public Text speakerName;
             public Text speakerHandle;
             public Text speakerCorp;
             public Text speakerStatus;
@@ -56,7 +57,8 @@ namespace HackedDesign {
                     return;
                 }
 
-                speaker.text = currentNarration.speaker.fullName;
+                speakerTitle.text = currentNarration.speaker.handle;
+                speakerName.text = currentNarration.speaker.fullName;
                 speakerHandle.text = currentNarration.speaker.handle;
                 speakerCorp.text = currentNarration.speaker.corp.name;
                 speakerCorp.color = currentNarration.speaker.corp.color;

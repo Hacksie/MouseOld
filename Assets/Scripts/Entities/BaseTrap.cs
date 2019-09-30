@@ -15,7 +15,7 @@ namespace HackedDesign {
             private bool flagged = false;
             private float triggerStart = 0;
 
-            public void Start () {
+            public new void Start () {
 
                 //alertLight = GetComponent()
                 // if (alertLight != null) {

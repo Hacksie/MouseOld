@@ -17,37 +17,37 @@ namespace HackedDesign
 
         [Header("Test Flags")]
         [SerializeField]
-        private RuntimePlatform testPlatform;
+        private RuntimePlatform testPlatform = RuntimePlatform.WindowsEditor;
         [SerializeField]
-        private bool testPlatformFlag;
+        private bool testPlatformFlag = false;
 
         [Header("Game")]
         [SerializeField]
-        private Entity.EntityManager entityManager;
+        private Entity.EntityManager entityManager = null;
 
         [Header("Player")]
         [SerializeField]
-        private GameObject player;
-        private PlayerController playerController;
+        private GameObject player = null;
+        private PlayerController playerController = null;
 
 
 
         [Header("Level")]
         [SerializeField]
-        private Level.LevelGenerator levelGenerator;
+        private Level.LevelGenerator levelGenerator = null;
         [SerializeField]
-        private Level.LevelRenderer levelRenderer;
+        private Level.LevelRenderer levelRenderer = null;
         [SerializeField]
-        private GameObject levelParent;
+        private GameObject levelParent = null;
         [SerializeField]
-        private GameObject npcParent;
+        private GameObject npcParent = null;
         [SerializeField]
-        private PolyNav.PolyNav2D polyNav2D;
+        private PolyNav.PolyNav2D polyNav2D = null;
 
         [SerializeField]
-        private GameObject roomAlertPrefab;
+        private GameObject roomAlertPrefab = null;
 
-        private GameObject roomAlert;
+        private GameObject roomAlert = null;
 
         [Header("Mobile UI")]
         [SerializeField]
@@ -55,46 +55,46 @@ namespace HackedDesign
 
         [Header("UI")]
         [SerializeField]
-        private GameObject UI;
+        private GameObject UI = null;
         [SerializeField]
-        private CursorPresenter cursorPresenter;
+        private CursorPresenter cursorPresenter = null;
         [SerializeField]
-        private MainMenuPresenter mainMenu;
+        private MainMenuPresenter mainMenu = null;
         [SerializeField]
-        private Story.ActionManager actionManager;
+        private Story.ActionManager actionManager = null;
         [SerializeField]
-        private ActionConsolePresenter actionConsolePanel;
+        private ActionConsolePresenter actionConsolePanel = null;
         [SerializeField]
-        private StartMenuManager startMenuManager;
+        private StartMenuManager startMenuManager = null;
         [SerializeField]
-        private StartMenuPanelPresenter startMenuPanel;
+        private StartMenuPanelPresenter startMenuPanel = null;
         [SerializeField]
-        private SelectMenuManager selectMenuManager;
+        private SelectMenuManager selectMenuManager = null;
         [SerializeField]
-        private SelectMenuPanelPresenter selectMenuPanel;
+        private SelectMenuPanelPresenter selectMenuPanel = null;
         [SerializeField]
-        private WorldMapManager worldMapManager;
+        private WorldMapManager worldMapManager = null;
         [SerializeField]
-        private WorldMapPanelPresenter worldMapPanel;
+        private WorldMapPanelPresenter worldMapPanel = null;
         [SerializeField]
-        private Story.InfoManager infoManager;
+        private Story.InfoManager infoManager = null;
         [SerializeField]
-        private Story.InfoPanelPresenter infoPanel;
+        private Story.InfoPanelPresenter infoPanel = null;
         [SerializeField]
-        private Story.TaskDefinitionManager taskManager;
+        private Story.TaskDefinitionManager taskManager = null;
         [SerializeField]
-        private Story.TaskPanelPresenter taskPanel;
+        private Story.TaskPanelPresenter taskPanel = null;
         [SerializeField]
-        private Dialogue.NarrationManager narrationManager;
+        private Dialogue.NarrationManager narrationManager = null;
         [SerializeField]
-        private Dialogue.NarrationPanelPresenter narrationPanel;
+        private Dialogue.NarrationPanelPresenter narrationPanel = null;
         [SerializeField]
-        private Dialogue.DialogueManager dialogueManager;
+        private Dialogue.DialogueManager dialogueManager = null;
         [SerializeField]
-        private Dialogue.DialoguePanelPresenter dialoguePanel;
+        private Dialogue.DialoguePanelPresenter dialoguePanel = null;
 
         [SerializeField]
-        private Level.LevelMapPanelPresenter levelMapPanel;
+        private Level.LevelMapPanelPresenter levelMapPanel = null;
 
         // [SerializeField]
         // private TimerPanelPresenter timerPanel;
@@ -194,11 +194,22 @@ namespace HackedDesign
 
         public void LoadRandomGame(string template, int length, int height, int width, int difficulty, int enemies, int traps)
         {
+            Debug.Log(this.name + ": loading random game");
             State.state = GameStateEnum.LOADING;
             State.currentLevel = levelGenerator.GenerateLevel(template, length, height, width, difficulty, enemies, traps);
             State.player = new Character.PlayerState();
             entityManager.Initialize(npcParent);
             actionManager.Initialize(entityManager, taskManager);
+            CoreGame.Instance.SceneInitialize();
+        }
+
+        public void LoadNewLevel(string template)
+        {
+            Debug.Log(this.name + ": loading new level");
+            State.state = GameStateEnum.LOADING;
+            State.currentLevel = levelGenerator.GenerateLevel(template);
+            //entityManager.Initialize(npcParent);
+            //actionManager.Initialize(entityManager, taskManager);
             CoreGame.Instance.SceneInitialize();
         }
 
@@ -228,9 +239,7 @@ namespace HackedDesign
         {
 
             Debug.Log(this.name + ": scene initialization");
-
             ShowPlayer(true);
-
 
             levelRenderer.Render(this.State.currentLevel);
             this.State.entityList.Clear();
@@ -280,6 +289,7 @@ namespace HackedDesign
 
         void SceneTriggersInitialize()
         {
+
             State.triggerList.Clear();
             Debug.Log(this.name + ": initializing triggers, count " + GameObject.FindGameObjectsWithTag("Trigger").Length);
 

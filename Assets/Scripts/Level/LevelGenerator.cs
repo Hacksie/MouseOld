@@ -20,7 +20,7 @@ namespace HackedDesign
             private Entity.EntityManager entityManager = null;
 
             [SerializeField]
-            private LevelGenTemplate[] levelGenTemplates;
+            private LevelGenTemplate[] levelGenTemplates = null;
 
             public Level GenerateLevel(string template)
             {

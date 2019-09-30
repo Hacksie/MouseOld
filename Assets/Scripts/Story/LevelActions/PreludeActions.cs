@@ -24,9 +24,6 @@ namespace HackedDesign.Story
                     Debug.Log("PreludeActions: invoke Prelude3");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude3");
                     break;
-                case "PreludeLaptop":
-                    PreludeLaptop();
-                    break;
                 case "Prelude4":
                     Debug.Log("PreludeActions: invoke Prelude4");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude4");
@@ -44,10 +41,11 @@ namespace HackedDesign.Story
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude7");
                     SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
                     CoreGame.Instance.State.state = GameStateEnum.SELECTMENU;
-
-                    //.SelectMenuState = SelectMenuManager.SelectMenuState.TASKS;
-
                     break;
+                case "PreludeLaptop":
+                    PreludeLaptop();
+                    break;
+                    //.SelectMenuState = SelectMenuManager.SelectMenuState.TASKS;
                 case "PreludeKari":
                 case "PreludeKari1":
                     PreludeKari1();
@@ -70,9 +68,10 @@ namespace HackedDesign.Story
         {
             Debug.Log("PreludeActions: prelude laptop");
             CoreGame.Instance.State.story.prelude_laptop = true;
-            ActionManager.instance.AddActionMessage("Task 'Milk Run' added to AI");
+            ActionManager.instance.AddActionMessage("Task 'Milk Run' added to Tasks");
             //taskManager.selectedTask = 
-
+            InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Saika"));
+            InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Snow Owl"));
 
 
             if (!CoreGame.Instance.State.taskList.Exists(t => t.title == "Milk Run"))
@@ -82,7 +81,11 @@ namespace HackedDesign.Story
                 CoreGame.Instance.State.selectedTask = task;
             }
 
-            Invoke("Prelude5");
+                    SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
+                    CoreGame.Instance.State.state = GameStateEnum.SELECTMENU;
+
+            //Invoke("Prelude")
+            //Invoke("Prelude5");
         }
 
         public void PreludeKari1()
@@ -106,6 +109,7 @@ namespace HackedDesign.Story
         {
             if (CoreGame.Instance.State.taskList.Exists(t => t.title == "Milk Run"))
             {
+                CoreGame.Instance.LoadNewLevel("Arisana Bar");
                 Debug.Log("PreludeActions: can exit");
             }
             else

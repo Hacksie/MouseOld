@@ -10,11 +10,12 @@ namespace HackedDesign {
 			[TextArea]
 			public string description;
 
+			public Character manager;
+
 			public bool started;
 			public bool completed;
 
 			public List<TaskObjective> objectives;
-
 			public List<Story.Character> keyContacts;
 		}
 	}

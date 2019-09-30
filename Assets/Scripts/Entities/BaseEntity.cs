@@ -119,15 +119,15 @@ namespace HackedDesign
 
 
 
-            public enum NPCState
-            {
-                STANDING,
-                PATROLLING,
-                SEEKING,
-                HUNTING,
-                FIGHTING,
-                STUNNED
-            }
+            // public enum NPCState
+            // {
+            //     STANDING,
+            //     PATROLLING,
+            //     SEEKING,
+            //     HUNTING,
+            //     FIGHTING,
+            //     STUNNED
+            // }
 
         }
     }
