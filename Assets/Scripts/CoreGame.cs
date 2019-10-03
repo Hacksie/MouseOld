@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using System.IO;
 
 namespace HackedDesign
@@ -30,8 +27,6 @@ namespace HackedDesign
         private GameObject player = null;
         private PlayerController playerController = null;
 
-
-
         [Header("Level")]
         [SerializeField]
         private Level.LevelGenerator levelGenerator = null;
@@ -46,7 +41,7 @@ namespace HackedDesign
 
         [SerializeField]
         private GameObject roomAlertPrefab = null;
-
+        [SerializeField]
         private GameObject roomAlert = null;
 
         [Header("Mobile UI")]
@@ -207,7 +202,10 @@ namespace HackedDesign
         {
             Debug.Log(this.name + ": loading new level");
             State.state = GameStateEnum.LOADING;
+            //levelRenderer.DestroyLevel();
+            State.entityList.Clear();
             State.currentLevel = levelGenerator.GenerateLevel(template);
+
             //entityManager.Initialize(npcParent);
             //actionManager.Initialize(entityManager, taskManager);
             CoreGame.Instance.SceneInitialize();
@@ -241,8 +239,9 @@ namespace HackedDesign
             Debug.Log(this.name + ": scene initialization");
             ShowPlayer(true);
 
-            levelRenderer.Render(this.State.currentLevel);
             this.State.entityList.Clear();
+            levelRenderer.Render(this.State.currentLevel);
+
             this.State.entityList.AddRange(levelRenderer.PopulateNPCSpawns(this.State.currentLevel));
             this.State.entityList.AddRange(levelRenderer.PopulateEnemySpawns(this.State.currentLevel));
             this.State.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.State.currentLevel));
@@ -293,8 +292,14 @@ namespace HackedDesign
             State.triggerList.Clear();
             Debug.Log(this.name + ": initializing triggers, count " + GameObject.FindGameObjectsWithTag("Trigger").Length);
 
+
             foreach (GameObject triggerObject in GameObject.FindGameObjectsWithTag("Trigger"))
             {
+                if(!triggerObject.activeInHierarchy)
+                {
+                    continue;
+                }
+                
                 Debug.Log(this.name + ": initializing trigger " + triggerObject.name);
                 Triggers.ITrigger trigger = triggerObject.GetComponent<Triggers.ITrigger>();
                 if (trigger != null)
@@ -374,7 +379,7 @@ namespace HackedDesign
             string path = Path.Combine(Application.persistentDataPath, "SaveFile" + State.gameSlot + ".json");
             Debug.Log(this.name + ": saving " + path);
             File.WriteAllText(path, json);
-            
+
             //XmlSerializer serializer = new XmlSerializer(typeof(GameState));
             //using (StringWriter sw =)
 
@@ -463,6 +468,7 @@ namespace HackedDesign
         {
             foreach (Triggers.ITrigger trigger in State.triggerList)
             {
+
                 trigger.UpdateTrigger();
             }
         }

@@ -71,6 +71,11 @@ namespace HackedDesign
                 else
                 {
                     taskDescription.text = CoreGame.Instance.State.selectedTask.description;
+                    taskDescription.text += "\n";
+                    foreach(TaskObjective objective in CoreGame.Instance.State.selectedTask.objectives)
+                    {
+                        taskDescription.text += "\n[" + (objective.completed ? "*" : " ") + "] " + objective.objective + (objective.optional ? "(*)" : "") ;
+                    }
                 }
             }
 

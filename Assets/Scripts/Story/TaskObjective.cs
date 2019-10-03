@@ -8,7 +8,6 @@ namespace HackedDesign {
 		public class TaskObjective : ScriptableObject {
 			public string objective;
 			public bool completed;
-			public bool available;
 			public bool optional;
 		}
 	}

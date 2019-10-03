@@ -13,7 +13,7 @@ namespace HackedDesign.Story
                     Debug.Log("PreludeActions: invoke Prelude1");
                     InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Arisana"));
                     InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Manager Lyon"));
-                    InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kari"));
+                    InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Cari"));
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
                     break;
                 case "Prelude2":
@@ -39,8 +39,8 @@ namespace HackedDesign.Story
                 case "Prelude7":
                     Debug.Log("PreludeActions: invoke Prelude7");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude7");
-                    SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
-                    CoreGame.Instance.State.state = GameStateEnum.SELECTMENU;
+                    //SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
+                    //CoreGame.Instance.State.state = GameStateEnum.SELECTMENU;
                     break;
                 case "PreludeLaptop":
                     PreludeLaptop();
@@ -57,7 +57,7 @@ namespace HackedDesign.Story
                 case "PreludeExit":
                     PreludeExit();
                     break;
-                case "PreludeBarSnowOwl":
+                case "PreludeBarKat":
                     Debug.Log("Snowowl");
                     break;
             }
@@ -71,7 +71,7 @@ namespace HackedDesign.Story
             ActionManager.instance.AddActionMessage("Task 'Milk Run' added to Tasks");
             //taskManager.selectedTask = 
             InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Saika"));
-            InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Snow Owl"));
+            //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kat"));
 
 
             if (!CoreGame.Instance.State.taskList.Exists(t => t.title == "Milk Run"))
@@ -109,8 +109,9 @@ namespace HackedDesign.Story
         {
             if (CoreGame.Instance.State.taskList.Exists(t => t.title == "Milk Run"))
             {
-                CoreGame.Instance.LoadNewLevel("Arisana Bar");
                 Debug.Log("PreludeActions: can exit");
+                CoreGame.Instance.LoadNewLevel("Arisana Bar");
+                
             }
             else
             {

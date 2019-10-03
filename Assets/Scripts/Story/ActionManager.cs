@@ -32,6 +32,7 @@ namespace HackedDesign.Story
             this.taskManager = taskManager;
 
             actions.Add("Olivia's Room", new PreludeActions());
+            actions.Add("Arisana Bar", new PreludeBarActions());
         }
 
 
@@ -62,6 +63,11 @@ namespace HackedDesign.Story
 
         public void Invoke(string actionName)
         {
+            if(string.IsNullOrWhiteSpace(actionName))
+            {
+                return;
+            }
+            
             CoreGame.Instance.SaveGame();
             
             if (CoreGame.Instance.State.currentLevel == null)
@@ -72,6 +78,9 @@ namespace HackedDesign.Story
             if (actions.ContainsKey(CoreGame.Instance.State.currentLevel.template.name))
             {
                 actions[CoreGame.Instance.State.currentLevel.template.name].Invoke(actionName);
+            }
+            else {
+                Debug.LogError(this.name + ": cannot invoke action: " + actionName + " in current level: " + CoreGame.Instance.State.currentLevel.template.name);
             }
         }
     }

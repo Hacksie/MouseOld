@@ -76,15 +76,17 @@ namespace HackedDesign
                 if (!string.IsNullOrWhiteSpace(genTemplate.levelResource))
                 {
                     level = LoadLevelFromFile(genTemplate);
+                    GenerateEntities(level, false);
                 }
                 else
                 {
                     level = GenerateRandomLevel(genTemplate);
                     GenerateEnemySpawns(level);
                     GenerateTrapSpawns(level);
+                    GenerateEntities(level, true);
                 }
 
-                GenerateEntities(level);
+                
 
 
                 level.Print();
@@ -514,31 +516,38 @@ namespace HackedDesign
                 return (!(level.map[pos.y].rooms[pos.x] == null));
             }
 
-        
 
-            void GenerateEntities(Level level)
+            void GenerateEntities(Level level, bool genProps)
             {
+
                 for (int i = 0; i < level.map.Count(); i++)
                 {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
+
                         Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4), 0);
 
                         if (level.map[i].rooms[j] != null)
                         {
 
                             GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_WALL, level.template, false);
-                            if (level.map[i].rooms[j].isEntry)
+
+                            if (genProps)
                             {
-                                GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_ENTRY, level.template, false);
-                            }
-                            else if (level.map[i].rooms[j].isEnd)
-                            {
-                                GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_END, level.template, false);
-                            }
-                            else
-                            {
-                                GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_RANDOM, level.template, true);
+
+                                if (level.map[i].rooms[j].isEntry)
+                                {
+
+                                    GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_ENTRY, level.template, false);
+                                }
+                                else if (level.map[i].rooms[j].isEnd)
+                                {
+                                    GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_END, level.template, false);
+                                }
+                                else
+                                {
+                                    GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_RANDOM, level.template, true);
+                                }
                             }
 
                             //GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_FIXED, level.template, true);
@@ -546,6 +555,8 @@ namespace HackedDesign
                         }
                     }
                 }
+
+
             }
 
             void GenerateRoomEntities(ProxyRoom proxyRoom, string type, LevelGenTemplate template, bool allowTraps)
@@ -754,7 +765,7 @@ namespace HackedDesign
                         }
                     );
                 }
-            }              
+            }
         }
     }
 }

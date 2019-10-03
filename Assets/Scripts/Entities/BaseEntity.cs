@@ -10,17 +10,16 @@ namespace HackedDesign
         public class BaseEntity : MonoBehaviour
         {
 
-            protected Animator anim; //The parent animator.
+            public Vector2 direction = Vector2.zero;
+            public LayerMask layerMask;            
 
             public bool facePlayer = true;
 
-            private List<SpriteRenderer> sprites = new List<SpriteRenderer>();
+            protected Animator anim; //The parent animator.
+            protected List<SpriteRenderer> sprites = new List<SpriteRenderer>();
             protected Transform player;
 
-            public Vector2 direction = Vector2.zero;
 
-
-            public LayerMask layerMask;
 
             // public List<Vector3> patrolPath;
             // public int patrolPathLength = 4;

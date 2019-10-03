@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace HackedDesign {
 
 	public class PlayerController : MonoBehaviour {
 
-		private float movementEpsilon = 0.2f; //An axis value above this is considered movement.		
+		private float movementEpsilon = 0.1f; //An axis value above this is considered movement.		
 
 		[Range (0.0f, 10.0f)]
 		[Tooltip ("The movement speed of the controller.")]

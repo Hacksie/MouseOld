@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67361496ba9bbd849975b74f72a8e3ec, type: 3}
-  m_Name: A.I.
+  m_Script: {fileID: 11500000, guid: 5e728b75ede1ad240b1076a43b0acda3, type: 3}
+  m_Name: Break into Saika Corp
   m_EditorClassIdentifier: 
-  available: 1
+  objective: Break into Saika Corp
+  completed: 0
+  optional: 0

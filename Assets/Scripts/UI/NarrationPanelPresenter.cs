@@ -57,7 +57,7 @@ namespace HackedDesign {
                     return;
                 }
 
-                speakerTitle.text = currentNarration.speaker.handle;
+                speakerTitle.text = "<color=\"#B0B0B0\">" + currentNarration.speaker.fullName + " </color>\"" + currentNarration.speaker.handle + "\"<color=\"#B0B0B0\">, " + currentNarration.speaker.@class.ToString () + " for </color><color=\"#" + ColorUtility.ToHtmlStringRGBA(currentNarration.speaker.corp.color) + "\">" + currentNarration.speaker.corp.name + "</color>";
                 speakerName.text = currentNarration.speaker.fullName;
                 speakerHandle.text = currentNarration.speaker.handle;
                 speakerCorp.text = currentNarration.speaker.corp.name;

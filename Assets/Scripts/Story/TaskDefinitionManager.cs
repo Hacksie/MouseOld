@@ -32,10 +32,19 @@ namespace HackedDesign
                 if (!t)
                     return null;
 
-                Story.Task instance = (Story.Task)ScriptableObject.CreateInstance(typeof(Story.Task));
+                Task instance = (Task)ScriptableObject.CreateInstance(typeof(Task));
                 instance.title = t.title;
                 instance.description = t.description;
                 instance.completed = t.completed;
+                instance.objectives = new List<TaskObjective>();
+                foreach(TaskObjective objective in t.objectives)
+                {
+                    TaskObjective o = (TaskObjective)ScriptableObject.CreateInstance(typeof(TaskObjective));
+                    o.objective = objective.objective;
+                    o.completed = objective.completed;
+                    o.optional = objective.optional;
+                    instance.objectives.Add(o);
+                }
                 return instance;
             }
 

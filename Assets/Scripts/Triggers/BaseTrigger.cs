@@ -45,6 +45,8 @@ namespace HackedDesign
             public virtual void Initialize(Input.IInputController inputController)
             {
                 this.inputController = inputController;
+                hasBeenLeft = false;
+                hasBeenTriggered = false;
                 collider = GetComponent<Collider2D>();
                 if (enabled)
                 {

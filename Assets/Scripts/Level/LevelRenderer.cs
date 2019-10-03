@@ -37,6 +37,7 @@ namespace HackedDesign
 
             public void Render(Level level)
             {
+                Debug.Log(this.name + ": rendering level");
                 DestroyLevel();
                 PopulateLevelTilemap(level);
                 //PopulateEnemySpawns (level);
@@ -70,7 +71,7 @@ namespace HackedDesign
                 // Destroy Tiles
                 for (int k = 0; k < levelParent.transform.childCount; k++)
                 {
-                    GameObject.Destroy(levelParent.transform.GetChild(k).gameObject);
+                    GameObject.DestroyImmediate(levelParent.transform.GetChild(k).gameObject);
                 }
             }
 
@@ -105,9 +106,10 @@ namespace HackedDesign
                             }
 
                             // BL
+                            Debug.Log(this.name + ": bl count " + level.map[i].rooms[j].bottomLeft.Count);
                             for (int e = 0; e < level.map[i].rooms[j].bottomLeft.Count; e++)
                             {
-                                //Debug.Log(level.map[i].rooms[j].bottomLeft[e].type + level.map[i].rooms[j].bottomLeft[e].name + level.template.name);
+                                Debug.Log(level.map[i].rooms[j].bottomLeft[e].type + level.map[i].rooms[j].bottomLeft[e].name + level.template.name);
                                 var go = FindRoomEntity(level.map[i].rooms[j].bottomLeft[e].type, level.map[i].rooms[j].bottomLeft[e].name, level.template);
                                 if (go == null)
                                 {
@@ -129,8 +131,10 @@ namespace HackedDesign
                             }
 
                             // BR
+                            Debug.Log(this.name + ": br count " + level.map[i].rooms[j].bottomRight.Count);
                             for (int e = 0; e < level.map[i].rooms[j].bottomRight.Count; e++)
                             {
+                                Debug.Log(level.map[i].rooms[j].bottomRight[e].type + level.map[i].rooms[j].bottomRight[e].name + level.template.name);
                                 var go = FindRoomEntity(level.map[i].rooms[j].bottomRight[e].type, level.map[i].rooms[j].bottomRight[e].name, level.template);
                                 if (go == null)
                                 {
@@ -147,6 +151,7 @@ namespace HackedDesign
                             }
 
                             // TL
+                            Debug.Log(this.name + ": tl count " + level.map[i].rooms[j].topLeft.Count);
                             for (int e = 0; e < level.map[i].rooms[j].topLeft.Count; e++)
                             {
 
@@ -167,6 +172,7 @@ namespace HackedDesign
                             }
 
                             //TR
+                            Debug.Log(this.name + ": tr count " + level.map[i].rooms[j].topRight.Count);
                             for (int e = 0; e < level.map[i].rooms[j].topRight.Count; e++)
                             {
                                 var go = FindRoomEntity(level.map[i].rooms[j].topRight[e].type, level.map[i].rooms[j].topRight[e].name, level.template);

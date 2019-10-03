@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using HackedDesign.Story;
 
 namespace HackedDesign.Entity
 {
@@ -10,17 +11,17 @@ namespace HackedDesign.Entity
 
         public const string UNKNOWN_STRING = @"?";
 
-        [SerializeField]
-        SpriteRenderer actionBubble = null;
+        //[SerializeField]
+        //SpriteRenderer actionBubble = null;
 
-        [SerializeField]
-        Collider2D actionTriggerCollider = null;
+        //[SerializeField]
+        //Collider2D actionTriggerCollider = null;
 
         [SerializeField]
         Story.Character character = null;
 
-        [SerializeField]
-        bool known = false;
+        //[SerializeField]
+        //bool known = false;
 
         [SerializeField]
         UnityEngine.UI.Text text = null;
@@ -37,24 +38,23 @@ namespace HackedDesign.Entity
                 Debug.Log(this.name + ": text is null");
             }
 
-            known = character.known;
+            //known = character.known;
 
             SetHandleText();
-
-
         }
 
         public override void UpdateBehaviour()
         {
+            Debug.Log(this.name + ": update behaviour");
             base.UpdateBehaviour();
             SetHandleText();
         }
 
         void SetHandleText()
         {
-            if (known)
+            if (InfoManager.instance.knownEntities.Find(e => e.name == gameObject.name))
             {
-            text.text = character.handle;
+                text.text = character.handle;
             }
             else
             {
