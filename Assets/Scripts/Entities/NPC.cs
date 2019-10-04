@@ -45,13 +45,18 @@ namespace HackedDesign.Entity
 
         public override void UpdateBehaviour()
         {
-            Debug.Log(this.name + ": update behaviour");
+            //Debug.Log(this.name + ": update behaviour");
             base.UpdateBehaviour();
             SetHandleText();
         }
 
         void SetHandleText()
         {
+            if(text == null)
+            {
+                return; 
+            }
+            
             if (InfoManager.instance.knownEntities.Find(e => e.name == gameObject.name))
             {
                 text.text = character.handle;

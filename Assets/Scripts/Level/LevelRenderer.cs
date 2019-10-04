@@ -384,6 +384,10 @@ namespace HackedDesign
                         results.Add(npc);
 
                     }
+                    else 
+                    {
+                        Debug.LogError(this.name + ": unable to find pooled NPC");
+                    }
                 }
 
                 return results;
