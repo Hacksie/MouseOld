@@ -29,7 +29,6 @@ namespace HackedDesign.Story
             {
                 Debug.Log("PreludeActions: can exit");
                 CoreGame.Instance.LoadNewLevel("Arisana Bar");
-                
             }
             else
             {
