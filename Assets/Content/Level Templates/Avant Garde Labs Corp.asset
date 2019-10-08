@@ -15,15 +15,16 @@ MonoBehaviour:
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
-  enemies: 2
-  traps: 2
+  enemies: 4
+  traps: 0
   generateDoors: 1
   startingRoomString: wdww
   startingAction: 
   exitAction: 
-  isRandom: 1
+  levelResource: 
   generateNavMesh: 1
-  floor: {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
+  floors:
+  - {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
   levelElements:
   - {fileID: 1873802445332644, guid: 1c534f2ffa411f4479942e99cbc76f27, type: 3}
   - {fileID: 1996918847672242, guid: e34b005cfdd4c62408cf399f75049dc5, type: 3}
@@ -157,5 +158,4 @@ MonoBehaviour:
   - {fileID: 6797104490100697780, guid: ecf5fbd55c4786c43afaada007f25fd4, type: 3}
   - {fileID: 8387367927353284284, guid: 0133037e36f623a48a2ff29e12716aa6, type: 3}
   - {fileID: 6150267684878857572, guid: 2ffcfcbb737fe244eac99e723d74062f, type: 3}
-  mapWallsRows: []
-  mapPropsRows: []
+  fixedProps: []

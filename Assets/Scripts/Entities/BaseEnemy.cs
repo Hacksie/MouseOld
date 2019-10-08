@@ -14,6 +14,9 @@ namespace HackedDesign {
             public float patrolLastCheck = 0;
             public Vector2Int currentDirection;
             public List<Vector2Int> currentDirections;
+            public Transform alertLight;
+            
+
 
             public float huntingLastSeen = 0;
             public float seekTime = 5.0f;
@@ -22,7 +25,7 @@ namespace HackedDesign {
 
             public Vector3 lastKnownLocation;
 
-            public EnemyState state = EnemyState.PATROLLING;
+            public EnemyState state = EnemyState.STANDING;
 
             void start () {
                 if (polyNavAgent == null) {
@@ -44,15 +47,42 @@ namespace HackedDesign {
 
 			public override void FaceDirection (Vector2 direction) {
 
+                this.direction = NormaliseDirectionVector(direction);
+                UpdateAlertLight(this.direction);
+
 				if (anim != null) {
-					anim.SetFloat ("directionX", direction.x);
-					anim.SetFloat ("directionY", direction.y);
+					anim.SetFloat ("directionX", this.direction.x);
+					anim.SetFloat ("directionY", this.direction.y);
 
 					if (this.polyNavAgent != null && this.polyNavAgent.currentSpeed > 0.01f) {
 						anim.SetBool ("isMoving", true);
 					}
 				}
-			}                 
+			}   
+
+            public void UpdateAlertLight(Vector2Int direction)
+            {
+                if(direction == Vector2Int.zero)
+                {
+                    alertLight.rotation = Quaternion.Euler(0,0, 180);
+                }
+                if(direction == Vector2Int.down)
+                {
+                    alertLight.rotation = Quaternion.Euler(0,0, 180);
+                }                
+                if(direction == Vector2Int.up)
+                {
+                    alertLight.rotation = Quaternion.Euler(0,0, 0);
+                }                   
+                if(direction == Vector2Int.left)
+                {
+                    alertLight.rotation = Quaternion.Euler(0,0,90);
+                } 
+                if(direction == Vector2Int.right)
+                {
+                    alertLight.rotation = Quaternion.Euler(0,0,270);
+                }                 
+            }              
 
             public override void UpdateBehaviour () {
 

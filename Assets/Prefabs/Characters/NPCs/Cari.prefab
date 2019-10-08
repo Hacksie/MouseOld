@@ -133,6 +133,7 @@ MonoBehaviour:
   sprite: {fileID: 4747332383414600392}
   requireInteraction: 1
   allowRepeatTriggers: 0
+  allowNPCAutoInteraction: 0
   triggerAction: PreludeKari
   leaveAction: 
   hasBeenTriggered: 0
@@ -168,7 +169,7 @@ GameObject:
   - component: {fileID: 4874515540998177804}
   - component: {fileID: 3630561396134547486}
   m_Layer: 9
-  m_Name: Kari
+  m_Name: Cari
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -317,15 +318,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5909a6d7cead226439b81d6d56b563b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  facePlayer: 1
   direction: {x: 0, y: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 0
-  actionBubble: {fileID: 4747332383414600392}
-  actionTriggerCollider: {fileID: 0}
+  facePlayer: 1
   character: {fileID: 11400000, guid: 7b0ab88b4fb757947ad38ab6026c5eb4, type: 2}
-  known: 0
   text: {fileID: 3236020944881651026}
 --- !u!1 &5886790249079917971
 GameObject:
@@ -490,8 +488,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9ebb6ca5ee4094addac513cf8528f1e1, type: 2}
     m_FontSize: 0

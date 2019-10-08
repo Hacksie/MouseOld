@@ -10,7 +10,7 @@ namespace HackedDesign
         public class BaseEntity : MonoBehaviour
         {
 
-            public Vector2 direction = Vector2.zero;
+            public Vector2Int direction = Vector2Int.zero;
             public LayerMask layerMask;            
 
             public bool facePlayer = true;
@@ -56,12 +56,20 @@ namespace HackedDesign
 
             public virtual void FaceDirection(Vector2 direction)
             {
+                this.direction = NormaliseDirectionVector(direction);
+
                 if (anim != null)
                 {
-                    anim.SetFloat("directionX", direction.x);
-                    anim.SetFloat("directionY", direction.y);
+                    anim.SetFloat("directionX", this.direction.x);
+                    anim.SetFloat("directionY", this.direction.y);
                     anim.SetBool("isMoving", false);
                 }
+            }
+
+            protected Vector2Int NormaliseDirectionVector(Vector2 direction)
+            {
+                return Vector2Int.RoundToInt(direction.normalized);
+                //return new Vector2Int(Mathf.RoundToInt(direction.normalized.x), Mathf.RoundToInt(direction.normalized.y));
             }
 
 

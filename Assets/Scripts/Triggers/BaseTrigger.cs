@@ -20,6 +20,7 @@ namespace HackedDesign
             [Header("Trigger settings")]
             public bool requireInteraction = false;
             public bool allowRepeatTriggers = false;
+            public bool allowNPCAutoInteraction = false;
 
             [Header("Trigger actions")]
             public string triggerAction;
@@ -106,7 +107,7 @@ namespace HackedDesign
                     return;
                 }
 
-                if (other.tag == TagManager.PLAYER && !hasBeenTriggered || (allowRepeatTriggers && hasBeenTriggered))
+                if (other.tag == TagManager.PLAYER && (!hasBeenTriggered || (allowRepeatTriggers && hasBeenTriggered)))
                 {
                     if (sprite != null && !sprite.gameObject.activeInHierarchy)
                     {
@@ -119,6 +120,10 @@ namespace HackedDesign
                         Invoke();
                     }
 
+                }
+                if(other.tag == TagManager.NPC && allowNPCAutoInteraction)
+                {
+                    Invoke();
                 }
             }
 
@@ -145,6 +150,10 @@ namespace HackedDesign
                         }
                     }
                 }
+                if(other.tag == TagManager.NPC && allowNPCAutoInteraction)
+                {
+                    Leave();
+                }                
 
 
             }

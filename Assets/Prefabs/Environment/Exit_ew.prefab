@@ -152,6 +152,7 @@ MonoBehaviour:
   sprite: {fileID: 8179897198640034044}
   requireInteraction: 0
   allowRepeatTriggers: 1
+  allowNPCAutoInteraction: 0
   triggerAction: 
   leaveAction: 
   hasBeenTriggered: 0
@@ -174,6 +175,7 @@ MonoBehaviour:
   sprite: {fileID: 0}
   requireInteraction: 0
   allowRepeatTriggers: 0
+  allowNPCAutoInteraction: 1
   triggerAction: 
   leaveAction: 
   hasBeenTriggered: 0
