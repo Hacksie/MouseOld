@@ -24,8 +24,10 @@ namespace HackedDesign {
 			movementVector = inputController.GetMovementAxis ();
 
 			if (movementVector.sqrMagnitude > (movementEpsilon * movementEpsilon)) {
-				anim.SetFloat ("directionX", movementVector.x);
-				anim.SetFloat ("directionY", movementVector.y);
+				anim.SetFloat ("moveX", movementVector.x);
+				anim.SetFloat ("moveY", movementVector.y);
+				//anim.SetFloat ("directionX", movementVector.x);
+				//anim.SetFloat ("directionY", movementVector.y);
 				anim.SetBool ("isMoving", true);
 			} else {
 				movementVector = Vector2.zero;

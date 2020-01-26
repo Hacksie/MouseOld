@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
-  m_Name: Olivia's Room
+  m_Name: Victoria's Room
   m_EditorClassIdentifier: 
   levelLength: 1
   levelWidth: 1
@@ -21,7 +21,7 @@ MonoBehaviour:
   startingRoomString: weww
   startingAction: Prelude1
   exitAction: PreludeExit
-  levelResource: OliviasRoom
+  levelResource: VictoriasRoom
   generateNavMesh: 0
   floors:
   - {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}

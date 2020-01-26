@@ -181,7 +181,7 @@ namespace HackedDesign
             State.state = GameStateEnum.LOADING;
             entityManager.Initialize(npcParent);
             actionManager.Initialize(entityManager, taskManager);
-            State.currentLevel = levelGenerator.GenerateLevel("Olivia's Room", 1, 1, 1, 0, 0, 0);
+            State.currentLevel = levelGenerator.GenerateLevel("Victoria's Room", 1, 1, 1, 0, 0, 0);
             State.player = new Character.PlayerState();
 
             CoreGame.Instance.SceneInitialize();
