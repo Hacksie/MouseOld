@@ -53,7 +53,12 @@ namespace HackedDesign.Story
                 case "PreludeKari2":
                     PreludeKari2();
                     break;
-
+                case "PreludeKari3":
+                    PreludeKari3();
+                    break;
+                case "PreludeKari4":
+                    PreludeKari4();
+                    break;                    
                 case "PreludeExit":
                     PreludeExit();
                     break;
@@ -99,10 +104,19 @@ namespace HackedDesign.Story
         public void PreludeKari2()
         {
             Dialogue.NarrationManager.instance.ShowNarration("PreludeKari2");
-            var kari = EntityManager.instance.GetPooledNPC("Kari");
+            //var kari = EntityManager.instance.GetPooledNPC("Kari");
             //var trigger = kari.GetComponent<Triggers.BaseTrigger>();
             //trigger.enabled = false;
         }
+
+        public void PreludeKari3()
+        {
+            Dialogue.NarrationManager.instance.ShowNarration("PreludeKari3");
+        }        
+        public void PreludeKari4()
+        {
+            Dialogue.NarrationManager.instance.ShowNarration("PreludeKari4");
+        }                
 
 
         public void PreludeExit()

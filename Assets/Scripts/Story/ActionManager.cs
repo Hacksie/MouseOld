@@ -31,7 +31,7 @@ namespace HackedDesign.Story
             this.entityManager = entityManager;
             this.taskManager = taskManager;
 
-            actions.Add("Olivia's Room", new PreludeActions());
+            actions.Add("Victoria's Room", new PreludeActions());
             actions.Add("Arisana Bar", new PreludeBarActions());
         }
 
