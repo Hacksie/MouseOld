@@ -12,5 +12,6 @@ namespace HackedDesign.Character
         public int intimidation = 0;
         public int software = 0;
         public int hardware = 0;
+        public int zap = 0;
     }
 }

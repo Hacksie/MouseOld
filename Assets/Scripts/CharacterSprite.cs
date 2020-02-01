@@ -68,13 +68,6 @@ namespace HackedDesign
         private int frameIndex = 0; //The index of the current frame. Used to set index of new frame.    
 
 
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
         void SetSpritesheets()
         {
             bodySpritesheet = isMale ? Resources.LoadAll<Sprite>(maleBodyFolderPath + maleBodySprites[bodyIndex].name) : Resources.LoadAll<Sprite>(femaleBodyFolderPath + femaleBodySprites[bodyIndex].name);
@@ -88,7 +81,7 @@ namespace HackedDesign
             }
         }
 
-        void LateUpdate()
+        void LateUpdate() //FIXME: make this called as part of the game loop
         {
             SetSpritesheets();
             currentFrameName = bodySpriteRenderer.sprite.name;

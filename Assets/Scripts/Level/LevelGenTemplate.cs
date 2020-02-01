@@ -18,7 +18,7 @@ namespace HackedDesign
 
 			public bool generateDoors = true;
 
-			public string startingRoomString = "weww";
+			public string startingRoomString = "wnww_entry";
 			public string startingAction;
 			public string exitAction;
 

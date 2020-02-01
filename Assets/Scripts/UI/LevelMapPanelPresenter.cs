@@ -121,9 +121,9 @@ namespace HackedDesign {
                     return false;
                 }
 
-                // Hack to deal with exits
-                wall1 = wall1.Replace('e','d');
-                wall2 = wall2.Replace('e','d');
+                // Hack to deal with entry & exits
+                wall1 = wall1.Replace('e','d').Replace('n','d');
+                wall2 = wall2.Replace('e','d').Replace('n','d');
 
                 return (nameSplit[0] == corner.ToLower () &&
                     (wall1.ToLower () == nameSplit[1].Substring (0, 1) && wall2.ToLower () == nameSplit[1].Substring (1, 1)));
