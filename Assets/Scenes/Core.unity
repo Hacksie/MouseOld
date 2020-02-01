@@ -40688,7 +40688,17 @@ PrefabInstance:
     - target: {fileID: 20545203259197626, guid: 703d9f9014e064f4db224415272a3583,
         type: 3}
       propertyPath: orthographic size
-      value: 5
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 20545203259197626, guid: 703d9f9014e064f4db224415272a3583,
+        type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20545203259197626, guid: 703d9f9014e064f4db224415272a3583,
+        type: 3}
+      propertyPath: far clip plane
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114714601997181840, guid: 703d9f9014e064f4db224415272a3583,
         type: 3}
@@ -40709,6 +40719,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RefResolutionY
       value: 768
+      objectReference: {fileID: 0}
+    - target: {fileID: 114946212773238066, guid: 703d9f9014e064f4db224415272a3583,
+        type: 3}
+      propertyPath: m_UpscaleRT
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 703d9f9014e064f4db224415272a3583, type: 3}
