@@ -12,6 +12,8 @@ namespace HackedDesign.Character
         public int intimidation = 0;
         public int software = 0;
         public int hardware = 0;
-        public int zap = 0;
+        public int battery = 20;
+        public int maxBattery = 50;
+        public int zap = 10;
     }
 }

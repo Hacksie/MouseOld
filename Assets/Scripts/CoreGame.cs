@@ -8,7 +8,7 @@ namespace HackedDesign
 
         public static CoreGame Instance { get; private set; }
 
-        public GameState State { get; private set; } = new GameState();
+        public GameState State;
 
         private Input.IInputController inputController;
 

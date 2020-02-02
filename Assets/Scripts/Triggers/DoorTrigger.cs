@@ -14,7 +14,7 @@ namespace HackedDesign {
 
             public override void Initialize (Input.IInputController inputController) {
                 base.Initialize(inputController);
-                Debug.Log ("Initialize door trigger");
+                Debug.Log ("Door: Initialize door trigger");
                 base.Activate();
                 
                 animator = GetComponent<Animator>();
@@ -24,13 +24,11 @@ namespace HackedDesign {
 
             // Update is called once per frame
             public override void UpdateTrigger () {
-                //Debug.Log("update trigger " + open);
                 if(animator != null)
                     animator.SetBool("open", open);
              }
 
             public override void Invoke () {
-                
                 open = true;            
             }
 
