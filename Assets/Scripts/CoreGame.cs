@@ -72,6 +72,8 @@ namespace HackedDesign
         [SerializeField]
         private WorldMapPanelPresenter worldMapPanel = null;
         [SerializeField]
+        private StatsPanelPresenter statsPanel = null;        
+        [SerializeField]
         private Story.InfoManager infoManager = null;
         [SerializeField]
         private Story.InfoPanelPresenter infoPanel = null;
@@ -87,6 +89,8 @@ namespace HackedDesign
         private Dialogue.DialogueManager dialogueManager = null;
         [SerializeField]
         private Dialogue.DialoguePanelPresenter dialoguePanel = null;
+
+        
 
         [SerializeField]
         private Level.LevelMapPanelPresenter levelMapPanel = null;
@@ -151,6 +155,7 @@ namespace HackedDesign
             narrationPanel.Initialize(narrationManager);
             dialoguePanel.Initialize(dialogueManager);
             worldMapPanel.Initialize(worldMapManager);
+            statsPanel.Initialize();
             levelRenderer.Initialize(entityManager, levelParent, npcParent, polyNav2D);
 
             RepaintAll();
@@ -172,7 +177,6 @@ namespace HackedDesign
                     inputController = new Input.DesktopInputController();
                     break;
             }
-
         }
 
         public void LoadNewGame()
@@ -250,9 +254,6 @@ namespace HackedDesign
 
             player.transform.position = State.currentLevel.ConvertLevelPosToWorld(State.currentLevel.playerSpawn.levelLocation) + State.currentLevel.playerSpawn.worldOffset;
 
-
-            //GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
-
             playerController = player.GetComponent<PlayerController>();
 
             SceneTriggersInitialize();
@@ -281,6 +282,7 @@ namespace HackedDesign
 
             levelMapPanel.Repaint();
             worldMapPanel.Repaint();
+            statsPanel.Repaint();
             //timerPanel.Repaint ();
             mobileInputUI.Repaint();
             cursorPresenter.Repaint();

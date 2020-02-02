@@ -108,10 +108,6 @@ namespace HackedDesign
 
                 JsonUtility.FromJsonOverwrite(jsonTextFile.text, level);
 
-                //Debug.Log(levelJson.map[0].row[0].bottomLeft[0].name);
-
-
-
                 return level;
 
             }
@@ -287,9 +283,7 @@ namespace HackedDesign
                     response.left = splitString[0].Substring(0, 1);
                     response.top = splitString[0].Substring(1, 1);
                     response.bottom = splitString[0].Substring(2, 1);
-                    response.right = splitString[0].Substring(3, 1);
-                    Debug.Log("top " + response.top);
-                    
+                    response.right = splitString[0].Substring(3, 1);                   
                 }
 
                 if (splitString.Length > 1)
@@ -558,7 +552,6 @@ namespace HackedDesign
             void GenerateRoomEntities(ProxyRoom proxyRoom, string type, LevelGenTemplate template, bool allowTraps)
             {
                 string roomString = proxyRoom.AsPrintableString();
-                Debug.Log("LevelGen: roomstring" + roomString);
                 List<GameObject> goBLList;
                 List<GameObject> goBRList;
                 List<GameObject> goTLList;
@@ -672,8 +665,6 @@ namespace HackedDesign
                     return false;
                 }
 
-                Debug.LogError(this.name + ": matchstringname" + corner + " " + wall1 + " " + wall2);
-
                 string open = "oaxy";
                 string door = "daxz";
                 string wall = "wayz";
@@ -682,11 +673,6 @@ namespace HackedDesign
 
                 string first = nameSplit[3].Substring(0, 1);
                 string second = nameSplit[3].Substring(1, 1);
-
-                if(wall1.ToLower() == "n" || wall2.ToLower() == "n")
-                {
-                    Debug.LogError(this.name + ": matchstringname" + first + " " + second);
-                }
 
                 return (nameSplit[2] == corner.ToLower() &&
                     ((wall1.ToLower() == "o" && open.IndexOf(first) >= 0) ||
@@ -711,8 +697,6 @@ namespace HackedDesign
                 {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
-                        //Debug.Log(level.map[i].rooms[j] != null && level.map[i].rooms[j].isNearEntry);
-
                         if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
                         {
                             candidates.Add(new Vector2Int(j, i));
