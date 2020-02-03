@@ -26,9 +26,6 @@ namespace HackedDesign
             {
                 this.template = template;
                 this.length = CapLevelLength(template.levelLength, template.levelWidth, template.levelHeight);
-                Debug.Log("Level length: " + length);
-
-
 
                 map = new ProxyRow[template.levelHeight];
                 for (int row = 0; row < template.levelHeight; row++)

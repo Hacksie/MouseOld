@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HackedDesign
 {
@@ -10,6 +11,13 @@ namespace HackedDesign
         public GameObject halfBattery;
         public GameObject almostBattery;
         public GameObject emptyBattery;
+        public Image keycard1;
+        public Image keycard2;
+        public Image keycard3;
+        public Image keycard4;
+        public Image keycard5;
+        public Color keycardEmptyColour;
+        public Color keycardFullColour;
 
         public void Initialize()
         {
@@ -39,7 +47,22 @@ namespace HackedDesign
 
         private void RepaintStats()
         {
+            RepaintKeycards();
             RepaintBattery();
+        }
+
+        private void RepaintKeycards()
+        {
+            keycard1.color = CoreGame.Instance.State.player.keycards >= 1 ? keycardFullColour : keycardEmptyColour;
+            keycard2.color = CoreGame.Instance.State.player.keycards >= 2 ? keycardFullColour : keycardEmptyColour;
+            keycard3.color = CoreGame.Instance.State.player.keycards >= 3 ? keycardFullColour : keycardEmptyColour;
+            keycard4.color = CoreGame.Instance.State.player.keycards >= 4 ? keycardFullColour : keycardEmptyColour;
+            keycard5.color = CoreGame.Instance.State.player.keycards >= 5 ? keycardFullColour : keycardEmptyColour;
+            //keycard5.SetActive(CoreGame.Instance.State.player.keycards == 5);
+            //keycard4.SetActive(CoreGame.Instance.State.player.keycards >= 4);
+            //keycard3.SetActive(CoreGame.Instance.State.player.keycards >= 3);
+            //keycard2.SetActive(CoreGame.Instance.State.player.keycards >= 2);
+            //keycard1.SetActive(CoreGame.Instance.State.player.keycards >= 1);
         }
         private void RepaintBattery()
         {

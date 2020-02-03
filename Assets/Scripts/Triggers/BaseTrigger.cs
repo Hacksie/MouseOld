@@ -95,7 +95,6 @@ namespace HackedDesign
             // TODO: Make door close trigger
             protected virtual void OnTriggerStay2D(Collider2D other)
             {
-
                 if (!enabled)
                 {
                     return;
@@ -154,7 +153,6 @@ namespace HackedDesign
                 {
                     Leave();
                 }                
-
 
             }
         }

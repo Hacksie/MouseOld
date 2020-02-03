@@ -36,6 +36,10 @@ namespace HackedDesign {
 			public bool InteractButtonUp() {
 				return UnityEngine.Input.GetButtonUp("Interact");
 			}
+
+			public bool OverloadButtonUp() {
+				return UnityEngine.Input.GetButtonUp("Overload");
+			}
 		}
 	}
 }

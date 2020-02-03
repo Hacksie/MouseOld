@@ -10,7 +10,10 @@ namespace HackedDesign {
             //public GameObject doorObject;
             public Collider2D doorCollider;
             public Animator animator;
+            public bool overloaded = false;
             bool open = false;
+            bool unlocked = false;
+            
 
             public override void Initialize (Input.IInputController inputController) {
                 base.Initialize(inputController);
@@ -25,7 +28,7 @@ namespace HackedDesign {
             // Update is called once per frame
             public override void UpdateTrigger () {
                 if(animator != null)
-                    animator.SetBool("open", open);
+                    animator.SetBool("open", open || overloaded);
              }
 
             public override void Invoke () {
@@ -35,6 +38,87 @@ namespace HackedDesign {
             public override void Leave() {
                 open = false;
             }     
+
+            protected override void OnTriggerStay2D(Collider2D other)
+            {
+                if (!enabled || overloaded)
+                {
+                    return;
+                }
+
+                if (requireInteraction && inputController == null)
+                {
+                    Debug.LogError(this.name + ": trigger has no inputController");
+                    return;
+                }
+
+                if (other.tag == TagManager.PLAYER && !open && (!hasBeenTriggered || (allowRepeatTriggers && hasBeenTriggered)))
+                {
+                    if (sprite != null && !sprite.gameObject.activeInHierarchy)
+                    {
+                        sprite.gameObject.SetActive(true);
+                    }
+
+                    if (!requireInteraction)
+                    {
+                        hasBeenTriggered = true;
+                        unlocked = true;
+                        Invoke();
+                    }
+                    else if(requireInteraction && (unlocked && inputController.InteractButtonUp()))
+                    {
+                        hasBeenTriggered = true;
+                        Invoke();
+                    }
+                    else if(requireInteraction && (!unlocked && inputController.InteractButtonUp() && CoreGame.Instance.State.player.CanKeycard()))
+                    {
+                        unlocked = true;
+                        hasBeenTriggered = true;
+                        CoreGame.Instance.State.player.ConsumeKeycard();
+                        Invoke();
+                    }
+                    else if(requireInteraction && inputController.OverloadButtonUp() && CoreGame.Instance.State.player.CanOverload())
+                    {
+                        overloaded = true;
+                        hasBeenTriggered = true;
+                        CoreGame.Instance.State.player.ConsumeOverload();
+                        Invoke();
+                    }
+                }
+                if(other.tag == TagManager.NPC && !open && allowNPCAutoInteraction)
+                {
+                    Invoke();
+                }
+            }
+
+            protected override void OnTriggerExit2D(Collider2D other)
+            {
+                if (!enabled)
+                {
+                    return;
+                }
+
+                if (other.tag == TagManager.PLAYER)
+                {
+                    if (sprite != null && sprite.gameObject.activeInHierarchy)
+                    {
+                        sprite.gameObject.SetActive(false);
+                    }
+
+                    if (hasBeenTriggered && !hasBeenLeft)
+                    {
+                        Leave();
+                        if (!allowRepeatTriggers)
+                        {
+                            hasBeenLeft = true;
+                        }
+                    }
+                }
+                if(other.tag == TagManager.NPC && allowNPCAutoInteraction)
+                {
+                    Leave();
+                }                
+            }            
 		}
 	}
 }

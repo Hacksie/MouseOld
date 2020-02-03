@@ -98,30 +98,30 @@ namespace HackedDesign {
 		}
 
 		public void StartRandomGameEvent () {
-			Debug.Log ("Start Random Game Event");
+			Debug.Log (this.name + ": Start Random Game Event");
 			UnityEngine.Random.InitState (System.Convert.ToInt32 (seedInput.text));
 			ShowCreditsPanel (false);
 			ShowOptionsPanel (false);
 			ShowRandomPanel (false);
-			Debug.Log (templateDropdown.options[templateDropdown.value].text);
+			Debug.Log (this.name + ": " + templateDropdown.options[templateDropdown.value].text);
 			CoreGame.Instance.LoadRandomGame (templateDropdown.options[templateDropdown.value].text, (int) lengthSlider.value, (int) heightSlider.value, (int) widthSlider.value, difficultyDropdown.value, (int) enemiesSlider.value, (int) camerasSlider.value);		}
 
 		public void OptionsEvent () {
-			Debug.Log ("Options Event");
+			Debug.Log (this.name + ": Options Event");
 			ShowCreditsPanel (false);
 			ShowOptionsPanel (true);
 			ShowRandomPanel (false);
 		}
 
 		public void CreditsEvent () {
-			Debug.Log ("Credits Event");
+			Debug.Log (this.name + ": Credits Event");
 			ShowCreditsPanel (true);
 			ShowOptionsPanel (false);
 			ShowRandomPanel (false);
 		}
 
 		public void QuitEvent () {
-			Debug.Log ("Quit Event");
+			Debug.Log (this.name + ": Quit Event");
 			Application.Quit ();
 		}
 
@@ -142,11 +142,8 @@ namespace HackedDesign {
 		private void PopulateResolutions () {
 			resolutionsDropdown.ClearOptions ();
 			resolutionsDropdown.AddOptions (Screen.resolutions.ToList ().ConvertAll (r => new UnityEngine.UI.Dropdown.OptionData (r.ToString ())));
-
 			resolutionsDropdown.value = Screen.resolutions.ToList ().IndexOf (Screen.currentResolution);
-
-			fullScreenToggle.isOn = Screen.fullScreen;
-			
+			fullScreenToggle.isOn = Screen.fullScreen;	
 		}
 
 		private void SetResolution () {
@@ -163,7 +160,6 @@ namespace HackedDesign {
 			masterMixer.GetFloat ("AmbientVolume", out ambientVolume);
 			masterMixer.GetFloat ("FXVolume", out fxVolume);
 			masterMixer.GetFloat ("MusicVolume", out musicVolume);
-
 			masterSlider.value = (masterVolume + 80) / 100;
 			ambientSlider.value = (ambientVolume + 80) / 100;
 			fxSlider.value = (fxVolume + 80) / 100;
