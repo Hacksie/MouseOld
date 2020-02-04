@@ -5,7 +5,6 @@ namespace HackedDesign
 {
     public class CoreGame : MonoBehaviour
     {
-
         public static CoreGame Instance { get; private set; }
 
         public GameState State;
@@ -43,6 +42,12 @@ namespace HackedDesign
         private GameObject roomAlertPrefab = null;
         [SerializeField]
         private GameObject roomAlert = null;
+
+        [Header("Lights")]
+        public UnityEngine.Experimental.Rendering.LWRP.Light2D globalLight;
+        public Color lightsDefault;
+        public Color lightsAlert;
+        public Color lightsBar;
 
         [Header("Mobile UI")]
         [SerializeField]
@@ -158,7 +163,7 @@ namespace HackedDesign
             statsPanel.Initialize();
             levelRenderer.Initialize(entityManager, levelParent, npcParent, polyNav2D);
 
-            RepaintAll();
+            RepaintAllUI();
 
             ShowPlayer(false);
         }
@@ -218,7 +223,7 @@ namespace HackedDesign
         public void EndGame()
         {
             State.state = GameStateEnum.MAINMENU;
-            RepaintAll();
+            RepaintAllUI();
             levelRenderer.DestroyLevel();
             State.entityList.Clear();
             ShowPlayer(false);
@@ -242,6 +247,7 @@ namespace HackedDesign
 
             Debug.Log(this.name + ": scene initialization");
             ShowPlayer(true);
+            SetLight(GlobalLightTypes.Default);
 
             this.State.entityList.Clear();
             levelRenderer.Render(this.State.currentLevel);
@@ -266,13 +272,12 @@ namespace HackedDesign
                 Story.ActionManager.instance.Invoke(State.currentLevel.template.startingAction);
             }
 
-            RepaintAll();
+            RepaintAllUI();
 
         }
 
-        void RepaintAll()
+        void RepaintAllUI()
         {
-
             mainMenu.Repaint();
             actionConsolePanel.Repaint();
             dialoguePanel.Repaint();
@@ -343,7 +348,7 @@ namespace HackedDesign
             Debug.Log(this.name + ": state set to NARRATION");
             Time.timeScale = 0;
             State.state = GameStateEnum.NARRATION;
-            RepaintAll();
+            RepaintAllUI();
         }
 
         public void SetWorldMap()
@@ -385,6 +390,28 @@ namespace HackedDesign
             //XmlSerializer serializer = new XmlSerializer(typeof(GameState));
             //using (StringWriter sw =)
 
+        }
+
+        public void UpdateLights()
+        {
+            switch(State.currentLight)
+            {
+                case GlobalLightTypes.Default:
+                    globalLight.color = lightsDefault;
+                    break;
+                case GlobalLightTypes.Alert:
+                    globalLight.color = lightsAlert;
+                    break;                
+                case GlobalLightTypes.Bar:
+                    globalLight.color = lightsBar;
+                    break;                
+                
+            }            
+        }
+
+        public void SetLight(GlobalLightTypes light)
+        {
+            State.currentLight = light;
         }
 
         void Update()
@@ -433,7 +460,8 @@ namespace HackedDesign
 
             }
 
-            RepaintAll();
+            UpdateLights();
+            RepaintAllUI();
 
         }
 

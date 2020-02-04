@@ -25,7 +25,9 @@ namespace HackedDesign
 
         public Story.Task selectedTask = null;
 
-        public GameObject alertTrap = null; // move this to state		
+        public GameObject alertTrap = null; // move this to state
+
+        public GlobalLightTypes currentLight;		
 
         public List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger>();
         public List<Entity.BaseEntity> entityList = new List<Entity.BaseEntity>();
