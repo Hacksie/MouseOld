@@ -16,7 +16,7 @@ namespace HackedDesign.Character
         public int maxBattery = 50;
         public int overload = 10;
         public int maxKeycards = 5;
-        public int keycards = 5;
+        public int keycards = 0;
 
         public bool CanOverload()
         {
