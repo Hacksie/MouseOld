@@ -573,7 +573,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 02071234902fe8047a8fd6539a79bae3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -591,10 +591,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1007191287
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: efe2934cbc9d14e62b28976db82cb5d6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8443eb14618754aaf83caa2da390ce84, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -650,7 +650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 646019389280388576}
   - component: {fileID: 5811734419574753251}
-  - component: {fileID: 1699179287665776664}
+  - component: {fileID: 8431059991299411444}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Trigger
@@ -699,7 +699,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1699179287665776664
+--- !u!114 &8431059991299411444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -708,10 +708,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4290376805730789972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8889c143c0a2b541a5d549c4db28897, type: 3}
+  m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enabled: 1
   sprite: {fileID: 6130983756572020378}
+  requireInteraction: 1
+  allowRepeatTriggers: 0
+  allowNPCAutoInteraction: 0
+  triggerAction: 
+  overloadAction: OverloadEntry
+  leaveAction: 
+  hasBeenTriggered: 0
+  hasBeenLeft: 0
 --- !u!1 &4704005888485762949
 GameObject:
   m_ObjectHideFlags: 0

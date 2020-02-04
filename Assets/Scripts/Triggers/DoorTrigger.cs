@@ -2,42 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HackedDesign {
-	namespace Triggers {
-		public class DoorTrigger : BaseTrigger {
+namespace HackedDesign
+{
+    namespace Triggers
+    {
+        public class DoorTrigger : BaseTrigger
+        {
 
 
+            public bool levelEntry = false;
             //public GameObject doorObject;
             public Collider2D doorCollider;
             public Animator animator;
             public bool overloaded = false;
+
             bool open = false;
             bool unlocked = false;
-            
 
-            public override void Initialize (Input.IInputController inputController) {
+
+            public override void Initialize(Input.IInputController inputController)
+            {
                 base.Initialize(inputController);
-                Debug.Log ("Door: Initialize door trigger");
+                Debug.Log("Door: Initialize door trigger");
                 base.Activate();
-                
+
                 animator = GetComponent<Animator>();
                 allowRepeatTriggers = true;
 
             }
 
             // Update is called once per frame
-            public override void UpdateTrigger () {
-                if(animator != null)
+            public override void UpdateTrigger()
+            {
+                if (animator != null)
                     animator.SetBool("open", open || overloaded);
-             }
-
-            public override void Invoke () {
-                open = true;            
             }
 
-            public override void Leave() {
+            public override void Invoke()
+            {
+                open = true;
+                base.Invoke();
+            }
+
+            public override void Leave()
+            {
                 open = false;
-            }     
+                base.Invoke();
+            }
 
             protected override void OnTriggerStay2D(Collider2D other)
             {
@@ -65,27 +76,59 @@ namespace HackedDesign {
                         unlocked = true;
                         Invoke();
                     }
-                    else if(requireInteraction && (unlocked && inputController.InteractButtonUp()))
+
+                    if (levelEntry)
                     {
-                        hasBeenTriggered = true;
-                        Invoke();
+                        if (requireInteraction && (unlocked && inputController.InteractButtonUp()))
+                        {
+                            hasBeenTriggered = true;
+                            unlocked = true;
+                            Invoke();
+                        }
+                        else if (requireInteraction && CoreGame.Instance.State.currentLevel.timer.running && inputController.InteractButtonUp())
+                        {
+                            // If the timer is running, the entry must have been overloaded
+                            hasBeenTriggered = true;
+                            overloaded = true;
+                            unlocked = true;
+                            Invoke();
+                        }
+                        else if (!overloaded && requireInteraction && inputController.OverloadButtonUp() && CoreGame.Instance.State.player.CanOverload())
+                        {
+                            overloaded = true;
+                            unlocked = true;
+                            hasBeenTriggered = true;
+                            CoreGame.Instance.State.player.ConsumeOverload();
+                            Overload();
+                        } 
                     }
-                    else if(requireInteraction && (!unlocked && inputController.InteractButtonUp() && CoreGame.Instance.State.player.CanKeycard()))
+                    else
                     {
-                        unlocked = true;
-                        hasBeenTriggered = true;
-                        CoreGame.Instance.State.player.ConsumeKeycard();
-                        Invoke();
+                        if (requireInteraction && (unlocked && inputController.InteractButtonUp()))
+                        {
+                            hasBeenTriggered = true;
+                            Invoke();
+                        }
+                        else if (requireInteraction && (!unlocked && inputController.InteractButtonUp() && CoreGame.Instance.State.player.CanKeycard()))
+                        {
+                            unlocked = true;
+                            hasBeenTriggered = true;
+                            CoreGame.Instance.State.player.ConsumeKeycard();
+                            Invoke();
+                        }
+                        else if (requireInteraction && inputController.OverloadButtonUp() && CoreGame.Instance.State.player.CanOverload())
+                        {
+                            overloaded = true;
+                            unlocked = true;
+                            hasBeenTriggered = true;
+                            CoreGame.Instance.State.player.ConsumeOverload();
+                            Invoke();
+                        }
                     }
-                    else if(requireInteraction && inputController.OverloadButtonUp() && CoreGame.Instance.State.player.CanOverload())
-                    {
-                        overloaded = true;
-                        hasBeenTriggered = true;
-                        CoreGame.Instance.State.player.ConsumeOverload();
-                        Invoke();
-                    }
+
+
                 }
-                if(other.tag == TagManager.NPC && !open && allowNPCAutoInteraction)
+                if (other.tag == TagManager.NPC && !open && allowNPCAutoInteraction)
                 {
                     Invoke();
                 }
@@ -114,11 +157,11 @@ namespace HackedDesign {
                         }
                     }
                 }
-                if(other.tag == TagManager.NPC && allowNPCAutoInteraction)
+                if (other.tag == TagManager.NPC && allowNPCAutoInteraction)
                 {
                     Leave();
-                }                
-            }            
-		}
-	}
+                }
+            }
+        }
+    }
 }

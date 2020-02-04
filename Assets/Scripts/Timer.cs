@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 namespace HackedDesign {
-	[CreateAssetMenu (fileName = "Timer", menuName = "Mouse/Gameplay/Timer")]
-	public class Timer : ScriptableObject {
+	//[CreateAssetMenu (fileName = "Timer", menuName = "Mouse/Gameplay/Timer")]
+	[System.Serializable]
+	public class Timer {
 
 		
 		public float maxTime = 5 * 60;
@@ -12,19 +13,10 @@ namespace HackedDesign {
 		public float startTime;
 		public bool running;
 
-		public Color color;
-		public Color warningColor;
-		public Color alertColor;
-
-		public void UpdateTimer()
-		{
-
-		}
-
 		public void Start()
 		{
 			startTime = Time.time;
-			//running = true;
+			running = true;
 			//public float startTime  = Time.time;
 			//public float currentTime  = Time.time;			
 		}

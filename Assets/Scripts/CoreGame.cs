@@ -100,8 +100,8 @@ namespace HackedDesign
         [SerializeField]
         private Level.LevelMapPanelPresenter levelMapPanel = null;
 
-        // [SerializeField]
-        // private TimerPanelPresenter timerPanel;
+        [SerializeField]
+        private TimerPanelPresenter timerPanel;
         // [SerializeField]
         // private Timer timer;
 
@@ -148,7 +148,6 @@ namespace HackedDesign
 
             SetPlatformInput();
 
-            //timerPanel.Initialize (this.timer);
             mobileInputUI.Initialize(inputController);
             actionConsolePanel.Initialize(actionManager);
             narrationManager.Initialize(inputController);
@@ -191,8 +190,8 @@ namespace HackedDesign
             entityManager.Initialize(npcParent);
             actionManager.Initialize(entityManager, taskManager);
             State.currentLevel = levelGenerator.GenerateLevel("Victoria's Room", 1, 1, 1, 0, 0, 0);
+            State.isRandom = false;
             State.player = new Character.PlayerState();
-
             CoreGame.Instance.SceneInitialize();
         }
 
@@ -201,6 +200,7 @@ namespace HackedDesign
             Debug.Log(this.name + ": loading random game");
             State.state = GameStateEnum.LOADING;
             State.currentLevel = levelGenerator.GenerateLevel(template, length, height, width, difficulty, enemies, traps);
+            State.isRandom = true;
             State.player = new Character.PlayerState();
             entityManager.Initialize(npcParent);
             actionManager.Initialize(entityManager, taskManager);
@@ -264,6 +264,7 @@ namespace HackedDesign
 
             SceneTriggersInitialize();
             CreateAlert();
+            timerPanel.Initialize (State.currentLevel.timer);
 
             SetPlaying();
 
@@ -288,7 +289,7 @@ namespace HackedDesign
             levelMapPanel.Repaint();
             worldMapPanel.Repaint();
             statsPanel.Repaint();
-            //timerPanel.Repaint ();
+            timerPanel.Repaint ();
             mobileInputUI.Repaint();
             cursorPresenter.Repaint();
         }

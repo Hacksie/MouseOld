@@ -65,15 +65,15 @@ namespace HackedDesign
             public void DestroyLevel()
             {
                 // Destroy NPCs
-                // for (int i = 0; i < npcParent.transform.childCount; i++)
-                // {
-                //     GameObject.Destroy(npcParent.transform.GetChild(i).gameObject);
-                // }
+                for (int i = 0; i < npcParent.transform.childCount; i++)
+                {
+                    GameObject.Destroy(npcParent.transform.GetChild(i).gameObject);
+                }
 
                 // Destroy Tiles
                 for (int k = 0; k < levelParent.transform.childCount; k++)
                 {
-                    GameObject.DestroyImmediate(levelParent.transform.GetChild(k).gameObject);
+                    GameObject.Destroy(levelParent.transform.GetChild(k).gameObject);
                 }
             }
 

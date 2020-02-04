@@ -72,11 +72,14 @@ MonoBehaviour:
   allowRepeatTriggers: 1
   allowNPCAutoInteraction: 1
   triggerAction: 
+  overloadAction: OverloadEntry
   leaveAction: 
   hasBeenTriggered: 0
   hasBeenLeft: 0
+  levelEntry: 1
   doorCollider: {fileID: 5667044606128391909}
   animator: {fileID: 5704413205964274915}
+  overloaded: 0
 --- !u!61 &5667044606128391909
 BoxCollider2D:
   m_ObjectHideFlags: 0

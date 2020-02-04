@@ -8,6 +8,9 @@ namespace HackedDesign {
 
 		private Timer timer;
 		public Text timerText;
+		public Color defaultColor;
+		public Color warningColor;
+		public Color alertColor;		
 
 		public void Initialize (Timer timer) {
 			this.timer = timer;
@@ -35,11 +38,11 @@ namespace HackedDesign {
 					float time = timer.maxTime - (Time.time - timer.startTime);
 
 					if (time < timer.alertTime) {
-						timerText.color = timer.alertColor;
+						timerText.color = alertColor;
 					} else if (time < timer.warningTime) {
-						timerText.color = timer.warningColor;
+						timerText.color = warningColor;
 					} else {
-						timerText.color = timer.color;
+						timerText.color = defaultColor;
 					}
 
 					timerText.text = time.ToString ("000");

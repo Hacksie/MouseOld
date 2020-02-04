@@ -5,21 +5,21 @@ namespace HackedDesign.Story
 {
     public class PreludeBarActions : ILevelActions
     {
-        public void Invoke(string actionName)
+        public bool Invoke(string actionName)
         {
             switch (actionName)
             {
                 case "PreludeExit":
                     PreludeExit();
-                    break;
+                    return true;
                 case "PreludeBarJoe":
                     InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Bouncer Joe"));
-                    break;                    
+                    return true;              
                 case "PreludeBarKat":
                     InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kat"));
-                    break;
+                    return true;
             }
-
+            return false;
         }
 
 
