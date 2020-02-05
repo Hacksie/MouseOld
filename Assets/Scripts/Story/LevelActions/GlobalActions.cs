@@ -12,6 +12,7 @@ namespace HackedDesign.Story
                 case "OverloadEntry":
                     Debug.Log("GlobalActions: invoke OverloadEntry");
                     CoreGame.Instance.State.currentLevel.timer.Start();
+                    CoreGame.Instance.State.currentLight = GlobalLightTypes.Alert;
                     //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Arisana"));
                     //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Manager Lyon"));
                     //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Cari"));
