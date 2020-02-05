@@ -44,7 +44,7 @@ namespace HackedDesign
         private GameObject roomAlert = null;
 
         [Header("Lights")]
-        public UnityEngine.Experimental.Rendering.LWRP.Light2D globalLight;
+        public UnityEngine.Experimental.Rendering.Universal.Light2D globalLight;
         public Color lightsDefault;
         public Color lightsAlert;
         public Color lightsBar;
