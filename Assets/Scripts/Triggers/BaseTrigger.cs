@@ -90,11 +90,13 @@ namespace HackedDesign
 
             public virtual void Overload()
             {
+                Debug.Log(this.name + ": invoking overload action: " + overloadAction);
                 Story.ActionManager.instance.Invoke(overloadAction);
             }
 
             public virtual void Leave()
             {
+                Debug.Log(this.name + ": invoking leave action: " + leaveAction);
                 Story.ActionManager.instance.Invoke(leaveAction);
             }
 

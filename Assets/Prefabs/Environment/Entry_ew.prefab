@@ -73,7 +73,7 @@ MonoBehaviour:
   allowNPCAutoInteraction: 1
   triggerAction: 
   overloadAction: OverloadEntry
-  leaveAction: 
+  leaveAction: LevelExit
   hasBeenTriggered: 0
   hasBeenLeft: 0
   levelEntry: 1
@@ -177,6 +177,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

@@ -47,7 +47,7 @@ namespace HackedDesign
             public override void Leave()
             {
                 open = false;
-                base.Invoke();
+                base.Leave();
             }
 
             protected override void OnTriggerStay2D(Collider2D other)

@@ -496,6 +496,7 @@ namespace HackedDesign
             playerController.UpdateMovement(inputController);
             PlayingNPCUpdate();
             PlayingTriggerUpdate();
+            State.currentLevel.timer.Update();
         }
 
         void PlayingTriggerUpdate()

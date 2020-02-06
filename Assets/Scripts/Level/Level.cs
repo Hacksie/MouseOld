@@ -20,6 +20,7 @@ namespace HackedDesign
             public List<Spawn> enemySpawnLocationList;
             public List<Spawn> trapSpawnLocationList;
             public Timer timer = new Timer();
+            public bool completed = false;
 
 
 

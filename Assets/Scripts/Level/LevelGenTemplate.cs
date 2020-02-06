@@ -27,7 +27,6 @@ namespace HackedDesign
 			public bool generateNavMesh = true;
 
 			public List<GameObject> floors;
-			//public LevelElements levelElements;   
 			public List<GameObject> levelElements;     
 			public List<GameObject> endProps;
 			public List<GameObject> startProps;
