@@ -11,6 +11,8 @@ namespace HackedDesign.Story
             {
                 case "OverloadEntry":
                     Debug.Log("GlobalActions: invoke OverloadEntry");
+                    // FIXME: Check if any other condition exists first!
+                    CoreGame.Instance.State.currentLevel.startTime = Time.time;
                     CoreGame.Instance.State.currentLevel.timer.Start();
                     CoreGame.Instance.State.currentLight = GlobalLightTypes.Warn;
                     //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Arisana"));
@@ -38,12 +40,15 @@ namespace HackedDesign.Story
                     CoreGame.Instance.State.currentLight = GlobalLightTypes.Default;
                     CoreGame.Instance.State.currentLevel.completed = true;
                     return true;
+                case "Captured":
+                    return true;
                 case "LevelExit":
                     Debug.Log("GlobalActions: invoke LevelExit");
                     if(CoreGame.Instance.State.currentLevel.completed)
                     {
                         CoreGame.Instance.State.currentLevel.timer.Stop();
                         Debug.Log("Level Over");
+                        CoreGame.Instance.SetMissionComplete();
                         
                         //Show end screen!
                     }

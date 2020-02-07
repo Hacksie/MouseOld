@@ -12,13 +12,12 @@ namespace HackedDesign
         public GameObject halfBattery;
         public GameObject almostBattery;
         public GameObject emptyBattery;
-        public Image keycard1;
-        public Image keycard2;
-        public Image keycard3;
-        public Image keycard4;
-        public Image keycard5;
+        public Text batteryText;
+        public Image keycard;
         public Color keycardEmptyColour;
         public Color keycardFullColour;
+
+        public Text keycardText;
 
         public void Initialize()
         {
@@ -54,11 +53,12 @@ namespace HackedDesign
 
         private void RepaintKeycards()
         {
-            keycard1.color = CoreGame.Instance.State.player.keycards >= 1 ? keycardFullColour : keycardEmptyColour;
-            keycard2.color = CoreGame.Instance.State.player.keycards >= 2 ? keycardFullColour : keycardEmptyColour;
-            keycard3.color = CoreGame.Instance.State.player.keycards >= 3 ? keycardFullColour : keycardEmptyColour;
-            keycard4.color = CoreGame.Instance.State.player.keycards >= 4 ? keycardFullColour : keycardEmptyColour;
-            keycard5.color = CoreGame.Instance.State.player.keycards >= 5 ? keycardFullColour : keycardEmptyColour;
+            keycard.color = CoreGame.Instance.State.player.keycards >= 1 ? keycardFullColour : keycardEmptyColour;
+            keycardText.text = "" + CoreGame.Instance.State.player.keycards;
+            // keycard2.color = CoreGame.Instance.State.player.keycards >= 2 ? keycardFullColour : keycardEmptyColour;
+            // keycard3.color = CoreGame.Instance.State.player.keycards >= 3 ? keycardFullColour : keycardEmptyColour;
+            // keycard4.color = CoreGame.Instance.State.player.keycards >= 4 ? keycardFullColour : keycardEmptyColour;
+            // keycard5.color = CoreGame.Instance.State.player.keycards >= 5 ? keycardFullColour : keycardEmptyColour;
             //keycard5.SetActive(CoreGame.Instance.State.player.keycards == 5);
             //keycard4.SetActive(CoreGame.Instance.State.player.keycards >= 4);
             //keycard3.SetActive(CoreGame.Instance.State.player.keycards >= 3);
@@ -67,6 +67,7 @@ namespace HackedDesign
         }
         private void RepaintBattery()
         {
+            batteryText.text = CoreGame.Instance.State.player.battery + "/" +CoreGame.Instance.State.player.maxBattery;
             float percent = 1.0f * CoreGame.Instance.State.player.battery / CoreGame.Instance.State.player.maxBattery;
             if (percent >= .60)
             {

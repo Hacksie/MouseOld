@@ -98,6 +98,10 @@ namespace HackedDesign
         private Dialogue.DialogueManager dialogueManager = null;
         [SerializeField]
         private Dialogue.DialoguePanelPresenter dialoguePanel = null;
+        [SerializeField]
+        private MissionCompleteManager missionCompleteManager = null;
+        [SerializeField]
+        private MissionCompletePresenter missionCompletePanel = null;
 
         
 
@@ -105,7 +109,7 @@ namespace HackedDesign
         private Level.LevelMapPanelPresenter levelMapPanel = null;
 
         [SerializeField]
-        private TimerPanelPresenter timerPanel;
+        private TimerPanelPresenter timerPanel = null;
         // [SerializeField]
         // private Timer timer;
 
@@ -165,6 +169,7 @@ namespace HackedDesign
             worldMapPanel.Initialize(worldMapManager);
             statsPanel.Initialize();
             levelRenderer.Initialize(entityManager, levelParent, npcParent, polyNav2D);
+            missionCompletePanel.Initialize(missionCompleteManager);
 
             RepaintAllUI();
 
@@ -289,6 +294,7 @@ namespace HackedDesign
             narrationPanel.Repaint();
             selectMenuPanel.Repaint();
             startMenuPanel.Repaint();
+            missionCompletePanel.Repaint();
 
             levelMapPanel.Repaint();
             worldMapPanel.Repaint();
@@ -355,6 +361,14 @@ namespace HackedDesign
             State.state = GameStateEnum.NARRATION;
             RepaintAllUI();
         }
+
+        public void SetMissionComplete()
+        {
+            Debug.Log(this.name + ": state set to MISSION COMPLETE");
+            Time.timeScale = 0;
+            State.state = GameStateEnum.MISSIONCOMPLETE;
+            RepaintAllUI();
+        }        
 
         public void SetWorldMap()
         {
@@ -459,6 +473,8 @@ namespace HackedDesign
                         Debug.Log(this.name + ": hide select menu");
                         SetPlaying();
                     }
+                    break;
+                case GameStateEnum.MISSIONCOMPLETE:
                     break;
 
                 case GameStateEnum.GAMEOVER:

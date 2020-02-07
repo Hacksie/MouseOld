@@ -21,6 +21,7 @@ namespace HackedDesign
             public List<Spawn> trapSpawnLocationList;
             public Timer timer = new Timer();
             public bool completed = false;
+            public float startTime = 0;
 
 
 
