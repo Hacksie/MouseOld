@@ -19343,6 +19343,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 921957571}
   m_CullTransparentMesh: 0
+--- !u!1 &924480601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4873446601010192988, guid: 8d88fba23804c2b42abf509a3f95c9e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3236683155468815232}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &925083303
 GameObject:
   m_ObjectHideFlags: 0
@@ -22191,6 +22197,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c348ba58e39f38a4092f4d65bb42e676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionTime: {fileID: 1734931190}
+  infoCollected: {fileID: 1498580188}
+  missionCredits: {fileID: 2007096257}
 --- !u!1 &1061818610
 GameObject:
   m_ObjectHideFlags: 0
@@ -23318,6 +23327,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147675428}
   m_CullTransparentMesh: 0
+--- !u!1 &1148548591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2909231430383627702, guid: 9fa3aee69389f39439839fa60883d929,
+    type: 3}
+  m_PrefabInstance: {fileID: 726503425}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1156005922
 GameObject:
   m_ObjectHideFlags: 0
@@ -26691,6 +26706,11 @@ MonoBehaviour:
         warning: 0
         end: 0
       completed: 0
+      startTime: 0
+      infoCollected: 0
+      maxInfo: 0
+      completeCredits: 0
+      creditsCollected: 0
     isRandom: 0
     taskList: []
     selectedTask: {fileID: 0}
@@ -29514,12 +29534,9 @@ MonoBehaviour:
   - {fileID: 6797104490100697780, guid: ecf5fbd55c4786c43afaada007f25fd4, type: 3}
   - {fileID: 8387367927353284284, guid: 0133037e36f623a48a2ff29e12716aa6, type: 3}
   npcPrefabList:
-  - {fileID: 2909231430383627702, guid: 9fa3aee69389f39439839fa60883d929, type: 3}
-  - {fileID: 6662437389986586198, guid: 98bed4888358cab4b8e9d9b5a911be8b, type: 3}
-  - {fileID: 4873446601010192988, guid: 8d88fba23804c2b42abf509a3f95c9e6, type: 3}
-  - {fileID: 7211059204870095280, guid: 67216167684bd5146952b99f4fd270de, type: 3}
-  - {fileID: 5377554542482034336, guid: 8ca279f3f92462545bb0486b3456c276, type: 3}
-  - {fileID: 6653895933885192060, guid: e79eb7fed0e93bf44a815c9201f14bd3, type: 3}
+  - {fileID: 924480601}
+  - {fileID: 1148548591}
+  npcParent: {fileID: 1170381601}
 --- !u!1 &1495170409
 GameObject:
   m_ObjectHideFlags: 0
@@ -29609,7 +29626,7 @@ GameObject:
   - component: {fileID: 1498580189}
   - component: {fileID: 1498580188}
   m_Layer: 5
-  m_Name: Text (5)
+  m_Name: InfoCollectedText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35585,7 +35602,7 @@ GameObject:
   - component: {fileID: 1734931191}
   - component: {fileID: 1734931190}
   m_Layer: 5
-  m_Name: Text (4)
+  m_Name: MissionTimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42124,7 +42141,7 @@ GameObject:
   - component: {fileID: 2007096258}
   - component: {fileID: 2007096257}
   m_Layer: 5
-  m_Name: Text (6)
+  m_Name: CreditsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

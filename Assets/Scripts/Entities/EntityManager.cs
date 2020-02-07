@@ -18,6 +18,7 @@ namespace HackedDesign
             private List<GameObject> npcPrefabList = null;
 
             private List<Entity.BaseEntity> npcPool = new List<Entity.BaseEntity>();
+            public GameObject npcParent;
 
 
             EntityManager()
@@ -54,7 +55,15 @@ namespace HackedDesign
             public BaseEntity GetPooledNPC(string name)
             {
                 //return null;
-                return npcPool.FirstOrDefault(g => g.gameObject.name == name);
+                for(int i=0;i<npcParent.transform.childCount;i++)
+                {
+                    if(npcParent.transform.GetChild(i).name == name)
+                    {
+                        return npcParent.transform.GetChild(i).gameObject.GetComponent<BaseEntity>();
+                    }
+                }
+                return null;
+                //return npcPool.FirstOrDefault(g => g.gameObject.name == name);
 
             }
 

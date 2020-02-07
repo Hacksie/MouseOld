@@ -374,13 +374,13 @@ namespace HackedDesign
                 return results;
             }
 
-            public List<Entity.BaseEntity> PopulateNPCSpawns(Level level)
+            public void PopulateNPCSpawns(Level level, List<Entity.BaseEntity> results)
             {
-                List<Entity.BaseEntity> results = new List<Entity.BaseEntity>();
+                //List<Entity.BaseEntity> results = new List<Entity.BaseEntity>();
 
                 if (level.npcSpawnLocationList == null)
                 {
-                    return results;
+                    return;
                 }
 
                 for (int i = 0; i < level.npcSpawnLocationList.Count; i++)
@@ -389,14 +389,14 @@ namespace HackedDesign
                     Entity.BaseEntity npc = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
 
                     //GameObject npcGameObj = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
+                    Debug.Log(this.name + ":  to spawn " + npc.name);
                     if (npc != null)
                     {
-                        Debug.Log(this.name + ": moving " + level.npcSpawnLocationList[i].name);
+                        Debug.Log(this.name + ": moving " + npc.name);
                         npc.transform.position = level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset;
                         npc.gameObject.SetActive(true);
                         npc.Initialize();
                         results.Add(npc);
-
                     }
                     else 
                     {
@@ -404,7 +404,7 @@ namespace HackedDesign
                     }
                 }
 
-                return results;
+                //return results;
             }
 
         }

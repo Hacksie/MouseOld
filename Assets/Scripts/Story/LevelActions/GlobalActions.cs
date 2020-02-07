@@ -12,6 +12,7 @@ namespace HackedDesign.Story
                 case "OverloadEntry":
                     Debug.Log("GlobalActions: invoke OverloadEntry");
                     // FIXME: Check if any other condition exists first!
+                    ActionManager.instance.AddActionMessage("Alert timer initiated");
                     CoreGame.Instance.State.currentLevel.startTime = Time.time;
                     CoreGame.Instance.State.currentLevel.timer.Start();
                     CoreGame.Instance.State.currentLight = GlobalLightTypes.Warn;
@@ -22,6 +23,7 @@ namespace HackedDesign.Story
                     return true;
                 case "BatteryFill":
                     Debug.Log("GlobalActions: invoke BatteryFill");
+                    ActionManager.instance.AddActionMessage("Battery filled");
                     CoreGame.Instance.State.player.battery = CoreGame.Instance.State.player.maxBattery;
                     return true;
                 case "TimerStart":
@@ -36,6 +38,7 @@ namespace HackedDesign.Story
                     return true;
                 case "EndComputer":
                     Debug.Log("GlobalActions: invoke EndComputer");
+                    ActionManager.instance.AddActionMessage("Alert shutdown");
                     CoreGame.Instance.State.currentLevel.timer.Start();
                     CoreGame.Instance.State.currentLight = GlobalLightTypes.Default;
                     CoreGame.Instance.State.currentLevel.completed = true;
@@ -46,6 +49,7 @@ namespace HackedDesign.Story
                     Debug.Log("GlobalActions: invoke LevelExit");
                     if(CoreGame.Instance.State.currentLevel.completed)
                     {
+                        ActionManager.instance.AddActionMessage("Mission completed");
                         CoreGame.Instance.State.currentLevel.timer.Stop();
                         Debug.Log("Level Over");
                         CoreGame.Instance.SetMissionComplete();

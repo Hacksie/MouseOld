@@ -45,9 +45,9 @@ namespace HackedDesign
         public Color[] colors;
 
         [Header("Settings")]
-        public bool isMale = false;
-
+        //public bool isMale = false;
         public int bodyIndex;
+        public int skinIndex;
         public int eyesIndex;
         public int shirtIndex;
         public int pantsIndex;
@@ -57,6 +57,7 @@ namespace HackedDesign
         public int pantsColorIndex;
         public int shoesColorIndex;
         public int hairColorIndex;
+
 
         private Sprite[] bodySpritesheet;
         private Sprite[] eyesSpritesheet;
@@ -70,14 +71,26 @@ namespace HackedDesign
 
         void SetSpritesheets()
         {
-            bodySpritesheet = isMale ? Resources.LoadAll<Sprite>(maleBodyFolderPath + maleBodySprites[bodyIndex].name) : Resources.LoadAll<Sprite>(femaleBodyFolderPath + femaleBodySprites[bodyIndex].name);
-            eyesSpritesheet = isMale ? Resources.LoadAll<Sprite>(maleEyesFolderPath + maleEyesSprites[eyesIndex].name) : Resources.LoadAll<Sprite>(femaleEyesFolderPath + femaleEyesSprites[eyesIndex].name);
-            shirtSpritesheet = isMale ? Resources.LoadAll<Sprite>(maleShirtFolderPath + maleShirtSprites[shirtIndex].name) : Resources.LoadAll<Sprite>(femaleShirtFolderPath + femaleShirtSprites[shirtIndex].name);
-            pantsSpritesheet = isMale ? Resources.LoadAll<Sprite>(malePantsFolderPath + malePantsSprites[pantsIndex].name) : Resources.LoadAll<Sprite>(femalePantsFolderPath + femalePantsSprites[pantsIndex].name);
-            shoesSpritesheet = isMale ? Resources.LoadAll<Sprite>(maleShoesFolderPath + maleShoesSprites[shoesIndex].name) : Resources.LoadAll<Sprite>(femaleShoesFolderPath + femaleShoesSprites[shoesIndex].name);
-            if(hairIndex>-1)
+            bodyIndex = bodyIndex < 0 ? Random.Range(0,2) : bodyIndex;
+            skinIndex = skinIndex < 0 ? Random.Range(0, maleBodySprites.Length) : skinIndex;
+            eyesIndex = eyesIndex < 0 ? Random.Range(0, maleEyesSprites.Length) : eyesIndex;
+            shirtIndex = shirtIndex < 0 ? Random.Range(0, maleShirtSprites.Length) : shirtIndex;
+            pantsIndex = pantsIndex < 0 ? Random.Range(0, malePantsSprites.Length) : pantsIndex;
+            shoesIndex = shoesIndex < 0 ? Random.Range(0, maleShoesSprites.Length) : shoesIndex;
+            hairIndex = hairIndex < 0 ? Random.Range(0, maleHairSprites.Length) : hairIndex;
+            shirtColorIndex = shirtColorIndex < 0 ? Random.Range(0, colors.Length) : shirtColorIndex;
+            pantsColorIndex = pantsColorIndex < 0 ? Random.Range(0, colors.Length) : pantsColorIndex;
+            shoesColorIndex = shoesColorIndex < 0 ? Random.Range(0, colors.Length) : shoesColorIndex;
+            hairColorIndex = hairColorIndex < 0 ? Random.Range(0, colors.Length) : hairColorIndex;
+
+            bodySpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleBodyFolderPath + maleBodySprites[skinIndex].name) : Resources.LoadAll<Sprite>(femaleBodyFolderPath + femaleBodySprites[skinIndex].name);
+            eyesSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleEyesFolderPath + maleEyesSprites[eyesIndex].name) : Resources.LoadAll<Sprite>(femaleEyesFolderPath + femaleEyesSprites[eyesIndex].name);
+            shirtSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleShirtFolderPath + maleShirtSprites[shirtIndex].name) : Resources.LoadAll<Sprite>(femaleShirtFolderPath + femaleShirtSprites[shirtIndex].name);
+            pantsSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(malePantsFolderPath + malePantsSprites[pantsIndex].name) : Resources.LoadAll<Sprite>(femalePantsFolderPath + femalePantsSprites[pantsIndex].name);
+            shoesSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleShoesFolderPath + maleShoesSprites[shoesIndex].name) : Resources.LoadAll<Sprite>(femaleShoesFolderPath + femaleShoesSprites[shoesIndex].name);
+            if (hairIndex > 0)
             {
-                hairSpritesheet = isMale ? Resources.LoadAll<Sprite>(maleHairFolderPath + maleHairSprites[hairIndex].name) : Resources.LoadAll<Sprite>(femaleHairFolderPath + femaleHairSprites[hairIndex].name);
+                hairSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleHairFolderPath + maleHairSprites[hairIndex].name) : Resources.LoadAll<Sprite>(femaleHairFolderPath + femaleHairSprites[hairIndex].name);
             }
         }
 
@@ -96,16 +109,17 @@ namespace HackedDesign
             shirtSpriteRenderer.sprite = shirtSpritesheet[frameIndex];
             pantsSpriteRenderer.sprite = pantsSpritesheet[frameIndex];
             shoesSpriteRenderer.sprite = shoesSpritesheet[frameIndex];
-            
+
             shirtSpriteRenderer.color = colors[shirtColorIndex];
             pantsSpriteRenderer.color = colors[pantsColorIndex];
             shoesSpriteRenderer.color = colors[shoesColorIndex];
-            if(hairIndex>-1)
+            if (hairIndex > -1)
             {
                 hairSpriteRenderer.sprite = hairSpritesheet[frameIndex];
                 hairSpriteRenderer.color = colors[hairColorIndex];
             }
-            else {
+            else
+            {
                 hairSpriteRenderer.sprite = null;
             }
         }

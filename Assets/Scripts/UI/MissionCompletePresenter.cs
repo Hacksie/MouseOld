@@ -7,12 +7,17 @@ using UnityEngine.SceneManagement;
 namespace HackedDesign {
 	public class MissionCompletePresenter : MonoBehaviour {
         MissionCompleteManager missionCompleteManager;
-        UnityEngine.UI.Text missionTime;
+        public UnityEngine.UI.Text missionTime;
+		public UnityEngine.UI.Text infoCollected;
+		public UnityEngine.UI.Text missionCredits;
 
 		private void Show (bool flag) {
 			Debug.Log ("Set mission complete " + flag);
 			this.gameObject.SetActive (flag);
-            missionTime.Text = (Time.time - CoreGame.Instance.State.currentLevel.startTime).ToString("{0s}");
+            missionTime.text = (Time.time - CoreGame.Instance.State.currentLevel.startTime).ToString("0s");
+			infoCollected.text = CoreGame.Instance.State.currentLevel.infoCollected + "/" + CoreGame.Instance.State.currentLevel.maxInfo;
+			missionCredits.text = "$" + (CoreGame.Instance.State.currentLevel.completeCredits + CoreGame.Instance.State.currentLevel.creditsCollected);
+
 
 		}        
 

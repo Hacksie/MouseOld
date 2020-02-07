@@ -213,7 +213,7 @@ namespace HackedDesign
             State.player = new Character.PlayerState();
             entityManager.Initialize(npcParent);
             actionManager.Initialize(entityManager, taskManager);
-            CoreGame.Instance.SceneInitialize();
+            SceneInitialize();
         }
 
         public void LoadNewLevel(string template)
@@ -224,13 +224,19 @@ namespace HackedDesign
             State.entityList.Clear();
             State.currentLevel = levelGenerator.GenerateLevel(template);
 
-            //entityManager.Initialize(npcParent);
-            //actionManager.Initialize(entityManager, taskManager);
-            CoreGame.Instance.SceneInitialize();
+            entityManager.Initialize(npcParent);
+            actionManager.Initialize(entityManager, taskManager);
+            SceneInitialize();
+
+            //             for(int i = 0; i<this.State.entityList.Count;i++)
+            // {
+            //     Debug.Log("XX" + this.State.entityList[i].name);
+            // }                
         }
 
         public void EndGame()
         {
+            Debug.Log(this.name + ": End Game");
             State.state = GameStateEnum.MAINMENU;
             RepaintAllUI();
             levelRenderer.DestroyLevel();
@@ -258,14 +264,18 @@ namespace HackedDesign
             ShowPlayer(true);
             SetLight(GlobalLightTypes.Default);
 
-            this.State.entityList.Clear();
+            //this.State.entityList.Clear();
             levelRenderer.Render(this.State.currentLevel);
 
-            this.State.entityList.AddRange(levelRenderer.PopulateNPCSpawns(this.State.currentLevel));
+            levelRenderer.PopulateNPCSpawns(this.State.currentLevel, this.State.entityList);
             this.State.entityList.AddRange(levelRenderer.PopulateEnemySpawns(this.State.currentLevel));
             this.State.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.State.currentLevel));
+           
 
+            
             levelMapPanel.Initialize(selectMenuManager, State.currentLevel);
+
+
 
             player.transform.position = State.currentLevel.ConvertLevelPosToWorld(State.currentLevel.playerSpawn.levelLocation) + State.currentLevel.playerSpawn.worldOffset;
 
@@ -273,7 +283,10 @@ namespace HackedDesign
 
             SceneTriggersInitialize();
             CreateAlert();
-            timerPanel.Initialize (State.currentLevel.timer);
+            timerPanel.Initialize (State.currentLevel.timer);      
+
+
+            //Debug.Break();
 
             SetPlaying();
 
