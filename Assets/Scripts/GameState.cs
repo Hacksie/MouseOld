@@ -53,6 +53,8 @@ namespace HackedDesign
         WORLDMAP,
         STARTMENU,
         SELECTMENU,
-        GAMEOVER
+        GAMEOVER,
+        CAPTURED,
+        MISSIONCOMPLETE
     }
 }

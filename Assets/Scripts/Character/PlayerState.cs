@@ -17,6 +17,7 @@ namespace HackedDesign.Character
         public int overload = 10;
         public int maxKeycards = 5;
         public int keycards = 0;
+        public int credits = 0;
 
         public bool CanOverload()
         {
