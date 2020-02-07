@@ -49,6 +49,7 @@ namespace HackedDesign
         //public UnityEngine.Rendering.Light2D globalLight;
         public UnityEngine.Experimental.Rendering.Universal.Light2D globalLight;
         public Color lightsDefault;
+        public Color lightsWarn;
         public Color lightsAlert;
         public Color lightsBar;
 
@@ -403,13 +404,15 @@ namespace HackedDesign
                 case GlobalLightTypes.Default:
                     globalLight.color = lightsDefault;
                     break;
+                case GlobalLightTypes.Warn:
+                    globalLight.color = lightsWarn;
+                    break;
                 case GlobalLightTypes.Alert:
                     globalLight.color = lightsAlert;
                     break;                
                 case GlobalLightTypes.Bar:
                     globalLight.color = lightsBar;
                     break;                
-                
             }            
         }
 

@@ -12,7 +12,7 @@ namespace HackedDesign.Story
                 case "OverloadEntry":
                     Debug.Log("GlobalActions: invoke OverloadEntry");
                     CoreGame.Instance.State.currentLevel.timer.Start();
-                    CoreGame.Instance.State.currentLight = GlobalLightTypes.Alert;
+                    CoreGame.Instance.State.currentLight = GlobalLightTypes.Warn;
                     //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Arisana"));
                     //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Manager Lyon"));
                     //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Cari"));
@@ -30,6 +30,7 @@ namespace HackedDesign.Story
                     return true;
                 case "TimerExpired":
                     Debug.Log("GlobalActions: invoke TimerEnd");
+                    CoreGame.Instance.State.currentLight = GlobalLightTypes.Alert;
                     return true;
                 case "EndComputer":
                     Debug.Log("GlobalActions: invoke EndComputer");
