@@ -12,6 +12,8 @@ namespace HackedDesign {
                 case GameStateEnum.STARTMENU:
                 case GameStateEnum.WORLDMAP:
                 case GameStateEnum.GAMEOVER:
+                case GameStateEnum.MISSIONCOMPLETE:
+                case GameStateEnum.CAPTURED:
                     Cursor.visible = true;
                     break;
                 default:

@@ -4,6 +4,6 @@ namespace HackedDesign.Story
 {
     public interface ILevelActions
     {
-        void Invoke(string actionName);
+        bool Invoke(string actionName);
     }
 }

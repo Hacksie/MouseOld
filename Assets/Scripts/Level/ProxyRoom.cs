@@ -22,6 +22,7 @@ namespace HackedDesign {
             public const string OPEN = "o";
             public const string DOOR = "d";
             public const string EXIT = "e"; 
+            public const string ENTRY = "n";
 
             public const string OBJ_TYPE_WALL = "wall";
             public const string OBJ_TYPE_ENTRY = "entry";

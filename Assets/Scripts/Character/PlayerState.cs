@@ -12,5 +12,41 @@ namespace HackedDesign.Character
         public int intimidation = 0;
         public int software = 0;
         public int hardware = 0;
+        public int battery = 50;
+        public int maxBattery = 50;
+        public int overload = 10;
+        public int maxKeycards = 5;
+        public int keycards = 0;
+        public int credits = 0;
+
+        public bool CanOverload()
+        {
+            return battery - overload >= 0;
+        }
+
+        public bool CanKeycard()
+        {
+            return keycards > 0;
+        }     
+
+        public bool ConsumeOverload()
+        {
+            if(CanOverload())
+            {
+                battery -=overload;
+                return true;
+            }
+            return false;
+        }
+
+        public bool ConsumeKeycard()
+        {
+            if(CanKeycard())
+            {
+                keycards--;
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -2,31 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 namespace HackedDesign {
-	[CreateAssetMenu (fileName = "Timer", menuName = "Mouse/Gameplay/Timer")]
-	public class Timer : ScriptableObject {
-
-		
-		public float maxTime = 5 * 60;
-		public float warningTime = 30;
+	//[CreateAssetMenu (fileName = "Timer", menuName = "Mouse/Gameplay/Timer")]
+	[System.Serializable]
+	public class Timer {
+		//public float maxTime = 5 * 60;
+		public float maxTime = 60;
+		public float warningTime = 20;
 		public float alertTime = 10;
 		public float startTime;
 		public bool running;
-
-		public Color color;
-		public Color warningColor;
-		public Color alertColor;
-
-		public void UpdateTimer()
-		{
-
-		}
+		public bool warning=false;
+		public bool end=false;
 
 		public void Start()
 		{
 			startTime = Time.time;
-			//running = true;
-			//public float startTime  = Time.time;
-			//public float currentTime  = Time.time;			
+			running = true;
+			warning = end = false;
+			Story.ActionManager.instance.Invoke("TimerStart");
+		}
+
+		public void Stop()
+		{
+			running = false;
+		}
+
+		public void Update()
+		{
+			if(!running)
+			{
+				return;
+			}
+			if(running && !end && Time.time - startTime >= maxTime)
+			{
+				end = true;
+				running = false;
+				Story.ActionManager.instance.Invoke("TimerExpired");
+			}			
+
+			if(running && !warning && Time.time - startTime >= (maxTime-warningTime))
+			{
+				warning = true;
+				Story.ActionManager.instance.Invoke("TimerAlert");
+			}
+
+
 		}
 
 		// public void Start()

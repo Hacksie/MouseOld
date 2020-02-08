@@ -21,12 +21,16 @@ namespace HackedDesign
         [Header("Level State")]
         public Level.Level currentLevel = null;
 
+        public bool isRandom = false;
+
         public List<Story.Task> taskList = new List<Story.Task>();
 
         public Story.Task selectedTask = null;
 
-        public GameObject alertTrap = null; // move this to state		
+        public GameObject alertTrap = null; // move this to state
 
+        public GlobalLightTypes currentLight;
+        
         public List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger>();
         public List<Entity.BaseEntity> entityList = new List<Entity.BaseEntity>();
 
@@ -49,6 +53,8 @@ namespace HackedDesign
         WORLDMAP,
         STARTMENU,
         SELECTMENU,
-        GAMEOVER
+        GAMEOVER,
+        CAPTURED,
+        MISSIONCOMPLETE
     }
 }

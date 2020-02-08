@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 61807340483984064}
   - component: {fileID: 61823095927018240}
   m_Layer: 0
-  m_Name: Exit_ew
+  m_Name: Entry_ew
   m_TagString: Trigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,7 +195,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.45}
+  m_Offset: {x: 0, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}

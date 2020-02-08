@@ -19,6 +19,14 @@ namespace HackedDesign
             public List<Spawn> npcSpawnLocationList;
             public List<Spawn> enemySpawnLocationList;
             public List<Spawn> trapSpawnLocationList;
+            public Timer timer = new Timer();
+            public bool completed = false;
+            public float startTime = 0;
+            public int infoCollected = 0;
+            public int maxInfo = 10;
+            public int completeCredits = 500;
+            public int creditsCollected = 0;
+            
 
 
 
@@ -26,9 +34,6 @@ namespace HackedDesign
             {
                 this.template = template;
                 this.length = CapLevelLength(template.levelLength, template.levelWidth, template.levelHeight);
-                Debug.Log("Level length: " + length);
-
-
 
                 map = new ProxyRow[template.levelHeight];
                 for (int row = 0; row < template.levelHeight; row++)

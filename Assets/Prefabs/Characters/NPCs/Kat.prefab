@@ -45,6 +45,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -225,6 +226,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -305,6 +307,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -397,6 +400,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -564,6 +568,7 @@ MonoBehaviour:
   maleShoesFolderPath: Retro 2D Characters/Spritesheets/Male/3 - Outfits/Tintable
     Clothes/
   maleHairSprites:
+  - {fileID: 0}
   - {fileID: 2800000, guid: 6a3b9e49f9393f444a6ca95d881d78e3, type: 3}
   - {fileID: 2800000, guid: dedf015df5a173e4ea4d668d46cbc3b7, type: 3}
   - {fileID: 2800000, guid: 49415e4f7decc0640b2c482852e93ef3, type: 3}
@@ -603,6 +608,7 @@ MonoBehaviour:
   femaleShoesFolderPath: Retro 2D Characters/Spritesheets/Female/3 - Outfits/Tintable
     Clothes/
   femaleHairSprites:
+  - {fileID: 0}
   - {fileID: 2800000, guid: 411031856cb05f741a19d84ec13b8659, type: 3}
   - {fileID: 2800000, guid: 96d1c34a4ab993d449cf1808a592f197, type: 3}
   - {fileID: 2800000, guid: 369189e853c71ef41954993f411c4ba7, type: 3}
@@ -623,17 +629,18 @@ MonoBehaviour:
   - {r: 0.15686275, g: 1, b: 0, a: 1}
   - {r: 0.64705884, g: 0.1764706, b: 1, a: 1}
   - {r: 1, g: 0.22745098, b: 0, a: 1}
-  isMale: 0
-  bodyIndex: 0
-  eyesIndex: 1
+  - {r: 0.6509804, g: 0.011764706, b: 0.23529412, a: 1}
+  bodyIndex: 1
+  skinIndex: 0
+  eyesIndex: 2
   shirtIndex: 0
   pantsIndex: 0
   shoesIndex: 0
-  hairIndex: 7
-  shirtColorIndex: 4
-  pantsColorIndex: 1
+  hairIndex: 9
+  shirtColorIndex: 1
+  pantsColorIndex: 4
   shoesColorIndex: 1
-  hairColorIndex: 0
+  hairColorIndex: 8
 --- !u!1 &4851064086937248401
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +686,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -764,6 +772,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -926,6 +935,7 @@ MonoBehaviour:
   allowRepeatTriggers: 1
   allowNPCAutoInteraction: 0
   triggerAction: PreludeBarKat
+  overloadAction: 
   leaveAction: 
   hasBeenTriggered: 0
   hasBeenLeft: 0
@@ -990,6 +1000,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

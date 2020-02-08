@@ -10,7 +10,7 @@ namespace HackedDesign
     {
         public class LevelGenerator : MonoBehaviour
         {
-            const string DEFAULT_ROOM_START = "wdww_entry";
+            const string DEFAULT_ROOM_START = "wnww_entry";
             const string TOPLEFT = "tl";
             const string TOPRIGHT = "tr";
             const string BOTTOMLEFT = "bl";
@@ -107,10 +107,6 @@ namespace HackedDesign
                 }
 
                 JsonUtility.FromJsonOverwrite(jsonTextFile.text, level);
-
-                //Debug.Log(levelJson.map[0].row[0].bottomLeft[0].name);
-
-
 
                 return level;
 
@@ -255,7 +251,7 @@ namespace HackedDesign
             ProxyRoom GenerateEntryRoom(Level level)
             {
 
-                string start = string.IsNullOrEmpty(level.template.startingRoomString) ? level.template.startingRoomString : DEFAULT_ROOM_START;
+                string start = string.IsNullOrEmpty(level.template.startingRoomString) ? DEFAULT_ROOM_START : level.template.startingRoomString;
 
                 ProxyRoom res = RoomFromString(start);
                 res.isEntry = true;
@@ -287,7 +283,7 @@ namespace HackedDesign
                     response.left = splitString[0].Substring(0, 1);
                     response.top = splitString[0].Substring(1, 1);
                     response.bottom = splitString[0].Substring(2, 1);
-                    response.right = splitString[0].Substring(3, 1);
+                    response.right = splitString[0].Substring(3, 1);                   
                 }
 
                 if (splitString.Length > 1)
@@ -298,12 +294,6 @@ namespace HackedDesign
 
                 return response;
             }
-
-            // RoomSide SideFromChar(char ch)
-            // {
-
-            //     return (RoomSide)Enum.ToObject(typeof(RoomSide), ch);
-            // }
 
             void GenerateAuxRooms(Level level)
             {
@@ -679,6 +669,7 @@ namespace HackedDesign
                 string door = "daxz";
                 string wall = "wayz";
                 string exit = "edaxy";
+                string entry = "ndaxy";
 
                 string first = nameSplit[3].Substring(0, 1);
                 string second = nameSplit[3].Substring(1, 1);
@@ -687,11 +678,13 @@ namespace HackedDesign
                     ((wall1.ToLower() == "o" && open.IndexOf(first) >= 0) ||
                         (wall1.ToLower() == "d" && door.IndexOf(first) >= 0) ||
                         (wall1.ToLower() == "w" && wall.IndexOf(first) >= 0) ||
-                        (wall1.ToLower() == "e" && exit.IndexOf(first) >= 0)) &&
+                        (wall1.ToLower() == "e" && exit.IndexOf(first) >= 0) ||
+                        (wall1.ToLower() == "n" && entry.IndexOf(first) >= 0)) &&
                     ((wall2.ToLower() == "o" && open.IndexOf(second) >= 0) ||
                         (wall2.ToLower() == "d" && door.IndexOf(second) >= 0) ||
                         (wall2.ToLower() == "w" && wall.IndexOf(second) >= 0) ||
-                        (wall2.ToLower() == "e" && exit.IndexOf(second) >= 0))
+                        (wall2.ToLower() == "e" && exit.IndexOf(second) >= 0) ||
+                        (wall2.ToLower() == "n" && entry.IndexOf(second) >= 0))
                 );
             }
 
@@ -704,8 +697,6 @@ namespace HackedDesign
                 {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
-                        Debug.Log(level.map[i].rooms[j] != null && level.map[i].rooms[j].isNearEntry);
-
                         if (level.map[i].rooms[j] != null && !level.map[i].rooms[j].isNearEntry)
                         {
                             candidates.Add(new Vector2Int(j, i));

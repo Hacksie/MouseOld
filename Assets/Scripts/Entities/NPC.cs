@@ -24,7 +24,7 @@ namespace HackedDesign.Entity
         //bool known = false;
 
         [SerializeField]
-        UnityEngine.UI.Text text = null;
+        //UnityEngine.UI.Text text = null;
 
         new void Start()
         {
@@ -33,10 +33,10 @@ namespace HackedDesign.Entity
             {
                 Debug.Log(this.name + ": character is null");
             }
-            if (text == null)
-            {
-                Debug.Log(this.name + ": text is null");
-            }
+            // if (text == null)
+            // {
+            //     Debug.Log(this.name + ": text is null");
+            // }
 
             //known = character.known;
 
@@ -52,6 +52,7 @@ namespace HackedDesign.Entity
 
         void SetHandleText()
         {
+            /*
             if(text == null)
             {
                 return; 
@@ -64,7 +65,7 @@ namespace HackedDesign.Entity
             else
             {
                 text.text = UNKNOWN_STRING;
-            }
+            }*/
         }
     }
 }

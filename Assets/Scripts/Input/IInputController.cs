@@ -12,6 +12,7 @@ namespace HackedDesign.Input
         bool SelectButtonUp();
         void ResetInput();
         bool InteractButtonUp();
+        bool OverloadButtonUp();
     }
 
 }

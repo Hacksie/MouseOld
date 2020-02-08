@@ -20,6 +20,8 @@ namespace HackedDesign
             public GameObject doornsPrefab;
             public GameObject exitewPrefab;
             public GameObject exitnsPrefab;
+            public GameObject entryewPrefab;
+            public GameObject entrynsPrefab;            
 
             private GameObject levelParent;
             private GameObject npcParent;
@@ -63,21 +65,20 @@ namespace HackedDesign
             public void DestroyLevel()
             {
                 // Destroy NPCs
-                // for (int i = 0; i < npcParent.transform.childCount; i++)
-                // {
-                //     GameObject.Destroy(npcParent.transform.GetChild(i).gameObject);
-                // }
+                for (int i = 0; i < npcParent.transform.childCount; i++)
+                {
+                    GameObject.Destroy(npcParent.transform.GetChild(i).gameObject);
+                }
 
                 // Destroy Tiles
                 for (int k = 0; k < levelParent.transform.childCount; k++)
                 {
-                    GameObject.DestroyImmediate(levelParent.transform.GetChild(k).gameObject);
+                    GameObject.Destroy(levelParent.transform.GetChild(k).gameObject);
                 }
             }
 
             void PopulateLevelTilemap(Level level)
             {
-
                 for (int i = 0; i < level.map.Count(); i++)
                 {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
@@ -87,7 +88,6 @@ namespace HackedDesign
 
                         if (level.map[i].rooms[j] != null)
                         {
-
                             if (!string.IsNullOrWhiteSpace(level.map[i].rooms[j].floor))
                             {
                                 var floor = level.template.floors.FirstOrDefault(o => o != null && o.name == level.map[i].rooms[j].floor);
@@ -106,10 +106,10 @@ namespace HackedDesign
                             }
 
                             // BL
-                            Debug.Log(this.name + ": bl count " + level.map[i].rooms[j].bottomLeft.Count);
+                            //Debug.Log(this.name + ": bl count " + level.map[i].rooms[j].bottomLeft.Count);
                             for (int e = 0; e < level.map[i].rooms[j].bottomLeft.Count; e++)
                             {
-                                Debug.Log(level.map[i].rooms[j].bottomLeft[e].type + level.map[i].rooms[j].bottomLeft[e].name + level.template.name);
+                                //Debug.Log(level.map[i].rooms[j].bottomLeft[e].type + level.map[i].rooms[j].bottomLeft[e].name + level.template.name);
                                 var go = FindRoomEntity(level.map[i].rooms[j].bottomLeft[e].type, level.map[i].rooms[j].bottomLeft[e].name, level.template);
                                 if (go == null)
                                 {
@@ -131,10 +131,10 @@ namespace HackedDesign
                             }
 
                             // BR
-                            Debug.Log(this.name + ": br count " + level.map[i].rooms[j].bottomRight.Count);
+                            //Debug.Log(this.name + ": br count " + level.map[i].rooms[j].bottomRight.Count);
                             for (int e = 0; e < level.map[i].rooms[j].bottomRight.Count; e++)
                             {
-                                Debug.Log(level.map[i].rooms[j].bottomRight[e].type + level.map[i].rooms[j].bottomRight[e].name + level.template.name);
+                                //Debug.Log(level.map[i].rooms[j].bottomRight[e].type + level.map[i].rooms[j].bottomRight[e].name + level.template.name);
                                 var go = FindRoomEntity(level.map[i].rooms[j].bottomRight[e].type, level.map[i].rooms[j].bottomRight[e].name, level.template);
                                 if (go == null)
                                 {
@@ -151,10 +151,12 @@ namespace HackedDesign
                             }
 
                             // TL
-                            Debug.Log(this.name + ": tl count " + level.map[i].rooms[j].topLeft.Count);
+                            //Debug.Log(this.name + ": tl count " + level.map[i].rooms[j].topLeft.Count);
                             for (int e = 0; e < level.map[i].rooms[j].topLeft.Count; e++)
                             {
-
+                                // if(level.map[i].rooms[j].isEntry) {
+                                // Debug.Log(this.name + ": tl " + level.map[i].rooms[j].topLeft[e].type + " " + level.map[i].rooms[j].topLeft[e].name);
+                                // }
                                 var go = FindRoomEntity(level.map[i].rooms[j].topLeft[e].type, level.map[i].rooms[j].topLeft[e].name, level.template);
                                 if (go == null)
                                 {
@@ -172,7 +174,7 @@ namespace HackedDesign
                             }
 
                             //TR
-                            Debug.Log(this.name + ": tr count " + level.map[i].rooms[j].topRight.Count);
+                            //Debug.Log(this.name + ": tr count " + level.map[i].rooms[j].topRight.Count);
                             for (int e = 0; e < level.map[i].rooms[j].topRight.Count; e++)
                             {
                                 var go = FindRoomEntity(level.map[i].rooms[j].topRight[e].type, level.map[i].rooms[j].topRight[e].name, level.template);
@@ -277,6 +279,18 @@ namespace HackedDesign
                                 GameObject.Instantiate(exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
                             }
 
+                            if (room.top == ProxyRoom.ENTRY)
+                            {
+                                Vector3 pos = new Vector3(j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                                GameObject.Instantiate(entryewPrefab, pos, Quaternion.identity, levelParent.transform);
+                            }
+
+                            if (room.left == ProxyRoom.ENTRY)
+                            {
+                                Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
+                                GameObject.Instantiate(entrynsPrefab, pos, Quaternion.identity, levelParent.transform);
+                            }                            
+
                         }
                     }
                 }
@@ -360,13 +374,13 @@ namespace HackedDesign
                 return results;
             }
 
-            public List<Entity.BaseEntity> PopulateNPCSpawns(Level level)
+            public void PopulateNPCSpawns(Level level, List<Entity.BaseEntity> results)
             {
-                List<Entity.BaseEntity> results = new List<Entity.BaseEntity>();
+                //List<Entity.BaseEntity> results = new List<Entity.BaseEntity>();
 
                 if (level.npcSpawnLocationList == null)
                 {
-                    return results;
+                    return;
                 }
 
                 for (int i = 0; i < level.npcSpawnLocationList.Count; i++)
@@ -375,14 +389,14 @@ namespace HackedDesign
                     Entity.BaseEntity npc = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
 
                     //GameObject npcGameObj = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
+                    Debug.Log(this.name + ":  to spawn " + npc.name);
                     if (npc != null)
                     {
-                        Debug.Log(this.name + ": moving " + level.npcSpawnLocationList[i].name);
+                        Debug.Log(this.name + ": moving " + npc.name);
                         npc.transform.position = level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset;
                         npc.gameObject.SetActive(true);
                         npc.Initialize();
                         results.Add(npc);
-
                     }
                     else 
                     {
@@ -390,7 +404,7 @@ namespace HackedDesign
                     }
                 }
 
-                return results;
+                //return results;
             }
 
         }

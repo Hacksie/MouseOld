@@ -24,6 +24,7 @@ namespace HackedDesign
 
             [Header("Trigger actions")]
             public string triggerAction;
+            public string overloadAction;
             public string leaveAction;
 
             [Header("Trigger state")]
@@ -87,15 +88,21 @@ namespace HackedDesign
                 Story.ActionManager.instance.Invoke(triggerAction);
             }
 
+            public virtual void Overload()
+            {
+                Debug.Log(this.name + ": invoking overload action: " + overloadAction);
+                Story.ActionManager.instance.Invoke(overloadAction);
+            }
+
             public virtual void Leave()
             {
+                Debug.Log(this.name + ": invoking leave action: " + leaveAction);
                 Story.ActionManager.instance.Invoke(leaveAction);
             }
 
             // TODO: Make door close trigger
             protected virtual void OnTriggerStay2D(Collider2D other)
             {
-
                 if (!enabled)
                 {
                     return;
@@ -114,10 +121,20 @@ namespace HackedDesign
                         sprite.gameObject.SetActive(true);
                     }
 
-                    if (!requireInteraction || (requireInteraction && inputController.InteractButtonUp()))
+                    if (!requireInteraction && !string.IsNullOrWhiteSpace(triggerAction))
                     {
                         hasBeenTriggered = true;
                         Invoke();
+                    }
+                    else if (requireInteraction && !string.IsNullOrWhiteSpace(triggerAction) && inputController.InteractButtonUp())
+                    {
+                        hasBeenTriggered = true;
+                        Invoke();
+                    }
+                    else if(!string.IsNullOrWhiteSpace(overloadAction) && inputController.OverloadButtonUp() && CoreGame.Instance.State.player.CanOverload())
+                    {
+                        hasBeenTriggered = true;
+                        Overload();
                     }
 
                 }
@@ -141,7 +158,7 @@ namespace HackedDesign
                         sprite.gameObject.SetActive(false);
                     }
 
-                    if (hasBeenTriggered && !hasBeenLeft)
+                    if (!string.IsNullOrWhiteSpace(triggerAction) && hasBeenTriggered && !hasBeenLeft)
                     {
                         Leave();
                         if (!allowRepeatTriggers)
@@ -150,11 +167,10 @@ namespace HackedDesign
                         }
                     }
                 }
-                if(other.tag == TagManager.NPC && allowNPCAutoInteraction)
+                if(!string.IsNullOrWhiteSpace(triggerAction) && other.tag == TagManager.NPC && allowNPCAutoInteraction)
                 {
                     Leave();
                 }                
-
 
             }
         }

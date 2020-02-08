@@ -5,10 +5,9 @@ namespace HackedDesign
 {
     public class CoreGame : MonoBehaviour
     {
-
         public static CoreGame Instance { get; private set; }
 
-        public GameState State { get; private set; } = new GameState();
+        public GameState State;
 
         private Input.IInputController inputController;
 
@@ -44,6 +43,16 @@ namespace HackedDesign
         [SerializeField]
         private GameObject roomAlert = null;
 
+        [Header("Lights")]
+        //public UnityEngine.Experimental.Rendering.Light2D globalLight;
+        //public UnityEngine.Experimental.Rendering.Light2D globalLight;
+        //public UnityEngine.Rendering.Light2D globalLight;
+        public UnityEngine.Experimental.Rendering.Universal.Light2D globalLight;
+        public Color lightsDefault;
+        public Color lightsWarn;
+        public Color lightsAlert;
+        public Color lightsBar;
+
         [Header("Mobile UI")]
         [SerializeField]
         private Input.MobileInputUIPresenter mobileInputUI = null;
@@ -72,6 +81,8 @@ namespace HackedDesign
         [SerializeField]
         private WorldMapPanelPresenter worldMapPanel = null;
         [SerializeField]
+        private StatsPanelPresenter statsPanel = null;        
+        [SerializeField]
         private Story.InfoManager infoManager = null;
         [SerializeField]
         private Story.InfoPanelPresenter infoPanel = null;
@@ -87,12 +98,18 @@ namespace HackedDesign
         private Dialogue.DialogueManager dialogueManager = null;
         [SerializeField]
         private Dialogue.DialoguePanelPresenter dialoguePanel = null;
+        [SerializeField]
+        private MissionCompleteManager missionCompleteManager = null;
+        [SerializeField]
+        private MissionCompletePresenter missionCompletePanel = null;
+
+        
 
         [SerializeField]
         private Level.LevelMapPanelPresenter levelMapPanel = null;
 
-        // [SerializeField]
-        // private TimerPanelPresenter timerPanel;
+        [SerializeField]
+        private TimerPanelPresenter timerPanel = null;
         // [SerializeField]
         // private Timer timer;
 
@@ -139,7 +156,6 @@ namespace HackedDesign
 
             SetPlatformInput();
 
-            //timerPanel.Initialize (this.timer);
             mobileInputUI.Initialize(inputController);
             actionConsolePanel.Initialize(actionManager);
             narrationManager.Initialize(inputController);
@@ -151,9 +167,11 @@ namespace HackedDesign
             narrationPanel.Initialize(narrationManager);
             dialoguePanel.Initialize(dialogueManager);
             worldMapPanel.Initialize(worldMapManager);
+            statsPanel.Initialize();
             levelRenderer.Initialize(entityManager, levelParent, npcParent, polyNav2D);
+            missionCompletePanel.Initialize(missionCompleteManager);
 
-            RepaintAll();
+            RepaintAllUI();
 
             ShowPlayer(false);
         }
@@ -172,7 +190,6 @@ namespace HackedDesign
                     inputController = new Input.DesktopInputController();
                     break;
             }
-
         }
 
         public void LoadNewGame()
@@ -182,8 +199,8 @@ namespace HackedDesign
             entityManager.Initialize(npcParent);
             actionManager.Initialize(entityManager, taskManager);
             State.currentLevel = levelGenerator.GenerateLevel("Victoria's Room", 1, 1, 1, 0, 0, 0);
+            State.isRandom = false;
             State.player = new Character.PlayerState();
-
             CoreGame.Instance.SceneInitialize();
         }
 
@@ -192,10 +209,11 @@ namespace HackedDesign
             Debug.Log(this.name + ": loading random game");
             State.state = GameStateEnum.LOADING;
             State.currentLevel = levelGenerator.GenerateLevel(template, length, height, width, difficulty, enemies, traps);
+            State.isRandom = true;
             State.player = new Character.PlayerState();
             entityManager.Initialize(npcParent);
             actionManager.Initialize(entityManager, taskManager);
-            CoreGame.Instance.SceneInitialize();
+            SceneInitialize();
         }
 
         public void LoadNewLevel(string template)
@@ -206,15 +224,21 @@ namespace HackedDesign
             State.entityList.Clear();
             State.currentLevel = levelGenerator.GenerateLevel(template);
 
-            //entityManager.Initialize(npcParent);
-            //actionManager.Initialize(entityManager, taskManager);
-            CoreGame.Instance.SceneInitialize();
+            entityManager.Initialize(npcParent);
+            actionManager.Initialize(entityManager, taskManager);
+            SceneInitialize();
+
+            //             for(int i = 0; i<this.State.entityList.Count;i++)
+            // {
+            //     Debug.Log("XX" + this.State.entityList[i].name);
+            // }                
         }
 
         public void EndGame()
         {
+            Debug.Log(this.name + ": End Game");
             State.state = GameStateEnum.MAINMENU;
-            RepaintAll();
+            RepaintAllUI();
             levelRenderer.DestroyLevel();
             State.entityList.Clear();
             ShowPlayer(false);
@@ -238,25 +262,31 @@ namespace HackedDesign
 
             Debug.Log(this.name + ": scene initialization");
             ShowPlayer(true);
+            SetLight(GlobalLightTypes.Default);
 
-            this.State.entityList.Clear();
+            //this.State.entityList.Clear();
             levelRenderer.Render(this.State.currentLevel);
 
-            this.State.entityList.AddRange(levelRenderer.PopulateNPCSpawns(this.State.currentLevel));
+            levelRenderer.PopulateNPCSpawns(this.State.currentLevel, this.State.entityList);
             this.State.entityList.AddRange(levelRenderer.PopulateEnemySpawns(this.State.currentLevel));
             this.State.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.State.currentLevel));
+           
 
+            
             levelMapPanel.Initialize(selectMenuManager, State.currentLevel);
 
+
+
             player.transform.position = State.currentLevel.ConvertLevelPosToWorld(State.currentLevel.playerSpawn.levelLocation) + State.currentLevel.playerSpawn.worldOffset;
-
-
-            //GameObject sceneStoriesObj = GameObject.FindWithTag (TagManager.STORY);
 
             playerController = player.GetComponent<PlayerController>();
 
             SceneTriggersInitialize();
             CreateAlert();
+            timerPanel.Initialize (State.currentLevel.timer);      
+
+
+            //Debug.Break();
 
             SetPlaying();
 
@@ -265,23 +295,24 @@ namespace HackedDesign
                 Story.ActionManager.instance.Invoke(State.currentLevel.template.startingAction);
             }
 
-            RepaintAll();
+            RepaintAllUI();
 
         }
 
-        void RepaintAll()
+        void RepaintAllUI()
         {
-
             mainMenu.Repaint();
             actionConsolePanel.Repaint();
             dialoguePanel.Repaint();
             narrationPanel.Repaint();
             selectMenuPanel.Repaint();
             startMenuPanel.Repaint();
+            missionCompletePanel.Repaint();
 
             levelMapPanel.Repaint();
             worldMapPanel.Repaint();
-            //timerPanel.Repaint ();
+            statsPanel.Repaint();
+            timerPanel.Repaint ();
             mobileInputUI.Repaint();
             cursorPresenter.Repaint();
         }
@@ -341,8 +372,16 @@ namespace HackedDesign
             Debug.Log(this.name + ": state set to NARRATION");
             Time.timeScale = 0;
             State.state = GameStateEnum.NARRATION;
-            RepaintAll();
+            RepaintAllUI();
         }
+
+        public void SetMissionComplete()
+        {
+            Debug.Log(this.name + ": state set to MISSION COMPLETE");
+            Time.timeScale = 0;
+            State.state = GameStateEnum.MISSIONCOMPLETE;
+            RepaintAllUI();
+        }        
 
         public void SetWorldMap()
         {
@@ -385,6 +424,30 @@ namespace HackedDesign
 
         }
 
+        public void UpdateLights()
+        {
+            switch(State.currentLight)
+            {
+                case GlobalLightTypes.Default:
+                    globalLight.color = lightsDefault;
+                    break;
+                case GlobalLightTypes.Warn:
+                    globalLight.color = lightsWarn;
+                    break;
+                case GlobalLightTypes.Alert:
+                    globalLight.color = lightsAlert;
+                    break;                
+                case GlobalLightTypes.Bar:
+                    globalLight.color = lightsBar;
+                    break;                
+            }            
+        }
+
+        public void SetLight(GlobalLightTypes light)
+        {
+            State.currentLight = light;
+        }
+
         void Update()
         {
 
@@ -424,6 +487,8 @@ namespace HackedDesign
                         SetPlaying();
                     }
                     break;
+                case GameStateEnum.MISSIONCOMPLETE:
+                    break;
 
                 case GameStateEnum.GAMEOVER:
                     EndGame();
@@ -431,7 +496,8 @@ namespace HackedDesign
 
             }
 
-            RepaintAll();
+            UpdateLights();
+            RepaintAllUI();
 
         }
 
@@ -462,6 +528,7 @@ namespace HackedDesign
             playerController.UpdateMovement(inputController);
             PlayingNPCUpdate();
             PlayingTriggerUpdate();
+            State.currentLevel.timer.Update();
         }
 
         void PlayingTriggerUpdate()

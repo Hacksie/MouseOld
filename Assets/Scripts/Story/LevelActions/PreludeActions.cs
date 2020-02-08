@@ -5,7 +5,7 @@ namespace HackedDesign.Story
 {
     public class PreludeActions : ILevelActions
     {
-        public void Invoke(string actionName)
+        public bool Invoke(string actionName)
         {
             switch (actionName)
             {
@@ -15,58 +15,58 @@ namespace HackedDesign.Story
                     InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Manager Lyon"));
                     InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Cari"));
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
-                    break;
+                    return true;
                 case "Prelude2":
                     Debug.Log("PreludeActions: invoke Prelude2");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude2");
-                    break;
+                    return true;
                 case "Prelude3":
                     Debug.Log("PreludeActions: invoke Prelude3");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude3");
-                    break;
+                    return true;
                 case "Prelude4":
                     Debug.Log("PreludeActions: invoke Prelude4");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude4");
-                    break;
+                    return true;
                 case "Prelude5":
                     Debug.Log("PreludeActions: invoke Prelude5");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude5");
-                    break;
+                    return true;
                 case "Prelude6":
                     Debug.Log("PreludeActions: invoke Prelude6");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude6");
-                    break;
+                    return true;
                 case "Prelude7":
                     Debug.Log("PreludeActions: invoke Prelude7");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude7");
                     //SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
                     //CoreGame.Instance.State.state = GameStateEnum.SELECTMENU;
-                    break;
+                    return true;
                 case "PreludeLaptop":
                     PreludeLaptop();
-                    break;
+                    return true;
                     //.SelectMenuState = SelectMenuManager.SelectMenuState.TASKS;
                 case "PreludeKari":
                 case "PreludeKari1":
                     PreludeKari1();
-                    break;
+                    return true;
                 case "PreludeKari2":
                     PreludeKari2();
-                    break;
+                    return true;
                 case "PreludeKari3":
                     PreludeKari3();
-                    break;
+                    return true;
                 case "PreludeKari4":
                     PreludeKari4();
-                    break;                    
+                    return true;              
                 case "PreludeExit":
                     PreludeExit();
-                    break;
+                    return true;
                 case "PreludeBarKat":
                     Debug.Log("Snowowl");
-                    break;
+                    return true;
             }
-
+            return false;
         }
 
         public void PreludeLaptop()

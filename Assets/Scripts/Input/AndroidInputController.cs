@@ -11,6 +11,8 @@ namespace HackedDesign {
 
 			bool startButtonDown;
 			bool selectButtonDown;
+			bool interactButtonDown;
+			bool overloadButtonDown;
 
 			public AndroidInputController (MobileInputUIPresenter mobileInputUI) {
 				this.mobileInput = mobileInputUI;
@@ -96,8 +98,26 @@ namespace HackedDesign {
 			}
 
 			public bool InteractButtonUp () {
+				if(mobileInput.mobileInteract) {
+					interactButtonDown = true;
+				} else if(interactButtonDown) {
+					interactButtonDown = false;
+					return true;
+				}
+
 				return UnityEngine.Input.GetButtonUp ("Interact");
 			}
+
+			public bool OverloadButtonUp () {
+				if(mobileInput.mobileOverload) {
+					overloadButtonDown = true;
+				} else if(overloadButtonDown) {
+					overloadButtonDown = false;
+					return true;
+				}
+
+				return UnityEngine.Input.GetButtonUp ("Overload");
+			}			
 
 			// private bool mobileLeft;
 			// private bool mobileRight;

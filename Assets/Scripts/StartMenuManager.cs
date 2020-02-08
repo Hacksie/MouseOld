@@ -10,6 +10,10 @@ namespace HackedDesign {
 			CoreGame.Instance.SetPlaying ();
 		}
 
+		public void ResetEvent () {
+			
+		}
+
 		public void QuitEvent () {
 			//FIXME: Ask for save?
 			CoreGame.Instance.EndGame();

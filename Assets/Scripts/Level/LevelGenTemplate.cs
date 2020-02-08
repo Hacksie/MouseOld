@@ -18,7 +18,7 @@ namespace HackedDesign
 
 			public bool generateDoors = true;
 
-			public string startingRoomString = "weww";
+			public string startingRoomString = "wnww_entry";
 			public string startingAction;
 			public string exitAction;
 
@@ -27,7 +27,6 @@ namespace HackedDesign
 			public bool generateNavMesh = true;
 
 			public List<GameObject> floors;
-			//public LevelElements levelElements;   
 			public List<GameObject> levelElements;     
 			public List<GameObject> endProps;
 			public List<GameObject> startProps;

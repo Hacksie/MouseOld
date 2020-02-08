@@ -30,7 +30,8 @@ namespace HackedDesign.Story
         {
             this.entityManager = entityManager;
             this.taskManager = taskManager;
-
+            actions.Clear();
+            actions.Add("Global", new GlobalActions());
             actions.Add("Victoria's Room", new PreludeActions());
             actions.Add("Arisana Bar", new PreludeBarActions());
         }
@@ -57,29 +58,32 @@ namespace HackedDesign.Story
             }
         }
 
-        //Twas the night before christmas, when all through the city, all the creatures were stirring. Even a Mouse... God please kill that alarm. I'm getting too old for this. If I had my way, I'd leave the creatures to their stirring and go back to sleep. No chance for that tonight.
-
-        //Good morning Miss Ives, it's currently 2:03am and I've just started a pot of coffee for you. It's currently raining outside and there is a message waiting for you on your terminal. 
-
         public void Invoke(string actionName)
         {
-            if(string.IsNullOrWhiteSpace(actionName))
+            if (string.IsNullOrWhiteSpace(actionName))
             {
                 return;
             }
-            
+
             CoreGame.Instance.SaveGame();
-            
+
             if (CoreGame.Instance.State.currentLevel == null)
             {
                 Debug.LogError(this.name + ": cannot invoke an action if no level is loaded");
             }
 
+            bool handled = false;
+
             if (actions.ContainsKey(CoreGame.Instance.State.currentLevel.template.name))
             {
-                actions[CoreGame.Instance.State.currentLevel.template.name].Invoke(actionName);
+                handled = actions[CoreGame.Instance.State.currentLevel.template.name].Invoke(actionName);
             }
-            else {
+            if(!handled) {
+                handled = actions["Global"].Invoke(actionName);
+            }
+
+            if(!handled)
+            {
                 Debug.LogError(this.name + ": cannot invoke action: " + actionName + " in current level: " + CoreGame.Instance.State.currentLevel.template.name);
             }
         }
