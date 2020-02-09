@@ -80,8 +80,10 @@ namespace HackedDesign
         private WorldMapManager worldMapManager = null;
         [SerializeField]
         private WorldMapPanelPresenter worldMapPanel = null;
+        //[SerializeField]
+        //private StatsPanelPresenter statsPanel = null;        
         [SerializeField]
-        private StatsPanelPresenter statsPanel = null;        
+        private ActionPanelPresenter actionPanel = null;
         [SerializeField]
         private Story.InfoManager infoManager = null;
         [SerializeField]
@@ -102,7 +104,8 @@ namespace HackedDesign
         private MissionCompleteManager missionCompleteManager = null;
         [SerializeField]
         private MissionCompletePresenter missionCompletePanel = null;
-
+        [SerializeField]
+        private Level.MinimapPresenter minimapPanel = null;
         
 
         [SerializeField]
@@ -167,9 +170,11 @@ namespace HackedDesign
             narrationPanel.Initialize(narrationManager);
             dialoguePanel.Initialize(dialogueManager);
             worldMapPanel.Initialize(worldMapManager);
-            statsPanel.Initialize();
+            //statsPanel.Initialize();
+            actionPanel.Initialize();
             levelRenderer.Initialize(entityManager, levelParent, npcParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
+            //
 
             RepaintAllUI();
 
@@ -227,11 +232,6 @@ namespace HackedDesign
             entityManager.Initialize(npcParent);
             actionManager.Initialize(entityManager, taskManager);
             SceneInitialize();
-
-            //             for(int i = 0; i<this.State.entityList.Count;i++)
-            // {
-            //     Debug.Log("XX" + this.State.entityList[i].name);
-            // }                
         }
 
         public void EndGame()
@@ -274,6 +274,7 @@ namespace HackedDesign
 
             
             levelMapPanel.Initialize(selectMenuManager, State.currentLevel);
+            minimapPanel.Initialize(State.currentLevel);
 
 
 
@@ -311,9 +312,11 @@ namespace HackedDesign
 
             levelMapPanel.Repaint();
             worldMapPanel.Repaint();
-            statsPanel.Repaint();
+            //statsPanel.Repaint();
+            actionPanel.Repaint();
             timerPanel.Repaint ();
             mobileInputUI.Repaint();
+            minimapPanel.Repaint();
             cursorPresenter.Repaint();
         }
 

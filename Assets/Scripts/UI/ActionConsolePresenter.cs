@@ -43,8 +43,8 @@ namespace HackedDesign
 
             panel.sizeDelta = new Vector2(panel.sizeDelta.x, 0);
 
-            var console = this.actionManager.console.Reverse().Take(6).Reverse().ToArray();
-            for (int i = 0; i < 6; i++)
+            var console = this.actionManager.console.Reverse().Take(line.Count()).Reverse().ToArray();
+            for (int i = 0; i < line.Count(); i++)
             {
                 if (i < console.Count())
                 {

@@ -12,7 +12,8 @@ namespace HackedDesign.Story
                 case "OverloadEntry":
                     Debug.Log("GlobalActions: invoke OverloadEntry");
                     // FIXME: Check if any other condition exists first!
-                    ActionManager.instance.AddActionMessage("Alert timer initiated");
+                    ActionManager.instance.AddActionMessage("Entry overloaded!");
+                    ActionManager.instance.AddActionMessage("60 second timer initiated");
                     CoreGame.Instance.State.currentLevel.startTime = Time.time;
                     CoreGame.Instance.State.currentLevel.timer.Start();
                     CoreGame.Instance.State.currentLight = GlobalLightTypes.Warn;

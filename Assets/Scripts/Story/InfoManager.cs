@@ -35,7 +35,7 @@ namespace HackedDesign {
 				{
 					Debug.Log(this.name + ": adding entity " + entity.name + " to known entities");
 					knownEntities.Add(entity);
-					ActionManager.instance.AddActionMessage("Added '" + entity.name + "' entry to " + entity.parentInfoCategory);
+					ActionManager.instance.AddActionMessage("'" + entity.name + "' added to " + entity.parentInfoCategory);
 				}
 			}
 
