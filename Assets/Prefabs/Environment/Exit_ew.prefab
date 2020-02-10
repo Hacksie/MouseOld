@@ -45,6 +45,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -69,7 +71,8 @@ SpriteRenderer:
   m_SortingLayerID: 1344584367
   m_SortingLayer: -3
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 664b54a6d8e280a4c9404a8903fd234b, type: 3}
+  m_Sprite: {fileID: -1922979618149193216, guid: ee192252ce6471b4ebe5c787be9865b8,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +98,7 @@ GameObject:
   - component: {fileID: 61807340483984064}
   - component: {fileID: 61823095927018240}
   m_Layer: 0
-  m_Name: Entry_ew
+  m_Name: Exit_ew
   m_TagString: Trigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,6 +157,7 @@ MonoBehaviour:
   allowRepeatTriggers: 1
   allowNPCAutoInteraction: 0
   triggerAction: 
+  overloadAction: 
   leaveAction: 
   hasBeenTriggered: 0
   hasBeenLeft: 0
@@ -177,11 +181,14 @@ MonoBehaviour:
   allowRepeatTriggers: 0
   allowNPCAutoInteraction: 1
   triggerAction: 
+  overloadAction: 
   leaveAction: 
   hasBeenTriggered: 0
   hasBeenLeft: 0
+  levelEntry: 0
   doorCollider: {fileID: 61807340483984064}
   animator: {fileID: 95934519643766982}
+  overloaded: 0
 --- !u!61 &61807340483984064
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -284,6 +291,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -308,7 +317,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5762ca8c04fe844b5a287f21c4a95c47, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bfd02f87ffa614e638bc961fd5bd7766, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
