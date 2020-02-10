@@ -85,12 +85,7 @@ namespace HackedDesign
                     GenerateTrapSpawns(level);
                     GenerateEntities(level, true);
                 }
-
-                
-
-
                 level.Print();
-
                 return level;
 
             }
@@ -114,13 +109,12 @@ namespace HackedDesign
 
             protected Level GenerateRandomLevel(LevelGenTemplate genTemplate)
             {
-
                 var level = new Level(genTemplate);
                 var position = GenerateStartingLocation(level);
 
                 if (level.length > 1)
                 {
-                    GenerateMainChain(new Vector2Int(position.x, position.y - 1), position, level, level.length - 1);
+                    GenerateMainChain(new Vector2Int(position.x, position.y - 1), level, level.length - 1);
                 }
 
                 GenerateAuxRooms(level);
@@ -154,7 +148,7 @@ namespace HackedDesign
                 return position;
             }
 
-            bool GenerateMainChain(Vector2Int newLocation, Vector2Int lastLocation, Level level, int lengthRemaining)
+            bool GenerateMainChain(Vector2Int newLocation, Level level, int lengthRemaining)
             {
                 if (lengthRemaining == 0)
                 {
@@ -185,7 +179,7 @@ namespace HackedDesign
                 for (int i = 0; i < directions.Count; i++)
                 {
 
-                    result = GenerateMainChain(directions[i], newLocation, level, lengthRemaining - 1);
+                    result = GenerateMainChain(directions[i], level, lengthRemaining - 1);
 
                     if (result) // If the chain is okay, don't need to try any new directions. We could probably return true here
                     {
