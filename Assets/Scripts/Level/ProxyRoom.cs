@@ -11,11 +11,11 @@ namespace HackedDesign {
             public bool isMainChain = false;
             public bool isNearEntry = false;
 
-            public string floor;
-            public string top;
-            public string left;
-            public string bottom;
-            public string right;
+            public string floor = "";
+            public string top = "";
+            public string left = "";
+            public string bottom = "";
+            public string right = "";
 
             // We'd use an enum, but I'm too lazy to write a serializer
             public const string WALL = "w";

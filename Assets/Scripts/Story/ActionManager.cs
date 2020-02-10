@@ -14,10 +14,8 @@ namespace HackedDesign.Story
 
         private Dictionary<string, ILevelActions> actions = new Dictionary<string, ILevelActions>();
 
-
-
         [SerializeField]
-        private float timeOut = 5.0f;
+        private float timeOut = 10.0f;
 
         public Queue<ActionMessage> console = new Queue<ActionMessage>();
 
