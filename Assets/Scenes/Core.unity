@@ -31150,7 +31150,7 @@ GameObject:
   - component: {fileID: 1399153309}
   - component: {fileID: 1399153308}
   m_Layer: 0
-  m_Name: KeybindingsButton
+  m_Name: ControlsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50246,7 +50246,7 @@ GameObject:
   - component: {fileID: 2102250135}
   - component: {fileID: 2102250134}
   m_Layer: 0
-  m_Name: KeybindingsText
+  m_Name: ControlsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50303,7 +50303,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Keybindings
+  m_Text: Controls
 --- !u!222 &2102250135
 CanvasRenderer:
   m_ObjectHideFlags: 0
