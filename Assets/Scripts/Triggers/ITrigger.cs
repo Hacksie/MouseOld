@@ -4,6 +4,8 @@ namespace HackedDesign {
             void Initialize (Input.IInputController inputController);
             void Invoke ();
             void Overload();
+            void Hack();
+            void Keycard();
             void Leave();
             void UpdateTrigger();
             void Activate ();

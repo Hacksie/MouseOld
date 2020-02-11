@@ -28,7 +28,12 @@ namespace HackedDesign.Character
         public bool CanKeycard()
         {
             return keycards > 0;
-        }     
+        }
+
+        public bool CanHack()
+        {
+            return bugs > 0;
+        }
 
         public bool ConsumeOverload()
         {
@@ -45,6 +50,16 @@ namespace HackedDesign.Character
             if(CanKeycard())
             {
                 keycards--;
+                return true;
+            }
+            return false;
+        }
+
+        public bool ConsumeHack()
+        {
+            if(CanHack())
+            {
+                bugs--;
                 return true;
             }
             return false;

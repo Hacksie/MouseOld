@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace HackedDesign {
 	namespace Triggers {
-		public class SpeechBubbleTrigger : BaseTrigger, ITrigger {
+		public class SpeechBubbleTrigger : BaseTrigger {
 
 			public float startTime;
 			public float showTime = 3.0f;
@@ -22,7 +22,6 @@ namespace HackedDesign {
 
 
 			public bool loop = false;
-			bool triggered;
 
 
 			public new void Initialize (Input.IInputController inputController) {

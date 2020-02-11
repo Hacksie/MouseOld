@@ -68,14 +68,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabled: 1
   sprite: {fileID: 0}
-  requireInteraction: 1
-  allowRepeatTriggers: 1
+  requireInteraction: 0
+  requireHack: 1
+  requireKeycard: 0
+  requireOverload: 0
+  allowOverload: 0
+  allowRepeatInteractions: 0
   allowNPCAutoInteraction: 1
   triggerAction: 
-  overloadAction: OverloadEntry
-  leaveAction: LevelExit
-  hasBeenTriggered: 0
-  hasBeenLeft: 0
+  hackAction: OverloadEntry
+  keycardAction: 
+  overloadAction: 
+  leaveAction: 
+  triggered: 0
+  npcTriggered: 0
   levelEntry: 1
   doorCollider: {fileID: 5667044606128391909}
   animator: {fileID: 5704413205964274915}
@@ -93,7 +99,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
+  m_Offset: {x: 0, y: 0.55}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -104,7 +110,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.25}
+  m_Size: {x: 0.5, y: 1.125}
   m_EdgeRadius: 0
 --- !u!61 &5667029983520468773
 BoxCollider2D:
@@ -178,6 +184,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -202,7 +209,8 @@ SpriteRenderer:
   m_SortingLayerID: 1344584367
   m_SortingLayer: -3
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 664b54a6d8e280a4c9404a8903fd234b, type: 3}
+  m_Sprite: {fileID: -2232060510679477986, guid: 664b54a6d8e280a4c9404a8903fd234b,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

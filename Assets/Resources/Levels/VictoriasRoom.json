@@ -20,7 +20,7 @@
                 "y": 0
             },
             "worldOffset": {
-                "x": -1,
+                "x": 0,
                 "y": 0
             }
         }
@@ -30,8 +30,8 @@
             "rooms": [
                 {
                     "left": "w",
-                    "top": "e",
-                    "bottom": "w",
+                    "top": "w",
+                    "bottom": "e",
                     "right": "w",
                     "isEntry": true,
                     "bottomLeft": [
