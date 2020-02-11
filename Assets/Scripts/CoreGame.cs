@@ -37,6 +37,8 @@ namespace HackedDesign
         private GameObject npcParent = null;
         [SerializeField]
         private PolyNav.PolyNav2D polyNav2D = null;
+        [SerializeField]
+        private string newGameLevel = "Olivia's Room";
 
         [SerializeField]
         private GameObject roomAlertPrefab = null;
@@ -203,7 +205,7 @@ namespace HackedDesign
             State.state = GameStateEnum.LOADING;
             entityManager.Initialize(npcParent);
             actionManager.Initialize(entityManager, taskManager);
-            State.currentLevel = levelGenerator.GenerateLevel("Victoria's Room", 1, 1, 1, 0, 0, 0);
+            State.currentLevel = levelGenerator.GenerateLevel(newGameLevel, 1, 1, 1, 0, 0, 0);
             State.isRandom = false;
             State.player = new Character.PlayerState();
             CoreGame.Instance.SceneInitialize();

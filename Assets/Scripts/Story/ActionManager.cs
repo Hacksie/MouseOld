@@ -30,7 +30,7 @@ namespace HackedDesign.Story
             this.taskManager = taskManager;
             actions.Clear();
             actions.Add("Global", new GlobalActions());
-            actions.Add("Victoria's Room", new PreludeActions());
+            actions.Add("Olivia's Room", new PreludeActions());
             actions.Add("Arisana Bar", new PreludeBarActions());
         }
 

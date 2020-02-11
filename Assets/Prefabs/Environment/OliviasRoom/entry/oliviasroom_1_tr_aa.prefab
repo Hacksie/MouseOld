@@ -113,7 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2752517563425494285}
   m_Layer: 0
-  m_Name: victoriasroom_1_tr_aa
+  m_Name: oliviasroom_1_tr_aa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -264,6 +264,15 @@ Tilemap:
   m_GameObject: {fileID: 5302747802955249565}
   m_Enabled: 1
   m_Tiles:
+  - first: {x: 6, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 12
+      m_TileSpriteIndex: 12
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 6
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 1073741825
   - first: {x: 3, y: 6, z: 0}
     second:
       serializedVersion: 2
@@ -335,8 +344,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 00d2c52bd7cc9204b8ac7c653f6e08eb, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 51aff0d3cb8d9e34c996c15e5d172cc3, type: 2}
   - m_RefCount: 1
@@ -372,8 +381,9 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -2507150593849930726, guid: 9992a77020e96a04891ffcd2fbdf70df,
+      type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 440136263125797017, guid: 699462aaa838af846860b3817087d471, type: 3}
   - m_RefCount: 1
@@ -389,7 +399,7 @@ Tilemap:
     m_Data: {fileID: -4633515994948560188, guid: 88d66615384b43e44862087c78d80543,
       type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 5
+  - m_RefCount: 6
     m_Data:
       e00: 1
       e01: 0
@@ -420,7 +430,7 @@ Tilemap:
     m_Data: {r: 2.1e-44, g: 2.1e-44, b: 2.1e-44, a: 2.1e-44}
   - m_RefCount: 0
     m_Data: {r: 0, g: 0, b: 0, a: 0}
-  - m_RefCount: 5
+  - m_RefCount: 6
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
