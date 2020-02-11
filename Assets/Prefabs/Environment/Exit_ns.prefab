@@ -68,13 +68,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabled: 1
   sprite: {fileID: 0}
-  requireInteraction: 0
-  allowRepeatTriggers: 1
+  requireInteraction: 1
   allowNPCAutoInteraction: 0
-  triggerAction: 
+  allowRepeatInteractions: 0
+  requireHack: 0
+  requireKeycard: 0
+  allowOverload: 0
+  triggerAction: LevelExit
+  hackAction: 
+  keycardAction: 
+  overloadAction: 
   leaveAction: 
-  hasBeenTriggered: 0
-  hasBeenLeft: 0
+  triggered: 0
+  npcTriggered: 0
   doorCollider: {fileID: 61927359348290232}
   animator: {fileID: 95529358425913334}
 --- !u!61 &61927359348290232
@@ -174,6 +180,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -198,12 +206,12 @@ SpriteRenderer:
   m_SortingLayerID: 1344584367
   m_SortingLayer: -3
   m_SortingOrder: 20
-  m_Sprite: {fileID: 21300004, guid: 664b54a6d8e280a4c9404a8903fd234b, type: 3}
+  m_Sprite: {fileID: 21300002, guid: 664b54a6d8e280a4c9404a8903fd234b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.25, y: 2}
+  m_Size: {x: 0.25, y: 1.984375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

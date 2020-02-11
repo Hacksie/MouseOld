@@ -13,6 +13,8 @@ namespace HackedDesign {
             public bool mobileSelect;
             public bool mobileInteract;
             public bool mobileOverload;
+            public bool mobileHack;
+            public bool mobileKeycard;
             private Input.IInputController inputController;
 
             public void Initialize(Input.IInputController inputController)

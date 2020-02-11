@@ -246,7 +246,7 @@ namespace HackedDesign
                     Debug.Log("Skipping doors");
                     return;
                 }
-
+                //FIXME: swap i & j to be consistent!
                 for (int i = 0; i < level.map.Count(); i++)
                 {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
@@ -278,6 +278,13 @@ namespace HackedDesign
                                 Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
                                 GameObject.Instantiate(exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
                             }
+                            if (room.bottom == ProxyRoom.EXIT)
+                            {
+                                Debug.Log("bottom e");
+                                Vector3 pos = new Vector3(j * 4 + 2, (i+1) * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                                GameObject.Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
+                            }
+
 
                             if (room.top == ProxyRoom.ENTRY)
                             {

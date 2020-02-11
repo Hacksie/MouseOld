@@ -10,7 +10,7 @@ namespace HackedDesign
     {
         public class LevelGenerator : MonoBehaviour
         {
-            const string DEFAULT_ROOM_START = "wnww_entry";
+            const string DEFAULT_ROOM_START = "wnew_entry";
             const string TOPLEFT = "tl";
             const string TOPRIGHT = "tr";
             const string BOTTOMLEFT = "bl";

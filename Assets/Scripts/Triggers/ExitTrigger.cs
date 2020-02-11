@@ -19,7 +19,7 @@ namespace HackedDesign {
                 
                 animator = GetComponent<Animator>();
                 requireInteraction = true;
-                allowRepeatTriggers = true;
+                
 
                 triggerAction = CoreGame.Instance.State.currentLevel.template.exitAction;
 

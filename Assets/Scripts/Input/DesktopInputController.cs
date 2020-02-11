@@ -40,6 +40,14 @@ namespace HackedDesign {
 			public bool OverloadButtonUp() {
 				return UnityEngine.Input.GetButtonUp("Overload");
 			}
+
+			public bool HackButtonUp() {
+				return UnityEngine.Input.GetButtonUp("Hack");
+			}
+
+			public bool KeycardButtonUp() {
+				return UnityEngine.Input.GetButtonUp("Keycard");
+			}
 		}
 	}
 }
