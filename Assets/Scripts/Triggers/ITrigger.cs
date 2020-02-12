@@ -5,7 +5,8 @@ namespace HackedDesign {
             void Invoke ();
             void Overload();
             void Hack();
-            void Keycard();
+            //void Keycard();
+            void Bug();
             void Leave();
             void UpdateTrigger();
             void Activate ();

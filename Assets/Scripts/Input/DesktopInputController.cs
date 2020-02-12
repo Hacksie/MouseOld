@@ -48,6 +48,10 @@ namespace HackedDesign {
 			public bool KeycardButtonUp() {
 				return UnityEngine.Input.GetButtonUp("Keycard");
 			}
+
+			public bool BugButtonUp() {
+				return UnityEngine.Input.GetButtonUp("Bug");
+			}
 		}
 	}
 }

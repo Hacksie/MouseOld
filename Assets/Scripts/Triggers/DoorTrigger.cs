@@ -10,6 +10,7 @@ namespace HackedDesign
         {
             public Collider2D doorCollider;
             public Animator animator;
+            public bool animate = true;
             
 
             bool open = false;
@@ -26,7 +27,7 @@ namespace HackedDesign
             // Update is called once per frame
             public override void UpdateTrigger()
             {
-                if (animator != null)
+                if (animate && animator != null)
                     animator.SetBool("open", open || overloaded);
             }
 
@@ -40,6 +41,12 @@ namespace HackedDesign
             {
                 open = true;
                 base.Hack();
+            }
+
+            public override void Bug()
+            {
+                open = true;
+                base.Bug();
             }
 
             public override void Overload()

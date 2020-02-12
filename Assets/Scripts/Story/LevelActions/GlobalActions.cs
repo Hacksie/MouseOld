@@ -18,10 +18,6 @@ namespace HackedDesign.Story
                     CoreGame.Instance.State.currentLevel.startTime = Time.time;
                     CoreGame.Instance.State.currentLevel.timer.Start();
                     CoreGame.Instance.State.currentLight = GlobalLightTypes.Warn;
-                    //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Arisana"));
-                    //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Manager Lyon"));
-                    //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Cari"));
-                    //Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
                     return true;
                 case "BatteryFill":
                     Debug.Log("GlobalActions: invoke BatteryFill");

@@ -18,15 +18,17 @@ namespace HackedDesign
             public SpriteRenderer sprite;
             public SpriteRenderer interactSprite;
             public SpriteRenderer hackSprite;
-            public SpriteRenderer keycardSprite;
+            //public SpriteRenderer keycardSprite;
             public SpriteRenderer overloadSprite;
+            public SpriteRenderer bugSprite;
 
 
             [Header("Trigger settings")]
             public bool requireInteraction = false;
             public bool requireHack = false;
-            public bool requireKeycard = false;
+            //public bool requireKeycard = false;
             public bool requireOverload = false;
+            public bool requireBug = false;
             public bool allowOverload = false;
             public bool allowRepeatInteractions = false;
             public bool allowNPCAutoInteraction = false;
@@ -35,8 +37,9 @@ namespace HackedDesign
 
             [Header("Trigger actions")]
             public string triggerAction;
+            public string bugAction;
             public string hackAction;
-            public string keycardAction;
+            //public string keycardAction;
             public string overloadAction;
             public string leaveAction;
 
@@ -45,6 +48,7 @@ namespace HackedDesign
             public bool npcTriggered = false;
             public bool overloaded = false;
             public bool hacked = false;
+            public bool bugged = false;
 
             public void Start()
             {
@@ -100,7 +104,10 @@ namespace HackedDesign
             public virtual void Invoke()
             {
                 Debug.Log(this.name + ": invoking trigger action: " + triggerAction);
-                Story.ActionManager.instance.Invoke(triggerAction);
+                if (!string.IsNullOrWhiteSpace(triggerAction))
+                {
+                    Story.ActionManager.instance.Invoke(triggerAction);
+                }
             }
 
             public virtual void Overload()
@@ -119,12 +126,21 @@ namespace HackedDesign
                 Story.ActionManager.instance.Invoke(hackAction);
             }
 
-            public virtual void Keycard()
+            public virtual void Bug()
             {
-                Debug.Log(this.name + ": invoking hack action: " + keycardAction);
-                CoreGame.Instance.State.player.ConsumeKeycard();
-                Story.ActionManager.instance.Invoke(keycardAction);
+                Debug.Log(this.name + ": invoking bug action: " + bugAction);
+                bugged = true;
+                hacked = true;
+                CoreGame.Instance.State.player.ConsumeBug();
+                Story.ActionManager.instance.Invoke(bugAction);
             }
+
+            // public virtual void Keycard()
+            // {
+            //     Debug.Log(this.name + ": invoking hack action: " + keycardAction);
+            //     CoreGame.Instance.State.player.ConsumeKeycard();
+            //     Story.ActionManager.instance.Invoke(keycardAction);
+            // }
 
             public virtual void Leave()
             {
@@ -144,36 +160,41 @@ namespace HackedDesign
                     sprite.gameObject.SetActive(true);
                 }
 
-                if (!requireInteraction && !requireHack && !requireKeycard && !requireOverload)
+                if (!requireInteraction && !requireHack && !requireBug && !requireOverload)
                 {
                     triggered = true;
                     Invoke();
                 }
 
-                if (!string.IsNullOrWhiteSpace(triggerAction) && inputController.InteractButtonUp() && !requireHack && !requireKeycard && !requireOverload)
+                if (!string.IsNullOrWhiteSpace(triggerAction) && inputController.InteractButtonUp() && !requireHack && !requireBug && !requireOverload)
                 {
                     triggered = true;
                     Invoke();
                 }
-                if (!string.IsNullOrWhiteSpace(overloadAction) && CoreGame.Instance.State.player.CanOverload() && inputController.OverloadButtonUp() && !requireInteraction && !requireHack && !requireKeycard)
+                if (!overloaded && !hacked && !bugged && !string.IsNullOrWhiteSpace(overloadAction) && CoreGame.Instance.State.player.CanOverload() && inputController.OverloadButtonUp() && !requireInteraction && !requireHack && !requireBug)
                 {
                     triggered = true;
                     Overload();
                 }
-                if (!string.IsNullOrWhiteSpace(keycardAction) && CoreGame.Instance.State.player.CanKeycard() && inputController.KeycardButtonUp() && !requireInteraction && !requireHack && !requireKeycard && !requireOverload)
+                // if (!string.IsNullOrWhiteSpace(keycardAction) && CoreGame.Instance.State.player.CanKeycard() && inputController.KeycardButtonUp() && !requireInteraction && !requireHack && !requireKeycard && !requireOverload)
+                // {
+                //     triggered = true;
+                //     Keycard();
+                // }
+                if (!overloaded && !hacked && !bugged && !string.IsNullOrWhiteSpace(bugAction) && CoreGame.Instance.State.player.CanBug() && inputController.BugButtonUp() && !requireInteraction && !requireHack && !requireOverload)
                 {
                     triggered = true;
-                    Keycard();
+                    Bug();
                 }
-                if (!string.IsNullOrWhiteSpace(hackAction) && CoreGame.Instance.State.player.CanHack() && inputController.HackButtonUp() && !requireInteraction && !requireKeycard && !requireOverload)
+                if (!overloaded && !hacked && !bugged && !string.IsNullOrWhiteSpace(hackAction) && CoreGame.Instance.State.player.CanHack() && inputController.HackButtonUp() && !requireInteraction && !requireBug && !requireOverload)
                 {
                     triggered = true;
                     Hack();
                 }
-                if(hacked && !string.IsNullOrWhiteSpace(hackAction) && (inputController.HackButtonUp() || inputController.InteractButtonUp()) && !requireInteraction && !requireKeycard && !requireOverload)
+                if ((hacked || bugged) && inputController.InteractButtonUp())
                 {
                     triggered = true;
-                    Hack();
+                    Invoke();
                 }
 
                 if (allowRepeatInteractions)
@@ -189,20 +210,20 @@ namespace HackedDesign
                     return;
                 }
 
-                if ((requireInteraction || requireHack || requireKeycard || requireOverload) && inputController == null)
+                if ((requireInteraction || requireHack || requireBug || requireOverload) && inputController == null)
                 {
                     Debug.LogError(this.name + ": trigger has no inputController");
                     return;
                 }
 
-                if (other.tag == TagManager.NPC && !triggered && allowNPCAutoInteraction)
+                if (other.CompareTag(TagManager.NPC) && !triggered && allowNPCAutoInteraction)
                 {
                     npcTriggered = true;
                     Invoke();
                 }
 
                 //FIXME: allow triggering without leaving
-                if (other.tag == TagManager.PLAYER && !triggered)
+                if (other.CompareTag(TagManager.PLAYER) && !triggered)
                 {
                     CheckPlayerActions();
                 }

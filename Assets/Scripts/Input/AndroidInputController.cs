@@ -15,6 +15,7 @@ namespace HackedDesign {
 			bool overloadButtonDown;
 			bool hackButtonDown;
 			bool keycardButtonDown;
+			bool bugButtonDown;
 
 			public AndroidInputController (MobileInputUIPresenter mobileInputUI) {
 				this.mobileInput = mobileInputUI;
@@ -133,6 +134,16 @@ namespace HackedDesign {
 				}
 				return UnityEngine.Input.GetButtonUp("Keycard");
 			}				
+
+			public bool BugButtonUp() {
+				if(mobileInput.mobileBug) {
+					bugButtonDown = true;
+				} else if(bugButtonDown) {
+					bugButtonDown = false;
+					return true;
+				}
+				return UnityEngine.Input.GetButtonUp("Bug");
+			}			
 		}
 	}
 }

@@ -46,6 +46,7 @@ namespace HackedDesign
 
         [Header("Settings")]
         //public bool isMale = false;
+        public bool isCharacter = true;
         public int bodyIndex;
         public int skinIndex;
         public int eyesIndex;
@@ -68,10 +69,15 @@ namespace HackedDesign
         private string currentFrameName; //Name of the current frame. Used to find the current frame's number.
         private int frameIndex = 0; //The index of the current frame. Used to set index of new frame.    
 
+        void Start()
+        {
+            SetSpritesheets();
+        }
+
 
         void SetSpritesheets()
         {
-            bodyIndex = bodyIndex < 0 ? Random.Range(0,2) : bodyIndex;
+            bodyIndex = bodyIndex < 0 ? Random.Range(0, 2) : bodyIndex;
             skinIndex = skinIndex < 0 ? Random.Range(0, maleBodySprites.Length) : skinIndex;
             eyesIndex = eyesIndex < 0 ? Random.Range(0, maleEyesSprites.Length) : eyesIndex;
             shirtIndex = shirtIndex < 0 ? Random.Range(0, maleShirtSprites.Length) : shirtIndex;
@@ -94,13 +100,27 @@ namespace HackedDesign
             }
         }
 
+        // public Sprite GetBodySprite()
+        // {
+        //     bodySpritesheet[frameIndex]   
+        // }
+
         void LateUpdate() //FIXME: make this called as part of the game loop
         {
-            SetSpritesheets();
+            //SetSpritesheets();
             currentFrameName = bodySpriteRenderer.sprite.name;
-            currentFrameName = Regex.Replace(currentFrameName, "r2c", "");
 
-            int.TryParse(Regex.Replace(currentFrameName, "[^0-9]", ""), out frameIndex);
+            if(currentFrameName.StartsWith("r2c")){
+                currentFrameName = currentFrameName.Substring(3);
+            }
+
+            //FIXME: Better than it was, but still GC issues with substring;
+            int ix = currentFrameName.LastIndexOf("_");
+            string frame = currentFrameName.Substring(ix + 1);
+            if(frame.Length > 0)
+            {
+                int.TryParse(frame, out frameIndex);
+            }
 
             frameIndex += 128;
 

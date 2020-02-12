@@ -14,7 +14,7 @@ namespace HackedDesign.Input
         bool InteractButtonUp();
         bool OverloadButtonUp();
         bool HackButtonUp();
-        bool KeycardButtonUp();
+        bool BugButtonUp();
     }
 
 }

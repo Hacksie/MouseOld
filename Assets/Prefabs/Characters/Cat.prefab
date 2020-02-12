@@ -471,24 +471,25 @@ MonoBehaviour:
   sprite: {fileID: 4362904087944334869}
   interactSprite: {fileID: 0}
   hackSprite: {fileID: 0}
-  keycardSprite: {fileID: 0}
   overloadSprite: {fileID: 0}
+  bugSprite: {fileID: 0}
   requireInteraction: 1
   requireHack: 0
-  requireKeycard: 0
   requireOverload: 0
+  requireBug: 0
   allowOverload: 0
   allowRepeatInteractions: 0
   allowNPCAutoInteraction: 0
-  triggerAction: PreludeKari
+  triggerAction: PreludeCat
+  bugAction: 
   hackAction: 
-  keycardAction: 
   overloadAction: 
   leaveAction: 
   triggered: 0
   npcTriggered: 0
   overloaded: 0
   hacked: 0
+  bugged: 0
 --- !u!58 &2306607941986645223
 CircleCollider2D:
   m_ObjectHideFlags: 0
