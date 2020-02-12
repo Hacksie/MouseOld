@@ -173,6 +173,7 @@ MonoBehaviour:
     m_Bits: 0
   facePlayer: 1
   character: {fileID: 11400000, guid: 7b0ab88b4fb757947ad38ab6026c5eb4, type: 2}
+  text: {fileID: 5874216084831355279}
 --- !u!1 &801259854833353615
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +263,6 @@ GameObject:
   - component: {fileID: 4953588814322771508}
   - component: {fileID: 3608340301121118614}
   - component: {fileID: 954078020950872571}
-  - component: {fileID: 8541600887683803743}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -334,23 +334,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &8541600887683803743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3233543894419571022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!1 &6295968191483358888
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,8 +562,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1007191287
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8abdd87a68c574f5da866a1683388474, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

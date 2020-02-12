@@ -24,35 +24,32 @@ namespace HackedDesign.Entity
         //bool known = false;
 
         [SerializeField]
-        //UnityEngine.UI.Text text = null;
+        UnityEngine.UI.Text text = null;
 
         new void Start()
         {
             base.Start();
             if (character == null)
             {
-                Debug.Log(this.name + ": character is null");
+                Debug.LogError(this.name + ": character is null");
             }
-            // if (text == null)
-            // {
-            //     Debug.Log(this.name + ": text is null");
-            // }
-
-            //known = character.known;
+            if (text == null)
+            {
+                Debug.LogError(this.name + ": text is null");
+            }
 
             SetHandleText();
         }
 
         public override void UpdateBehaviour()
         {
-            //Debug.Log(this.name + ": update behaviour");
             base.UpdateBehaviour();
             SetHandleText();
         }
 
         void SetHandleText()
         {
-            /*
+            
             if(text == null)
             {
                 return; 
@@ -65,7 +62,7 @@ namespace HackedDesign.Entity
             else
             {
                 text.text = UNKNOWN_STRING;
-            }*/
+            }
         }
     }
 }

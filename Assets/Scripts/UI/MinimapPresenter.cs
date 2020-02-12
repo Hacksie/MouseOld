@@ -34,7 +34,7 @@ namespace HackedDesign
 
             private void PopulateWallNames()
             {
-                wallSprites.ForEach(e => wallSpritesDetails.Add(new WallSpriteDetails { name = e.name, corner = e.name.Substring(0,2), wall1 = e.name[3], wall2=e.name[4]}));
+                wallSprites.ForEach(e => wallSpritesDetails.Add(new WallSpriteDetails { name = e.name, corner = e.name.Substring(0,2), wall1 = e.name.Substring(3,1), wall2=e.name.Substring(4,1)}));
             }
 
             private void PopulateWalls()
@@ -98,8 +98,8 @@ namespace HackedDesign
                     return;
                 }
 
-                // When the map gets serialized, the 'empty' rooms become non empty, because fuck me, right?
-                if (x < 0 || x >= CoreGame.Instance.State.currentLevel.map[y].rooms.Count() || CoreGame.Instance.State.currentLevel.map[y].rooms[x] == null || string.IsNullOrWhiteSpace(CoreGame.Instance.State.currentLevel.map[y].rooms[x].AsPrintableString()))
+                // When the map gets serialized, the 'empty' rooms become non null, because fuck me, right?
+                if (x < 0 || x >= CoreGame.Instance.State.currentLevel.map[y].rooms.Count() || CoreGame.Instance.State.currentLevel.map[y].rooms[x] == null || string.IsNullOrWhiteSpace(CoreGame.Instance.State.currentLevel.map[y].rooms[x].left))
                 {
                     walls[6 * (j * 3 + i)].gameObject.SetActive(false);
                     walls[6 * (j * 3 + i) + 1].gameObject.SetActive(false);
@@ -109,14 +109,12 @@ namespace HackedDesign
                     walls[6 * (j * 3 + i) + 5].gameObject.SetActive(false);
                     return;
                 }
-                //FIXME: Make AsStrings for each corner;
-                string chunkString = CoreGame.Instance.State.currentLevel.map[y].rooms[x].AsPrintableString();
+                ProxyRoom room = CoreGame.Instance.State.currentLevel.map[y].rooms[x];
 
-                Sprite blSprite = FindChunkObject("bl", chunkString[0], chunkString[2]);
-                Sprite brSprite = FindChunkObject("br", chunkString[3], chunkString[2]);
-
-                Sprite tlSprite = FindChunkObject("tl", chunkString[0], chunkString[1]);
-                Sprite trSprite = FindChunkObject("tr", chunkString[3], chunkString[1]);
+                Sprite blSprite = FindChunkObject("bl", room.left, room.bottom);
+                Sprite brSprite = FindChunkObject("br", room.right, room.bottom);
+                Sprite tlSprite = FindChunkObject("tl", room.left, room.top);
+                Sprite trSprite = FindChunkObject("tr", room.right, room.top);
 
                 //FIXME: Test for null
 
@@ -132,7 +130,7 @@ namespace HackedDesign
                 walls[6 * (j * 3 + i) + 5].gameObject.SetActive(CoreGame.Instance.State.currentLevel.map[y].rooms[x].isEnd);
 
             }
-            private Sprite FindChunkObject(string corner, char wall1, char wall2)
+            private Sprite FindChunkObject(string corner, string wall1, string wall2)
             {
                 for (int i = 0; i < wallSprites.Count; i++)
                 {
@@ -144,11 +142,11 @@ namespace HackedDesign
                 return null;
             }
 
-            private bool MatchSpriteName(WallSpriteDetails spriteDetails, string corner, char wall1, char wall2)
+            private bool MatchSpriteName(WallSpriteDetails spriteDetails, string corner, string wall1, string wall2)
             {
                 // Hack to deal with entry & exits
-                wall1 = wall1 == 'e' ? 'd' : wall1 == 'n' ? 'd' : wall1;
-                wall2 = wall2 == 'e' ? 'd' : wall2 == 'n' ? 'd' : wall2;
+                wall1 = wall1 == "e" ? "d" : wall1 == "n" ? "d" : wall1;
+                wall2 = wall2 == "e" ? "d" : wall2 == "n" ? "d" : wall2;
 
                 return (spriteDetails.corner == corner && (wall1 == spriteDetails.wall1 && wall2 == spriteDetails.wall2));
             }
@@ -157,8 +155,8 @@ namespace HackedDesign
             {
                 public string name;
                 public string corner;
-                public char wall1;
-                public char wall2;
+                public string wall1;
+                public string wall2;
             }
         }
     }

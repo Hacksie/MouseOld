@@ -39,8 +39,9 @@ namespace HackedDesign {
             public List<Corner> topRight = new List<Corner> ();
 
             // Set at runtime    
-            //public bool visited = false;            
+            //public bool visited = false;     
 
+            // FIXME: Create individual as strings
             public string AsPrintableString () {
                 string s = "" + left + top + bottom + right;
                 return s;

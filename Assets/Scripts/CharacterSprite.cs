@@ -122,6 +122,8 @@ namespace HackedDesign
                 int.TryParse(frame, out frameIndex);
             }
 
+            //Debug.Log(frameIndex, ani)
+
             frameIndex += 128;
 
             bodySpriteRenderer.sprite = bodySpritesheet[frameIndex];
