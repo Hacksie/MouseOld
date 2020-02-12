@@ -37,6 +37,9 @@ namespace HackedDesign
         public Texture2D[] catBodySprites;
         public string catBodyFolderPath;
 
+        public Texture2D[] droneBodySprites;
+        public string droneBodyFolderPath;        
+
         public Color[] colors;
 
         public enum BodyTypes

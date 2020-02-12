@@ -130,7 +130,10 @@ namespace HackedDesign
                     break;
                 case CharacterSpriteManager.BodyTypes.Cat:
                     bodySpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.catBodyFolderPath + characterSpriteManager.catBodySprites[skinIndex].name);
-                break;
+                    break;
+                case CharacterSpriteManager.BodyTypes.Drone:
+                    bodySpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.droneBodyFolderPath + characterSpriteManager.droneBodySprites[skinIndex].name);
+                    break;
             }
         }
 
@@ -157,19 +160,19 @@ namespace HackedDesign
             //Debug.Log(frameIndex, ani)
 
             frameIndex += 128;
-            if(bodySpriteRenderer != null)
+            if (bodySpriteRenderer != null)
                 bodySpriteRenderer.sprite = bodySpritesheet[frameIndex];
 
-            if(eyesSpriteRenderer != null && eyesIndex > 0)
+            if (eyesSpriteRenderer != null && eyesIndex > 0)
                 eyesSpriteRenderer.sprite = eyesSpritesheet[frameIndex];
-            
-            if(shirtSpriteRenderer != null && shirtIndex > 0)
+
+            if (shirtSpriteRenderer != null && shirtIndex > 0)
                 shirtSpriteRenderer.sprite = shirtSpritesheet[frameIndex];
 
-            if(pantsSpriteRenderer != null && pantsIndex > 0)
+            if (pantsSpriteRenderer != null && pantsIndex > 0)
                 pantsSpriteRenderer.sprite = pantsSpritesheet[frameIndex];
 
-            if(shoesSpriteRenderer != null && shoesIndex > 0)
+            if (shoesSpriteRenderer != null && shoesIndex > 0)
                 shoesSpriteRenderer.sprite = shoesSpritesheet[frameIndex];
 
             if (hairSpriteRenderer != null && hairIndex > 0)

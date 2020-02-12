@@ -2018,6 +2018,153 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111968005}
   m_CullTransparentMesh: 0
+--- !u!1 &117474440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 117474441}
+  - component: {fileID: 117474442}
+  m_Layer: 0
+  m_Name: Character Sprites
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &117474441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117474440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1367923948}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &117474442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117474440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e72d9d82bb3ec418f075033f37ddc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maleBodySprites:
+  - {fileID: 2800000, guid: 37596e7f63b20894fb4d02ca5a7cbb39, type: 3}
+  - {fileID: 2800000, guid: d9c4ca82972af8c4babf8b2da8b101c2, type: 3}
+  - {fileID: 2800000, guid: cb2ac61f003bb0844b54dea8c932f56c, type: 3}
+  - {fileID: 2800000, guid: 2a37380d76fc45b4ab8ee3bdfdfd1764, type: 3}
+  maleBodyFolderPath: Retro 2D Characters/Spritesheets/Male/1 - Character Base/
+  maleEyesSprites:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 27320c993ac352b46a6923b0784fdd1e, type: 3}
+  - {fileID: 2800000, guid: 1cfa2276599acb540a077d020d81c8c5, type: 3}
+  - {fileID: 2800000, guid: 4c3a1869430e17e4fab4f67127c7e0aa, type: 3}
+  - {fileID: 2800000, guid: 9e8cb5cce92e68f4da104c48d82438b1, type: 3}
+  - {fileID: 2800000, guid: 0083717f52f61de4a83050aa975933e0, type: 3}
+  - {fileID: 2800000, guid: 285e18c162a99d44cad6c97e58c72116, type: 3}
+  - {fileID: 2800000, guid: 21ff47d7a1efb5c4a93a97a1464d4ccc, type: 3}
+  maleEyesFolderPath: Retro 2D Characters/Spritesheets/Male/2 - Eye Colors/
+  maleShirtSprites:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 2c8cbf1086142b745b68b6de605d2068, type: 3}
+  maleShirtFolderPath: Retro 2D Characters/Spritesheets/Male/3 - Outfits/Tintable
+    Clothes/
+  malePantsSprites:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 99a42e430e0a8e4449211a7644238f3e, type: 3}
+  malePantsFolderPath: Retro 2D Characters/Spritesheets/Male/3 - Outfits/Tintable
+    Clothes/
+  maleShoesSprites:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 88b3c9e5eecafbc4d90c4654e2c3834a, type: 3}
+  maleShoesFolderPath: Retro 2D Characters/Spritesheets/Male/3 - Outfits/Tintable
+    Clothes/
+  maleHairSprites:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 6a3b9e49f9393f444a6ca95d881d78e3, type: 3}
+  - {fileID: 2800000, guid: dedf015df5a173e4ea4d668d46cbc3b7, type: 3}
+  - {fileID: 2800000, guid: 49415e4f7decc0640b2c482852e93ef3, type: 3}
+  - {fileID: 2800000, guid: 623e330686e580d449236b16c60f99aa, type: 3}
+  - {fileID: 2800000, guid: b5077c314a7243c4cabf3c80c71adbb5, type: 3}
+  - {fileID: 2800000, guid: 74b9d22ddde146242968bd24830368ab, type: 3}
+  - {fileID: 2800000, guid: 1f1a023d69b726c4a8e3c65261ec2063, type: 3}
+  - {fileID: 2800000, guid: 5394cb841b24967468822318b479093d, type: 3}
+  - {fileID: 2800000, guid: 54595d0e08398f447893d72c864dbae1, type: 3}
+  - {fileID: 2800000, guid: 3d0f6074d970762419aa6b234be7a2f5, type: 3}
+  maleHairFolderPath: Retro 2D Characters/Spritesheets/Male/5 - Hairstyles/
+  femaleBodySprites:
+  - {fileID: 2800000, guid: 8bdec7538dc12e24dac2f148aa37746a, type: 3}
+  - {fileID: 2800000, guid: 195ef76499fc5004b8d9cb7ccf394d9e, type: 3}
+  - {fileID: 2800000, guid: 72c50cffa197b864fbb83251e3352c6a, type: 3}
+  - {fileID: 2800000, guid: c63a5295d6e0f4746bff303d9a60c913, type: 3}
+  femaleBodyFolderPath: Retro 2D Characters/Spritesheets/Female/1 - Character Base/
+  femaleEyesSprites:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: e0eddbd1234e3d842a69e4109958f1d6, type: 3}
+  - {fileID: 2800000, guid: 7320c9f4b628f6b4388887c9d61cca4f, type: 3}
+  - {fileID: 2800000, guid: 5584147639d72d6418413a04d713a1b6, type: 3}
+  - {fileID: 2800000, guid: 028d443a7004a3a4c82f6623635a6b8d, type: 3}
+  - {fileID: 2800000, guid: 2fc3799c6604e4f4f8431c38cc8e2b59, type: 3}
+  - {fileID: 2800000, guid: 4701fd80fa8014346ad859b2d564c645, type: 3}
+  - {fileID: 2800000, guid: 548b8531e9c2d0d4a91b212c25e40837, type: 3}
+  femaleEyesFolderPath: Retro 2D Characters/Spritesheets/Female/2 - Eye Colors/
+  femaleShirtSprites:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 1e162714077175946a478296eb05081c, type: 3}
+  femaleShirtFolderPath: Retro 2D Characters/Spritesheets/Female/3 - Outfits/Tintable
+    Clothes/
+  femalePantsSprites:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: e9720c4b7e2cb8a47aa8291da3b926d9, type: 3}
+  femalePantsFolderPath: Retro 2D Characters/Spritesheets/Female/3 - Outfits/Tintable
+    Clothes/
+  femaleShoesSprites:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 8ae8db8d681616147a6cb0735f8c5843, type: 3}
+  femaleShoesFolderPath: Retro 2D Characters/Spritesheets/Female/3 - Outfits/Tintable
+    Clothes/
+  femaleHairSprites:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 411031856cb05f741a19d84ec13b8659, type: 3}
+  - {fileID: 2800000, guid: 96d1c34a4ab993d449cf1808a592f197, type: 3}
+  - {fileID: 2800000, guid: 369189e853c71ef41954993f411c4ba7, type: 3}
+  - {fileID: 2800000, guid: dda8057baae92c740ba62c60444c5502, type: 3}
+  - {fileID: 2800000, guid: 7d3a2ac9e07ee014fa9412102bd4131a, type: 3}
+  - {fileID: 2800000, guid: 410cf4e662e4e0042bed227a4f4ee5d9, type: 3}
+  - {fileID: 2800000, guid: 799d2088bcee40448b9fbd219768b4e4, type: 3}
+  - {fileID: 2800000, guid: 71a4720ac58777d4280e192d35a6f96e, type: 3}
+  - {fileID: 2800000, guid: f39b1327cc817d14dbb817c565adac5f, type: 3}
+  - {fileID: 2800000, guid: dd4b5a277d4c6f049b0da61f1127307d, type: 3}
+  femaleHairFolderPath: Retro 2D Characters/Spritesheets/Female/5 - Hairstyles/
+  catBodySprites:
+  - {fileID: 2800000, guid: 39b3cd774c3455540be8b7be4a094a07, type: 3}
+  catBodyFolderPath: Retro 2D Characters/Spritesheets/Cat/1 - Character Base/
+  droneBodySprites:
+  - {fileID: 2800000, guid: bbc5d02e0deb55f42b33bb39c61a8ff7, type: 3}
+  droneBodyFolderPath: Retro 2D Characters/Spritesheets/Drone/1 - Character Base/
+  colors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.3529412, g: 0.3529412, b: 0.3529412, a: 1}
+  - {r: 1, g: 0.85098046, b: 0.54901963, a: 1}
+  - {r: 0, g: 0.3372549, b: 1, a: 1}
+  - {r: 0.7372549, g: 0.50980395, b: 0.22352943, a: 1}
+  - {r: 0.15686275, g: 1, b: 0, a: 1}
+  - {r: 0.64705884, g: 0.1764706, b: 1, a: 1}
+  - {r: 1, g: 0.227451, b: 0, a: 1}
+  - {r: 0.6509804, g: 0.011764707, b: 0.23529413, a: 1}
 --- !u!1 &123134072
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,6 +2557,16 @@ PrefabInstance:
     - target: {fileID: 4546495147908606, guid: 8025b6825ad43164498657ae63eafe5e, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6633112899820760140, guid: 8025b6825ad43164498657ae63eafe5e,
+        type: 3}
+      propertyPath: characterSpriteManager
+      value: 
+      objectReference: {fileID: 117474442}
+    - target: {fileID: 7333075627624759679, guid: 8025b6825ad43164498657ae63eafe5e,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8025b6825ad43164498657ae63eafe5e, type: 3}
@@ -12953,6 +13110,8 @@ GameObject:
   m_Component:
   - component: {fileID: 530021001}
   - component: {fileID: 530021002}
+  - component: {fileID: 530021004}
+  - component: {fileID: 530021003}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -13013,7 +13172,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 150
   m_Sprite: {fileID: 4112356383579328530, guid: 65550690b60c7a44a84da0ded8a01c83,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -13026,6 +13185,55 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &530021003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530021000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 547f349d6cfbc394ab33edc4c645e19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSpriteManager: {fileID: 117474442}
+  bodySpriteRenderer: {fileID: 530021002}
+  eyesSpriteRenderer: {fileID: 0}
+  hairSpriteRenderer: {fileID: 0}
+  shirtSpriteRenderer: {fileID: 0}
+  pantsSpriteRenderer: {fileID: 0}
+  shoesSpriteRenderer: {fileID: 0}
+  bodyType: 3
+  skinIndex: 0
+  eyesIndex: 0
+  shirtIndex: 0
+  pantsIndex: 0
+  shoesIndex: 0
+  hairIndex: 0
+  shirtColorIndex: 0
+  pantsColorIndex: 0
+  shoesColorIndex: 0
+  hairColorIndex: 0
+--- !u!95 &530021004
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530021000}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 20a6cf81bc7533b46a91f87bae04cec0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &533806541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30438,6 +30646,7 @@ Transform:
   - {fileID: 1485982270}
   - {fileID: 998081918}
   - {fileID: 466040287}
+  - {fileID: 117474441}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43635,12 +43844,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1845278801}
   m_CullTransparentMesh: 0
---- !u!20 &1848195221 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 20545203259197626, guid: 703d9f9014e064f4db224415272a3583,
-    type: 3}
-  m_PrefabInstance: {fileID: 2142059785}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1848237378
 GameObject:
   m_ObjectHideFlags: 0
@@ -54057,11 +54260,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3608340301121118614, guid: 94b6a2a9550e7844d99e2582fc52fab5,
+    - target: {fileID: 1321504269350858128, guid: 94b6a2a9550e7844d99e2582fc52fab5,
         type: 3}
-      propertyPath: m_Camera
+      propertyPath: characterSpriteManager
       value: 
-      objectReference: {fileID: 1848195221}
+      objectReference: {fileID: 117474442}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b6a2a9550e7844d99e2582fc52fab5, type: 3}
 --- !u!1001 &6239770985078664659
