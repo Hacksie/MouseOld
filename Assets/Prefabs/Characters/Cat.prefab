@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4523880731136029641}
   - component: {fileID: 4523880731083409617}
   - component: {fileID: 5696939016893488323}
+  - component: {fileID: 1321504269350858128}
   m_Layer: 9
   m_Name: Cat
   m_TagString: NPC
@@ -78,8 +79,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 150
-  m_Sprite: {fileID: 21300116, guid: 81ae1ee8016359d44b7c47df5d8bc370, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.65882355}
+  m_Sprite: {fileID: 5636384447315941421, guid: 39b3cd774c3455540be8b7be4a094a07,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -125,7 +127,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.34375, y: 0.53125}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -174,6 +176,36 @@ MonoBehaviour:
   facePlayer: 1
   character: {fileID: 11400000, guid: 7b0ab88b4fb757947ad38ab6026c5eb4, type: 2}
   text: {fileID: 5874216084831355279}
+--- !u!114 &1321504269350858128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422101999507088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 547f349d6cfbc394ab33edc4c645e19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSpriteManager: {fileID: 0}
+  bodySpriteRenderer: {fileID: 212236620607918638}
+  eyesSpriteRenderer: {fileID: 0}
+  hairSpriteRenderer: {fileID: 0}
+  shirtSpriteRenderer: {fileID: 0}
+  pantsSpriteRenderer: {fileID: 0}
+  shoesSpriteRenderer: {fileID: 0}
+  bodyType: 2
+  skinIndex: 0
+  eyesIndex: 0
+  shirtIndex: 0
+  pantsIndex: 0
+  shoesIndex: 0
+  hairIndex: 0
+  shirtColorIndex: 0
+  pantsColorIndex: 0
+  shoesColorIndex: 0
+  hairColorIndex: 0
 --- !u!1 &801259854833353615
 GameObject:
   m_ObjectHideFlags: 0

@@ -60,9 +60,14 @@ namespace HackedDesign
 
                 if (anim != null)
                 {
-                    anim.SetFloat("directionX", this.direction.x);
-                    anim.SetFloat("directionY", this.direction.y);
-                    anim.SetBool("isMoving", false);
+			        anim.SetFloat ("moveX", this.direction.x);
+				    anim.SetFloat ("moveY", this.direction.y);
+				//anim.SetFloat ("directionX", movementVector.x);
+				//anim.SetFloat ("directionY", movementVector.y);
+				    anim.SetBool ("isMoving", true);                    
+                    // anim.SetFloat("directionX", this.direction.x);
+                    // anim.SetFloat("directionY", this.direction.y);
+                    // anim.SetBool("isMoving", false);
                 }
             }
 
