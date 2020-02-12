@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 959229683828659297}
   m_Layer: 0
-  m_Name: victoriasroom_1_bl_aa
+  m_Name: oliviasroom_1_bl_aa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,14 +226,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabled: 1
   sprite: {fileID: 0}
+  interactSprite: {fileID: 0}
+  hackSprite: {fileID: 0}
+  keycardSprite: {fileID: 0}
+  overloadSprite: {fileID: 0}
   requireInteraction: 1
-  allowRepeatTriggers: 1
+  requireHack: 0
+  requireKeycard: 0
+  requireOverload: 0
+  allowOverload: 0
+  allowRepeatInteractions: 0
   allowNPCAutoInteraction: 0
   triggerAction: 
+  hackAction: 
+  keycardAction: 
   overloadAction: 
   leaveAction: 
-  hasBeenTriggered: 0
-  hasBeenLeft: 0
+  triggered: 0
+  npcTriggered: 0
+  overloaded: 0
+  hacked: 0
   startTime: 0
   showTime: 3
   speechBubbles:
@@ -574,7 +586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6150918346119349870
 Transform:
   m_ObjectHideFlags: 0

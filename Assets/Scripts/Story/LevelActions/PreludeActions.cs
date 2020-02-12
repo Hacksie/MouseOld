@@ -13,7 +13,7 @@ namespace HackedDesign.Story
                     Debug.Log("PreludeActions: invoke Prelude1");
                     InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Arisana"));
                     InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Manager Lyon"));
-                    InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Cari"));
+                    InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Cat"));
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
                     return true;
                 case "Prelude2":
@@ -46,18 +46,18 @@ namespace HackedDesign.Story
                     PreludeLaptop();
                     return true;
                     //.SelectMenuState = SelectMenuManager.SelectMenuState.TASKS;
-                case "PreludeKari":
-                case "PreludeKari1":
-                    PreludeKari1();
+                case "PreludeCat":
+                case "PreludeCat1":
+                    PreludeCat1();
                     return true;
-                case "PreludeKari2":
-                    PreludeKari2();
+                case "PreludeCat2":
+                    PreludeCat2();
                     return true;
-                case "PreludeKari3":
-                    PreludeKari3();
+                case "PreludeCat3":
+                    PreludeCat3();
                     return true;
-                case "PreludeKari4":
-                    PreludeKari4();
+                case "PreludeCat4":
+                    PreludeCat4();
                     return true;              
                 case "PreludeExit":
                     PreludeExit();
@@ -93,29 +93,29 @@ namespace HackedDesign.Story
             //Invoke("Prelude5");
         }
 
-        public void PreludeKari1()
+        public void PreludeCat1()
         {
-            Debug.Log("PreludeActions: prelude kari");
-            CoreGame.Instance.State.story.prelude_kari_talk = true;
-            Dialogue.NarrationManager.instance.ShowNarration("PreludeKari1");
+            Debug.Log("PreludeActions: prelude Cat");
+            CoreGame.Instance.State.story.prelude_cat_talk = true;
+            Dialogue.NarrationManager.instance.ShowNarration("PreludeCat1");
 
         }
 
-        public void PreludeKari2()
+        public void PreludeCat2()
         {
-            Dialogue.NarrationManager.instance.ShowNarration("PreludeKari2");
-            //var kari = EntityManager.instance.GetPooledNPC("Kari");
-            //var trigger = kari.GetComponent<Triggers.BaseTrigger>();
+            Dialogue.NarrationManager.instance.ShowNarration("PreludeCat2");
+            //var Cat = EntityManager.instance.GetPooledNPC("Cat");
+            //var trigger = Cat.GetComponent<Triggers.BaseTrigger>();
             //trigger.enabled = false;
         }
 
-        public void PreludeKari3()
+        public void PreludeCat3()
         {
-            Dialogue.NarrationManager.instance.ShowNarration("PreludeKari3");
+            Dialogue.NarrationManager.instance.ShowNarration("PreludeCat3");
         }        
-        public void PreludeKari4()
+        public void PreludeCat4()
         {
-            Dialogue.NarrationManager.instance.ShowNarration("PreludeKari4");
+            Dialogue.NarrationManager.instance.ShowNarration("PreludeCat4");
         }                
 
 

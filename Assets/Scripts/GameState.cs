@@ -38,7 +38,7 @@ namespace HackedDesign
     }
 
 	public class StoryState {
-		public bool prelude_kari_talk = false;
+		public bool prelude_cat_talk = false;
 		public bool prelude_laptop = false;
 	}
 

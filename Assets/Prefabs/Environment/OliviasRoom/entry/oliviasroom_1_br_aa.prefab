@@ -90,9 +90,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.75
+  m_FalloffIntensity: 0.5
   m_Color: {r: 0.28714314, g: 0.8308824, b: 0.8200076, a: 1}
-  m_Intensity: 0.3
+  m_Intensity: 0.2
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 6b08fb8100000000231218f2
   m_LightCookieSprite: {fileID: 0}
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0.33
+  m_PointLightInnerRadius: 0.125
   m_PointLightOuterRadius: 1
   m_PointLightDistance: 3
   m_PointLightQuality: 1
@@ -163,14 +163,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabled: 1
   sprite: {fileID: 9101579669830673235}
+  interactSprite: {fileID: 0}
+  hackSprite: {fileID: 0}
+  keycardSprite: {fileID: 0}
+  overloadSprite: {fileID: 0}
   requireInteraction: 1
-  allowRepeatTriggers: 1
+  requireHack: 0
+  requireKeycard: 0
+  requireOverload: 0
+  allowOverload: 0
+  allowRepeatInteractions: 0
   allowNPCAutoInteraction: 0
   triggerAction: PreludeLaptop
+  hackAction: 
+  keycardAction: 
   overloadAction: 
   leaveAction: 
-  hasBeenTriggered: 0
-  hasBeenLeft: 0
+  triggered: 0
+  npcTriggered: 0
+  overloaded: 0
+  hacked: 0
 --- !u!61 &7257883033859373638
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1111,7 +1123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6732597116898073426}
   m_Layer: 0
-  m_Name: victoriasroom_1_br_aa
+  m_Name: oliviasroom_1_br_aa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

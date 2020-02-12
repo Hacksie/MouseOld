@@ -68,6 +68,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabled: 1
   sprite: {fileID: 0}
+  interactSprite: {fileID: 0}
+  hackSprite: {fileID: 0}
+  keycardSprite: {fileID: 0}
+  overloadSprite: {fileID: 0}
   requireInteraction: 0
   requireHack: 1
   requireKeycard: 0
@@ -76,16 +80,16 @@ MonoBehaviour:
   allowRepeatInteractions: 0
   allowNPCAutoInteraction: 1
   triggerAction: 
-  hackAction: OverloadEntry
+  hackAction: HackEntry
   keycardAction: 
   overloadAction: 
   leaveAction: 
   triggered: 0
   npcTriggered: 0
-  levelEntry: 1
+  overloaded: 0
+  hacked: 0
   doorCollider: {fileID: 5667044606128391909}
   animator: {fileID: 5704413205964274915}
-  overloaded: 0
 --- !u!61 &5667044606128391909
 BoxCollider2D:
   m_ObjectHideFlags: 0
