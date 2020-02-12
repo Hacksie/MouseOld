@@ -67,22 +67,21 @@ namespace HackedDesign
         private Sprite[] shoesSpritesheet;
         private Sprite[] hairSpritesheet;
         private string currentFrameName; //Name of the current frame. Used to find the current frame's number.
-        private int frameIndex = 0; //The index of the current frame. Used to set index of new frame.    
+        private int frameIndex = 0; //The index of the current frame. Used to set index of new frame.
 
         void Start()
         {
             SetSpritesheets();
         }
 
-
         void SetSpritesheets()
         {
             bodyIndex = bodyIndex < 0 ? Random.Range(0, 2) : bodyIndex;
             skinIndex = skinIndex < 0 ? Random.Range(0, maleBodySprites.Length) : skinIndex;
-            eyesIndex = eyesIndex < 0 ? Random.Range(0, maleEyesSprites.Length) : eyesIndex;
-            shirtIndex = shirtIndex < 0 ? Random.Range(0, maleShirtSprites.Length) : shirtIndex;
-            pantsIndex = pantsIndex < 0 ? Random.Range(0, malePantsSprites.Length) : pantsIndex;
-            shoesIndex = shoesIndex < 0 ? Random.Range(0, maleShoesSprites.Length) : shoesIndex;
+            eyesIndex = eyesIndex < 0 ? Random.Range(1, maleEyesSprites.Length) : eyesIndex;
+            shirtIndex = shirtIndex < 0 ? Random.Range(1, maleShirtSprites.Length) : shirtIndex;
+            pantsIndex = pantsIndex < 0 ? Random.Range(1, malePantsSprites.Length) : pantsIndex;
+            shoesIndex = shoesIndex < 0 ? Random.Range(1, maleShoesSprites.Length) : shoesIndex;
             hairIndex = hairIndex < 0 ? Random.Range(0, maleHairSprites.Length) : hairIndex;
             shirtColorIndex = shirtColorIndex < 0 ? Random.Range(0, colors.Length) : shirtColorIndex;
             pantsColorIndex = pantsColorIndex < 0 ? Random.Range(0, colors.Length) : pantsColorIndex;
@@ -90,10 +89,22 @@ namespace HackedDesign
             hairColorIndex = hairColorIndex < 0 ? Random.Range(0, colors.Length) : hairColorIndex;
 
             bodySpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleBodyFolderPath + maleBodySprites[skinIndex].name) : Resources.LoadAll<Sprite>(femaleBodyFolderPath + femaleBodySprites[skinIndex].name);
-            eyesSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleEyesFolderPath + maleEyesSprites[eyesIndex].name) : Resources.LoadAll<Sprite>(femaleEyesFolderPath + femaleEyesSprites[eyesIndex].name);
-            shirtSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleShirtFolderPath + maleShirtSprites[shirtIndex].name) : Resources.LoadAll<Sprite>(femaleShirtFolderPath + femaleShirtSprites[shirtIndex].name);
-            pantsSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(malePantsFolderPath + malePantsSprites[pantsIndex].name) : Resources.LoadAll<Sprite>(femalePantsFolderPath + femalePantsSprites[pantsIndex].name);
-            shoesSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleShoesFolderPath + maleShoesSprites[shoesIndex].name) : Resources.LoadAll<Sprite>(femaleShoesFolderPath + femaleShoesSprites[shoesIndex].name);
+            if (eyesIndex > 0)
+            {
+                eyesSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleEyesFolderPath + maleEyesSprites[eyesIndex].name) : Resources.LoadAll<Sprite>(femaleEyesFolderPath + femaleEyesSprites[eyesIndex].name);
+            }
+            if (shirtIndex > 0)
+            {
+                shirtSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleShirtFolderPath + maleShirtSprites[shirtIndex].name) : Resources.LoadAll<Sprite>(femaleShirtFolderPath + femaleShirtSprites[shirtIndex].name);
+            }
+            if (pantsIndex > 0)
+            {
+                pantsSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(malePantsFolderPath + malePantsSprites[pantsIndex].name) : Resources.LoadAll<Sprite>(femalePantsFolderPath + femalePantsSprites[pantsIndex].name);
+            }
+            if (shoesIndex > 0)
+            {
+                shoesSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleShoesFolderPath + maleShoesSprites[shoesIndex].name) : Resources.LoadAll<Sprite>(femaleShoesFolderPath + femaleShoesSprites[shoesIndex].name);
+            }
             if (hairIndex > 0)
             {
                 hairSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleHairFolderPath + maleHairSprites[hairIndex].name) : Resources.LoadAll<Sprite>(femaleHairFolderPath + femaleHairSprites[hairIndex].name);
@@ -110,14 +121,15 @@ namespace HackedDesign
             //SetSpritesheets();
             currentFrameName = bodySpriteRenderer.sprite.name;
 
-            if(currentFrameName.StartsWith("r2c")){
+            if (currentFrameName.StartsWith("r2c"))
+            {
                 currentFrameName = currentFrameName.Substring(3);
             }
 
             //FIXME: Better than it was, but still GC issues with substring;
             int ix = currentFrameName.LastIndexOf("_");
             string frame = currentFrameName.Substring(ix + 1);
-            if(frame.Length > 0)
+            if (frame.Length > 0)
             {
                 int.TryParse(frame, out frameIndex);
             }

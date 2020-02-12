@@ -57,6 +57,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -196,6 +197,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 2a37380d76fc45b4ab8ee3bdfdfd1764, type: 3}
   maleBodyFolderPath: Retro 2D Characters/Spritesheets/Male/1 - Character Base/
   maleEyesSprites:
+  - {fileID: 0}
   - {fileID: 2800000, guid: 27320c993ac352b46a6923b0784fdd1e, type: 3}
   - {fileID: 2800000, guid: 1cfa2276599acb540a077d020d81c8c5, type: 3}
   - {fileID: 2800000, guid: 4c3a1869430e17e4fab4f67127c7e0aa, type: 3}
@@ -205,14 +207,17 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 21ff47d7a1efb5c4a93a97a1464d4ccc, type: 3}
   maleEyesFolderPath: Retro 2D Characters/Spritesheets/Male/2 - Eye Colors/
   maleShirtSprites:
+  - {fileID: 0}
   - {fileID: 2800000, guid: 2c8cbf1086142b745b68b6de605d2068, type: 3}
   maleShirtFolderPath: Retro 2D Characters/Spritesheets/Male/3 - Outfits/Tintable
     Clothes/
   malePantsSprites:
+  - {fileID: 0}
   - {fileID: 2800000, guid: 99a42e430e0a8e4449211a7644238f3e, type: 3}
   malePantsFolderPath: Retro 2D Characters/Spritesheets/Male/3 - Outfits/Tintable
     Clothes/
   maleShoesSprites:
+  - {fileID: 0}
   - {fileID: 2800000, guid: 88b3c9e5eecafbc4d90c4654e2c3834a, type: 3}
   maleShoesFolderPath: Retro 2D Characters/Spritesheets/Male/3 - Outfits/Tintable
     Clothes/
@@ -236,6 +241,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: c63a5295d6e0f4746bff303d9a60c913, type: 3}
   femaleBodyFolderPath: Retro 2D Characters/Spritesheets/Female/1 - Character Base/
   femaleEyesSprites:
+  - {fileID: 0}
   - {fileID: 2800000, guid: e0eddbd1234e3d842a69e4109958f1d6, type: 3}
   - {fileID: 2800000, guid: 7320c9f4b628f6b4388887c9d61cca4f, type: 3}
   - {fileID: 2800000, guid: 5584147639d72d6418413a04d713a1b6, type: 3}
@@ -245,14 +251,17 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 548b8531e9c2d0d4a91b212c25e40837, type: 3}
   femaleEyesFolderPath: Retro 2D Characters/Spritesheets/Female/2 - Eye Colors/
   femaleShirtSprites:
+  - {fileID: 0}
   - {fileID: 2800000, guid: 1e162714077175946a478296eb05081c, type: 3}
   femaleShirtFolderPath: Retro 2D Characters/Spritesheets/Female/3 - Outfits/Tintable
     Clothes/
   femalePantsSprites:
+  - {fileID: 0}
   - {fileID: 2800000, guid: e9720c4b7e2cb8a47aa8291da3b926d9, type: 3}
   femalePantsFolderPath: Retro 2D Characters/Spritesheets/Female/3 - Outfits/Tintable
     Clothes/
   femaleShoesSprites:
+  - {fileID: 0}
   - {fileID: 2800000, guid: 8ae8db8d681616147a6cb0735f8c5843, type: 3}
   femaleShoesFolderPath: Retro 2D Characters/Spritesheets/Female/3 - Outfits/Tintable
     Clothes/
@@ -279,12 +288,13 @@ MonoBehaviour:
   - {r: 0.64705884, g: 0.1764706, b: 1, a: 1}
   - {r: 1, g: 0.22745098, b: 0, a: 1}
   - {r: 0.6509804, g: 0.011764706, b: 0.23529412, a: 1}
+  isCharacter: 1
   bodyIndex: 1
   skinIndex: 0
-  eyesIndex: 2
-  shirtIndex: 0
-  pantsIndex: 0
-  shoesIndex: 0
+  eyesIndex: 3
+  shirtIndex: 1
+  pantsIndex: 1
+  shoesIndex: 1
   hairIndex: 9
   shirtColorIndex: 1
   pantsColorIndex: 4
@@ -336,6 +346,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -417,6 +428,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -498,6 +510,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -579,6 +592,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -732,6 +746,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
