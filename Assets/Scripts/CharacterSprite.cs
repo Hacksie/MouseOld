@@ -7,6 +7,8 @@ namespace HackedDesign
 {
     public class CharacterSprite : MonoBehaviour
     {
+        public CharacterSpriteManager characterSpriteManager;
+
         [Header("Renderers")]
         public SpriteRenderer bodySpriteRenderer;
         public SpriteRenderer eyesSpriteRenderer;
@@ -15,39 +17,9 @@ namespace HackedDesign
         public SpriteRenderer pantsSpriteRenderer;
         public SpriteRenderer shoesSpriteRenderer;
 
-        [Header("Assets")]
-        public Texture2D[] maleBodySprites;
-        public string maleBodyFolderPath;
-        public Texture2D[] maleEyesSprites;
-        public string maleEyesFolderPath;
-        public Texture2D[] maleShirtSprites;
-        public string maleShirtFolderPath;
-        public Texture2D[] malePantsSprites;
-        public string malePantsFolderPath;
-        public Texture2D[] maleShoesSprites;
-        public string maleShoesFolderPath;
-        public Texture2D[] maleHairSprites;
-        public string maleHairFolderPath;
-
-        public Texture2D[] femaleBodySprites;
-        public string femaleBodyFolderPath;
-        public Texture2D[] femaleEyesSprites;
-        public string femaleEyesFolderPath;
-        public Texture2D[] femaleShirtSprites;
-        public string femaleShirtFolderPath;
-        public Texture2D[] femalePantsSprites;
-        public string femalePantsFolderPath;
-        public Texture2D[] femaleShoesSprites;
-        public string femaleShoesFolderPath;
-        public Texture2D[] femaleHairSprites;
-        public string femaleHairFolderPath;
-
-        public Color[] colors;
-
         [Header("Settings")]
-        //public bool isMale = false;
-        public bool isCharacter = true;
-        public int bodyIndex;
+        public CharacterSpriteManager.BodyTypes bodyType;
+        //public int bodyIndex;
         public int skinIndex;
         public int eyesIndex;
         public int shirtIndex;
@@ -76,45 +48,96 @@ namespace HackedDesign
 
         void SetSpritesheets()
         {
-            bodyIndex = bodyIndex < 0 ? Random.Range(0, 2) : bodyIndex;
-            skinIndex = skinIndex < 0 ? Random.Range(0, maleBodySprites.Length) : skinIndex;
-            eyesIndex = eyesIndex < 0 ? Random.Range(1, maleEyesSprites.Length) : eyesIndex;
-            shirtIndex = shirtIndex < 0 ? Random.Range(1, maleShirtSprites.Length) : shirtIndex;
-            pantsIndex = pantsIndex < 0 ? Random.Range(1, malePantsSprites.Length) : pantsIndex;
-            shoesIndex = shoesIndex < 0 ? Random.Range(1, maleShoesSprites.Length) : shoesIndex;
-            hairIndex = hairIndex < 0 ? Random.Range(0, maleHairSprites.Length) : hairIndex;
-            shirtColorIndex = shirtColorIndex < 0 ? Random.Range(0, colors.Length) : shirtColorIndex;
-            pantsColorIndex = pantsColorIndex < 0 ? Random.Range(0, colors.Length) : pantsColorIndex;
-            shoesColorIndex = shoesColorIndex < 0 ? Random.Range(0, colors.Length) : shoesColorIndex;
-            hairColorIndex = hairColorIndex < 0 ? Random.Range(0, colors.Length) : hairColorIndex;
+            bodyType = bodyType == CharacterSpriteManager.BodyTypes.RandomHuman ? (CharacterSpriteManager.BodyTypes)Random.Range(0, 2) : bodyType;
+            skinIndex = skinIndex < 0 ? Random.Range(0, characterSpriteManager.maleBodySprites.Length) : skinIndex;
+            eyesIndex = eyesIndex < 0 ? Random.Range(1, characterSpriteManager.maleEyesSprites.Length) : eyesIndex;
+            shirtIndex = shirtIndex < 0 ? Random.Range(1, characterSpriteManager.maleShirtSprites.Length) : shirtIndex;
+            pantsIndex = pantsIndex < 0 ? Random.Range(1, characterSpriteManager.malePantsSprites.Length) : pantsIndex;
+            shoesIndex = shoesIndex < 0 ? Random.Range(1, characterSpriteManager.maleShoesSprites.Length) : shoesIndex;
+            hairIndex = hairIndex < 0 ? Random.Range(0, characterSpriteManager.maleHairSprites.Length) : hairIndex;
+            shirtColorIndex = shirtColorIndex < 0 ? Random.Range(0, characterSpriteManager.colors.Length) : shirtColorIndex;
+            pantsColorIndex = pantsColorIndex < 0 ? Random.Range(0, characterSpriteManager.colors.Length) : pantsColorIndex;
+            shoesColorIndex = shoesColorIndex < 0 ? Random.Range(0, characterSpriteManager.colors.Length) : shoesColorIndex;
+            hairColorIndex = hairColorIndex < 0 ? Random.Range(0, characterSpriteManager.colors.Length) : hairColorIndex;
 
-            bodySpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleBodyFolderPath + maleBodySprites[skinIndex].name) : Resources.LoadAll<Sprite>(femaleBodyFolderPath + femaleBodySprites[skinIndex].name);
-            if (eyesIndex > 0)
+            switch (bodyType)
             {
-                eyesSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleEyesFolderPath + maleEyesSprites[eyesIndex].name) : Resources.LoadAll<Sprite>(femaleEyesFolderPath + femaleEyesSprites[eyesIndex].name);
-            }
-            if (shirtIndex > 0)
-            {
-                shirtSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleShirtFolderPath + maleShirtSprites[shirtIndex].name) : Resources.LoadAll<Sprite>(femaleShirtFolderPath + femaleShirtSprites[shirtIndex].name);
-            }
-            if (pantsIndex > 0)
-            {
-                pantsSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(malePantsFolderPath + malePantsSprites[pantsIndex].name) : Resources.LoadAll<Sprite>(femalePantsFolderPath + femalePantsSprites[pantsIndex].name);
-            }
-            if (shoesIndex > 0)
-            {
-                shoesSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleShoesFolderPath + maleShoesSprites[shoesIndex].name) : Resources.LoadAll<Sprite>(femaleShoesFolderPath + femaleShoesSprites[shoesIndex].name);
-            }
-            if (hairIndex > 0)
-            {
-                hairSpritesheet = bodyIndex == 0 ? Resources.LoadAll<Sprite>(maleHairFolderPath + maleHairSprites[hairIndex].name) : Resources.LoadAll<Sprite>(femaleHairFolderPath + femaleHairSprites[hairIndex].name);
+                case CharacterSpriteManager.BodyTypes.Male:
+                    bodySpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.maleBodyFolderPath + characterSpriteManager.maleBodySprites[skinIndex].name);
+                    if (eyesIndex > 0)
+                    {
+                        eyesSpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.maleEyesFolderPath + characterSpriteManager.maleEyesSprites[eyesIndex].name);
+                    }
+                    if (shirtIndex > 0)
+                    {
+                        shirtSpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.maleShirtFolderPath + characterSpriteManager.maleShirtSprites[shirtIndex].name);
+                    }
+                    if (pantsIndex > 0)
+                    {
+                        pantsSpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.malePantsFolderPath + characterSpriteManager.malePantsSprites[pantsIndex].name);
+                    }
+                    if (shoesIndex > 0)
+                    {
+                        shoesSpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.maleShoesFolderPath + characterSpriteManager.maleShoesSprites[shoesIndex].name);
+                    }
+                    if (hairIndex > 0)
+                    {
+                        hairSpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.maleHairFolderPath + characterSpriteManager.maleHairSprites[hairIndex].name);
+                    }
+
+                    shirtSpriteRenderer.color = characterSpriteManager.colors[shirtColorIndex];
+                    pantsSpriteRenderer.color = characterSpriteManager.colors[pantsColorIndex];
+                    shoesSpriteRenderer.color = characterSpriteManager.colors[shoesColorIndex];
+                    hairSpriteRenderer.color = characterSpriteManager.colors[hairColorIndex];
+
+                    if (hairIndex == 0)
+                    {
+                        hairSpriteRenderer.sprite = null;
+                    }
+                    break;
+                case CharacterSpriteManager.BodyTypes.Female:
+                    bodySpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.femaleBodyFolderPath + characterSpriteManager.femaleBodySprites[skinIndex].name);
+                    if (eyesIndex > 0)
+                    {
+                        eyesSpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.femaleEyesFolderPath + characterSpriteManager.femaleEyesSprites[eyesIndex].name);
+                    }
+                    if (shirtIndex > 0)
+                    {
+                        shirtSpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.femaleShirtFolderPath + characterSpriteManager.femaleShirtSprites[shirtIndex].name);
+                    }
+                    if (pantsIndex > 0)
+                    {
+                        pantsSpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.femalePantsFolderPath + characterSpriteManager.femalePantsSprites[pantsIndex].name);
+                    }
+                    if (shoesIndex > 0)
+                    {
+                        shoesSpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.femaleShoesFolderPath + characterSpriteManager.femaleShoesSprites[shoesIndex].name);
+                    }
+                    if (hairIndex > 0)
+                    {
+                        hairSpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.femaleHairFolderPath + characterSpriteManager.femaleHairSprites[hairIndex].name);
+                    }
+
+                    shirtSpriteRenderer.color = characterSpriteManager.colors[shirtColorIndex];
+                    pantsSpriteRenderer.color = characterSpriteManager.colors[pantsColorIndex];
+                    shoesSpriteRenderer.color = characterSpriteManager.colors[shoesColorIndex];
+                    hairSpriteRenderer.color = characterSpriteManager.colors[hairColorIndex];
+
+                    if (hairIndex == 0)
+                    {
+                        hairSpriteRenderer.sprite = null;
+                    }
+                    break;
+                case CharacterSpriteManager.BodyTypes.Cat:
+                    bodySpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.catBodyFolderPath + characterSpriteManager.catBodySprites[skinIndex].name);
+                    break;
+                case CharacterSpriteManager.BodyTypes.Drone:
+                    bodySpritesheet = Resources.LoadAll<Sprite>(characterSpriteManager.droneBodyFolderPath + characterSpriteManager.droneBodySprites[skinIndex].name);
+                    break;
             }
         }
 
-        // public Sprite GetBodySprite()
-        // {
-        //     bodySpritesheet[frameIndex]   
-        // }
+
 
         void LateUpdate() //FIXME: make this called as part of the game loop
         {
@@ -137,24 +160,25 @@ namespace HackedDesign
             //Debug.Log(frameIndex, ani)
 
             frameIndex += 128;
+            if (bodySpriteRenderer != null)
+                bodySpriteRenderer.sprite = bodySpritesheet[frameIndex];
 
-            bodySpriteRenderer.sprite = bodySpritesheet[frameIndex];
-            eyesSpriteRenderer.sprite = eyesSpritesheet[frameIndex];
-            shirtSpriteRenderer.sprite = shirtSpritesheet[frameIndex];
-            pantsSpriteRenderer.sprite = pantsSpritesheet[frameIndex];
-            shoesSpriteRenderer.sprite = shoesSpritesheet[frameIndex];
+            if (eyesSpriteRenderer != null && eyesIndex > 0)
+                eyesSpriteRenderer.sprite = eyesSpritesheet[frameIndex];
 
-            shirtSpriteRenderer.color = colors[shirtColorIndex];
-            pantsSpriteRenderer.color = colors[pantsColorIndex];
-            shoesSpriteRenderer.color = colors[shoesColorIndex];
-            if (hairIndex > -1)
+            if (shirtSpriteRenderer != null && shirtIndex > 0)
+                shirtSpriteRenderer.sprite = shirtSpritesheet[frameIndex];
+
+            if (pantsSpriteRenderer != null && pantsIndex > 0)
+                pantsSpriteRenderer.sprite = pantsSpritesheet[frameIndex];
+
+            if (shoesSpriteRenderer != null && shoesIndex > 0)
+                shoesSpriteRenderer.sprite = shoesSpritesheet[frameIndex];
+
+            if (hairSpriteRenderer != null && hairIndex > 0)
             {
                 hairSpriteRenderer.sprite = hairSpritesheet[frameIndex];
-                hairSpriteRenderer.color = colors[hairColorIndex];
-            }
-            else
-            {
-                hairSpriteRenderer.sprite = null;
+
             }
         }
     }

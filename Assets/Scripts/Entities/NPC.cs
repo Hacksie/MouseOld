@@ -43,6 +43,7 @@ namespace HackedDesign.Entity
 
         public override void UpdateBehaviour()
         {
+
             base.UpdateBehaviour();
             SetHandleText();
         }
