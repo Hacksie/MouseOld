@@ -28,13 +28,15 @@ namespace HackedDesign
             private PolyNav.PolyNav2D polyNav2D;
 
             private Entity.EntityManager entityManager;
+            private CharacterSpriteManager characterSpriteManager;
 
-            public void Initialize(Entity.EntityManager entityManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
+            public void Initialize(Entity.EntityManager entityManager, CharacterSpriteManager characterSpriteManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
             {
                 this.levelParent = levelParent;
                 this.npcParent = npcParent;
                 this.polyNav2D = polyNav2D;
                 this.entityManager = entityManager;
+                this.characterSpriteManager = characterSpriteManager;
             }
 
             public void Render(Level level)
@@ -329,9 +331,12 @@ namespace HackedDesign
                     {
                         var go = GameObject.Instantiate(enemyGameObj, level.ConvertLevelPosToWorld(level.enemySpawnLocationList[i].levelLocation) + level.enemySpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
                         Entity.BaseEnemy npc = go.GetComponent<Entity.BaseEnemy>();
-                        if (npc != null)
+                        CharacterSprite cs = go.GetComponent<CharacterSprite>();
+                        if (npc != null && cs != null)
                         {
+                            cs.Initialize(characterSpriteManager);
                             npc.Initialize(polyNav2D);
+                            
                             //CoreGame.instance.state.entityList.Add(npc);
                             results.Add(npc);
                         }

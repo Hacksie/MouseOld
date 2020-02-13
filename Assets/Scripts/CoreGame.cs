@@ -20,6 +20,8 @@ namespace HackedDesign
         [Header("Game")]
         [SerializeField]
         private Entity.EntityManager entityManager = null;
+        [SerializeField]
+        private CharacterSpriteManager characterSpriteManager = null;
 
         [Header("Player")]
         [SerializeField]
@@ -174,7 +176,7 @@ namespace HackedDesign
             worldMapPanel.Initialize(worldMapManager);
             //statsPanel.Initialize();
             actionPanel.Initialize();
-            levelRenderer.Initialize(entityManager, levelParent, npcParent, polyNav2D);
+            levelRenderer.Initialize(entityManager, characterSpriteManager, levelParent, npcParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
             //
 

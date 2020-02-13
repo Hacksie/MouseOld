@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Text.RegularExpressions;
+﻿using UnityEngine;
 
 namespace HackedDesign
 {
     public class CharacterSprite : MonoBehaviour
     {
         public CharacterSpriteManager characterSpriteManager;
+
+        public int spriteSheetOffset = 128;
 
         [Header("Renderers")]
         public SpriteRenderer bodySpriteRenderer;
@@ -38,8 +37,13 @@ namespace HackedDesign
         private Sprite[] pantsSpritesheet;
         private Sprite[] shoesSpritesheet;
         private Sprite[] hairSpritesheet;
-        private string currentFrameName; //Name of the current frame. Used to find the current frame's number.
-        private int frameIndex = 0; //The index of the current frame. Used to set index of new frame.
+        //private string currentFrameName; //Name of the current frame. Used to find the current frame's number.
+        //private int frameIndex = 0; //The index of the current frame. Used to set index of new frame.
+
+        public void Initialize(CharacterSpriteManager characterSpriteManager)
+        {
+            this.characterSpriteManager = characterSpriteManager;
+        }
 
         void Start()
         {
@@ -142,7 +146,7 @@ namespace HackedDesign
         void LateUpdate() //FIXME: make this called as part of the game loop
         {
             //SetSpritesheets();
-            currentFrameName = bodySpriteRenderer.sprite.name;
+            string currentFrameName = bodySpriteRenderer.sprite.name;
 
             if (currentFrameName.StartsWith("r2c"))
             {
@@ -152,14 +156,14 @@ namespace HackedDesign
             //FIXME: Better than it was, but still GC issues with substring;
             int ix = currentFrameName.LastIndexOf("_");
             string frame = currentFrameName.Substring(ix + 1);
+            int frameIndex = 0;
             if (frame.Length > 0)
             {
                 int.TryParse(frame, out frameIndex);
             }
 
-            //Debug.Log(frameIndex, ani)
 
-            frameIndex += 128;
+            frameIndex += spriteSheetOffset;
             if (bodySpriteRenderer != null)
                 bodySpriteRenderer.sprite = bodySpritesheet[frameIndex];
 
