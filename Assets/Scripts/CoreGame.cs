@@ -100,10 +100,10 @@ namespace HackedDesign
         private Dialogue.NarrationManager narrationManager = null;
         [SerializeField]
         private Dialogue.NarrationPanelPresenter narrationPanel = null;
-        [SerializeField]
-        private Dialogue.DialogueManager dialogueManager = null;
-        [SerializeField]
-        private Dialogue.DialoguePanelPresenter dialoguePanel = null;
+        // [SerializeField]
+        // private Dialogue.DialogueManager dialogueManager = null;
+        // [SerializeField]
+        // private Dialogue.DialoguePanelPresenter dialoguePanel = null;
         [SerializeField]
         private MissionCompleteManager missionCompleteManager = null;
         [SerializeField]
@@ -168,13 +168,13 @@ namespace HackedDesign
             mobileInputUI.Initialize(inputController);
             actionConsolePanel.Initialize(actionManager);
             narrationManager.Initialize(inputController);
-            dialogueManager.Initialize(inputController);
+            //dialogueManager.Initialize(inputController);
             infoPanel.Initialize(infoManager, selectMenuManager);
             taskPanel.Initialize(selectMenuManager); // in the future, we might separate out the task definitions and actual task states
             startMenuPanel.Initialize(startMenuManager);
             selectMenuPanel.Initialize(selectMenuManager, infoPanel, taskPanel, levelMapPanel);
             narrationPanel.Initialize(narrationManager);
-            dialoguePanel.Initialize(dialogueManager);
+            //dialoguePanel.Initialize(dialogueManager);
             worldMapPanel.Initialize(worldMapManager);
             statsPanel.Initialize();
             //statsPanel.Initialize();
@@ -293,9 +293,6 @@ namespace HackedDesign
             CreateAlert();
             timerPanel.Initialize (State.currentLevel.timer);      
 
-
-            //Debug.Break();
-
             SetPlaying();
 
             if (!string.IsNullOrWhiteSpace(State.currentLevel.template.startingAction))
@@ -311,7 +308,7 @@ namespace HackedDesign
         {
             mainMenu.Repaint();
             actionConsolePanel.Repaint();
-            dialoguePanel.Repaint();
+            //dialoguePanel.Repaint();
             narrationPanel.Repaint();
             selectMenuPanel.Repaint();
             startMenuPanel.Repaint();
@@ -319,7 +316,6 @@ namespace HackedDesign
 
             levelMapPanel.Repaint();
             worldMapPanel.Repaint();
-            //statsPanel.Repaint();
             actionPanel.Repaint();
             timerPanel.Repaint ();
             mobileInputUI.Repaint();

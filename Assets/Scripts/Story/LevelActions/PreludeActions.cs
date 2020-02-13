@@ -39,13 +39,14 @@ namespace HackedDesign.Story
                 case "Prelude7":
                     Debug.Log("PreludeActions: invoke Prelude7");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude7");
-                    //SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
-                    //CoreGame.Instance.State.state = GameStateEnum.SELECTMENU;
+                    return true;
+                case "Prelude8":
+                    Debug.Log("PreludeActions: invoke Prelude8");
+                    Dialogue.NarrationManager.instance.ShowNarration("Prelude8");
                     return true;
                 case "PreludeLaptop":
                     PreludeLaptop();
                     return true;
-                    //.SelectMenuState = SelectMenuManager.SelectMenuState.TASKS;
                 case "PreludeCat":
                 case "PreludeCat1":
                     PreludeCat1();

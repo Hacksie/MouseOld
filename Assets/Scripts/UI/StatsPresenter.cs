@@ -21,7 +21,7 @@ namespace HackedDesign
 
             deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 
-            if (CoreGame.Instance.State.state != GameStateEnum.NARRATION)
+            if (CoreGame.Instance.State.state == GameStateEnum.PLAYING)
             {
                 if (!this.gameObject.activeInHierarchy)
                 {
@@ -30,8 +30,8 @@ namespace HackedDesign
 
                 float msec = deltaTime * 1000.0f;
                 float fps = 1.0f / deltaTime;
-                statsText.text = string.Format("{0:####}, {1:###}", fps, msec);
-
+                var player = CoreGame.Instance.GetPlayer();
+                statsText.text = string.Format("{0:####}, {1:###}, {2:###.##} {3:###.##}", fps, msec, player.gameObject.transform.position.x, player.gameObject.transform.position.y);
             }
             else if (this.gameObject.activeInHierarchy)
             {
