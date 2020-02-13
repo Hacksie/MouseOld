@@ -166,7 +166,7 @@ namespace HackedDesign
                     Invoke();
                 }
 
-                if (!string.IsNullOrWhiteSpace(triggerAction) && inputController.InteractButtonUp() && !requireHack && !requireBug && !requireOverload)
+                if (inputController.InteractButtonUp() && !requireHack && !requireBug && !requireOverload)
                 {
                     triggered = true;
                     Invoke();
