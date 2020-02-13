@@ -399,14 +399,15 @@ namespace HackedDesign
                 {
                     Debug.Log(this.name + ": attempting to spawn " + level.npcSpawnLocationList[i].name);
                     Entity.BaseEntity npc = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
-
-                    //GameObject npcGameObj = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
-                    Debug.Log(this.name + ":  to spawn " + npc.name);
+                    
+                    
                     if (npc != null)
                     {
+                        CharacterSprite cs = npc.gameObject.GetComponent<CharacterSprite>(); // FIXME: Check null
                         Debug.Log(this.name + ": moving " + npc.name);
                         npc.transform.position = level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset;
                         npc.gameObject.SetActive(true);
+                        cs.Initialize(characterSpriteManager);
                         npc.Initialize();
                         results.Add(npc);
                     }

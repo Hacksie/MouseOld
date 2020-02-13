@@ -110,6 +110,8 @@ namespace HackedDesign
         private MissionCompletePresenter missionCompletePanel = null;
         [SerializeField]
         private Level.MinimapPresenter minimapPanel = null;
+        [SerializeField]
+        private StatsPresenter statsPanel = null;
         
 
         [SerializeField]
@@ -174,6 +176,7 @@ namespace HackedDesign
             narrationPanel.Initialize(narrationManager);
             dialoguePanel.Initialize(dialogueManager);
             worldMapPanel.Initialize(worldMapManager);
+            statsPanel.Initialize();
             //statsPanel.Initialize();
             actionPanel.Initialize();
             levelRenderer.Initialize(entityManager, characterSpriteManager, levelParent, npcParent, polyNav2D);
@@ -322,6 +325,7 @@ namespace HackedDesign
             mobileInputUI.Repaint();
             minimapPanel.Repaint();
             cursorPresenter.Repaint();
+            statsPanel.Repaint();
         }
 
         void SceneTriggersInitialize()

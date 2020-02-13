@@ -48,7 +48,7 @@ namespace HackedDesign {
 				}
 			}
 
-			public override void Invoke () {
+			public override void Invoke (UnityEngine.GameObject source) {
 				Debug.Log("Invoke trigger");
 				if (currentTextItem < speechBubbles.Length) {
 					textField.text = speechBubbles[currentTextItem].text;

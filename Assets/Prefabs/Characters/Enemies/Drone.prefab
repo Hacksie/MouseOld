@@ -152,24 +152,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f28d8d6fa1e3c4b8172b541b8847cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0, y: 0}
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 257
+  direction: {x: 0, y: 0}
   facePlayer: 1
   polyNavAgent: {fileID: 5357332260020041057}
+  alertLight: {fileID: 6731770016961423799}
+  state: 1
   patrolWait: 6
   patrolSpeed: 0.75
   huntSpeed: 1
+  hostile: 0
   patrolLastCheck: 0
   currentDirection: {x: 0, y: 0}
   currentDirections: []
-  alertLight: {fileID: 6731770016961423799}
   huntingLastSeen: 0
   seekTime: 5
   fightDistance: 1.5
   lastKnownLocation: {x: 0, y: 0, z: 0}
-  state: 1
 --- !u!61 &6037855938991397944
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -272,8 +273,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6834497833064637216}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 962003991612460470}

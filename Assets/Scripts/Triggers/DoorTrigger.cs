@@ -31,34 +31,34 @@ namespace HackedDesign
                     animator.SetBool("open", open || overloaded);
             }
 
-            public override void Invoke()
+            public override void Invoke(UnityEngine.GameObject source)
             {
                 open = true;
-                base.Invoke();
+                base.Invoke(source);
             }
 
-            public override void Hack()
+            public override void Hack(UnityEngine.GameObject source)
             {
                 open = true;
-                base.Hack();
+                base.Hack(source);
             }
 
-            public override void Bug()
+            public override void Bug(UnityEngine.GameObject source)
             {
                 open = true;
-                base.Bug();
+                base.Bug(source);
             }
 
-            public override void Overload()
+            public override void Overload(UnityEngine.GameObject source)
             {
                 open = true;
-                base.Overload();
+                base.Overload(source);
             }
 
-            public override void Leave()
+            public override void Leave(UnityEngine.GameObject source)
             {
                 open = false;
-                base.Leave();
+                base.Leave(source);
             }
         }
     }

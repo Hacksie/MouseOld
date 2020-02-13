@@ -101,34 +101,34 @@ namespace HackedDesign
 
             }
 
-            public virtual void Invoke()
+            public virtual void Invoke(UnityEngine.GameObject source)
             {
-                Debug.Log(this.name + ": invoking trigger action: " + triggerAction);
+                Debug.Log(this.name + ": " + source.name + " invoked trigger action: " + triggerAction);
                 if (!string.IsNullOrWhiteSpace(triggerAction))
                 {
                     Story.ActionManager.instance.Invoke(triggerAction);
                 }
             }
 
-            public virtual void Overload()
+            public virtual void Overload(UnityEngine.GameObject source)
             {
-                Debug.Log(this.name + ": invoking overload action: " + overloadAction);
+                Debug.Log(this.name + ": " + source.name + " invoked overload action: " + overloadAction);
                 overloaded = true;
                 CoreGame.Instance.State.player.ConsumeOverload();
                 Story.ActionManager.instance.Invoke(overloadAction);
             }
 
-            public virtual void Hack()
+            public virtual void Hack(UnityEngine.GameObject source)
             {
-                Debug.Log(this.name + ": invoking hack action: " + hackAction);
+                Debug.Log(this.name + ": " + source.name + " invoked hack action: " + hackAction);
                 hacked = true;
                 CoreGame.Instance.State.player.ConsumeHack();
                 Story.ActionManager.instance.Invoke(hackAction);
             }
 
-            public virtual void Bug()
+            public virtual void Bug(UnityEngine.GameObject source)
             {
-                Debug.Log(this.name + ": invoking bug action: " + bugAction);
+                Debug.Log(this.name + ": " + source.name + " invoked bug action: " + bugAction);
                 bugged = true;
                 hacked = true;
                 CoreGame.Instance.State.player.ConsumeBug();
@@ -142,16 +142,16 @@ namespace HackedDesign
             //     Story.ActionManager.instance.Invoke(keycardAction);
             // }
 
-            public virtual void Leave()
+            public virtual void Leave(UnityEngine.GameObject source)
             {
-                Debug.Log(this.name + ": invoking leave action: " + leaveAction);
+                Debug.Log(this.name + ": " + source.name + " invoked action: " + leaveAction);
                 if (!string.IsNullOrWhiteSpace(leaveAction))
                 {
                     Story.ActionManager.instance.Invoke(leaveAction);
                 }
             }
 
-            protected void CheckPlayerActions()
+            protected void CheckPlayerActions(GameObject source)
             {
                 //FIXME: have 4 different sprites for each possible action. 
                 // Show the sprite permanently if the object is hacked or overloaded
@@ -163,18 +163,18 @@ namespace HackedDesign
                 if (!requireInteraction && !requireHack && !requireBug && !requireOverload)
                 {
                     triggered = true;
-                    Invoke();
+                    Invoke(source);
                 }
 
                 if (inputController.InteractButtonUp() && !requireHack && !requireBug && !requireOverload)
                 {
                     triggered = true;
-                    Invoke();
+                    Invoke(source);
                 }
                 if (!overloaded && !hacked && !bugged && !string.IsNullOrWhiteSpace(overloadAction) && CoreGame.Instance.State.player.CanOverload() && inputController.OverloadButtonUp() && !requireInteraction && !requireHack && !requireBug)
                 {
                     triggered = true;
-                    Overload();
+                    Overload(source);
                 }
                 // if (!string.IsNullOrWhiteSpace(keycardAction) && CoreGame.Instance.State.player.CanKeycard() && inputController.KeycardButtonUp() && !requireInteraction && !requireHack && !requireKeycard && !requireOverload)
                 // {
@@ -184,17 +184,17 @@ namespace HackedDesign
                 if (!overloaded && !hacked && !bugged && !string.IsNullOrWhiteSpace(bugAction) && CoreGame.Instance.State.player.CanBug() && inputController.BugButtonUp() && !requireInteraction && !requireHack && !requireOverload)
                 {
                     triggered = true;
-                    Bug();
+                    Bug(source);
                 }
                 if (!overloaded && !hacked && !bugged && !string.IsNullOrWhiteSpace(hackAction) && CoreGame.Instance.State.player.CanHack() && inputController.HackButtonUp() && !requireInteraction && !requireBug && !requireOverload)
                 {
                     triggered = true;
-                    Hack();
+                    Hack(source);
                 }
                 if ((hacked || bugged) && inputController.InteractButtonUp())
                 {
                     triggered = true;
-                    Invoke();
+                    Invoke(source);
                 }
 
                 if (allowRepeatInteractions)
@@ -219,13 +219,13 @@ namespace HackedDesign
                 if (other.CompareTag(TagManager.NPC) && !triggered && allowNPCAutoInteraction)
                 {
                     npcTriggered = true;
-                    Invoke();
+                    Invoke(other.gameObject);
                 }
 
                 //FIXME: allow triggering without leaving
                 if (other.CompareTag(TagManager.PLAYER) && !triggered)
                 {
-                    CheckPlayerActions();
+                    CheckPlayerActions(other.gameObject);
                 }
             }
 
@@ -238,7 +238,7 @@ namespace HackedDesign
                 if (!string.IsNullOrWhiteSpace(triggerAction) && other.tag == TagManager.NPC && allowNPCAutoInteraction)
                 {
                     npcTriggered = false;
-                    Leave();
+                    Leave(other.gameObject);
                 }
 
                 if (other.tag == TagManager.PLAYER)
@@ -251,7 +251,7 @@ namespace HackedDesign
                     if (triggered)
                     {
                         triggered = false;
-                        Leave();
+                        Leave(other.gameObject);
                     }
                 }
 

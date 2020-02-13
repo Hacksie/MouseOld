@@ -9,15 +9,21 @@ namespace HackedDesign
     {
         public class BaseEntity : MonoBehaviour
         {
-
-            public Vector2Int direction = Vector2Int.zero;
-            public LayerMask layerMask;            
-
-            public bool facePlayer = true;
-
+            
             protected Animator anim; //The parent animator.
             protected List<SpriteRenderer> sprites = new List<SpriteRenderer>();
             protected Transform player;
+
+            [Header("Settings")]
+            public LayerMask layerMask;            
+
+            [Header("State")]
+            public Vector2Int direction = Vector2Int.zero;
+            
+
+            public bool facePlayer = true;
+
+
 
 
 
