@@ -24,8 +24,8 @@ namespace HackedDesign {
 			public bool loop = false;
 
 
-			public new void Initialize (Input.IInputController inputController) {
-				base.Initialize(inputController);
+			public new void Initialize () {
+				base.Initialize();
 				Debug.Log (this.name + ": initialize speech bubble");
 				
 				canvas = GameObject.Instantiate (textFieldPrefab);
@@ -37,7 +37,7 @@ namespace HackedDesign {
 			}
 
 			// Update is called once per frame
-			public override void UpdateTrigger () {
+			public override void UpdateTrigger (Input.IInputController inputController) {
 
 				if (textField.gameObject.activeInHierarchy) {
 				 	textField.rectTransform.position = Camera.main.WorldToScreenPoint (transform.position + offset);

@@ -78,10 +78,7 @@ namespace HackedDesign
 
                 var speaker = infoManager.GetCharacter(currentNarration.speaker);
                 var corp = infoManager.GetCorp(speaker.corp);
-                Debug.Log("AA" + corp.id + ":" + corp.color);
-
                 speakerTitle.text = "<color=\"#B0B0B0\">" + speaker.name + " </color>\"" + speaker.handle + "\"<color=\"#B0B0B0\">, " + speaker.category + " for </color><color=\"" + corp.color + "\">" + corp.name + "</color>";
-
                 var bodySprites = characterSpriteManager.GetBody(speaker.id);
                 var hairSprites = characterSpriteManager.GetHair(speaker.id);
                 var eyesSprites = characterSpriteManager.GetEyes(speaker.id);

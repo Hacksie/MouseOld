@@ -15,9 +15,9 @@ namespace HackedDesign
 
             bool open = false;
 
-            public override void Initialize(Input.IInputController inputController)
+            public override void Initialize()
             {
-                base.Initialize(inputController);
+                base.Initialize();
                 Debug.Log("Door: Initialize door trigger");
                 base.Activate();
 
@@ -25,7 +25,7 @@ namespace HackedDesign
             }
 
             // Update is called once per frame
-            public override void UpdateTrigger()
+            public override void UpdateTrigger(Input.IInputController inputController)
             {
                 if (animate && animator != null)
                     animator.SetBool("open", open || overloaded);

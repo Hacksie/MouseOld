@@ -352,6 +352,7 @@ namespace HackedDesign
             statsPanel.Repaint();
         }
 
+        // FIXME: There's probably a better way to do this these days
         void SceneTriggersInitialize()
         {
 
@@ -371,7 +372,7 @@ namespace HackedDesign
                 if (trigger != null)
                 {
                     State.triggerList.Add(trigger);
-                    trigger.Initialize(inputController);
+                    trigger.Initialize();
                 }
             }
         }
@@ -547,13 +548,17 @@ namespace HackedDesign
             actionManager.UpdateBehaviour();
             switch (State.state)
             {
+                case GameStateEnum.CAPTURED:
+                case GameStateEnum.DIALOGUE:
+                case GameStateEnum.GAMEOVER:
+                case GameStateEnum.MISSIONCOMPLETE:
+                case GameStateEnum.SELECTMENU:
+                case GameStateEnum.STARTMENU:
+                case GameStateEnum.WORLDMAP:
                 case GameStateEnum.NARRATION:
-                    UpdateCharacterSprites();
-                    break;
                 case GameStateEnum.PLAYING:
                     UpdateCharacterSprites();
                     break;
-
             }
         }
 
@@ -580,8 +585,7 @@ namespace HackedDesign
         {
             foreach (Triggers.ITrigger trigger in State.triggerList)
             {
-
-                trigger.UpdateTrigger();
+                trigger.UpdateTrigger(inputController);
             }
         }
 
@@ -595,7 +599,6 @@ namespace HackedDesign
 
         void PlayingFixedUpdate()
         {
-            //mapUI.SetPlayerLocation(player.transform.position);
             playerController.UpdateTransform();
         }
     }

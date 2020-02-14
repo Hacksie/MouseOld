@@ -50,17 +50,22 @@ namespace HackedDesign.Story
                     return true;
                 case "PreludeCat":
                 case "PreludeCat1":
-                    PreludeCat1();
+                    Debug.Log("PreludeActions: prelude Cat");
+                    CoreGame.Instance.State.story.prelude_cat_talk = true;
+                    Dialogue.NarrationManager.instance.ShowNarration("PreludeCat1");
                     return true;
                 case "PreludeCat2":
-                    PreludeCat2();
+                    Dialogue.NarrationManager.instance.ShowNarration("PreludeCat2");
                     return true;
                 case "PreludeCat3":
-                    PreludeCat3();
+                    Dialogue.NarrationManager.instance.ShowNarration("PreludeCat3");
                     return true;
                 case "PreludeCat4":
-                    PreludeCat4();
-                    return true;              
+                    Dialogue.NarrationManager.instance.ShowNarration("PreludeCat4");
+                    return true;
+                case "PreludeCat5":
+                    Dialogue.NarrationManager.instance.ShowNarration("PreludeCat5");
+                    return true;
                 case "PreludeExit":
                     PreludeExit();
                     return true;
@@ -70,6 +75,16 @@ namespace HackedDesign.Story
             }
             return false;
         }
+
+        public void PreludeCat3()
+        {
+            
+        }
+        public void PreludeCat4()
+        {
+            
+        }
+
 
         public void PreludeLaptop()
         {
@@ -88,37 +103,11 @@ namespace HackedDesign.Story
                 CoreGame.Instance.State.selectedTask = task;
             }
 
-                    SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
-                    CoreGame.Instance.State.state = GameStateEnum.SELECTMENU;
-
-            //Invoke("Prelude")
-            //Invoke("Prelude5");
+            SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
+            CoreGame.Instance.State.state = GameStateEnum.SELECTMENU;
         }
 
-        public void PreludeCat1()
-        {
-            Debug.Log("PreludeActions: prelude Cat");
-            CoreGame.Instance.State.story.prelude_cat_talk = true;
-            Dialogue.NarrationManager.instance.ShowNarration("PreludeCat1");
 
-        }
-
-        public void PreludeCat2()
-        {
-            Dialogue.NarrationManager.instance.ShowNarration("PreludeCat2");
-            //var Cat = EntityManager.instance.GetPooledNPC("Cat");
-            //var trigger = Cat.GetComponent<Triggers.BaseTrigger>();
-            //trigger.enabled = false;
-        }
-
-        public void PreludeCat3()
-        {
-            Dialogue.NarrationManager.instance.ShowNarration("PreludeCat3");
-        }        
-        public void PreludeCat4()
-        {
-            Dialogue.NarrationManager.instance.ShowNarration("PreludeCat4");
-        }                
 
 
         public void PreludeExit()
@@ -127,7 +116,7 @@ namespace HackedDesign.Story
             {
                 Debug.Log("PreludeActions: can exit");
                 CoreGame.Instance.LoadNewLevel("Arisana Bar");
-                
+
             }
             else
             {
