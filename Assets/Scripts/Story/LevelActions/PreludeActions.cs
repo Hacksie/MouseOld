@@ -11,9 +11,10 @@ namespace HackedDesign.Story
             {
                 case "Prelude1":
                     Debug.Log("PreludeActions: invoke Prelude1");
-                    InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Arisana"));
-                    InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Manager Lyon"));
-                    InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Cat"));
+                    //FIXME: This isn't necessary anymore! Just pass in a string and save the LINQ query
+                    InfoManager.instance.AddToKnownCorps("Arisana");
+                    InfoManager.instance.AddToKnownCharacters("ManagerLyon");
+                    InfoManager.instance.AddToKnownCharacters("Cat");
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
                     return true;
                 case "Prelude2":
@@ -76,7 +77,7 @@ namespace HackedDesign.Story
             CoreGame.Instance.State.story.prelude_laptop = true;
             ActionManager.instance.AddActionMessage("Task 'Milk Run' added to Tasks");
             //taskManager.selectedTask = 
-            InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Saika"));
+            InfoManager.instance.AddToKnownCorps("Saika");
             //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kat"));
 
 

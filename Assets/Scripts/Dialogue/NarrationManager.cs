@@ -11,6 +11,7 @@ namespace HackedDesign {
 
 			public Narration currentNarration;
 			public List<Narration> narrationList = new List<Narration> ();
+			public string narrationResource = @"Narration/";
 
 			private Input.IInputController input;
 
@@ -20,13 +21,27 @@ namespace HackedDesign {
 
 			public void Initialize (Input.IInputController input) {
 				this.input = input;
+				LoadNarration();
+			}
+
+			private void LoadNarration()
+			{
+                var jsonTextFiles = Resources.LoadAll<TextAsset>(narrationResource);
+				
+
+				foreach(var file in jsonTextFiles)
+				{
+					var narrations = JsonUtility.FromJson<NarrationHolder>(file.text);
+					narrationList.AddRange(narrations.narrations);
+					Debug.Log(this.name +": narration added");
+				}				
 			}
 
 			public void ShowNarration (Narration narration) {
-				input.ResetInput();
+				input.ResetInput(); // Is there a better way of doing this? Move to the presenter
 				//Input.ResetInputAxes();
 				if (narration != null) {
-					Debug.Log(this.name + ": show narration " + narration.name);
+					Debug.Log(this.name + ": show narration " + narration.id);
 					currentNarration = narration;
 					CoreGame.Instance.SetNarration ();
 				} else {
@@ -34,33 +49,19 @@ namespace HackedDesign {
 				}
 			}
 
-			public void ShowNarration (string name) {
-				ShowNarration (narrationList.FirstOrDefault (e => e != null && e.name == name));
+			public void ShowNarration (string id) {
+				ShowNarration (narrationList.FirstOrDefault (e => e != null && e.id == id));
 			}
 
 			public void NarrationButtonEvent () {
 				Debug.Log (this.name + ": narration button event");
 
-				string nextAction = "";
-				if (!string.IsNullOrWhiteSpace (currentNarration.narrationAction)) {
-					nextAction = currentNarration.narrationAction;
-				}
+				string nextAction = currentNarration.action;
 
 				currentNarration = null;
 				CoreGame.Instance.SetPlaying ();
 
 				Story.ActionManager.instance.Invoke (nextAction);
-
-				// if(currentDialogue.nextDialogue == null)
-				// {
-				// 	currentDialogue = null;
-				// 	GameManager.instance.Resume();
-				// }
-				// else
-				// {
-				// 	ShowDialogue(currentDialogue.nextDialogue);
-				// }
-
 			}
 
 			public void SetCurrentDialogue (string name) {
@@ -69,6 +70,10 @@ namespace HackedDesign {
 
 			public Narration GetCurrentNarration () {
 				return currentNarration;
+			}
+
+			public class NarrationHolder {
+				public List<Narration> narrations;
 			}
 		}
 	}

@@ -1,0 +1,95 @@
+{
+    "narrations":[
+    {
+        "id": "Prelude1",
+        "speaker": "Mouse",
+        "text": "<color='#B0B0B0'>Twas the night before christmas, when all through the city, no creatures were stirring. Except a Mouse... Though if I had my way, I'd leave the creatures to their stirrings and go back to sleep. I'm getting too old for this.</color>",
+        "action": "Prelude2",
+        "button":"arrowright"
+    },
+    {
+        "id": "Prelude2",
+        "speaker": "Mouse",
+        "text": "'Cat, please, kill that alarm.'",
+        "action": "Prelude3",
+        "button":"arrowright"
+    },
+    {
+        "id": "Prelude3",
+        "speaker": "Cat",
+        "text": "<color='#B0B0B0'>*purrs*</color> 'Of course Miss. There is a message from your manager waiting for you on your laptop. I would start a coffee pot for you, but once again you're out. Also, if you have the time, I could really use a few more scratches behind the ears.'",
+        "action": "Prelude4",
+        "button":"arrowright"
+    },
+    {
+        "id": "Prelude4",
+        "speaker": "Mouse",
+        "text": "<color='#B0B0B0'>C.A.T is your AI companion and assistant. As a contractor, you'd never be allowed a real animal companion, but you could at least afford the optional physical addon, and Cat was as cute as any real cat could be.</color>",
+        "action": "Prelude5",
+        "button":"arrowright"
+    },
+    {
+        "id": "Prelude5",
+        "speaker": "Mouse",
+        "text": "<color='#B0B0B0'>Excluding a few upgrades along the way, she's been your constant companion ever since you purchased her with one of your first paychecks, a tidy 9 years ago. Sure, there are more advanced models available these days, but there's no way you'd upgrade.</color>",
+        "action": "Prelude6",
+        "button":"arrowright"
+    },
+    {
+        "id": "Prelude6",
+        "speaker": "Mouse",
+        "text": "<color='#B0B0B0'>Even if she does have a smart mouth on her sometimes...</color>\n'Why is a highly intelligent AI faux cat unable to scratch behind their own ears?'",
+        "action": "Prelude7",
+        "button":"arrowright"
+    },
+    {
+        "id": "Prelude7",
+        "speaker": "Cat",
+        "text": "'Why would I do it when I can get you to do it for me?'",
+        "action": "Prelude8",
+        "button":"arrowright"
+    },
+    {
+        "id": "Prelude8",
+        "speaker": "Mouse",
+        "text": "'Touche.' <color='#B0B0B0'>You give the adorable creature a few scratches behind her realistic fur ears and then lever yourself out of bed. Your laptop is already glowing on your desk with the new message.</color>",
+        "action": "",
+        "button":"arrowright"
+    },
+    {
+        "id":"PreludeCat1",
+        "speaker":"Mouse",
+        "text": "'Why can't you order coffee for me when I run out?'",
+        "action": "PreludeCat2",
+        "button":"arrowright"
+    },
+    {
+        "id":"PreludeCat2",
+        "speaker":"Cat",
+        "text":"'I'd ask you the same question.'",
+        "action":"PreludeCat3",
+        "button":"arrowright"
+    },
+    {
+        "id":"PreludeCat3",
+        "speaker":"Mouse",
+        "text":"'Why do I even have you?'",
+        "action":"PreludeCat4",
+        "button":"arrowright"
+    },
+    {
+        "id":"PreludeCat4",
+        "speaker":"Cat",
+        "text":"'Because I'm completely adorable?'",
+        "action":"PreludeCat5",
+        "button":"arrowright"
+    },
+    {
+        "id":"PreludeCat5",
+        "speaker":"Mouse",
+        "text":"<color='#B0B0B0'>*sigh*<color>",
+        "action":"PreludeCat5",
+        "button":"arrowright"
+    }            
+]
+}

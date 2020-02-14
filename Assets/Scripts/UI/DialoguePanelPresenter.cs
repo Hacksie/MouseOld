@@ -69,53 +69,53 @@ namespace HackedDesign.Dialogue
             //Debug.Log(currentDialogue.speaker.corp.color.ToString());
 
             text.text = currentDialogue.text;
-            speaker.text = currentDialogue.speaker.fullName;
-            speakerHandle.text = currentDialogue.speaker.handle;
-            speakerCorp.text = currentDialogue.speaker.corp.name;
-            speakerCorp.color = currentDialogue.speaker.corp.color;
-            speakerStatus.text = currentDialogue.speaker.@class.ToString();
+            // speaker.text = currentDialogue.speaker.fullName;
+            // speakerHandle.text = currentDialogue.speaker.handle;
+            // speakerCorp.text = currentDialogue.speaker.corp.name;
+            // speakerCorp.color = currentDialogue.speaker.corp.color;
+            // speakerStatus.text = currentDialogue.speaker.@class.ToString();
 
-            EventSystem.current.SetSelectedGameObject(null);
-            if (currentDialogue.button1text != "")
-            {
-                response1Button.gameObject.SetActive(true);
-                response1ButtonText.text = currentDialogue.button1text;
-                EventSystem.current.SetSelectedGameObject(response1Button.gameObject);
-            }
-            else
-            {
-                response1Button.gameObject.SetActive(false);
-            }
+            // EventSystem.current.SetSelectedGameObject(null);
+            // if (currentDialogue.button1text != "")
+            // {
+            //     response1Button.gameObject.SetActive(true);
+            //     response1ButtonText.text = currentDialogue.button1text;
+            //     EventSystem.current.SetSelectedGameObject(response1Button.gameObject);
+            // }
+            // else
+            // {
+            //     response1Button.gameObject.SetActive(false);
+            // }
 
-            if (currentDialogue.button2text != "")
-            {
-                response2Button.gameObject.SetActive(true);
-                response2ButtonText.text = currentDialogue.button2text;
-            }
-            else
-            {
-                response2Button.gameObject.SetActive(false);
-            }
+            // if (currentDialogue.button2text != "")
+            // {
+            //     response2Button.gameObject.SetActive(true);
+            //     response2ButtonText.text = currentDialogue.button2text;
+            // }
+            // else
+            // {
+            //     response2Button.gameObject.SetActive(false);
+            // }
 
-            if (currentDialogue.button3text != "")
-            {
-                response3Button.gameObject.SetActive(true);
-                response3ButtonText.text = currentDialogue.button3text;
-            }
-            else
-            {
-                response3Button.gameObject.SetActive(false);
-            }
+            // if (currentDialogue.button3text != "")
+            // {
+            //     response3Button.gameObject.SetActive(true);
+            //     response3ButtonText.text = currentDialogue.button3text;
+            // }
+            // else
+            // {
+            //     response3Button.gameObject.SetActive(false);
+            // }
 
-            if (currentDialogue.button4text != "")
-            {
-                response4Button.gameObject.SetActive(true);
-                response4ButtonText.text = currentDialogue.button4text;
-            }
-            else
-            {
-                response4Button.gameObject.SetActive(false);
-            }
+            // if (currentDialogue.button4text != "")
+            // {
+            //     response4Button.gameObject.SetActive(true);
+            //     response4ButtonText.text = currentDialogue.button4text;
+            // }
+            // else
+            // {
+            //     response4Button.gameObject.SetActive(false);
+            // }
 
             //avatar.sprite = currentNarration.speaker.avatar;
             //actionButtonImage.sprite = currentDialogue.button;

@@ -29,14 +29,14 @@ namespace HackedDesign.Entity
         new void Start()
         {
             base.Start();
-            if (character == null)
-            {
-                Debug.LogError(this.name + ": character is null");
-            }
-            if (text == null)
-            {
-                Debug.LogError(this.name + ": text is null");
-            }
+            // if (character == null)
+            // {
+            //     Debug.LogError(this.name + ": character is null");
+            // }
+            // if (text == null)
+            // {
+            //     Debug.LogError(this.name + ": text is null");
+            // }
 
             SetHandleText();
         }
@@ -56,14 +56,14 @@ namespace HackedDesign.Entity
                 return; 
             }
             
-            if (InfoManager.instance.knownEntities.Find(e => e.name == gameObject.name))
-            {
-                text.text = character.handle;
-            }
-            else
-            {
-                text.text = UNKNOWN_STRING;
-            }
+            // if (InfoManager.instance.knownEntities.Find(e => e.name == gameObject.name))
+            // {
+            //     text.text = character.handle;
+            // }
+            // else
+            // {
+            //     text.text = UNKNOWN_STRING;
+            // }
         }
     }
 }

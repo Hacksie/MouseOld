@@ -203,6 +203,7 @@ namespace HackedDesign
                 }
             }
 
+            //FIXME: Move input code outside of physics update
             protected virtual void OnTriggerStay2D(Collider2D other)
             {
                 if (!enabled)
@@ -235,13 +236,13 @@ namespace HackedDesign
                 {
                     return;
                 }
-                if (!string.IsNullOrWhiteSpace(triggerAction) && other.tag == TagManager.NPC && allowNPCAutoInteraction)
+                if (!string.IsNullOrWhiteSpace(triggerAction) && other.CompareTag(TagManager.NPC) && allowNPCAutoInteraction)
                 {
                     npcTriggered = false;
                     Leave(other.gameObject);
                 }
 
-                if (other.tag == TagManager.PLAYER)
+                if (other.CompareTag(TagManager.PLAYER))
                 {
                     if (sprite != null && sprite.gameObject.activeInHierarchy)
                     {
