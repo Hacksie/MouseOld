@@ -111,7 +111,6 @@ namespace HackedDesign
 
                     if (other.CompareTag(TagManager.PLAYER))
                     {
-                        Debug.Log("Trigger")       ;
                         if (CheckPlayerActions(other.gameObject, inputController))
                         {
                             colliders.RemoveAt(i);

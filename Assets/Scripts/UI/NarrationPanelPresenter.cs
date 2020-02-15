@@ -100,13 +100,15 @@ namespace HackedDesign
                 avatarPantsSprite.gameObject.SetActive(pantsSprites != null);
                 avatarShoesSprite.gameObject.SetActive(shoesSprites != null);
 
+                var offset = characterSpriteManager.GetSpriteOffset(speaker.id);
 
-                avatarBodySprite.sprite = bodySprites != null ? bodySprites[128] : null;
-                avatarHairSprite.sprite = hairSprites != null ? hairSprites[128] : null;
-                avatarEyesSprite.sprite = eyesSprites != null ? eyesSprites[128] : null;
-                avatarShirtSprite.sprite = shirtSprites != null ? shirtSprites[128] : null;
-                avatarPantsSprite.sprite = pantsSprites != null ? pantsSprites[128] : null;
-                avatarShoesSprite.sprite = shoesSprites != null ? shoesSprites[128] : null;
+
+                avatarBodySprite.sprite = bodySprites != null ? bodySprites[offset] : null;
+                avatarHairSprite.sprite = hairSprites != null ? hairSprites[offset] : null;
+                avatarEyesSprite.sprite = eyesSprites != null ? eyesSprites[offset] : null;
+                avatarShirtSprite.sprite = shirtSprites != null ? shirtSprites[offset] : null;
+                avatarPantsSprite.sprite = pantsSprites != null ? pantsSprites[offset] : null;
+                avatarShoesSprite.sprite = shoesSprites != null ? shoesSprites[offset] : null;
 
                 avatarHairSprite.color = hairColor != null ? hairColor : Color.magenta;
                 avatarShirtSprite.color = shirtColor != null ? shirtColor : Color.magenta;
@@ -115,8 +117,7 @@ namespace HackedDesign
 
 
                 text.text = currentNarration.text;
-                
-                //actionButtonImage.sprite = currentNarration.button;
+
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(actionButton.gameObject);
             }

@@ -6,8 +6,6 @@ namespace HackedDesign
     {
         public CharacterSpriteManager characterSpriteManager;
 
-        public int spriteSheetOffset = 128;
-
         [Header("Renderers")]
         public SpriteRenderer bodySpriteRenderer;
         public SpriteRenderer eyesSpriteRenderer;
@@ -19,28 +17,12 @@ namespace HackedDesign
         [Header("Settings")]
         public string character;
 
-        public CharacterSpriteManager.BodyTypes body;
-        //public int bodyIndex;
-        public int skinIndex;
-        public int eyesIndex;
-        public int shirtIndex;
-        public int pantsIndex;
-        public int shoesIndex;
-        public int hairIndex;
-        public int shirtColorIndex;
-        public int pantsColorIndex;
-        public int shoesColorIndex;
-        public int hairColorIndex;
-
-
         private Sprite[] bodySpritesheet;
         private Sprite[] eyesSpritesheet;
         private Sprite[] shirtSpritesheet;
         private Sprite[] pantsSpritesheet;
         private Sprite[] shoesSpritesheet;
         private Sprite[] hairSpritesheet;
-        //private string currentFrameName; //Name of the current frame. Used to find the current frame's number.
-        //private int frameIndex = 0; //The index of the current frame. Used to set index of new frame.
 
         public void Initialize(CharacterSpriteManager characterSpriteManager)
         {
@@ -66,7 +48,7 @@ namespace HackedDesign
                 pantsSpriteRenderer.color = characterSpriteManager.GetPantsColor(character);
 
             if(shoesSpriteRenderer != null)
-                shoesSpriteRenderer.color = characterSpriteManager.GetShoesColor(character);                                
+                shoesSpriteRenderer.color = characterSpriteManager.GetShoesColor(character);
         }
 
 
@@ -92,7 +74,7 @@ namespace HackedDesign
             }
 
 
-            frameIndex += spriteSheetOffset;
+            frameIndex += characterSpriteManager.GetSpriteOffset(character);
 
             if(bodySpriteRenderer!=null)
                 bodySpriteRenderer.sprite = (bodySpritesheet != null && bodySpritesheet.Length > 0) ? bodySpritesheet[frameIndex] : null;

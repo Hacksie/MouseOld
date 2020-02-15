@@ -61,6 +61,12 @@ namespace HackedDesign
 
         }
 
+        public int GetSpriteOffset(string id)
+        {
+            var character = infoManager.GetCharacter(id);
+            return character.spriteOffset;
+        }
+
         public Sprite[] GetBody(string id)
         {
             var character = infoManager.GetCharacter(id);
