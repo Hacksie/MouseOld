@@ -75,7 +75,7 @@ namespace HackedDesign.Story {
                     if (categories.Count() > i) {
                         cbt.gameObject.SetActive (true); // Just in case it isn't active
 
-                        cbt.name = categories[i].name;
+                        cbt.name = categories[i].text;
 
                         // if(currentCategory == infoManager.selectedInfoCategory)
                         // {
@@ -83,7 +83,7 @@ namespace HackedDesign.Story {
                         // }
 
                         //sb.sector = currentSector;
-                        t.text = categories[i].name;
+                        t.text = categories[i].text;
 
                     } else {
                         cbt.gameObject.SetActive (false);
@@ -112,6 +112,7 @@ namespace HackedDesign.Story {
 
             public void RepaintEntities () {
 
+/*
                 var entities = infoManager.knownEntities.Where (e => e.parentInfoCategory == infoManager.selectedInfoCategory).ToList ();
 
                 for (int i = 0; i < infoEntitiesParent.childCount; i++) {
@@ -130,14 +131,14 @@ namespace HackedDesign.Story {
 
                 }
 
-                RepaintDescription ();
+                RepaintDescription ();*/
 
             }
 
             public void RepaintDescription () {
                 //Transform cbt = infoDescriptionParent.GetChild (i);
                 //Button b = cbt.GetComponent<Button> ();
-
+/*
                 Text t = infoDescriptionParent.GetComponentInChildren<Text> ();
 
                 var entity = infoManager.entities.FirstOrDefault (e => e.parentInfoCategory == infoManager.selectedInfoCategory && e.name == infoManager.selectedInfoEntity);
@@ -149,7 +150,7 @@ namespace HackedDesign.Story {
                 {
                     t.text = "";
 
-                }
+                }*/
 
             }
         }

@@ -13,6 +13,9 @@ namespace HackedDesign {
             public bool mobileSelect;
             public bool mobileInteract;
             public bool mobileOverload;
+            public bool mobileHack;
+            public bool mobileKeycard;
+            public bool mobileBug;
             private Input.IInputController inputController;
 
             public void Initialize(Input.IInputController inputController)
@@ -88,13 +91,31 @@ namespace HackedDesign {
                 mobileInteract = false;
             }
 
+            public void BugMobileButtonDown() {
+                mobileBug = true;
+            }            
+
+            public void BugMobileButtonUp() {
+                mobileBug = false;
+            } 
+
+            public void HackMobileButtonDown() {
+                mobileHack = true;
+            }
+
+            public void HackMobileButtonUp() {
+                mobileHack = false;
+            } 
+
             public void OverloadMobileButtonDown() {
                 mobileOverload = true;
             }            
 
             public void OverloadMobileButtonUp() {
                 mobileOverload = false;
-            }            
+            }
+
+  
         }
     }
 }

@@ -15,6 +15,7 @@ namespace HackedDesign.Character
         public int battery = 50;
         public int maxBattery = 50;
         public int overload = 10;
+        public int hack = 5;
         public int maxKeycards = 5;
         public int keycards = 0;
         public int credits = 0;
@@ -28,7 +29,17 @@ namespace HackedDesign.Character
         public bool CanKeycard()
         {
             return keycards > 0;
-        }     
+        }
+
+        public bool CanHack()
+        {
+            return battery - hack >= 0;
+        }
+
+        public bool CanBug()
+        {
+            return bugs > 0;
+        }
 
         public bool ConsumeOverload()
         {
@@ -49,5 +60,24 @@ namespace HackedDesign.Character
             }
             return false;
         }
+
+        public bool ConsumeHack()
+        {
+            if(CanHack())
+            {
+                battery -=hack;
+                return true;
+            }
+            return false;
+        }
+        public bool ConsumeBug()
+        {
+            if(CanBug())
+            {
+                --bugs;
+                return true;
+            }
+            return false;
+        }        
     }
 }

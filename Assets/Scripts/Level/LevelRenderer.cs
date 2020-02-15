@@ -28,13 +28,15 @@ namespace HackedDesign
             private PolyNav.PolyNav2D polyNav2D;
 
             private Entity.EntityManager entityManager;
+            private CharacterSpriteManager characterSpriteManager;
 
-            public void Initialize(Entity.EntityManager entityManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
+            public void Initialize(Entity.EntityManager entityManager, CharacterSpriteManager characterSpriteManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
             {
                 this.levelParent = levelParent;
                 this.npcParent = npcParent;
                 this.polyNav2D = polyNav2D;
                 this.entityManager = entityManager;
+                this.characterSpriteManager = characterSpriteManager;
             }
 
             public void Render(Level level)
@@ -246,7 +248,7 @@ namespace HackedDesign
                     Debug.Log("Skipping doors");
                     return;
                 }
-
+                //FIXME: swap i & j to be consistent!
                 for (int i = 0; i < level.map.Count(); i++)
                 {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
@@ -278,6 +280,13 @@ namespace HackedDesign
                                 Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
                                 GameObject.Instantiate(exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
                             }
+                            if (room.bottom == ProxyRoom.EXIT)
+                            {
+                                Debug.Log("bottom e");
+                                Vector3 pos = new Vector3(j * 4 + 2, (i+1) * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                                GameObject.Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
+                            }
+
 
                             if (room.top == ProxyRoom.ENTRY)
                             {
@@ -322,9 +331,12 @@ namespace HackedDesign
                     {
                         var go = GameObject.Instantiate(enemyGameObj, level.ConvertLevelPosToWorld(level.enemySpawnLocationList[i].levelLocation) + level.enemySpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
                         Entity.BaseEnemy npc = go.GetComponent<Entity.BaseEnemy>();
-                        if (npc != null)
+                        CharacterSprite cs = go.GetComponent<CharacterSprite>();
+                        if (npc != null && cs != null)
                         {
+                            cs.Initialize(characterSpriteManager);
                             npc.Initialize(polyNav2D);
+                            
                             //CoreGame.instance.state.entityList.Add(npc);
                             results.Add(npc);
                         }
@@ -387,14 +399,15 @@ namespace HackedDesign
                 {
                     Debug.Log(this.name + ": attempting to spawn " + level.npcSpawnLocationList[i].name);
                     Entity.BaseEntity npc = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
-
-                    //GameObject npcGameObj = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
-                    Debug.Log(this.name + ":  to spawn " + npc.name);
+                    
+                    
                     if (npc != null)
                     {
+                        CharacterSprite cs = npc.gameObject.GetComponent<CharacterSprite>(); // FIXME: Check null
                         Debug.Log(this.name + ": moving " + npc.name);
                         npc.transform.position = level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset;
                         npc.gameObject.SetActive(true);
+                        cs.Initialize(characterSpriteManager);
                         npc.Initialize();
                         results.Add(npc);
                     }

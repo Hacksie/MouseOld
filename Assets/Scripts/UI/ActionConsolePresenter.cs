@@ -43,6 +43,7 @@ namespace HackedDesign
 
             panel.sizeDelta = new Vector2(panel.sizeDelta.x, 0);
 
+            //FIXME: fix the GC alloc
             var console = this.actionManager.console.Reverse().Take(line.Count()).Reverse().ToArray();
             for (int i = 0; i < line.Count(); i++)
             {

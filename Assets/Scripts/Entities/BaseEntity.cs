@@ -9,15 +9,21 @@ namespace HackedDesign
     {
         public class BaseEntity : MonoBehaviour
         {
-
-            public Vector2Int direction = Vector2Int.zero;
-            public LayerMask layerMask;            
-
-            public bool facePlayer = true;
-
+            
             protected Animator anim; //The parent animator.
             protected List<SpriteRenderer> sprites = new List<SpriteRenderer>();
             protected Transform player;
+
+            [Header("Settings")]
+            public LayerMask layerMask;            
+
+            [Header("State")]
+            public Vector2Int direction = Vector2Int.zero;
+            
+
+            public bool facePlayer = true;
+
+
 
 
 
@@ -60,9 +66,14 @@ namespace HackedDesign
 
                 if (anim != null)
                 {
-                    anim.SetFloat("directionX", this.direction.x);
-                    anim.SetFloat("directionY", this.direction.y);
-                    anim.SetBool("isMoving", false);
+			        anim.SetFloat ("moveX", this.direction.x);
+				    anim.SetFloat ("moveY", this.direction.y);
+				//anim.SetFloat ("directionX", movementVector.x);
+				//anim.SetFloat ("directionY", movementVector.y);
+				    anim.SetBool ("isMoving", true);                    
+                    // anim.SetFloat("directionX", this.direction.x);
+                    // anim.SetFloat("directionY", this.direction.y);
+                    // anim.SetBool("isMoving", false);
                 }
             }
 

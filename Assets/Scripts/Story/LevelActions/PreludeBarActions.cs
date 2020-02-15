@@ -13,10 +13,10 @@ namespace HackedDesign.Story
                     PreludeExit();
                     return true;
                 case "PreludeBarJoe":
-                    InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Bouncer Joe"));
+                    InfoManager.instance.AddToKnownCharacters("BouncerJoe");
                     return true;              
                 case "PreludeBarKat":
-                    InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kat"));
+                    InfoManager.instance.AddToKnownCharacters("Kat");
                     return true;
             }
             return false;

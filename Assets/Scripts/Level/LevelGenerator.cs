@@ -10,7 +10,7 @@ namespace HackedDesign
     {
         public class LevelGenerator : MonoBehaviour
         {
-            const string DEFAULT_ROOM_START = "wnww_entry";
+            const string DEFAULT_ROOM_START = "wnew_entry";
             const string TOPLEFT = "tl";
             const string TOPRIGHT = "tr";
             const string BOTTOMLEFT = "bl";
@@ -545,14 +545,14 @@ namespace HackedDesign
 
             void GenerateRoomEntities(ProxyRoom proxyRoom, string type, LevelGenTemplate template, bool allowTraps)
             {
-                string roomString = proxyRoom.AsPrintableString();
+                //string roomString = proxyRoom.AsPrintableString();
                 List<GameObject> goBLList;
                 List<GameObject> goBRList;
                 List<GameObject> goTLList;
                 List<GameObject> goTRList;
 
                 // TL
-                goTLList = FindRoomObject(TOPLEFT, roomString.Substring(0, 1), roomString.Substring(1, 1), type, template).ToList();
+                goTLList = FindRoomObject(TOPLEFT, proxyRoom.left, proxyRoom.top, type, template).ToList();
                 goTLList.Randomize();
 
                 if (goTLList.FirstOrDefault() != null)
@@ -567,7 +567,7 @@ namespace HackedDesign
                 }
 
                 // TR
-                goTRList = FindRoomObject(TOPRIGHT, roomString.Substring(3, 1), roomString.Substring(1, 1), type, template).ToList();
+                goTRList = FindRoomObject(TOPRIGHT, proxyRoom.right, proxyRoom.top, type, template).ToList();
                 goTRList.Randomize();
 
                 if (goTRList.FirstOrDefault() != null)
@@ -582,7 +582,7 @@ namespace HackedDesign
                 }
 
                 // BL
-                goBLList = FindRoomObject(BOTTOMLEFT, roomString.Substring(0, 1), roomString.Substring(2, 1), type, template).ToList();
+                goBLList = FindRoomObject(BOTTOMLEFT,proxyRoom.left, proxyRoom.bottom, type, template).ToList();
                 goBLList.Randomize();
 
                 if (goBLList.FirstOrDefault() != null)
@@ -597,7 +597,7 @@ namespace HackedDesign
                 }
 
                 // BR
-                goBRList = FindRoomObject(BOTTOMRIGHT, roomString.Substring(3, 1), roomString.Substring(2, 1), type, template).ToList();
+                goBRList = FindRoomObject(BOTTOMRIGHT,proxyRoom.right, proxyRoom.bottom, type, template).ToList();
                 goBRList.Randomize();
 
                 if (goBRList.FirstOrDefault() != null)

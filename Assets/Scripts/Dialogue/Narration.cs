@@ -4,13 +4,15 @@ using UnityEngine.Events;
 namespace HackedDesign {
 
 	namespace Dialogue {
-		[CreateAssetMenu (fileName = "Narration", menuName = "Mouse/Dialogue/Narration")]
-		public class Narration : ScriptableObject {
-			public Story.Character speaker;
+
+		[System.Serializable]
+		public class Narration {
+			public string id;
+			public string speaker;
 			[TextArea]
 			public string text;
 			public Sprite button;
-			public string narrationAction;
+			public string action;
 		}
 	}
 

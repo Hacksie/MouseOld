@@ -1,0 +1,77 @@
+{
+    "playerSpawn": {
+        "type": "player",
+        "name": "mouse",
+        "levelPosition": {
+            "x": 0,
+            "y": 0
+        },
+        "worldOffset": {
+            "x": 1,
+            "y": 1            
+        }
+    },   
+    "npcSpawnLocationList": [
+        {
+            "type": "npc",
+            "name": "Cat",
+            "levelLocation": {
+                "x": 0,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": 1.25,
+                "y": 0
+            }
+        },
+        {
+            "type": "npc",
+            "name": "Drone",
+            "levelLocation": {
+                "x": 0,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": -1,
+                "y": 1
+            }
+        }        
+    ],     
+    "map": [
+        {
+            "rooms": [
+                {
+                    "left": "w",
+                    "top": "w",
+                    "bottom": "e",
+                    "right": "w",
+                    "isEntry": true,
+                    "bottomLeft": [
+                        {
+                            "type": "entry",
+                            "name": "oliviasroom_1_bl_aa"
+                        }
+                    ],
+                    "bottomRight": [
+                        {
+                            "type": "entry",
+                            "name": "oliviasroom_1_br_aa"
+                        }
+                    ],
+                    "topLeft": [
+                        {
+                            "type": "entry",
+                            "name": "oliviasroom_1_tl_aa"
+                        }
+                    ],
+                    "topRight": [
+                        {
+                            "type": "entry",
+                            "name": "oliviasroom_1_tr_aa"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

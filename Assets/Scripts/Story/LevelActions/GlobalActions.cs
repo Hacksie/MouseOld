@@ -9,18 +9,15 @@ namespace HackedDesign.Story
         {
             switch (actionName)
             {
-                case "OverloadEntry":
-                    Debug.Log("GlobalActions: invoke OverloadEntry");
+                case "HackEntry":
+                    Debug.Log("GlobalActions: invoke HackEntry");
                     // FIXME: Check if any other condition exists first!
-                    ActionManager.instance.AddActionMessage("Entry overloaded!");
-                    ActionManager.instance.AddActionMessage("60 second timer initiated");
+                    ActionManager.instance.AddActionMessage("Entry hacked");
+                    ActionManager.instance.AddActionMessage("Security systems activated!");
+                    ActionManager.instance.AddActionMessage("60 second timer initiated!");
                     CoreGame.Instance.State.currentLevel.startTime = Time.time;
                     CoreGame.Instance.State.currentLevel.timer.Start();
                     CoreGame.Instance.State.currentLight = GlobalLightTypes.Warn;
-                    //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Arisana"));
-                    //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Manager Lyon"));
-                    //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Cari"));
-                    //Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
                     return true;
                 case "BatteryFill":
                     Debug.Log("GlobalActions: invoke BatteryFill");

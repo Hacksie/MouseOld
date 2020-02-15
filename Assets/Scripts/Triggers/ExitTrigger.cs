@@ -12,21 +12,21 @@ namespace HackedDesign {
             public Animator animator;
             //bool open = false;
 
-            public override void Initialize (Input.IInputController inputController) {
-                base.Initialize(inputController);
+            public override void Initialize () {
+                base.Initialize();
                 Debug.Log ("Initialize door trigger");
                 base.Activate();
                 
                 animator = GetComponent<Animator>();
                 requireInteraction = true;
-                allowRepeatTriggers = true;
+                
 
                 triggerAction = CoreGame.Instance.State.currentLevel.template.exitAction;
 
             }
 
             // Update is called once per frame
-            public override void UpdateTrigger () {
+            public override void UpdateTrigger (Input.IInputController inputController) {
                 //Debug.Log("update trigger " + open);
                 // if(animator != null)
                 //     animator.SetBool("open", open);

@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace HackedDesign {
 	namespace Story {
-		[CreateAssetMenu (fileName = "Story", menuName = "Mouse/Story/Corp")]
+		[System.Serializable]
 		public class Corp : InfoEntity {
-			public Color color;
+			public string color;
 			public Sprite logo;
 		}
 	}

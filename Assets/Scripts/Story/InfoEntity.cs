@@ -4,10 +4,12 @@ using UnityEngine;
 
 namespace HackedDesign {
 	namespace Story {
-		[CreateAssetMenu (fileName = "InfoEntity", menuName = "Mouse/Story/Entity")]
-		public class InfoEntity : ScriptableObject {
-			public bool known;
-			//public bool unread;
+		[System.Serializable]
+		public class InfoEntity {
+			public string id;
+			public string name;
+			public bool known = false;
+			public bool read = false;
 			public string parentInfoCategory;
 			public string description;
 		}
