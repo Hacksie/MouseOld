@@ -29,6 +29,8 @@ namespace HackedDesign
             {
                 if (animate && animator != null)
                     animator.SetBool("open", open || overloaded);
+
+                base.UpdateTrigger(inputController);
             }
 
             public override void Invoke(UnityEngine.GameObject source)

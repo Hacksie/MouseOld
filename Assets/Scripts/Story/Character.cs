@@ -25,6 +25,7 @@ namespace HackedDesign
             public string pantscolor;
             public string shoescolor;
             public string haircolor;
+            public int spriteOffset;
 
             public void SetRandomAttributes()
             {

@@ -115,6 +115,8 @@ namespace HackedDesign
         private Level.MinimapPresenter minimapPanel = null;
         [SerializeField]
         private StatsPresenter statsPanel = null;
+        [SerializeField]
+        private TitlecardPresenter titlecardPanel = null;
 
 
         [SerializeField]
@@ -186,6 +188,7 @@ namespace HackedDesign
             statsPanel.Initialize();
             //statsPanel.Initialize();
             actionPanel.Initialize();
+            titlecardPanel.Initialize(actionManager);
             
             levelRenderer.Initialize(entityManager, characterSpriteManager, levelParent, npcParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
@@ -349,7 +352,9 @@ namespace HackedDesign
             mobileInputUI.Repaint();
             minimapPanel.Repaint();
             cursorPresenter.Repaint();
+            titlecardPanel.Repaint();
             statsPanel.Repaint();
+            
         }
 
         // FIXME: There's probably a better way to do this these days
@@ -386,6 +391,13 @@ namespace HackedDesign
         {
             Debug.Log(this.name + ": GameOver");
             State.state = GameStateEnum.GAMEOVER;
+        }
+
+        public void SetTitlecard()
+        {
+            Debug.Log(this.name + ": state set to TITLECARD");
+            Time.timeScale = 0;
+            State.state = GameStateEnum.TITLECARD;            
         }
 
         public void SetPlaying()

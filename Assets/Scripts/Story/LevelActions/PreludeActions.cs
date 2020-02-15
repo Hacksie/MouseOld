@@ -9,9 +9,11 @@ namespace HackedDesign.Story
         {
             switch (actionName)
             {
+                case "Prelude":
+                    CoreGame.Instance.SetTitlecard();
+                    return true;
                 case "Prelude1":
                     Debug.Log("PreludeActions: invoke Prelude1");
-                    //FIXME: This isn't necessary anymore! Just pass in a string and save the LINQ query
                     InfoManager.instance.AddToKnownCorps("Arisana");
                     InfoManager.instance.AddToKnownCharacters("ManagerLyon");
                     InfoManager.instance.AddToKnownCharacters("Cat");

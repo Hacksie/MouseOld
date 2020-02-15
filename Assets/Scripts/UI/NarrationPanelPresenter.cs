@@ -16,7 +16,10 @@ namespace HackedDesign
             public Text text;
             public Button actionButton;
             //public Image actionButtonImage;
-            public Text speakerTitle;
+            public Text handleText;
+            public Text shortNameText;
+            public Text categoryText;
+            public Text corpText;
             public Image avatarBodySprite;
             public Image avatarHairSprite;
             public Image avatarEyesSprite;
@@ -24,12 +27,10 @@ namespace HackedDesign
             public Image avatarShirtSprite;
             public Image avatarShoesSprite;
 
-            //public Image avatar;
             private Story.InfoManager infoManager;
             private INarrationManager narrationManager;
             private CharacterSpriteManager characterSpriteManager;
 
-            //public List<Character.Corp> corps = new List<Character.Corp>();
 
             public void Initialize(INarrationManager narrationManager, Story.InfoManager info, CharacterSpriteManager characterSpriteManager)
             {
@@ -39,7 +40,6 @@ namespace HackedDesign
 
                 if (text == null) Debug.LogError("Text is null");
                 if (actionButton == null) Debug.LogError("Button is null");
-                //if (actionButtonImage == null) Debug.LogError ("Button sprite is null");
             }
 
             public void Repaint()
@@ -78,7 +78,10 @@ namespace HackedDesign
 
                 var speaker = infoManager.GetCharacter(currentNarration.speaker);
                 var corp = infoManager.GetCorp(speaker.corp);
-                speakerTitle.text = "<color=\"#B0B0B0\">" + speaker.name + " </color>\"" + speaker.handle + "\"<color=\"#B0B0B0\">, " + speaker.category + " for </color><color=\"" + corp.color + "\">" + corp.name + "</color>";
+                handleText.text = speaker.handle;
+                shortNameText.text = speaker.name;
+                categoryText.text = speaker.category;
+                corpText.text = "<color=\"" + corp.color + "\">" + corp.name + "</color>";
                 var bodySprites = characterSpriteManager.GetBody(speaker.id);
                 var hairSprites = characterSpriteManager.GetHair(speaker.id);
                 var eyesSprites = characterSpriteManager.GetEyes(speaker.id);

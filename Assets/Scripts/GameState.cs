@@ -38,6 +38,7 @@ namespace HackedDesign
     }
 
 	public class StoryState {
+        public int act = 0;
 		public bool prelude_cat_talk = false;
 		public bool prelude_laptop = false;
 	}
@@ -45,6 +46,7 @@ namespace HackedDesign
     public enum GameStateEnum
     {
         MAINMENU,
+        TITLECARD,
         CUTSCENE,
         PLAYING,
         LOADING,
