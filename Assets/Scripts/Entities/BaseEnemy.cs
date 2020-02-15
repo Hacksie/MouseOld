@@ -24,7 +24,7 @@ namespace HackedDesign
             public Vector2Int currentDirection;
             public List<Vector2Int> currentDirections;
 
-            
+
 
 
 
@@ -60,22 +60,33 @@ namespace HackedDesign
                 }
             }
 
+            public void Animate()
+            {
+                if (anim != null)
+                {
+                    if (this.polyNavAgent != null && this.polyNavAgent.currentSpeed > 0.01f)
+                    {
+                        anim.SetFloat("moveX", this.polyNavAgent.movingDirection.x);
+                        anim.SetFloat("moveY", this.polyNavAgent.movingDirection.y);
+                        anim.SetBool("isMoving", true);
+                    }
+                    else 
+                    {
+                        anim.SetFloat("moveX", 0);
+                        anim.SetFloat("moveY", 0);
+                        anim.SetBool("isMoving", false);                        
+                    }
+                }
+            }
+
             public override void FaceDirection(Vector2 direction)
             {
 
                 this.direction = NormaliseDirectionVector(direction);
                 UpdateAlertLight(this.direction);
 
-                if (anim != null)
-                {
-                    anim.SetFloat("moveX", this.direction.x);
-                    anim.SetFloat("moveY", this.direction.y);
 
-                    if (this.polyNavAgent != null && this.polyNavAgent.currentSpeed > 0.01f)
-                    {
-                        anim.SetBool("isMoving", true);
-                    }
-                }
+
             }
 
             public void UpdateAlertLight(Vector2Int direction)
@@ -126,6 +137,8 @@ namespace HackedDesign
                         UpdateFighting();
                         break;
                 }
+
+                Animate();
             }
 
             public void UpdateStanding()
@@ -140,6 +153,9 @@ namespace HackedDesign
                         state = EnemyState.HUNTING;
                     }
                 }
+
+                //currentDirection = Vector2Int.down;
+
 
             }
 
@@ -235,10 +251,7 @@ namespace HackedDesign
 
                     FaceDirection(pos - transform.position);
                 }
-                else
-                {
 
-                }
 
             }
 

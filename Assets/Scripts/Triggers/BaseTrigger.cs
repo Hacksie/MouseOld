@@ -121,7 +121,7 @@ namespace HackedDesign
 
             public virtual void Invoke(UnityEngine.GameObject source)
             {
-                Debug.Log(this.name + ": " + source.name + " invoked trigger action: " + triggerAction);
+                //Debug.Log(this.name + ": " + source.name + " invoked trigger action: " + triggerAction);
                 if (!string.IsNullOrWhiteSpace(triggerAction))
                 {
                     Story.ActionManager.instance.Invoke(triggerAction);
@@ -130,7 +130,7 @@ namespace HackedDesign
 
             public virtual void Overload(UnityEngine.GameObject source)
             {
-                Debug.Log(this.name + ": " + source.name + " invoked overload action: " + overloadAction);
+                //Debug.Log(this.name + ": " + source.name + " invoked overload action: " + overloadAction);
                 overloaded = true;
                 CoreGame.Instance.State.player.ConsumeOverload();
                 Story.ActionManager.instance.Invoke(overloadAction);
@@ -138,7 +138,7 @@ namespace HackedDesign
 
             public virtual void Hack(UnityEngine.GameObject source)
             {
-                Debug.Log(this.name + ": " + source.name + " invoked hack action: " + hackAction);
+                //Debug.Log(this.name + ": " + source.name + " invoked hack action: " + hackAction);
                 hacked = true;
                 CoreGame.Instance.State.player.ConsumeHack();
                 Story.ActionManager.instance.Invoke(hackAction);
@@ -146,7 +146,7 @@ namespace HackedDesign
 
             public virtual void Bug(UnityEngine.GameObject source)
             {
-                Debug.Log(this.name + ": " + source.name + " invoked bug action: " + bugAction);
+                //Debug.Log(this.name + ": " + source.name + " invoked bug action: " + bugAction);
                 bugged = true;
                 hacked = true;
                 CoreGame.Instance.State.player.ConsumeBug();
@@ -162,7 +162,7 @@ namespace HackedDesign
 
             public virtual void Leave(UnityEngine.GameObject source)
             {
-                Debug.Log(this.name + ": " + source.name + " invoked action: " + leaveAction);
+                //Debug.Log(this.name + ": " + source.name + " invoked action: " + leaveAction);
                 if (!string.IsNullOrWhiteSpace(leaveAction))
                 {
                     Story.ActionManager.instance.Invoke(leaveAction);
@@ -255,10 +255,14 @@ namespace HackedDesign
                     return;
                 }
 
-                if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)) && colliders.Contains(other.gameObject))
+                if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)))
                 {
-                    Debug.Log(this.name + ": removed from collider list " + other.gameObject);
-                    colliders.Remove(other.gameObject);
+                    Leave(other.gameObject);
+                    //Debug.Log(this.name + ": removed from collider list " + other.gameObject);
+                    if(colliders.Contains(other.gameObject))
+                        colliders.Remove(other.gameObject);
+
+                    
                 }
 
                 /*

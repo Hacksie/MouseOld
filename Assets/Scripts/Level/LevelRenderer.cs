@@ -282,7 +282,6 @@ namespace HackedDesign
                             }
                             if (room.bottom == ProxyRoom.EXIT)
                             {
-                                Debug.Log("bottom e");
                                 Vector3 pos = new Vector3(j * 4 + 2, (i+1) * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
                                 GameObject.Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
                             }

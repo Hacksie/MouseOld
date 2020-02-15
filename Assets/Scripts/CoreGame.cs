@@ -309,8 +309,8 @@ namespace HackedDesign
                 var charSprite = npc.gameObject.GetComponent<CharacterSprite>();
                 if (charSprite != null)
                 {
+                    Debug.Log(this.name + ": character sprite added: " + charSprite.gameObject.name);
                     characterSprites.Add(charSprite);
-                    //charSprite.UpdateSprites();
                 }
             }
 
