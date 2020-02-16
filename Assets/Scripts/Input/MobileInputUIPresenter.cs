@@ -63,8 +63,8 @@ namespace HackedDesign
                 //      return rect;
                 //  }
 
-            
-                /*
+                //FIXME: come back to this later, handle scaling
+                
                 if (UnityEngine.Input.GetMouseButton(0) && RectTransformToScreenSpace(joystickRect).Contains(UnityEngine.Input.mousePosition))
                 {
 
@@ -76,7 +76,12 @@ namespace HackedDesign
                     joystickKnob.position = joystickRect.position;
                 }
 
-                mobileAxis = (joystickKnob.position - joystickRect.position).normalized;*/
+                var dir = (joystickKnob.position - joystickRect.position);
+                
+                if(dir.sqrMagnitude < 0.01f)
+                    mobileAxis = Vector2.zero;
+                else
+                    mobileAxis = dir.normalized;               
             }
 
             private Rect RectTransformToScreenSpace(RectTransform transform)

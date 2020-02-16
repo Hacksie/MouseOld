@@ -26,9 +26,9 @@ namespace HackedDesign.Entity
         [SerializeField]
         UnityEngine.UI.Text text = null;
 
-        new void Start()
+        public override void Initialize()
         {
-            base.Start();
+            base.Initialize();
             if (string.IsNullOrWhiteSpace(character))
             {
                 Debug.LogError(this.name + ": character is null");
