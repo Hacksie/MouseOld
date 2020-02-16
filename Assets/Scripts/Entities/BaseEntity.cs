@@ -45,19 +45,9 @@ namespace HackedDesign
 
             }
 
-            public void Initialize()
+            public virtual void Initialize()
             {
                 this.player = CoreGame.Instance.GetPlayer().transform;
-            }
-
-            public void Activate()
-            {
-                //gameObject.SetActive(true);
-            }
-
-            public void Deactivate()
-            {
-                //gameObject.SetActive(false);
             }
 
             public virtual void FaceDirection(Vector2 direction)
@@ -80,7 +70,6 @@ namespace HackedDesign
             protected Vector2Int NormaliseDirectionVector(Vector2 direction)
             {
                 return Vector2Int.RoundToInt(direction.normalized);
-                //return new Vector2Int(Mathf.RoundToInt(direction.normalized.x), Mathf.RoundToInt(direction.normalized.y));
             }
 
 
