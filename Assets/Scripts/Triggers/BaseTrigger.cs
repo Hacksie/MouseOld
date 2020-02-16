@@ -245,7 +245,7 @@ namespace HackedDesign
                     {
                         colliders.Add(other.gameObject);
                     }
-                }        
+                }
             }
 
             protected virtual void OnTriggerExit2D(Collider2D other)
@@ -259,10 +259,18 @@ namespace HackedDesign
                 {
                     Leave(other.gameObject);
                     //Debug.Log(this.name + ": removed from collider list " + other.gameObject);
-                    if(colliders.Contains(other.gameObject))
+                    if (colliders.Contains(other.gameObject))
                         colliders.Remove(other.gameObject);
 
-                    
+                    if (other.CompareTag(TagManager.PLAYER))
+                    {
+                        if (sprite != null && sprite.gameObject.activeInHierarchy)
+                        {
+                            sprite.gameObject.SetActive(false);
+                        }
+                    }
+
+
                 }
 
                 /*

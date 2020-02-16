@@ -17,7 +17,7 @@ namespace HackedDesign {
                     Cursor.visible = true;
                     break;
                 default:
-                    Cursor.visible = false;
+                    //Cursor.visible = false;
                     break;
             }
         }

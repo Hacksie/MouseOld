@@ -27,6 +27,8 @@ namespace HackedDesign {
 
 			private Vector2 GetMobileAxis () {
 				Vector2 mobileAxis = Vector2.zero;
+				mobileAxis = mobileInput.GetAxis();
+				/*/
 				if (mobileInput.mobileLeft) {
 					mobileAxis.x -= 1;
 				}
@@ -41,7 +43,7 @@ namespace HackedDesign {
 
 				if (mobileInput.mobileDown) {
 					mobileAxis.y -= 1;
-				}
+				}*/
 
 				return mobileAxis;
 			}
@@ -143,7 +145,7 @@ namespace HackedDesign {
 					return true;
 				}
 				return UnityEngine.Input.GetButtonUp("Bug");
-			}			
+			}
 		}
 	}
 }

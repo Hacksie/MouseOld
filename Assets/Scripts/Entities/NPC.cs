@@ -18,7 +18,7 @@ namespace HackedDesign.Entity
         //Collider2D actionTriggerCollider = null;
 
         [SerializeField]
-        Story.Character character = null;
+        string character = "";
 
         //[SerializeField]
         //bool known = false;
@@ -29,14 +29,14 @@ namespace HackedDesign.Entity
         new void Start()
         {
             base.Start();
-            // if (character == null)
-            // {
-            //     Debug.LogError(this.name + ": character is null");
-            // }
-            // if (text == null)
-            // {
-            //     Debug.LogError(this.name + ": text is null");
-            // }
+            if (string.IsNullOrWhiteSpace(character))
+            {
+                Debug.LogError(this.name + ": character is null");
+            }
+            if (text == null)
+            {
+                Debug.LogError(this.name + ": text is null");
+            }
 
             SetHandleText();
         }
@@ -55,15 +55,10 @@ namespace HackedDesign.Entity
             {
                 return; 
             }
+            var c = InfoManager.instance.GetCharacter(character);
+            text.text = c.handle;
             
-            // if (InfoManager.instance.knownEntities.Find(e => e.name == gameObject.name))
-            // {
-            //     text.text = character.handle;
-            // }
-            // else
-            // {
-            //     text.text = UNKNOWN_STRING;
-            // }
+            
         }
     }
 }

@@ -174,25 +174,7 @@ MonoBehaviour:
     m_Bits: 0
   direction: {x: 0, y: 0}
   facePlayer: 1
-  character:
-    id: 
-    name: 
-    known: 0
-    read: 0
-    parentInfoCategory: 
-    description: 
-    handle: 
-    corp: 
-    serial: 
-    avatar: {fileID: 0}
-    category: 
-    body: 0
-    skin: 0
-    eyes: 0
-    shirt: 0
-    pants: 0
-    shoes: 0
-    hair: 0
+  character: Cat
   text: {fileID: 5874216084831355279}
 --- !u!114 &1321504269350858128
 MonoBehaviour:
@@ -207,7 +189,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSpriteManager: {fileID: 0}
-  spriteSheetOffset: 128
   bodySpriteRenderer: {fileID: 212236620607918638}
   eyesSpriteRenderer: {fileID: 0}
   hairSpriteRenderer: {fileID: 0}
@@ -215,17 +196,6 @@ MonoBehaviour:
   pantsSpriteRenderer: {fileID: 0}
   shoesSpriteRenderer: {fileID: 0}
   character: Cat
-  body: 2
-  skinIndex: 0
-  eyesIndex: 0
-  shirtIndex: 0
-  pantsIndex: 0
-  shoesIndex: 0
-  hairIndex: 0
-  shirtColorIndex: 0
-  pantsColorIndex: 0
-  shoesColorIndex: 0
-  hairColorIndex: 0
 --- !u!1 &801259854833353615
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +230,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.125}
   m_SizeDelta: {x: 50, y: 12.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5837150202874835699
@@ -340,7 +310,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.625}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1, y: 0.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3608340301121118614
@@ -402,7 +372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3082649133088502048
 Transform:
   m_ObjectHideFlags: 0
@@ -525,6 +495,7 @@ MonoBehaviour:
   overloaded: 0
   hacked: 0
   bugged: 0
+  colliders: []
 --- !u!58 &2306607941986645223
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -574,7 +545,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.25}
+  m_AnchoredPosition: {x: 0, y: 0.625}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &4362904087944334869

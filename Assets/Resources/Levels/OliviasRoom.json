@@ -7,10 +7,10 @@
             "y": 0
         },
         "worldOffset": {
-            "x": 1,
-            "y": 1            
+            "x": 0.5,
+            "y": 0.5
         }
-    },   
+    },
     "npcSpawnLocationList": [
         {
             "type": "npc",
@@ -23,20 +23,8 @@
                 "x": 1.25,
                 "y": 0
             }
-        },
-        {
-            "type": "npc",
-            "name": "Drone",
-            "levelLocation": {
-                "x": 0,
-                "y": 0
-            },
-            "worldOffset": {
-                "x": -1,
-                "y": 1
-            }
-        }        
-    ],     
+        }
+    ],
     "map": [
         {
             "rooms": [
