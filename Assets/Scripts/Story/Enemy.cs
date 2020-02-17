@@ -5,9 +5,10 @@ namespace HackedDesign
     namespace Story
     {
         [System.Serializable]
-        public class Character : InfoEntity
+        public class Enemy : InfoEntity
         {
             //public string fullName;
+            public string uniqueId;
             public string handle;
             public string corp;
             public string serial;
@@ -28,8 +29,9 @@ namespace HackedDesign
 
             public void SetRandomAttributes()
             {
-                
+                Debug.Log("AA" + body);
                 body = body == CharacterSpriteManager.BodyTypes.RandomHuman ? (CharacterSpriteManager.BodyTypes)Random.Range(0, 2) : body;
+                Debug.Log("BB" + body);
                 //Color c = ColorUtility.
 
                 //FIXME: Pull these from config

@@ -128,7 +128,15 @@ MonoBehaviour:
   shirtSpriteRenderer: {fileID: 0}
   pantsSpriteRenderer: {fileID: 0}
   shoesSpriteRenderer: {fileID: 0}
+  isEnemy: 1
   character: Drone
+  uniqueId: 
+  bodySpritesheet: []
+  eyesSpritesheet: []
+  shirtSpritesheet: []
+  pantsSpritesheet: []
+  shoesSpritesheet: []
+  hairSpritesheet: []
 --- !u!114 &4325470943052008101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +156,7 @@ MonoBehaviour:
   facePlayer: 1
   polyNavAgent: {fileID: 5357332260020041057}
   alertLight: {fileID: 6731770016961423799}
+  enemy: 
   state: 1
   patrolWait: 6
   patrolSpeed: 0.75

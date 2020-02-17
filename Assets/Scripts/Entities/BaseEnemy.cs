@@ -13,6 +13,7 @@ namespace HackedDesign
             public Transform alertLight;
 
             [Header("Settings")]
+            public string enemy = "";
             public EnemyState state = EnemyState.STANDING;
             public float patrolWait = 6.0f;
             public float patrolSpeed = 0.75f;
@@ -70,11 +71,11 @@ namespace HackedDesign
                         anim.SetFloat("moveY", this.polyNavAgent.movingDirection.y);
                         anim.SetBool("isMoving", true);
                     }
-                    else 
+                    else
                     {
                         anim.SetFloat("moveX", 0);
                         anim.SetFloat("moveY", 0);
-                        anim.SetBool("isMoving", false);                        
+                        anim.SetBool("isMoving", false);
                     }
                 }
             }

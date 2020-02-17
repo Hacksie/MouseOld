@@ -15,15 +15,19 @@ namespace HackedDesign
             public List<InfoCategory> categories = new List<InfoCategory>();
             public List<Character> characters = new List<Character>();
             public List<Corp> corps = new List<Corp>();
+            public List<Enemy> enemies = new List<Enemy>();
 
             public string categoryResource = @"Info/Categories/";
             public string corpsResource = @"Info/Corps/";
             public string charactersResource = @"Info/Characters/";
+            public string enemiesResource = @"Info/Enemies/";
 
             [Header("State")]
             //public List<InfoEntity> knownEntities = new List<InfoEntity>();
             public List<Character> knownCharacters = new List<Character>();
             public List<Corp> knownCorps = new List<Corp>();
+            public List<Enemy> knownEnemies = new List<Enemy>();
+            public List<Enemy> uniqueEnemies = new List<Enemy>();
 
 
             public string selectedInfoCategory;
@@ -39,6 +43,7 @@ namespace HackedDesign
                 LoadCategories();
                 LoadCorps();
                 LoadCharacters();
+                LoadEnemies();
 
             }
 
@@ -75,11 +80,26 @@ namespace HackedDesign
                 {
                     var character = JsonUtility.FromJson<Character>(file.text);
 
-                    character.SetRandomAttributes();
+                    //character.SetRandomAttributes();
                     characters.Add(character);
                     //entities.Add(character);
                     Debug.Log(this.name + " character added: " + character.id);
                 }
+            }
+
+            public void LoadEnemies()
+            {
+                var jsonTextFiles = Resources.LoadAll<TextAsset>(enemiesResource);
+
+                foreach (var file in jsonTextFiles)
+                {
+                    var character = JsonUtility.FromJson<Enemy>(file.text);
+
+                    //character.SetRandomAttributes();
+                    enemies.Add(character);
+                    //entities.Add(character);
+                    Debug.Log(this.name + " enemy added: " + character.id);
+                }                
             }
 
             public List<InfoCategory> GetCategories()
@@ -92,15 +112,77 @@ namespace HackedDesign
                 return characters.Find(e => e.id == id);
             }
 
+            public Enemy GetEnemy(string id)
+            {
+                return enemies.Find(e => e.id == id);
+            }
+
+            public Enemy GetUniqueEnemy(string uniqueId)
+            {
+                return uniqueEnemies.Find(e => e.uniqueId == uniqueId);
+            }
+
             public Corp GetCorp(string id)
             {
                 return corps.Find(e => e.id == id);
             }            
 
-            // public InfoEntity GetEntity(string id)
-            // {
-            //     return entities.Find(e => e.id == id);
-            // }
+            public void AddToKnownEnemies(string id)
+            {
+                if (!knownEnemies.Exists(e => e.id == id))
+                {
+                    var character = enemies.Find(e => e.id == id);
+                    if (character != null)
+                    {
+                        Debug.Log(this.name + ": adding entity " + character.id + " to known entities");
+                        knownEnemies.Add(character);
+                        ActionManager.instance.AddActionMessage("'" + character.id + "' added to " + character.parentInfoCategory);
+                    }
+                    else
+                    {
+                        Debug.LogError(this.name + ":  entity not found: " + id);
+                    }
+                }
+            }
+
+            public Enemy GenerateRandomEnemy(string id)
+            {
+                Debug.Log(this.name + ": generating unique enemy " + id);
+                int uniqueId = uniqueEnemies.Count;
+                var enemy = GetEnemy(id);
+
+                var newEnemy = new Enemy {
+                    id = enemy.id,
+                    uniqueId = enemy.id + uniqueId.ToString(),
+                    name = enemy.name,
+                    read = enemy.read,
+                    parentInfoCategory = enemy.parentInfoCategory,
+                    description = enemy.description,
+                    handle = enemy.handle,
+                    corp = enemy.corp,
+                    serial = enemy.serial,
+                    category = enemy.category,
+                    body = enemy.body,
+                    skin = enemy.skin,
+                    eyes = enemy.eyes,
+                    shirt = enemy.shirt,
+                    pants = enemy.pants,
+                    shoes = enemy.shoes,
+                    hair = enemy.hair,
+                    shirtcolor = enemy.shirtcolor,
+                    pantscolor = enemy.pantscolor,
+                    shoescolor = enemy.shoescolor,
+                    haircolor = enemy.haircolor,
+                    spriteOffset = enemy.spriteOffset
+                };
+
+                newEnemy.SetRandomAttributes();
+
+                uniqueEnemies.Add(newEnemy);
+
+                return newEnemy;
+
+            }
 
             public void AddToKnownCharacters(string id)
             {
@@ -110,6 +192,7 @@ namespace HackedDesign
                     if (character != null)
                     {
                         Debug.Log(this.name + ": adding entity " + character.id + " to known entities");
+                        character.SetRandomAttributes(); // Unlikely to do anything for NPCs
                         knownCharacters.Add(character);
                         ActionManager.instance.AddActionMessage("'" + character.id + "' added to " + character.parentInfoCategory);
                     }

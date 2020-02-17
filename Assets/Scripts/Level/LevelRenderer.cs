@@ -29,13 +29,15 @@ namespace HackedDesign
 
             private Entity.EntityManager entityManager;
             private CharacterSpriteManager characterSpriteManager;
+            private Story.InfoManager infoManager;
 
-            public void Initialize(Entity.EntityManager entityManager, CharacterSpriteManager characterSpriteManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
+            public void Initialize(Entity.EntityManager entityManager, Story.InfoManager infoManager, CharacterSpriteManager characterSpriteManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
             {
                 this.levelParent = levelParent;
                 this.npcParent = npcParent;
                 this.polyNav2D = polyNav2D;
                 this.entityManager = entityManager;
+                this.infoManager = infoManager;
                 this.characterSpriteManager = characterSpriteManager;
             }
 
@@ -306,11 +308,13 @@ namespace HackedDesign
 
             public List<Entity.BaseEnemy> PopulateEnemySpawns(Level level)
             {
+                Debug.Log(this.name + ": populating enemy spawns");
 
                 List<Entity.BaseEnemy> results = new List<Entity.BaseEnemy>();
 
                 if (entityManager.enemies.Count <= 0)
                 {
+                    Debug.Log(this.name + ": No enemies to spawn");
                     return results;
                 }
 
@@ -321,7 +325,7 @@ namespace HackedDesign
 
                 for (int i = 0; i < level.enemySpawnLocationList.Count; i++)
                 {
-
+                    Debug.Log(this.name +": attempting to spawn" + level.enemySpawnLocationList[i].name);
                     //int rand = UnityEngine.Random.Range(0, enemyEasyPrefabs.Count);
 
                     GameObject enemyGameObj = entityManager.enemies.FirstOrDefault(g => g != null && g.name == level.enemySpawnLocationList[i].name);
@@ -330,9 +334,12 @@ namespace HackedDesign
                     {
                         var go = GameObject.Instantiate(enemyGameObj, level.ConvertLevelPosToWorld(level.enemySpawnLocationList[i].levelLocation) + level.enemySpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
                         Entity.BaseEnemy npc = go.GetComponent<Entity.BaseEnemy>();
+                        Story.Enemy uniqueEnemy = infoManager.GenerateRandomEnemy(npc.enemy);
                         CharacterSprite cs = go.GetComponent<CharacterSprite>();
                         if (npc != null && cs != null)
                         {
+                            cs.uniqueId = uniqueEnemy.uniqueId;
+                            cs.character = uniqueEnemy.id;
                             cs.Initialize(characterSpriteManager);
                             npc.Initialize(polyNav2D);
                             

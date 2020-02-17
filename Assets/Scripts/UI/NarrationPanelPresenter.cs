@@ -82,7 +82,8 @@ namespace HackedDesign
                 shortNameText.text = speaker.name;
                 categoryText.text = speaker.category;
                 corpText.text = "<color=\"" + corp.color + "\">" + corp.name + "</color>";
-                var bodySprites = characterSpriteManager.GetBody(speaker.id);
+                //CharacterSpriteManager.BodyTypes body = characterSpriteManager.GetBody(speaker.id);
+                var bodySprites = characterSpriteManager.GetSkin(speaker.id);
                 var hairSprites = characterSpriteManager.GetHair(speaker.id);
                 var eyesSprites = characterSpriteManager.GetEyes(speaker.id);
                 var shirtSprites = characterSpriteManager.GetShirt(speaker.id);

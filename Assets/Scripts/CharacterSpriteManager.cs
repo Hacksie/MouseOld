@@ -51,8 +51,6 @@ namespace HackedDesign
         public string creatureBodyFolderPath;
 
 
-        //public Color[] colors;
-
         private Story.InfoManager infoManager;
 
         public void Initialize(Story.InfoManager infoManager)
@@ -61,25 +59,34 @@ namespace HackedDesign
 
         }
 
+
         public int GetSpriteOffset(string id)
         {
             var character = infoManager.GetCharacter(id);
             return character.spriteOffset;
         }
 
-        public Sprite[] GetBody(string id)
+
+        public BodyTypes GetBody(string id)
         {
             var character = infoManager.GetCharacter(id);
+            return character.body;
+        }
+
+        public Sprite[] GetSkin(string id)
+        {
+            var character = infoManager.GetCharacter(id);
+
             switch (character.body)
             {
                 case BodyTypes.Male:
-                return Resources.LoadAll<Sprite>(maleBodyFolderPath + maleBodySprites[character.skin].name);
+                    return Resources.LoadAll<Sprite>(maleBodyFolderPath + maleBodySprites[character.skin].name);
 
                 case BodyTypes.Female:
-                return Resources.LoadAll<Sprite>(femaleBodyFolderPath + femaleBodySprites[character.skin].name);
+                    return Resources.LoadAll<Sprite>(femaleBodyFolderPath + femaleBodySprites[character.skin].name);
 
                 case BodyTypes.Creature:
-                return Resources.LoadAll<Sprite>(creatureBodyFolderPath + creatureBodySprites[character.skin].name);
+                    return Resources.LoadAll<Sprite>(creatureBodyFolderPath + creatureBodySprites[character.skin].name);
             }
             return null;
         }
@@ -88,53 +95,54 @@ namespace HackedDesign
         {
             var character = infoManager.GetCharacter(id);
 
-            if(character.hair == 0)
+            if (character.hair == 0)
                 return null;
-            switch ((BodyTypes)character.body)
+
+            switch (character.body)
             {
                 case BodyTypes.Male:
-                return Resources.LoadAll<Sprite>(maleHairFolderPath + maleHairSprites[character.hair].name);
+                    return Resources.LoadAll<Sprite>(maleHairFolderPath + maleHairSprites[character.hair].name);
 
                 case BodyTypes.Female:
-                return Resources.LoadAll<Sprite>(femaleHairFolderPath + femaleHairSprites[character.hair].name);
+                    return Resources.LoadAll<Sprite>(femaleHairFolderPath + femaleHairSprites[character.hair].name);
             }
 
             return null;
-        }        
+        }
 
         public Sprite[] GetEyes(string id)
         {
             var character = infoManager.GetCharacter(id);
 
-            if(character.eyes == 0)
+            if (character.eyes == 0)
                 return null;
 
-            switch ((BodyTypes)character.body)
+            switch (character.body)
             {
                 case BodyTypes.Male:
-                return Resources.LoadAll<Sprite>(maleEyesFolderPath + maleEyesSprites[character.eyes].name);
+                    return Resources.LoadAll<Sprite>(maleEyesFolderPath + maleEyesSprites[character.eyes].name);
 
                 case BodyTypes.Female:
-                return Resources.LoadAll<Sprite>(femaleEyesFolderPath + femaleEyesSprites[character.eyes].name);
+                    return Resources.LoadAll<Sprite>(femaleEyesFolderPath + femaleEyesSprites[character.eyes].name);
             }
 
             return null;
-        }  
+        }
 
         public Sprite[] GetShirt(string id)
         {
             var character = infoManager.GetCharacter(id);
 
-            if(character.shirt == 0)
+            if (character.shirt == 0)
                 return null;
 
-            switch ((BodyTypes)character.body)
+            switch (character.body)
             {
                 case BodyTypes.Male:
-                return Resources.LoadAll<Sprite>(maleShirtFolderPath + maleShirtSprites[character.shirt].name);
+                    return Resources.LoadAll<Sprite>(maleShirtFolderPath + maleShirtSprites[character.shirt].name);
 
                 case BodyTypes.Female:
-                return Resources.LoadAll<Sprite>(femaleShirtFolderPath + femaleShirtSprites[character.shirt].name);
+                    return Resources.LoadAll<Sprite>(femaleShirtFolderPath + femaleShirtSprites[character.shirt].name);
             }
 
             return null;
@@ -143,16 +151,16 @@ namespace HackedDesign
         {
             var character = infoManager.GetCharacter(id);
 
-            if(character.pants == 0)
+            if (character.pants == 0)
                 return null;
 
-            switch ((BodyTypes)character.body)
+            switch (character.body)
             {
                 case BodyTypes.Male:
-                return Resources.LoadAll<Sprite>(malePantsFolderPath + malePantsSprites[character.pants].name);
+                    return Resources.LoadAll<Sprite>(malePantsFolderPath + malePantsSprites[character.pants].name);
 
                 case BodyTypes.Female:
-                return Resources.LoadAll<Sprite>(femalePantsFolderPath + femalePantsSprites[character.pants].name);
+                    return Resources.LoadAll<Sprite>(femalePantsFolderPath + femalePantsSprites[character.pants].name);
             }
 
             return null;
@@ -161,16 +169,16 @@ namespace HackedDesign
         {
             var character = infoManager.GetCharacter(id);
 
-            if(character.shoes == 0)
+            if (character.shoes == 0)
                 return null;
 
-            switch ((BodyTypes)character.body)
+            switch (character.body)
             {
                 case BodyTypes.Male:
-                return Resources.LoadAll<Sprite>(maleShoesFolderPath + maleShoesSprites[character.shoes].name);
+                    return Resources.LoadAll<Sprite>(maleShoesFolderPath + maleShoesSprites[character.shoes].name);
 
                 case BodyTypes.Female:
-                return Resources.LoadAll<Sprite>(femaleShoesFolderPath + femaleShoesSprites[character.shoes].name);
+                    return Resources.LoadAll<Sprite>(femaleShoesFolderPath + femaleShoesSprites[character.shoes].name);
             }
 
             return null;
@@ -182,7 +190,7 @@ namespace HackedDesign
 
             Color color = Color.magenta;
 
-            if(!string.IsNullOrWhiteSpace(character.haircolor))
+            if (!string.IsNullOrWhiteSpace(character.haircolor))
             {
                 ColorUtility.TryParseHtmlString(character.haircolor, out color);
             }
@@ -196,13 +204,13 @@ namespace HackedDesign
 
             Color color = Color.magenta;
 
-            if(!string.IsNullOrWhiteSpace(character.shirtcolor))
+            if (!string.IsNullOrWhiteSpace(character.shirtcolor))
             {
                 ColorUtility.TryParseHtmlString(character.shirtcolor, out color);
             }
 
             return color;
-        }  
+        }
 
         public Color GetPantsColor(string id)
         {
@@ -210,13 +218,13 @@ namespace HackedDesign
 
             Color color = Color.magenta;
 
-            if(!string.IsNullOrWhiteSpace(character.pantscolor))
+            if (!string.IsNullOrWhiteSpace(character.pantscolor))
             {
                 ColorUtility.TryParseHtmlString(character.pantscolor, out color);
             }
 
             return color;
-        }  
+        }
 
         public Color GetShoesColor(string id)
         {
@@ -224,14 +232,197 @@ namespace HackedDesign
 
             Color color = Color.magenta;
 
-            if(!string.IsNullOrWhiteSpace(character.shoescolor))
+            if (!string.IsNullOrWhiteSpace(character.shoescolor))
             {
                 ColorUtility.TryParseHtmlString(character.shoescolor, out color);
             }
 
             return color;
-        }                        
-        
+        }
+
+
+        public int GetEnemySpriteOffset(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+            return character.spriteOffset;
+        }
+
+        public BodyTypes GetEnemyBody(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+            return character.body;
+        }
+
+        public Sprite[] GetEnemySkin(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+
+            switch (character.body)
+            {
+                case BodyTypes.Male:
+                    return Resources.LoadAll<Sprite>(maleBodyFolderPath + maleBodySprites[character.skin].name);
+
+                case BodyTypes.Female:
+                    return Resources.LoadAll<Sprite>(femaleBodyFolderPath + femaleBodySprites[character.skin].name);
+
+                case BodyTypes.Creature:
+                    return Resources.LoadAll<Sprite>(creatureBodyFolderPath + creatureBodySprites[character.skin].name);
+            }
+            return null;
+        }
+
+
+
+
+        public Sprite[] GetEnemyHair(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+
+            if (character.hair == 0)
+                return null;
+
+            switch (character.body)
+            {
+                case BodyTypes.Male:
+                    return Resources.LoadAll<Sprite>(maleHairFolderPath + maleHairSprites[character.hair].name);
+
+                case BodyTypes.Female:
+                    return Resources.LoadAll<Sprite>(femaleHairFolderPath + femaleHairSprites[character.hair].name);
+            }
+
+            return null;
+        }
+
+        public Sprite[] GetEnemyEyes(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+
+            if (character.eyes == 0)
+                return null;
+
+            switch (character.body)
+            {
+                case BodyTypes.Male:
+                    return Resources.LoadAll<Sprite>(maleEyesFolderPath + maleEyesSprites[character.eyes].name);
+
+                case BodyTypes.Female:
+                    return Resources.LoadAll<Sprite>(femaleEyesFolderPath + femaleEyesSprites[character.eyes].name);
+            }
+
+            return null;
+        }
+
+        public Sprite[] GetEnemyShirt(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+
+            if (character.shirt == 0)
+                return null;
+
+            switch (character.body)
+            {
+                case BodyTypes.Male:
+                    return Resources.LoadAll<Sprite>(maleShirtFolderPath + maleShirtSprites[character.shirt].name);
+
+                case BodyTypes.Female:
+                    return Resources.LoadAll<Sprite>(femaleShirtFolderPath + femaleShirtSprites[character.shirt].name);
+            }
+
+            return null;
+        }
+        public Sprite[] GetEnemyPants(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+
+            if (character.pants == 0)
+                return null;
+
+            switch (character.body)
+            {
+                case BodyTypes.Male:
+                    return Resources.LoadAll<Sprite>(malePantsFolderPath + malePantsSprites[character.pants].name);
+
+                case BodyTypes.Female:
+                    return Resources.LoadAll<Sprite>(femalePantsFolderPath + femalePantsSprites[character.pants].name);
+            }
+
+            return null;
+        }
+        public Sprite[] GetEnemyShoes(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+
+            if (character.shoes == 0)
+                return null;
+
+            switch (character.body)
+            {
+                case BodyTypes.Male:
+                    return Resources.LoadAll<Sprite>(maleShoesFolderPath + maleShoesSprites[character.shoes].name);
+
+                case BodyTypes.Female:
+                    return Resources.LoadAll<Sprite>(femaleShoesFolderPath + femaleShoesSprites[character.shoes].name);
+            }
+
+            return null;
+        }
+
+        public Color GetEnemyHairColor(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+
+            Color color = Color.magenta;
+
+            if (!string.IsNullOrWhiteSpace(character.haircolor))
+            {
+                ColorUtility.TryParseHtmlString(character.haircolor, out color);
+            }
+
+            return color;
+        }
+
+        public Color GetEnemyShirtColor(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+
+            Color color = Color.magenta;
+
+            if (!string.IsNullOrWhiteSpace(character.shirtcolor))
+            {
+                ColorUtility.TryParseHtmlString(character.shirtcolor, out color);
+            }
+
+            return color;
+        }
+
+        public Color GetEnemyPantsColor(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+
+            Color color = Color.magenta;
+
+            if (!string.IsNullOrWhiteSpace(character.pantscolor))
+            {
+                ColorUtility.TryParseHtmlString(character.pantscolor, out color);
+            }
+
+            return color;
+        }
+
+        public Color GetEnemyShoesColor(string uniqueId)
+        {
+            var character = infoManager.GetUniqueEnemy(uniqueId);
+
+            Color color = Color.magenta;
+
+            if (!string.IsNullOrWhiteSpace(character.shoescolor))
+            {
+                ColorUtility.TryParseHtmlString(character.shoescolor, out color);
+            }
+
+            return color;
+        }
+
 
         public enum BodyTypes
         {

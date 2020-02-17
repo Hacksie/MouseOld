@@ -1,0 +1,105 @@
+{
+    "playerSpawn": {
+        "type": "player",
+        "name": "mouse",
+        "levelPosition": {
+            "x": 0,
+            "y": 0
+        },
+        "worldOffset": {
+            "x": 0.5,
+            "y": 0.5
+        }
+    },
+    "npcSpawnLocationList": [],
+    "map": [
+        {
+            "rooms": [
+                {
+                    "left": "w",
+                    "top": "w",
+                    "bottom": "d",
+                    "right": "w"
+                },
+                {
+                    "left": "w",
+                    "top": "w",
+                    "bottom": "d",
+                    "right": "w"
+                },
+                {
+                    "left": "w",
+                    "top": "w",
+                    "bottom": "d",
+                    "right": "w"
+                }
+            ]            
+        },
+        {
+            "rooms": [
+                {
+                    "left": "w",
+                    "top": "d",
+                    "bottom": "d",
+                    "right": "o"
+                },
+                {
+                    "left": "o",
+                    "top": "d",
+                    "bottom": "w",
+                    "right": "o"
+                },
+                {
+                    "left": "o",
+                    "top": "d",
+                    "bottom": "d",
+                    "right": "w"
+                }
+            ]            
+        },
+        {
+            "rooms": [
+                {
+                    "left": "w",
+                    "top": "d",
+                    "bottom": "o",
+                    "right": "o"
+                },
+                {
+                    "left": "o",
+                    "top": "w",
+                    "bottom": "o",
+                    "right": "o"
+                },
+                {
+                    "left": "o",
+                    "top": "d",
+                    "bottom": "o",
+                    "right": "w"
+                }                
+            ]
+        },
+        {
+            "rooms": [
+                {
+                    "left": "w",
+                    "top": "o",
+                    "bottom": "e",
+                    "right": "o"
+                },
+                {
+                    "left": "o",
+                    "top": "o",
+                    "bottom": "w",
+                    "right": "o"
+                },
+                {
+                    "left": "o",
+                    "top": "o",
+                    "bottom": "w",
+                    "right": "w"
+                }                
+            ]
+        }        
+    ]
+}

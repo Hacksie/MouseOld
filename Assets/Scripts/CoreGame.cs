@@ -190,7 +190,7 @@ namespace HackedDesign
             actionPanel.Initialize();
             titlecardPanel.Initialize(actionManager);
             
-            levelRenderer.Initialize(entityManager, characterSpriteManager, levelParent, npcParent, polyNav2D);
+            levelRenderer.Initialize(entityManager, infoManager, characterSpriteManager, levelParent, npcParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
             //
 

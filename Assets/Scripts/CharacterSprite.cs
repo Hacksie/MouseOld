@@ -15,14 +15,17 @@ namespace HackedDesign
         public SpriteRenderer shoesSpriteRenderer;
 
         [Header("Settings")]
+        public bool isEnemy = false;
         public string character;
+        public string uniqueId;
+        public Sprite[] bodySpritesheet;
+        public Sprite[] eyesSpritesheet;
+        public Sprite[] shirtSpritesheet;
+        public Sprite[] pantsSpritesheet;
+        public Sprite[] shoesSpritesheet;
+        public Sprite[] hairSpritesheet;
 
-        private Sprite[] bodySpritesheet;
-        private Sprite[] eyesSpritesheet;
-        private Sprite[] shirtSpritesheet;
-        private Sprite[] pantsSpritesheet;
-        private Sprite[] shoesSpritesheet;
-        private Sprite[] hairSpritesheet;
+        private int spriteOffset;
 
         public void Initialize(CharacterSpriteManager characterSpriteManager)
         {
@@ -32,23 +35,50 @@ namespace HackedDesign
 
         void SetSpritesheets()
         {
-            bodySpritesheet = characterSpriteManager.GetBody(character);
-            hairSpritesheet = characterSpriteManager.GetHair(character);
-            eyesSpritesheet = characterSpriteManager.GetEyes(character);
-            shirtSpritesheet = characterSpriteManager.GetShirt(character);
-            pantsSpritesheet = characterSpriteManager.GetPants(character);
-            shoesSpritesheet = characterSpriteManager.GetShoes(character);
-            if(hairSpriteRenderer != null)
-                hairSpriteRenderer.color = characterSpriteManager.GetHairColor(character);
-            
-            if(shirtSpriteRenderer != null)
-                shirtSpriteRenderer.color = characterSpriteManager.GetShirtColor(character);
+            if (isEnemy)
+            {
+                bodySpritesheet = characterSpriteManager.GetEnemySkin(uniqueId);
+                hairSpritesheet = characterSpriteManager.GetEnemyHair(uniqueId);
+                eyesSpritesheet = characterSpriteManager.GetEnemyEyes(uniqueId);
+                shirtSpritesheet = characterSpriteManager.GetEnemyShirt(uniqueId);
+                pantsSpritesheet = characterSpriteManager.GetEnemyPants(uniqueId);
+                shoesSpritesheet = characterSpriteManager.GetEnemyShoes(uniqueId);
+                if (hairSpriteRenderer != null)
+                    hairSpriteRenderer.color = characterSpriteManager.GetEnemyHairColor(uniqueId);
 
-            if(pantsSpriteRenderer != null)
-                pantsSpriteRenderer.color = characterSpriteManager.GetPantsColor(character);
+                if (shirtSpriteRenderer != null)
+                    shirtSpriteRenderer.color = characterSpriteManager.GetEnemyShirtColor(uniqueId);
 
-            if(shoesSpriteRenderer != null)
-                shoesSpriteRenderer.color = characterSpriteManager.GetShoesColor(character);
+                if (pantsSpriteRenderer != null)
+                    pantsSpriteRenderer.color = characterSpriteManager.GetEnemyPantsColor(uniqueId);
+
+                if (shoesSpriteRenderer != null)
+                    shoesSpriteRenderer.color = characterSpriteManager.GetEnemyShoesColor(uniqueId);
+
+                spriteOffset = characterSpriteManager.GetEnemySpriteOffset(uniqueId);
+            }
+            else
+            {
+                bodySpritesheet = characterSpriteManager.GetSkin(character);
+                hairSpritesheet = characterSpriteManager.GetHair(character);
+                eyesSpritesheet = characterSpriteManager.GetEyes(character);
+                shirtSpritesheet = characterSpriteManager.GetShirt(character);
+                pantsSpritesheet = characterSpriteManager.GetPants(character);
+                shoesSpritesheet = characterSpriteManager.GetShoes(character);
+                if (hairSpriteRenderer != null)
+                    hairSpriteRenderer.color = characterSpriteManager.GetHairColor(character);
+
+                if (shirtSpriteRenderer != null)
+                    shirtSpriteRenderer.color = characterSpriteManager.GetShirtColor(character);
+
+                if (pantsSpriteRenderer != null)
+                    pantsSpriteRenderer.color = characterSpriteManager.GetPantsColor(character);
+
+                if (shoesSpriteRenderer != null)
+                    shoesSpriteRenderer.color = characterSpriteManager.GetShoesColor(character);
+
+                spriteOffset = characterSpriteManager.GetSpriteOffset(character);
+            }
         }
 
 
@@ -74,19 +104,19 @@ namespace HackedDesign
             }
 
 
-            frameIndex += characterSpriteManager.GetSpriteOffset(character);
+            frameIndex +=spriteOffset;
 
-            if(bodySpriteRenderer!=null)
+            if (bodySpriteRenderer != null)
                 bodySpriteRenderer.sprite = (bodySpritesheet != null && bodySpritesheet.Length > 0) ? bodySpritesheet[frameIndex] : null;
-            if(hairSpriteRenderer!=null)
+            if (hairSpriteRenderer != null)
                 hairSpriteRenderer.sprite = (hairSpritesheet != null && hairSpritesheet.Length > 0) ? hairSpritesheet[frameIndex] : null;
-            if(eyesSpriteRenderer!=null)
+            if (eyesSpriteRenderer != null)
                 eyesSpriteRenderer.sprite = (eyesSpritesheet != null && eyesSpritesheet.Length > 0) ? eyesSpritesheet[frameIndex] : null;
-            if(shirtSpriteRenderer!=null)
+            if (shirtSpriteRenderer != null)
                 shirtSpriteRenderer.sprite = (shirtSpritesheet != null && shirtSpritesheet.Length > 0) ? shirtSpritesheet[frameIndex] : null;
-            if(pantsSpriteRenderer!=null)
+            if (pantsSpriteRenderer != null)
                 pantsSpriteRenderer.sprite = (pantsSpritesheet != null && pantsSpritesheet.Length > 0) ? pantsSpritesheet[frameIndex] : null;
-            if(shoesSpriteRenderer!=null)
+            if (shoesSpriteRenderer != null)
                 shoesSpriteRenderer.sprite = (shoesSpritesheet != null && shoesSpritesheet.Length > 0) ? shoesSpritesheet[frameIndex] : null;
 
         }

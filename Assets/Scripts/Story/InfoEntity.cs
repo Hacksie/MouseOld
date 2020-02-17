@@ -8,7 +8,6 @@ namespace HackedDesign {
 		public class InfoEntity {
 			public string id;
 			public string name;
-			public bool known = false;
 			public bool read = false;
 			public string parentInfoCategory;
 			public string description;
