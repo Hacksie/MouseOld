@@ -81,8 +81,8 @@ namespace HackedDesign
                 else
                 {
                     level = GenerateRandomLevel(genTemplate);
-                    GenerateEnemySpawns(level);
-                    GenerateTrapSpawns(level);
+                    GenerateEnemySpawns(level, difficulty);
+                    GenerateTrapSpawns(level, difficulty);
                     GenerateEntities(level, true);
                 }
                 level.Print();
@@ -682,7 +682,7 @@ namespace HackedDesign
                 );
             }
 
-            void GenerateEnemySpawns(Level level)
+            void GenerateEnemySpawns(Level level, int difficulty)
             {
                 List<Vector2Int> candidates = new List<Vector2Int>();
                 level.enemySpawnLocationList = new List<Spawn>();
@@ -700,16 +700,22 @@ namespace HackedDesign
 
                 candidates.Randomize();
 
+                var enemyList = difficulty == 0? level.template.easyEnemies : difficulty == 1? level.template.mediumEnemies : level.template.hardEnemies;
+
                 foreach (var candidate in candidates.Take(level.template.enemies))
                 {
 
-                    int rand = UnityEngine.Random.Range(0, entityManager.enemies.Count);
+                    //int rand = UnityEngine.Random.Range(0, enemyList);
+
+                    var enemy = enemyList[UnityEngine.Random.Range(0, enemyList.Count)];
+
+                    //FIXME: check the enemy is valid
 
                     level.enemySpawnLocationList.Add(
                         new Spawn()
                         {
                             type = Spawn.ENTITY_TYPE_ENEMY,
-                            name = entityManager.enemies[UnityEngine.Random.Range(0, entityManager.enemies.Count)].name,
+                            name = enemy,
                             levelLocation = candidate,
                             worldOffset = Vector2.zero
                         }
@@ -717,7 +723,7 @@ namespace HackedDesign
                 }
             }
 
-            void GenerateTrapSpawns(Level level)
+            void GenerateTrapSpawns(Level level, int difficulty)
             {
                 List<Vector2Int> candidates = new List<Vector2Int>();
                 level.trapSpawnLocationList = new List<Spawn>();

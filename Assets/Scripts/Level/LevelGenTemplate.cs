@@ -33,6 +33,10 @@ namespace HackedDesign
 			public List<GameObject> randomProps;
 			public List<GameObject> trapProps;
 			public List<GameObject> fixedProps;
+
+			public List<string> easyEnemies;
+			public List<string> mediumEnemies;
+			public List<string> hardEnemies;
 		                
         }
     }

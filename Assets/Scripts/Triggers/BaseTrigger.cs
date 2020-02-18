@@ -133,15 +133,25 @@ namespace HackedDesign
                 //Debug.Log(this.name + ": " + source.name + " invoked overload action: " + overloadAction);
                 overloaded = true;
                 CoreGame.Instance.State.player.ConsumeOverload();
-                Story.ActionManager.instance.Invoke(overloadAction);
+                if (!string.IsNullOrWhiteSpace(overloadAction))
+                {
+                    Story.ActionManager.instance.Invoke(overloadAction);
+                }
             }
 
             public virtual void Hack(UnityEngine.GameObject source)
             {
                 //Debug.Log(this.name + ": " + source.name + " invoked hack action: " + hackAction);
-                hacked = true;
-                CoreGame.Instance.State.player.ConsumeHack();
-                Story.ActionManager.instance.Invoke(hackAction);
+
+
+                if (CoreGame.Instance.State.player.ConsumeHack())
+                {
+                    hacked = true;
+                    if (!string.IsNullOrWhiteSpace(hackAction))
+                    {
+                        Story.ActionManager.instance.Invoke(hackAction);
+                    }
+                }
             }
 
             public virtual void Bug(UnityEngine.GameObject source)
@@ -150,7 +160,10 @@ namespace HackedDesign
                 bugged = true;
                 hacked = true;
                 CoreGame.Instance.State.player.ConsumeBug();
-                Story.ActionManager.instance.Invoke(bugAction);
+                if (!string.IsNullOrWhiteSpace(bugAction))
+                {
+                    Story.ActionManager.instance.Invoke(bugAction);
+                }
             }
 
             // public virtual void Keycard()
@@ -189,7 +202,7 @@ namespace HackedDesign
                     Invoke(source);
                     return true;
                 }
-                if (!overloaded && !hacked && !bugged && !string.IsNullOrWhiteSpace(overloadAction) && CoreGame.Instance.State.player.CanOverload() && inputController.OverloadButtonUp() && !requireInteraction && !requireHack && !requireBug)
+                if (!overloaded && !hacked && !bugged && CoreGame.Instance.State.player.CanOverload() && inputController.OverloadButtonUp() && !requireOverload)
                 {
                     Overload(source);
                     return true;
@@ -199,12 +212,12 @@ namespace HackedDesign
                 //     triggered = true;
                 //     Keycard();
                 // }
-                if (!overloaded && !hacked && !bugged && !string.IsNullOrWhiteSpace(bugAction) && CoreGame.Instance.State.player.CanBug() && inputController.BugButtonUp() && !requireInteraction && !requireHack && !requireOverload)
+                if (!overloaded && !hacked && !bugged && CoreGame.Instance.State.player.CanBug() && inputController.BugButtonUp() && !requireBug)
                 {
                     Bug(source);
                     return true;
                 }
-                if (!overloaded && !hacked && !bugged && !string.IsNullOrWhiteSpace(hackAction) && CoreGame.Instance.State.player.CanHack() && inputController.HackButtonUp() && !requireInteraction && !requireBug && !requireOverload)
+                if (!overloaded && !hacked && !bugged && CoreGame.Instance.State.player.CanHack() && inputController.HackButtonUp() && !requireBug)
                 {
                     Hack(source);
                     return true;

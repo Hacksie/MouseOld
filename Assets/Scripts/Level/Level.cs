@@ -200,6 +200,7 @@ namespace HackedDesign
             public string name;
             public Vector2Int levelLocation;
             public Vector2 worldOffset;
+            public int difficulty;
         }
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
-  enemies: 0
+  enemies: 10
   traps: 0
   generateDoors: 1
   startingRoomString: wnew_entry
@@ -211,3 +211,9 @@ MonoBehaviour:
   - {fileID: 8387367927353284284, guid: 0133037e36f623a48a2ff29e12716aa6, type: 3}
   - {fileID: 6150267684878857572, guid: 2ffcfcbb737fe244eac99e723d74062f, type: 3}
   fixedProps: []
+  easyEnemies:
+  - Easy Guard
+  mediumEnemies:
+  - Drone
+  hardEnemies:
+  - Drone

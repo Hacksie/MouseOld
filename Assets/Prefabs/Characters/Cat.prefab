@@ -195,7 +195,15 @@ MonoBehaviour:
   shirtSpriteRenderer: {fileID: 0}
   pantsSpriteRenderer: {fileID: 0}
   shoesSpriteRenderer: {fileID: 0}
+  isEnemy: 0
   character: Cat
+  uniqueId: 
+  bodySpritesheet: []
+  eyesSpritesheet: []
+  shirtSpritesheet: []
+  pantsSpritesheet: []
+  shoesSpritesheet: []
+  hairSpritesheet: []
 --- !u!1 &801259854833353615
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +596,7 @@ SpriteRenderer:
   m_SortingLayerID: -1007191287
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8abdd87a68c574f5da866a1683388474, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea4382fd9aedb4e70a76687e4d6b1db9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
