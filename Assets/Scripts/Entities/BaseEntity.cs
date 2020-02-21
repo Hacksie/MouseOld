@@ -75,19 +75,7 @@ namespace HackedDesign
 
             public virtual void UpdateBehaviour()
             {
-                //Debug.Log(this.name + ": update base entity");
-                // FIXME: This happens because this can be called before the scene finishes loading
-                // if(CoreGame.instance.state.state != GameState.PLAYING)
-                // {
-                // 	anim.speed = 0;
-                // }
-                // else if(anim.speed == 0 && CoreGame.instance.state.state == GameState.PLAYING)
-                // {
-                // 	anim.speed = 1;
-                // }
 
-
-                UpdateLayer(player.position - transform.position);
             }
 
             public RaycastHit2D CanSeePlayer()

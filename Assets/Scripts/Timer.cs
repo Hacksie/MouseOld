@@ -14,12 +14,14 @@ namespace HackedDesign {
 		public bool warning=false;
 		public bool end=false;
 
-		public void Start()
+		public void Start(int timeout)
 		{
 			startTime = Time.time;
 			running = true;
 			warning = end = false;
+			this.maxTime = timeout;
 			Story.ActionManager.instance.Invoke("TimerStart");
+
 		}
 
 		public void Stop()

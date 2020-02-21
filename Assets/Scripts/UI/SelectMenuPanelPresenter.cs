@@ -10,7 +10,6 @@ namespace HackedDesign
 
         SelectMenuManager selectMenuManager;
 
-        // Inject these in
         private Story.InfoPanelPresenter infoPanel = null;
         private Story.TaskPanelPresenter taskPanel = null;
         private Level.LevelMapPanelPresenter levelMapPanel = null;
@@ -66,7 +65,6 @@ namespace HackedDesign
                 Show(false);
             }
 
-            //if(selectMenuManager.)
             infoPanel.Repaint();
             taskPanel.Repaint();
             stashPanel.Repaint();
@@ -77,37 +75,8 @@ namespace HackedDesign
         private void Show(bool flag)
         {
             Debug.Log(this.name + ": repaint");
-            HideAll();
             this.gameObject.SetActive(flag);
-            //Cursor.visible = flag;
-
-            if (!flag)
-            {
-                return;
-            }
-        }
-
-        public void HideAll()
-        {
-            //if (infoPanel != null)
-            //{
-            //    //infoPanel.Show(false);
-            //}
-
-            //if (taskPanel != null)
-            //{
-            //    //taskPanel.Show(false);
-            //}
-
-            //if (stashPanel != null)
-            //{
-            //    StashPanel.SetActive(false);
-            //}
-
-            //if (psychPanel != null)
-            //{
-            //    PsychPanel.SetActive(false);
-            //}
+              
         }
 
         public void ResumeClickEvent()

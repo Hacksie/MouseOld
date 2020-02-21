@@ -47,7 +47,10 @@ namespace HackedDesign {
 				}
 			} else
 			{
-				this.gameObject.SetActive(false);
+				if (this.gameObject.activeInHierarchy)
+				{
+					this.gameObject.SetActive(false);
+				}
 				//Cursor.visible = false;
 			}
 

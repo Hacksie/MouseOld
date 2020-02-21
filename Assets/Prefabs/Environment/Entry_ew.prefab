@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5652212586236187715}
   - component: {fileID: 5704413205964274915}
-  - component: {fileID: 5758082916202147433}
   - component: {fileID: 5667044606128391909}
   - component: {fileID: 5667029983520468773}
+  - component: {fileID: 5952106861313315895}
+  - component: {fileID: 4269703331575487086}
+  - component: {fileID: 5950933447067635145}
   m_Layer: 0
   m_Name: Entry_ew
   m_TagString: Trigger
@@ -54,42 +56,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5758082916202147433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5655291503860304359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 040397a4aabe3f645b0ac5c0d4707dce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enabled: 1
-  sprite: {fileID: 0}
-  interactSprite: {fileID: 0}
-  hackSprite: {fileID: 0}
-  keycardSprite: {fileID: 0}
-  overloadSprite: {fileID: 0}
-  requireInteraction: 0
-  requireHack: 1
-  requireKeycard: 0
-  requireOverload: 0
-  allowOverload: 0
-  allowRepeatInteractions: 0
-  allowNPCAutoInteraction: 1
-  triggerAction: 
-  hackAction: HackEntry
-  keycardAction: 
-  overloadAction: 
-  leaveAction: 
-  triggered: 0
-  npcTriggered: 0
-  overloaded: 0
-  hacked: 0
-  doorCollider: {fileID: 5667044606128391909}
-  animator: {fileID: 5704413205964274915}
 --- !u!61 &5667044606128391909
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -114,7 +80,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.125}
+  m_Size: {x: 1, y: 1.125}
   m_EdgeRadius: 0
 --- !u!61 &5667029983520468773
 BoxCollider2D:
@@ -142,6 +108,133 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 2.5}
   m_EdgeRadius: 0
+--- !u!114 &5952106861313315895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655291503860304359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
+  sprite: {fileID: 0}
+  interactSprite: {fileID: 0}
+  hackSprite: {fileID: 0}
+  overloadSprite: {fileID: 0}
+  bugSprite: {fileID: 0}
+  autoInteraction: 0
+  allowInteraction: 0
+  allowBug: 0
+  allowHack: 1
+  allowOverload: 0
+  requireInteraction: 0
+  requireHack: 1
+  requireOverload: 0
+  requireBug: 0
+  allowRepeatInteractions: 0
+  allowNPCAutoInteraction: 0
+  interactActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4269703331575487086}
+        m_TargetAssemblyTypeName: HackedDesign.Triggers.Door, Assembly-CSharp
+        m_MethodName: Open
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  bugActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  hackActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5950933447067635145}
+        m_TargetAssemblyTypeName: HackedDesign.Story.ActionInvoker, Assembly-CSharp
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4269703331575487086}
+        m_TargetAssemblyTypeName: HackedDesign.Triggers.Door, Assembly-CSharp
+        m_MethodName: Open
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  overloadActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leaveActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4269703331575487086}
+        m_TargetAssemblyTypeName: HackedDesign.Triggers.Door, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  triggered: 0
+  npcTriggered: 0
+  overloaded: 0
+  hacked: 0
+  bugged: 0
+  colliders: []
+--- !u!114 &4269703331575487086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655291503860304359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af835f2ea87ed844d922ea8b7457e598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5704413205964274915}
+  trigger: {fileID: 5952106861313315895}
+  open: 0
+  animate: 1
+--- !u!114 &5950933447067635145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655291503860304359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da42ddf162ce4e549ae84e8e1f140427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: HackEntry
 --- !u!1 &5655707733936147515
 GameObject:
   m_ObjectHideFlags: 0

@@ -86,21 +86,20 @@ namespace HackedDesign
         public void UpdateSprites()
         {
 
-            //SetSpritesheets();
             string currentFrameName = bodySpriteRenderer.sprite.name;
 
-            if (currentFrameName.StartsWith("r2c"))
+            if (currentFrameName.StartsWith("r2c", System.StringComparison.Ordinal))
             {
                 currentFrameName = currentFrameName.Substring(3);
             }
 
             //FIXME: Better than it was, but still GC issues with substring;
-            int ix = currentFrameName.LastIndexOf("_");
+            int ix = currentFrameName.LastIndexOf("_", System.StringComparison.Ordinal);
             string frame = currentFrameName.Substring(ix + 1);
             int frameIndex = 0;
             if (frame.Length > 0)
             {
-                int.TryParse(frame, out frameIndex);
+                _ = int.TryParse(frame, out frameIndex);
             }
 
 

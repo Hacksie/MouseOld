@@ -1192,6 +1192,7 @@ GameObject:
   - component: {fileID: 3529206032614963171}
   - component: {fileID: 6880499910656553449}
   - component: {fileID: 4162244570434435734}
+  - component: {fileID: 1159308521356067574}
   m_Layer: 0
   m_Name: Laptop
   m_TagString: Trigger
@@ -1231,18 +1232,40 @@ MonoBehaviour:
   hackSprite: {fileID: 0}
   overloadSprite: {fileID: 0}
   bugSprite: {fileID: 0}
-  requireInteraction: 1
-  requireHack: 0
-  requireOverload: 0
-  requireBug: 0
+  autoInteraction: 0
+  allowInteraction: 1
+  allowBug: 0
+  allowHack: 0
   allowOverload: 0
-  allowRepeatInteractions: 0
+  allowRepeatInteractions: 1
   allowNPCAutoInteraction: 0
-  triggerAction: PreludeLaptop
-  bugAction: 
-  hackAction: 
-  overloadAction: 
-  leaveAction: 
+  interactActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1159308521356067574}
+        m_TargetAssemblyTypeName: HackedDesign.Story.ActionInvoker, Assembly-CSharp
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  bugActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  hackActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  overloadActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leaveActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
   triggered: 0
   npcTriggered: 0
   overloaded: 0
@@ -1275,6 +1298,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &1159308521356067574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6090067449731250842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da42ddf162ce4e549ae84e8e1f140427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: PreludeLaptop
 --- !u!1 &6763238150788001320
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,28 +5,29 @@ namespace HackedDesign
 {
     public class StatsPresenter : MonoBehaviour
     {
-        float deltaTime = 0.0f;
-        bool show = true;
-        public Text statsText;
+        [SerializeField]
+        private bool show = true;
+        [SerializeField]
+        private Text statsText;
 
+        float deltaTime = 0.0f;
+        
         public void Initialize()
         {
-
-
         }
 
         public void Repaint()
         {
-            if (!show) return;
-
             deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 
             if (CoreGame.Instance.state.state == State.GameStateEnum.PLAYING)
             {
                 if (!this.gameObject.activeInHierarchy)
                 {
-                    Show(true);
+                    Show(true && show);
                 }
+
+                if (!show) return;
 
                 float msec = deltaTime * 1000.0f;
                 float fps = 1.0f / deltaTime;

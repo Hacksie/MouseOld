@@ -40,7 +40,6 @@ namespace HackedDesign
             {
                 return;
             }
-
             panel.sizeDelta = new Vector2(panel.sizeDelta.x, 0);
 
             //FIXME: fix the GC alloc

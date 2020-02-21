@@ -92,9 +92,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4018848563275878}
   - component: {fileID: 95934519643766982}
-  - component: {fileID: 114322400302453324}
   - component: {fileID: 61807340483984064}
   - component: {fileID: 61823095927018240}
+  - component: {fileID: 4763328188394681162}
+  - component: {fileID: 4539015788125069565}
   m_Layer: 0
   m_Name: Door_ew
   m_TagString: Trigger
@@ -136,45 +137,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114322400302453324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1503932064757186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 040397a4aabe3f645b0ac5c0d4707dce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enabled: 1
-  sprite: {fileID: 0}
-  interactSprite: {fileID: 0}
-  hackSprite: {fileID: 0}
-  overloadSprite: {fileID: 0}
-  bugSprite: {fileID: 0}
-  requireInteraction: 0
-  requireHack: 1
-  requireOverload: 0
-  requireBug: 0
-  allowOverload: 0
-  allowRepeatInteractions: 0
-  allowNPCAutoInteraction: 1
-  triggerAction: 
-  bugAction: 
-  hackAction: 
-  overloadAction: 
-  leaveAction: 
-  triggered: 0
-  npcTriggered: 0
-  overloaded: 0
-  hacked: 0
-  bugged: 0
-  colliders: []
-  doorCollider: {fileID: 61807340483984064}
-  animator: {fileID: 95934519643766982}
-  animate: 1
 --- !u!61 &61807340483984064
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -199,7 +161,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.125}
+  m_Size: {x: 1, y: 1.125}
   m_EdgeRadius: 0
 --- !u!61 &61823095927018240
 BoxCollider2D:
@@ -227,3 +189,93 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 2.5}
   m_EdgeRadius: 0
+--- !u!114 &4763328188394681162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503932064757186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
+  sprite: {fileID: 0}
+  interactSprite: {fileID: 0}
+  hackSprite: {fileID: 0}
+  overloadSprite: {fileID: 0}
+  bugSprite: {fileID: 0}
+  autoInteraction: 0
+  allowInteraction: 1
+  allowBug: 0
+  allowHack: 0
+  allowOverload: 0
+  requireInteraction: 1
+  requireHack: 0
+  requireOverload: 0
+  requireBug: 0
+  allowRepeatInteractions: 0
+  allowNPCAutoInteraction: 1
+  interactActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4539015788125069565}
+        m_TargetAssemblyTypeName: HackedDesign.Triggers.Door, Assembly-CSharp
+        m_MethodName: Open
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  bugActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  hackActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  overloadActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leaveActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4539015788125069565}
+        m_TargetAssemblyTypeName: HackedDesign.Triggers.Door, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  triggered: 0
+  npcTriggered: 0
+  overloaded: 0
+  hacked: 0
+  bugged: 0
+  colliders: []
+--- !u!114 &4539015788125069565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503932064757186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af835f2ea87ed844d922ea8b7457e598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 95934519643766982}
+  trigger: {fileID: 4763328188394681162}
+  open: 0
+  animate: 1

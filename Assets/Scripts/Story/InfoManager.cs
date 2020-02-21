@@ -79,10 +79,7 @@ namespace HackedDesign
                 foreach (var file in jsonTextFiles)
                 {
                     var character = JsonUtility.FromJson<Character>(file.text);
-
-                    //character.SetRandomAttributes();
                     characters.Add(character);
-                    //entities.Add(character);
                     Debug.Log(this.name + " character added: " + character.id);
                 }
             }
@@ -109,29 +106,49 @@ namespace HackedDesign
 
             public Character GetCharacter(string id)
             {
-                return characters.Find(e => e.id == id);
+                foreach (var v in characters)
+                {
+                    if (v.id == id)
+                        return v;
+                }
+                return null;
             }
 
             public Enemy GetEnemy(string id)
             {
-                return enemies.Find(e => e.id == id);
+                foreach (var v in enemies)
+                {
+                    if (v.id == id)
+                        return v;
+                }
+                return null;
             }
 
             public Enemy GetUniqueEnemy(string uniqueId)
             {
-                return uniqueEnemies.Find(e => e.uniqueId == uniqueId);
+                foreach (var v in uniqueEnemies)
+                {
+                    if (v.uniqueId == uniqueId)
+                        return v;
+                }
+                return null;
             }
 
             public Corp GetCorp(string id)
             {
-                return corps.Find(e => e.id == id);
+                foreach (var v in corps)
+                {
+                    if (v.id == id)
+                        return v;
+                }
+                return null;
             }            
 
             public void AddToKnownEnemies(string id)
             {
                 if (!knownEnemies.Exists(e => e.id == id))
                 {
-                    var character = enemies.Find(e => e.id == id);
+                    var character = GetEnemy(id);
                     if (character != null)
                     {
                         Debug.Log(this.name + ": adding entity " + character.id + " to known entities");

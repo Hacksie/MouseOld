@@ -14,9 +14,9 @@ namespace HackedDesign.Story
                     // FIXME: Check if any other condition exists first!
                     ActionManager.instance.AddActionMessage("Entry hacked");
                     ActionManager.instance.AddActionMessage("Security systems activated!");
-                    ActionManager.instance.AddActionMessage("60 second timer initiated!");
+                    ActionManager.instance.AddActionMessage($"{CoreGame.Instance.state.player.baselevelTimer.ToString()} second timer initiated!");
                     CoreGame.Instance.state.currentLevel.startTime = Time.time;
-                    CoreGame.Instance.state.currentLevel.timer.Start();
+                    CoreGame.Instance.state.currentLevel.timer.Start(CoreGame.Instance.state.player.baselevelTimer);
                     CoreGame.Instance.state.currentLight = State.GlobalLightTypes.Warn;
                     return true;
                 case "BatteryFill":
@@ -37,7 +37,7 @@ namespace HackedDesign.Story
                 case "EndComputer":
                     Debug.Log("GlobalActions: invoke EndComputer");
                     ActionManager.instance.AddActionMessage("Alert shutdown");
-                    CoreGame.Instance.state.currentLevel.timer.Start();
+                    CoreGame.Instance.state.currentLevel.timer.Start(CoreGame.Instance.state.player.baselevelTimer);
                     CoreGame.Instance.state.currentLight = State.GlobalLightTypes.Default;
                     CoreGame.Instance.state.currentLevel.completed = true;
                     return true;

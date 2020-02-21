@@ -20,6 +20,7 @@ namespace HackedDesign.State
         public int keycards = 0;
         public int credits = 0;
         public int bugs = 1;
+        public int baselevelTimer = 90;
 
         public bool CanOverload()
         {
