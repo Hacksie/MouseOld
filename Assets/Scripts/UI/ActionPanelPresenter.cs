@@ -16,7 +16,7 @@ namespace HackedDesign
 
         public void Repaint()
         {
-            if (CoreGame.Instance.State.state == GameStateEnum.PLAYING)
+            if (CoreGame.Instance.state.state == State.GameStateEnum.PLAYING)
             {
                 if (!this.gameObject.activeInHierarchy)
                 {
@@ -37,8 +37,8 @@ namespace HackedDesign
 
         private void RepaintCounts()
         {
-            bugsCountText.text = CoreGame.Instance.State.player.bugs.ToString();
-            batterySprite.rectTransform.sizeDelta = new Vector2(batterySpriteMaxSize.x * CoreGame.Instance.State.player.battery / CoreGame.Instance.State.player.maxBattery, batterySpriteMaxSize.y);
+            bugsCountText.text = CoreGame.Instance.state.player.bugs.ToString();
+            batterySprite.rectTransform.sizeDelta = new Vector2(batterySpriteMaxSize.x * CoreGame.Instance.state.player.battery / CoreGame.Instance.state.player.maxBattery, batterySpriteMaxSize.y);
         }
     }
 }

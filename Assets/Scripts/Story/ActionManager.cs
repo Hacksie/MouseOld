@@ -65,16 +65,16 @@ namespace HackedDesign.Story
 
             CoreGame.Instance.SaveGame();
 
-            if (CoreGame.Instance.State.currentLevel == null)
+            if (CoreGame.Instance.state.currentLevel == null)
             {
                 Debug.LogError(this.name + ": cannot invoke an action if no level is loaded");
             }
 
             bool handled = false;
 
-            if (actions.ContainsKey(CoreGame.Instance.State.currentLevel.template.name))
+            if (actions.ContainsKey(CoreGame.Instance.state.currentLevel.template.name))
             {
-                handled = actions[CoreGame.Instance.State.currentLevel.template.name].Invoke(actionName);
+                handled = actions[CoreGame.Instance.state.currentLevel.template.name].Invoke(actionName);
             }
             if(!handled) {
                 handled = actions["Global"].Invoke(actionName);
@@ -82,7 +82,7 @@ namespace HackedDesign.Story
 
             if(!handled)
             {
-                Debug.LogError(this.name + ": cannot invoke action: " + actionName + " in current level: " + CoreGame.Instance.State.currentLevel.template.name);
+                Debug.LogError(this.name + ": cannot invoke action: " + actionName + " in current level: " + CoreGame.Instance.state.currentLevel.template.name);
             }
         }
     }

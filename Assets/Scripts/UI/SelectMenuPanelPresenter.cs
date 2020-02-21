@@ -14,8 +14,8 @@ namespace HackedDesign
         private Story.InfoPanelPresenter infoPanel = null;
         private Story.TaskPanelPresenter taskPanel = null;
         private Level.LevelMapPanelPresenter levelMapPanel = null;
-        private GameObject StashPanel = null;
-        private GameObject PsychPanel = null;
+        private StashPanelPresenter stashPanel = null;
+        private PsychPanelPresenter psychPanel = null;
 
         public Button InfoButton = null;
         public Button TasksButton = null;
@@ -24,17 +24,19 @@ namespace HackedDesign
         public Button MapButton = null;
 
 
-        public void Initialize(SelectMenuManager selectMenuManager, Story.InfoPanelPresenter infoPanel, Story.TaskPanelPresenter taskPanel, Level.LevelMapPanelPresenter levelMapPanel)
+        public void Initialize(SelectMenuManager selectMenuManager, Story.InfoPanelPresenter infoPanel, Story.TaskPanelPresenter taskPanel, StashPanelPresenter stashPanel, PsychPanelPresenter psychPanel, Level.LevelMapPanelPresenter levelMapPanel)
         {
             this.selectMenuManager = selectMenuManager;
             this.infoPanel = infoPanel;
             this.taskPanel = taskPanel;
             this.levelMapPanel = levelMapPanel;
+            this.stashPanel = stashPanel;
+            this.psychPanel = psychPanel;
         }
 
         public void Repaint()
         {
-            if (CoreGame.Instance.State.state == GameStateEnum.SELECTMENU && !this.gameObject.activeInHierarchy)
+            if (CoreGame.Instance.state.state == State.GameStateEnum.SELECTMENU && !this.gameObject.activeInHierarchy)
             {
                 Show(true);
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
@@ -59,7 +61,7 @@ namespace HackedDesign
                 }
 
             }
-            else if (CoreGame.Instance.State.state != GameStateEnum.SELECTMENU && this.gameObject.activeInHierarchy)
+            else if (CoreGame.Instance.state.state != State.GameStateEnum.SELECTMENU && this.gameObject.activeInHierarchy)
             {
                 Show(false);
             }
@@ -67,10 +69,9 @@ namespace HackedDesign
             //if(selectMenuManager.)
             infoPanel.Repaint();
             taskPanel.Repaint();
+            stashPanel.Repaint();
+            psychPanel.Repaint();
             levelMapPanel.Repaint();
-
-
-
         }
 
         private void Show(bool flag)
@@ -84,46 +85,29 @@ namespace HackedDesign
             {
                 return;
             }
-
-            // switch(selectMenuManager.GetMenuState())
-            // {
-            // 	case SelectMenuManager.SelectMenuState.INFO:
-            // 	//infoPanel.Show(true);
-            // 	break;
-
-            // 	case SelectMenuManager.SelectMenuState.TASKS:
-            // 	//taskPanel.Show(true);
-            // 	break;
-
-            // 	case SelectMenuManager.SelectMenuState.STASH:
-            // 	break;
-
-            // 	case SelectMenuManager.SelectMenuState.PSYCH:
-            // 	break;
-            // }
         }
 
         public void HideAll()
         {
-            if (infoPanel != null)
-            {
-                //infoPanel.Show(false);
-            }
+            //if (infoPanel != null)
+            //{
+            //    //infoPanel.Show(false);
+            //}
 
-            if (taskPanel != null)
-            {
-                //taskPanel.Show(false);
-            }
+            //if (taskPanel != null)
+            //{
+            //    //taskPanel.Show(false);
+            //}
 
-            if (StashPanel != null)
-            {
-                StashPanel.SetActive(false);
-            }
+            //if (stashPanel != null)
+            //{
+            //    StashPanel.SetActive(false);
+            //}
 
-            if (PsychPanel != null)
-            {
-                PsychPanel.SetActive(false);
-            }
+            //if (psychPanel != null)
+            //{
+            //    PsychPanel.SetActive(false);
+            //}
         }
 
         public void ResumeClickEvent()
@@ -142,6 +126,20 @@ namespace HackedDesign
         {
             Debug.Log("Select Menu Task Clicked");
             selectMenuManager.MenuState = SelectMenuManager.SelectMenuState.TASKS;
+            Show(true);
+        }
+
+        public void StashClickEvent()
+        {
+            Debug.Log("Select Menu Task Clicked");
+            selectMenuManager.MenuState = SelectMenuManager.SelectMenuState.STASH;
+            Show(true);
+        }
+
+        public void PsychClickEvent()
+        {
+            Debug.Log("Select Menu Task Clicked");
+            selectMenuManager.MenuState = SelectMenuManager.SelectMenuState.PSYCH;
             Show(true);
         }
 

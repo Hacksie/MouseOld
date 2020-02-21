@@ -22,7 +22,7 @@ namespace HackedDesign
 
             public void Repaint()
             {
-                if (CoreGame.Instance.State.state == GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.TASKS)
+                if (CoreGame.Instance.state.state == State.GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.TASKS)
                 {
                     if (!this.gameObject.activeInHierarchy)
                     {
@@ -49,30 +49,30 @@ namespace HackedDesign
                     GameObject.Destroy(taskButtonParent.transform.GetChild(i).gameObject);
                 }
 
-                for (int i = 0; i < CoreGame.Instance.State.taskList.Count; i++)
+                for (int i = 0; i < CoreGame.Instance.state.taskList.Count; i++)
                 {
 
                     var go = GameObject.Instantiate(taskButtonPrefab, Vector3.zero, Quaternion.identity, taskButtonParent.transform);
                     var goText = go.GetComponentInChildren<UnityEngine.UI.Text>();
-                    goText.text = CoreGame.Instance.State.taskList[i].title;
+                    goText.text = CoreGame.Instance.state.taskList[i].title;
                 }
 
-                RepaintTaskDescription(CoreGame.Instance.State.selectedTask);
+                RepaintTaskDescription(CoreGame.Instance.state.selectedTask);
             }
 
             public void RepaintTaskDescription(Task selectedTask)
             {
 
-                if (CoreGame.Instance.State.selectedTask == null)
+                if (CoreGame.Instance.state.selectedTask == null)
                 {
                     taskDescription.text = "";
 
                 }
                 else
                 {
-                    taskDescription.text = CoreGame.Instance.State.selectedTask.description;
+                    taskDescription.text = CoreGame.Instance.state.selectedTask.description;
                     taskDescription.text += "\n";
-                    foreach(TaskObjective objective in CoreGame.Instance.State.selectedTask.objectives)
+                    foreach(TaskObjective objective in CoreGame.Instance.state.selectedTask.objectives)
                     {
                         taskDescription.text += "\n[" + (objective.completed ? "*" : " ") + "] " + objective.objective + (objective.optional ? "(*)" : "") ;
                     }

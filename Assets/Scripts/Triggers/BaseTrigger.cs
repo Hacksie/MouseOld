@@ -132,7 +132,7 @@ namespace HackedDesign
             {
                 //Debug.Log(this.name + ": " + source.name + " invoked overload action: " + overloadAction);
                 overloaded = true;
-                CoreGame.Instance.State.player.ConsumeOverload();
+                CoreGame.Instance.state.player.ConsumeOverload();
                 if (!string.IsNullOrWhiteSpace(overloadAction))
                 {
                     Story.ActionManager.instance.Invoke(overloadAction);
@@ -144,7 +144,7 @@ namespace HackedDesign
                 //Debug.Log(this.name + ": " + source.name + " invoked hack action: " + hackAction);
 
 
-                if (CoreGame.Instance.State.player.ConsumeHack())
+                if (CoreGame.Instance.state.player.ConsumeHack())
                 {
                     hacked = true;
                     if (!string.IsNullOrWhiteSpace(hackAction))
@@ -159,7 +159,7 @@ namespace HackedDesign
                 //Debug.Log(this.name + ": " + source.name + " invoked bug action: " + bugAction);
                 bugged = true;
                 hacked = true;
-                CoreGame.Instance.State.player.ConsumeBug();
+                CoreGame.Instance.state.player.ConsumeBug();
                 if (!string.IsNullOrWhiteSpace(bugAction))
                 {
                     Story.ActionManager.instance.Invoke(bugAction);
@@ -202,7 +202,7 @@ namespace HackedDesign
                     Invoke(source);
                     return true;
                 }
-                if (!overloaded && !hacked && !bugged && CoreGame.Instance.State.player.CanOverload() && inputController.OverloadButtonUp() && !requireOverload)
+                if (!overloaded && !hacked && !bugged && CoreGame.Instance.state.player.CanOverload() && inputController.OverloadButtonUp() && !requireOverload)
                 {
                     Overload(source);
                     return true;
@@ -212,12 +212,12 @@ namespace HackedDesign
                 //     triggered = true;
                 //     Keycard();
                 // }
-                if (!overloaded && !hacked && !bugged && CoreGame.Instance.State.player.CanBug() && inputController.BugButtonUp() && !requireBug)
+                if (!overloaded && !hacked && !bugged && CoreGame.Instance.state.player.CanBug() && inputController.BugButtonUp() && !requireBug)
                 {
                     Bug(source);
                     return true;
                 }
-                if (!overloaded && !hacked && !bugged && CoreGame.Instance.State.player.CanHack() && inputController.HackButtonUp() && !requireBug)
+                if (!overloaded && !hacked && !bugged && CoreGame.Instance.state.player.CanHack() && inputController.HackButtonUp() && !requireBug)
                 {
                     Hack(source);
                     return true;

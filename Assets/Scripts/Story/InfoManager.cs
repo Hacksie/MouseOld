@@ -151,6 +151,11 @@ namespace HackedDesign
                 int uniqueId = uniqueEnemies.Count;
                 var enemy = GetEnemy(id);
 
+                if(enemy == null)
+                {
+                    Debug.LogError(this.name + ": enemy not found: " + id);
+                }
+
                 var newEnemy = new Enemy {
                     id = enemy.id,
                     uniqueId = enemy.id + uniqueId.ToString(),

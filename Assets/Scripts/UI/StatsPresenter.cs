@@ -21,7 +21,7 @@ namespace HackedDesign
 
             deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 
-            if (CoreGame.Instance.State.state == GameStateEnum.PLAYING)
+            if (CoreGame.Instance.state.state == State.GameStateEnum.PLAYING)
             {
                 if (!this.gameObject.activeInHierarchy)
                 {

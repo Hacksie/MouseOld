@@ -18,12 +18,12 @@ namespace HackedDesign
         public bool isEnemy = false;
         public string character;
         public string uniqueId;
-        public Sprite[] bodySpritesheet;
-        public Sprite[] eyesSpritesheet;
-        public Sprite[] shirtSpritesheet;
-        public Sprite[] pantsSpritesheet;
-        public Sprite[] shoesSpritesheet;
-        public Sprite[] hairSpritesheet;
+        private Sprite[] bodySpritesheet;
+        private Sprite[] eyesSpritesheet;
+        private Sprite[] shirtSpritesheet;
+        private Sprite[] pantsSpritesheet;
+        private Sprite[] shoesSpritesheet;
+        private Sprite[] hairSpritesheet;
 
         private int spriteOffset;
 

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1809079235}
   - component: {fileID: 4246859651488603324}
   m_Layer: 9
-  m_Name: Security Guard Easy
+  m_Name: Easy Guard
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +131,6 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   facePlayer: 1
   polyNavAgent: {fileID: 1809079235}
-  alertLight: {fileID: 6653725784068743768}
   enemy: EasyGuard
   state: 0
   patrolWait: 7
@@ -513,7 +512,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6653725784068743768
 Transform:
   m_ObjectHideFlags: 0

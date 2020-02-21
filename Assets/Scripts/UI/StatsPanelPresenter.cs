@@ -23,7 +23,7 @@ namespace HackedDesign
 
         public void Repaint()
         {
-            if (CoreGame.Instance.State.state == GameStateEnum.PLAYING)
+            if (CoreGame.Instance.state.state == State.GameStateEnum.PLAYING)
             {
                 if (!this.gameObject.activeInHierarchy)
                 {
@@ -50,8 +50,8 @@ namespace HackedDesign
 
         private void RepaintKeycards()
         {
-            keycard.color = CoreGame.Instance.State.player.keycards >= 1 ? keycardFullColour : keycardEmptyColour;
-            keycardText.text = "" + CoreGame.Instance.State.player.keycards;
+            keycard.color = CoreGame.Instance.state.player.keycards >= 1 ? keycardFullColour : keycardEmptyColour;
+            keycardText.text = "" + CoreGame.Instance.state.player.keycards;
             // keycard2.color = CoreGame.Instance.State.player.keycards >= 2 ? keycardFullColour : keycardEmptyColour;
             // keycard3.color = CoreGame.Instance.State.player.keycards >= 3 ? keycardFullColour : keycardEmptyColour;
             // keycard4.color = CoreGame.Instance.State.player.keycards >= 4 ? keycardFullColour : keycardEmptyColour;
@@ -64,8 +64,8 @@ namespace HackedDesign
         }
         private void RepaintBattery()
         {
-            batteryText.text = CoreGame.Instance.State.player.battery + "/" +CoreGame.Instance.State.player.maxBattery;
-            float percent = 1.0f * CoreGame.Instance.State.player.battery / CoreGame.Instance.State.player.maxBattery;
+            batteryText.text = CoreGame.Instance.state.player.battery + "/" +CoreGame.Instance.state.player.maxBattery;
+            float percent = 1.0f * CoreGame.Instance.state.player.battery / CoreGame.Instance.state.player.maxBattery;
             if (percent >= .60)
             {
                 fullBattery.SetActive(true);

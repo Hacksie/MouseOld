@@ -15,14 +15,14 @@ namespace HackedDesign.Story
                     ActionManager.instance.AddActionMessage("Entry hacked");
                     ActionManager.instance.AddActionMessage("Security systems activated!");
                     ActionManager.instance.AddActionMessage("60 second timer initiated!");
-                    CoreGame.Instance.State.currentLevel.startTime = Time.time;
-                    CoreGame.Instance.State.currentLevel.timer.Start();
-                    CoreGame.Instance.State.currentLight = GlobalLightTypes.Warn;
+                    CoreGame.Instance.state.currentLevel.startTime = Time.time;
+                    CoreGame.Instance.state.currentLevel.timer.Start();
+                    CoreGame.Instance.state.currentLight = State.GlobalLightTypes.Warn;
                     return true;
                 case "BatteryFill":
                     Debug.Log("GlobalActions: invoke BatteryFill");
                     ActionManager.instance.AddActionMessage("Battery filled");
-                    CoreGame.Instance.State.player.battery = CoreGame.Instance.State.player.maxBattery;
+                    CoreGame.Instance.state.player.battery = CoreGame.Instance.state.player.maxBattery;
                     return true;
                 case "TimerStart":
                     Debug.Log("GlobalActions: invoke TimerStart");
@@ -32,23 +32,23 @@ namespace HackedDesign.Story
                     return true;
                 case "TimerExpired":
                     Debug.Log("GlobalActions: invoke TimerEnd");
-                    CoreGame.Instance.State.currentLight = GlobalLightTypes.Alert;
+                    CoreGame.Instance.state.currentLight = State.GlobalLightTypes.Alert;
                     return true;
                 case "EndComputer":
                     Debug.Log("GlobalActions: invoke EndComputer");
                     ActionManager.instance.AddActionMessage("Alert shutdown");
-                    CoreGame.Instance.State.currentLevel.timer.Start();
-                    CoreGame.Instance.State.currentLight = GlobalLightTypes.Default;
-                    CoreGame.Instance.State.currentLevel.completed = true;
+                    CoreGame.Instance.state.currentLevel.timer.Start();
+                    CoreGame.Instance.state.currentLight = State.GlobalLightTypes.Default;
+                    CoreGame.Instance.state.currentLevel.completed = true;
                     return true;
                 case "Captured":
                     return true;
                 case "LevelExit":
                     Debug.Log("GlobalActions: invoke LevelExit");
-                    if(CoreGame.Instance.State.currentLevel.completed)
+                    if(CoreGame.Instance.state.currentLevel.completed)
                     {
                         ActionManager.instance.AddActionMessage("Mission completed");
-                        CoreGame.Instance.State.currentLevel.timer.Stop();
+                        CoreGame.Instance.state.currentLevel.timer.Stop();
                         Debug.Log("Level Over");
                         CoreGame.Instance.SetMissionComplete();
                         

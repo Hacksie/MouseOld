@@ -21,7 +21,7 @@ namespace HackedDesign {
                 requireInteraction = true;
                 
 
-                triggerAction = CoreGame.Instance.State.currentLevel.template.exitAction;
+                triggerAction = CoreGame.Instance.state.currentLevel.template.exitAction;
 
             }
 

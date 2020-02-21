@@ -10,7 +10,7 @@ namespace HackedDesign
         {
             [Header("Game Objects")]
             public PolyNav.PolyNavAgent polyNavAgent;
-            public Transform alertLight;
+            //public Transform alertLight;
 
             [Header("Settings")]
             public string enemy = "";
@@ -84,35 +84,32 @@ namespace HackedDesign
             {
 
                 this.direction = NormaliseDirectionVector(direction);
-                UpdateAlertLight(this.direction);
-
-
-
+                //UpdateAlertLight(this.direction);
             }
 
-            public void UpdateAlertLight(Vector2Int direction)
-            {
-                if (direction == Vector2Int.zero)
-                {
-                    alertLight.rotation = Quaternion.Euler(0, 0, 180);
-                }
-                if (direction == Vector2Int.down)
-                {
-                    alertLight.rotation = Quaternion.Euler(0, 0, 180);
-                }
-                if (direction == Vector2Int.up)
-                {
-                    alertLight.rotation = Quaternion.Euler(0, 0, 0);
-                }
-                if (direction == Vector2Int.left)
-                {
-                    alertLight.rotation = Quaternion.Euler(0, 0, 90);
-                }
-                if (direction == Vector2Int.right)
-                {
-                    alertLight.rotation = Quaternion.Euler(0, 0, 270);
-                }
-            }
+            // public void UpdateAlertLight(Vector2Int direction)
+            // {
+            //     if (direction == Vector2Int.zero)
+            //     {
+            //         alertLight.rotation = Quaternion.Euler(0, 0, 180);
+            //     }
+            //     if (direction == Vector2Int.down)
+            //     {
+            //         alertLight.rotation = Quaternion.Euler(0, 0, 180);
+            //     }
+            //     if (direction == Vector2Int.up)
+            //     {
+            //         alertLight.rotation = Quaternion.Euler(0, 0, 0);
+            //     }
+            //     if (direction == Vector2Int.left)
+            //     {
+            //         alertLight.rotation = Quaternion.Euler(0, 0, 90);
+            //     }
+            //     if (direction == Vector2Int.right)
+            //     {
+            //         alertLight.rotation = Quaternion.Euler(0, 0, 270);
+            //     }
+            // }
 
             public override void UpdateBehaviour()
             {
@@ -178,7 +175,7 @@ namespace HackedDesign
                     }
                 }
 
-                if (CoreGame.Instance.State.alertTrap != null)
+                if (CoreGame.Instance.state.alertTrap != null)
                 {
                     Debug.Log("Enemy is responding to alert: " + this.name);
                     state = EnemyState.RESPONDING;
@@ -190,20 +187,20 @@ namespace HackedDesign
 
                     patrolLastCheck = Time.time;
                     // Keep patrolling
-                    var location = CoreGame.Instance.State.currentLevel.ConvertWorldToLevelPos(transform.position);
+                    var location = CoreGame.Instance.state.currentLevel.ConvertWorldToLevelPos(transform.position);
 
-                    var currentDirections = CoreGame.Instance.State.currentLevel.MovementDirections(location, false, false);
+                    var currentDirections = CoreGame.Instance.state.currentLevel.MovementDirections(location, false, false);
                     currentDirections.Randomize();
 
                     if (currentDirections.Count > 0)
                     {
                         currentDirection = currentDirections[0];
 
-                        polyNavAgent.SetDestination(CoreGame.Instance.State.currentLevel.ConvertLevelPosToWorld(currentDirection));
+                        polyNavAgent.SetDestination(CoreGame.Instance.state.currentLevel.ConvertLevelPosToWorld(currentDirection));
 
                     }
                     // Change this to look at the actual current direction
-                    FaceDirection(CoreGame.Instance.State.currentLevel.ConvertLevelPosToWorld(currentDirection) - (Vector2)transform.position);
+                    FaceDirection(CoreGame.Instance.state.currentLevel.ConvertLevelPosToWorld(currentDirection) - (Vector2)transform.position);
                 }
 
             }
@@ -224,7 +221,7 @@ namespace HackedDesign
                     }
                 }
 
-                if (CoreGame.Instance.State.alertTrap == null)
+                if (CoreGame.Instance.state.alertTrap == null)
                 {
                     Debug.Log("Alert camera cleared: " + this.name);
                     CoreGame.Instance.ClearAlert();
@@ -232,7 +229,7 @@ namespace HackedDesign
                     return;
                 }
 
-                if (CoreGame.Instance.State.currentLevel.ConvertWorldToLevelPos(this.transform.position) == CoreGame.Instance.State.currentLevel.ConvertWorldToLevelPos(CoreGame.Instance.State.alertTrap.transform.position))
+                if (CoreGame.Instance.state.currentLevel.ConvertWorldToLevelPos(this.transform.position) == CoreGame.Instance.state.currentLevel.ConvertWorldToLevelPos(CoreGame.Instance.state.alertTrap.transform.position))
                 {
                     Debug.Log("Enemy is clearing alert: " + this.name);
                     CoreGame.Instance.ClearAlert();
@@ -240,10 +237,10 @@ namespace HackedDesign
                     return;
                 }
 
-                if (CoreGame.Instance.State.alertTrap != null)
+                if (CoreGame.Instance.state.alertTrap != null)
                 {
 
-                    Vector3 pos = CoreGame.Instance.State.alertTrap.transform.position;
+                    Vector3 pos = CoreGame.Instance.state.alertTrap.transform.position;
                     if (polyNavAgent.primeGoal != new Vector2(pos.x, pos.y))
                     {
                         polyNavAgent.SetDestination(pos);

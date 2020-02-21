@@ -18,7 +18,7 @@ namespace HackedDesign
 
         public void Repaint()
         {
-            if (CoreGame.Instance.State.state == GameStateEnum.TITLECARD)
+            if (CoreGame.Instance.state.state == State.GameStateEnum.TITLECARD)
             {
                 if (!this.gameObject.activeInHierarchy)
                 {
@@ -34,13 +34,13 @@ namespace HackedDesign
 
         public void ClickEvent()
         {
-            actionManager.Invoke(this.nextActions[CoreGame.Instance.State.story.act]);
+            actionManager.Invoke(this.nextActions[CoreGame.Instance.state.story.act]);
         }        
 
         private void Show(bool flag)
         {
             this.gameObject.SetActive(flag);
-            this.titleText.text = titleStrings[CoreGame.Instance.State.story.act];
+            this.titleText.text = titleStrings[CoreGame.Instance.state.story.act];
         }   
 
 

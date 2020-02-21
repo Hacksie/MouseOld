@@ -38,7 +38,7 @@ namespace HackedDesign.Story {
             }
 
             public void Repaint () {
-                if (CoreGame.Instance.State.state == GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.INFO) {
+                if (CoreGame.Instance.state.state == State.GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.INFO) {
                     if (!this.gameObject.activeInHierarchy) {
                         Show (true);
                     }

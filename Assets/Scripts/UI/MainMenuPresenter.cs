@@ -39,7 +39,7 @@ namespace HackedDesign {
 
 		public void Repaint()
 		{
-			if(CoreGame.Instance.State.state == GameStateEnum.MAINMENU)
+			if(CoreGame.Instance.state.state == State.GameStateEnum.MAINMENU)
 			{
 				if(!this.gameObject.activeInHierarchy) {
 					this.gameObject.SetActive(true);

@@ -53,7 +53,7 @@ namespace HackedDesign.Story
                 case "PreludeCat":
                 case "PreludeCat1":
                     Debug.Log("PreludeActions: prelude Cat");
-                    CoreGame.Instance.State.story.prelude_cat_talk = true;
+                    CoreGame.Instance.state.story.prelude_cat_talk = true;
                     Dialogue.NarrationManager.instance.ShowNarration("PreludeCat1");
                     return true;
                 case "PreludeCat2":
@@ -91,22 +91,22 @@ namespace HackedDesign.Story
         public void PreludeLaptop()
         {
             Debug.Log("PreludeActions: prelude laptop");
-            CoreGame.Instance.State.story.prelude_laptop = true;
+            CoreGame.Instance.state.story.prelude_laptop = true;
             ActionManager.instance.AddActionMessage("Task 'Milk Run' added to Tasks");
             //taskManager.selectedTask = 
             InfoManager.instance.AddToKnownCorps("Saika");
             //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kat"));
 
 
-            if (!CoreGame.Instance.State.taskList.Exists(t => t.title == "Milk Run"))
+            if (!CoreGame.Instance.state.taskList.Exists(t => t.title == "Milk Run"))
             {
                 var task = TaskDefinitionManager.instance.GetTaskInstance("Milk Run");
-                CoreGame.Instance.State.taskList.Add(task);
-                CoreGame.Instance.State.selectedTask = task;
+                CoreGame.Instance.state.taskList.Add(task);
+                CoreGame.Instance.state.selectedTask = task;
             }
 
             SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
-            CoreGame.Instance.State.state = GameStateEnum.SELECTMENU;
+            CoreGame.Instance.state.state = State.GameStateEnum.SELECTMENU;
         }
 
 
@@ -114,7 +114,7 @@ namespace HackedDesign.Story
 
         public void PreludeExit()
         {
-            if (CoreGame.Instance.State.taskList.Exists(t => t.title == "Milk Run"))
+            if (CoreGame.Instance.state.taskList.Exists(t => t.title == "Milk Run"))
             {
                 Debug.Log("PreludeActions: can exit");
                 CoreGame.Instance.LoadNewLevel("Arisana Bar");

@@ -14,17 +14,17 @@ namespace HackedDesign {
 		private void Show (bool flag) {
 			Debug.Log ("Set mission complete " + flag);
 			this.gameObject.SetActive (flag);
-            missionTime.text = (Time.time - CoreGame.Instance.State.currentLevel.startTime).ToString("0s");
-			infoCollected.text = CoreGame.Instance.State.currentLevel.infoCollected + "/" + CoreGame.Instance.State.currentLevel.maxInfo;
-			missionCredits.text = "$" + (CoreGame.Instance.State.currentLevel.completeCredits + CoreGame.Instance.State.currentLevel.creditsCollected);
+            missionTime.text = (Time.time - CoreGame.Instance.state.currentLevel.startTime).ToString("0s");
+			infoCollected.text = CoreGame.Instance.state.currentLevel.infoCollected + "/" + CoreGame.Instance.state.currentLevel.maxInfo;
+			missionCredits.text = "$" + (CoreGame.Instance.state.currentLevel.completeCredits + CoreGame.Instance.state.currentLevel.creditsCollected);
 
 
 		}        
 
 		public void Repaint () {
-			if (CoreGame.Instance.State.state == GameStateEnum.MISSIONCOMPLETE && !this.gameObject.activeInHierarchy) {
+			if (CoreGame.Instance.state.state == State.GameStateEnum.MISSIONCOMPLETE && !this.gameObject.activeInHierarchy) {
 				Show (true);
-			} else if (CoreGame.Instance.State.state != GameStateEnum.MISSIONCOMPLETE && this.gameObject.activeInHierarchy) {
+			} else if (CoreGame.Instance.state.state != State.GameStateEnum.MISSIONCOMPLETE && this.gameObject.activeInHierarchy) {
 				Show (false);
 			}
 		}
