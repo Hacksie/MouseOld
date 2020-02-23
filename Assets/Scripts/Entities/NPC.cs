@@ -9,7 +9,7 @@ namespace HackedDesign.Entity
     public class NPC : BaseEntity
     {
 
-        public const string UNKNOWN_STRING = @"?";
+        
 
         //[SerializeField]
         //SpriteRenderer actionBubble = null;
@@ -38,27 +38,16 @@ namespace HackedDesign.Entity
                 Debug.LogError(this.name + ": text is null");
             }
 
-            SetHandleText();
+            //SetHandleText();
         }
 
         public override void UpdateBehaviour()
         {
 
             base.UpdateBehaviour();
-            SetHandleText();
+            
         }
 
-        void SetHandleText()
-        {
-            
-            if(text == null)
-            {
-                return; 
-            }
-            var c = InfoManager.instance.GetCharacter(character);
-            text.text = c.handle;
-            
-            
-        }
+
     }
 }

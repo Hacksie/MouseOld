@@ -46,10 +46,9 @@ namespace HackedDesign
                 Debug.Log(this.name + ": rendering level");
                 DestroyLevel();
                 PopulateLevelTilemap(level);
-                //PopulateEnemySpawns (level);
 
 
-                PopulateLevelDoors(level);
+                
 
                 //PopulateCameraSpawns (level);
 
@@ -243,12 +242,14 @@ namespace HackedDesign
 
             }
 
-            void PopulateLevelDoors(Level level)
+            public List<Triggers.Door> PopulateLevelDoors(Level level)
             {
+                List<Triggers.Door> results = new List<Triggers.Door>();
+
                 if (!level.template.generateDoors)
                 {
                     Debug.Log("Skipping doors");
-                    return;
+                    return results;
                 }
                 //FIXME: swap i & j to be consistent!
                 for (int i = 0; i < level.map.Count(); i++)
@@ -257,53 +258,89 @@ namespace HackedDesign
                     {
                         ProxyRoom room = level.map[i].rooms[j];
 
-                        if (room != null)
+                        if (room == null)
                         {
-                            if (room.top == ProxyRoom.DOOR)
+                            continue;
+                        }
+
+                        if (room.top == ProxyRoom.DOOR)
+                        {
+                            Vector3 pos = new Vector3(j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                            var go = Instantiate(doorewPrefab, pos, Quaternion.identity, levelParent.transform);
+                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            if (door != null)
                             {
-                                Vector3 pos = new Vector3(j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
-                                GameObject.Instantiate(doorewPrefab, pos, Quaternion.identity, levelParent.transform);
+                                results.Add(door);
                             }
+                        }
 
-                            if (room.left == ProxyRoom.DOOR)
+                        if (room.left == ProxyRoom.DOOR)
+                        {
+                            Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
+                            var go = Instantiate(doornsPrefab, pos, Quaternion.identity, levelParent.transform);
+                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            if (door != null)
                             {
-                                Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
-                                GameObject.Instantiate(doornsPrefab, pos, Quaternion.identity, levelParent.transform);
+                                results.Add(door);
                             }
+                        }
 
-                            if (room.top == ProxyRoom.EXIT)
+                        if (room.top == ProxyRoom.EXIT)
+                        {
+                            Vector3 pos = new Vector3(j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                            var go = Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
+                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            if (door != null)
                             {
-                                Vector3 pos = new Vector3(j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
-                                GameObject.Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
+                                results.Add(door);
                             }
+                        }
 
-                            if (room.left == ProxyRoom.EXIT)
+                        if (room.left == ProxyRoom.EXIT)
+                        {
+                            Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
+                            var go = Instantiate(exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
+                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            if (door != null)
                             {
-                                Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
-                                GameObject.Instantiate(exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
+                                results.Add(door);
                             }
-                            if (room.bottom == ProxyRoom.EXIT)
+                        }
+                        if (room.bottom == ProxyRoom.EXIT)
+                        {
+                            Vector3 pos = new Vector3(j * 4 + 2, (i + 1) * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                            var go = Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
+                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            if (door != null)
                             {
-                                Vector3 pos = new Vector3(j * 4 + 2, (i+1) * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
-                                GameObject.Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
+                                results.Add(door);
                             }
-
-
-                            if (room.top == ProxyRoom.ENTRY)
+                        }
+                        if (room.top == ProxyRoom.ENTRY)
+                        {
+                            Vector3 pos = new Vector3(j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                            var go = Instantiate(entryewPrefab, pos, Quaternion.identity, levelParent.transform);
+                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            if (door != null)
                             {
-                                Vector3 pos = new Vector3(j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
-                                GameObject.Instantiate(entryewPrefab, pos, Quaternion.identity, levelParent.transform);
+                                results.Add(door);
                             }
+                        }
 
-                            if (room.left == ProxyRoom.ENTRY)
+                        if (room.left == ProxyRoom.ENTRY)
+                        {
+                            Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
+                            var go = Instantiate(entrynsPrefab, pos, Quaternion.identity, levelParent.transform);
+                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            if (door != null)
                             {
-                                Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
-                                GameObject.Instantiate(entrynsPrefab, pos, Quaternion.identity, levelParent.transform);
-                            }                            
-
+                                results.Add(door);
+                            }
                         }
                     }
                 }
+
+                return results;
             }
 
             public List<Entity.BaseEnemy> PopulateEnemySpawns(Level level)

@@ -33,6 +33,7 @@ namespace HackedDesign.State
         
         public List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger>();
         public List<Entity.BaseEntity> entityList = new List<Entity.BaseEntity>();
+        public List<Triggers.Door> doorList = new List<Triggers.Door>();
 
         
     }

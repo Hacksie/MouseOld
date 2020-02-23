@@ -5,7 +5,9 @@ using UnityEngine.Events;
 
 namespace HackedDesign.Triggers
 {
-    class Door : MonoBehaviour
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(BaseTrigger))]
+    public class Door : MonoBehaviour
     {
         public Animator animator;
         public BaseTrigger trigger;
@@ -13,19 +15,24 @@ namespace HackedDesign.Triggers
         public bool open = false;
         public bool animate = true;
 
-        public void Initialize()
+        private void Start()
         {
-
-            Debug.Log("Door: Initialize door trigger");
-
             animator = GetComponent<Animator>();
             trigger = GetComponent<BaseTrigger>();
         }
 
-        // FIXME: Create coregame loop
-        public void Update()
+        public void Initialize()
         {
-            
+        }
+
+        // FIXME: Create coregame loop
+        //private void LateUpdate()
+        //{
+        //    UpdateAnimation();
+        //}
+
+        public void UpdateAnimation()
+        {
             if (animate && animator != null)
             {
                 animator.SetBool("open", open);

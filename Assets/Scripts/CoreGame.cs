@@ -270,6 +270,8 @@ namespace HackedDesign
 
             levelRenderer.Render(this.state.currentLevel);
 
+            this.state.doorList.AddRange(levelRenderer.PopulateLevelDoors(this.state.currentLevel));
+
             levelRenderer.PopulateNPCSpawns(this.state.currentLevel, this.state.entityList);
             this.state.entityList.AddRange(levelRenderer.PopulateEnemySpawns(this.state.currentLevel));
             this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.state.currentLevel));
@@ -536,6 +538,7 @@ namespace HackedDesign
                 case State.GameStateEnum.NARRATION:
                 case State.GameStateEnum.PLAYING:
                     UpdateCharacterSprites();
+                    UpdateDoorAnimations();
                     break;
             }
         }
@@ -547,6 +550,14 @@ namespace HackedDesign
                 case State.GameStateEnum.PLAYING:
                     PlayingFixedUpdate();
                     break;
+            }
+        }
+
+        void UpdateDoorAnimations()
+        {
+            foreach(var door in state.doorList)
+            {
+                door.UpdateAnimation();
             }
         }
 
