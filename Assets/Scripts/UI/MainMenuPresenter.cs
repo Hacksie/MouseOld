@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace HackedDesign {
@@ -25,6 +26,7 @@ namespace HackedDesign {
 		public UnityEngine.UI.Dropdown difficultyDropdown;
 		public UnityEngine.UI.Slider enemiesSlider;
 		public UnityEngine.UI.Slider camerasSlider;
+		public GameObject defaultButton;
 
 		public Level.LevelGenTemplate[] templates;
 
@@ -43,7 +45,8 @@ namespace HackedDesign {
 			{
 				if(!this.gameObject.activeInHierarchy) {
 					this.gameObject.SetActive(true);
-					//Cursor.visible = true;
+					EventSystem.current.SetSelectedGameObject(null);
+					EventSystem.current.SetSelectedGameObject(defaultButton);
 				}
 			} else
 			{

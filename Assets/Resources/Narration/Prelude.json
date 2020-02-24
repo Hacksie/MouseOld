@@ -84,12 +84,19 @@
         "action":"PreludeCat5",
         "button":"arrowright"
     },
-    {
-        "id":"PreludeCat5",
-        "speaker":"Mouse",
-        "text":"<color='#B0B0B0'>*sigh*</color>",
-        "action":"",
-        "button":"arrowright"
-    }            
+      {
+        "id": "PreludeCat5",
+        "speaker": "Mouse",
+        "text": "<color='#B0B0B0'>*sigh*</color>",
+        "action": "",
+        "button": "arrowright"
+      },
+      {
+        "id": "PreludeFridge",
+        "speaker": "Mouse",
+        "text": "<color='#B0B0B0'>You know damn well there's nothing in here</color>",
+        "action": "",
+        "button": "arrowright"
+      }
 ]
 }

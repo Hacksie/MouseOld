@@ -52,7 +52,7 @@ namespace HackedDesign
                 for (int i = 0; i < CoreGame.Instance.state.taskList.Count; i++)
                 {
 
-                    var go = GameObject.Instantiate(taskButtonPrefab, Vector3.zero, Quaternion.identity, taskButtonParent.transform);
+                    var go = Instantiate(taskButtonPrefab, Vector3.zero, Quaternion.identity, taskButtonParent.transform);
                     var goText = go.GetComponentInChildren<UnityEngine.UI.Text>();
                     goText.text = CoreGame.Instance.state.taskList[i].title;
                 }
@@ -72,9 +72,14 @@ namespace HackedDesign
                 {
                     taskDescription.text = CoreGame.Instance.state.selectedTask.description;
                     taskDescription.text += "\n";
-                    foreach(TaskObjective objective in CoreGame.Instance.state.selectedTask.objectives)
+                    if (CoreGame.Instance.state.selectedTask.objectives != null)
                     {
-                        taskDescription.text += "\n[" + (objective.completed ? "*" : " ") + "] " + objective.objective + (objective.optional ? "(*)" : "") ;
+                        Logger.Log(this.name, "objectives count - " + CoreGame.Instance.state.selectedTask.objectives.Count);
+                        foreach (TaskObjective objective in CoreGame.Instance.state.selectedTask.objectives)
+                        {
+                            taskDescription.text += "\n[" + (objective.completed ? "*" : " ") + "] " + objective.objective + (objective.optional ? "(*)" : "");
+                            taskDescription.text += "\n     <color='#999999'>" + objective.description + "</color>";
+                        }
                     }
                 }
             }

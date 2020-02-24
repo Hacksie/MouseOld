@@ -1,0 +1,55 @@
+{
+    "tasks": [
+        {
+            "id": "tutorial",
+            "title": "Tutorial",
+            "description": "The tutorial level",
+            "giver": "ManagerLyon",
+            "objectives": [
+                {
+                    "objective": "Learning about technicians",
+                    "description":"Learn",
+                    "optional": "false"
+                },
+                {
+                    "objective": "Learning about cameras",
+                    "description":"Learn",
+                    "optional": "false"
+                },
+                {
+                    "objective": "Learning about guards",
+                    "description":"Learn",
+                    "optional": "false"
+                },
+                {
+                    "objective": "Acquire info",
+                    "description":"Learn",
+                    "optional": "false"
+                }
+            ]
+        },
+        {
+            "id": "milk run",
+            "title": "Milk Run",
+            "description": "Miss Hart. Arisana has a task that needs your specialist services. Details attached. Small time corp Saika have recently been making a lot of noise in the market, far in excess of what their publically communicated budget suggests they're capable of. The only explanation is another corp fronting them the cash. Find out. I also had a new contractor starting working for me recently. I''d like you to take her along and observe how she handles herself. I've asked her to find you in the Arisana Contractor's bar. Please collect her, complete the task as described and report back. Zero noise. This should be a milk run for someone as experienced as you.",
+            "giver": "ManagerLyon",
+            "objectives": [
+                {
+                    "objective": "Meet Snow Owl",
+                    "description":"Learn",
+                    "optional": "false"
+                },
+                {
+                    "objective": "Break into Saika Corp",
+                    "description":"Learn",
+                    "optional": "false"
+                },
+                {
+                    "objective": "Discover the corp fronting Saika",
+                    "description":"Learn",
+                    "optional": "false"
+                }
+            ]            
+        }
+    ]
+}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HackedDesign.Entity
+namespace HackedDesign.Entities
 {
     public class SecurityCamera : BaseTrap
     {

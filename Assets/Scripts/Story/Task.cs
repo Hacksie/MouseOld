@@ -1,22 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace HackedDesign {
 	namespace Story {
-		[CreateAssetMenu (fileName = "Task", menuName = "Mouse/Story/Task")]
-		public class Task : ScriptableObject {
+		[System.Serializable]
+		public class Task {
+			public string id;
 			public string title;
-			[TextArea]
+			
 			public string description;
+			
 
-			public Character manager;
+			public string giver;
 
 			public bool started;
 			public bool completed;
 
 			public List<TaskObjective> objectives;
-			public List<Story.Character> keyContacts;
+
+			
 		}
 	}
 }

@@ -4,15 +4,17 @@ using UnityEngine;
 
 namespace HackedDesign
 {
-    namespace Entity
+    namespace Entities
     {
-        public class BaseEnemy : BaseEntity
+        public class BaseEnemy : MonoBehaviour
         {
             [Header("Game Objects")]
+            protected Animator anim;
             public PolyNav.PolyNavAgent polyNavAgent;
-            //public Transform alertLight;
+            public Transform alert;
 
             [Header("Settings")]
+            public LayerMask layerMask;
             public string enemy = "";
             public EnemyState state = EnemyState.STANDING;
             public float patrolWait = 6.0f;
@@ -21,12 +23,10 @@ namespace HackedDesign
             public bool hostile = true;
 
             [Header("State")]
+            public Vector2Int direction = Vector2Int.zero;
             public float patrolLastCheck = 0;
             public Vector2Int currentDirection;
             public List<Vector2Int> currentDirections;
-
-
-
 
 
             public float huntingLastSeen = 0;
@@ -36,24 +36,30 @@ namespace HackedDesign
 
             public Vector3 lastKnownLocation;
 
+            protected Transform player;
+
+            protected float visibilityDistance = 3.2f;
 
 
-            void start()
+            protected void Start()
             {
-                if (polyNavAgent == null)
-                {
-                    Debug.LogError("Enemy without polyNavAgent set: " + this.name);
-                }
-
+                anim = transform.GetComponent<Animator>();
                 if (anim == null)
                 {
-                    Debug.LogError("Enemy without animator set: " + this.name);
+                    Logger.LogError(this.name, "Enemy without animation set");
+                }
+                if (polyNavAgent == null)
+                {
+                    Logger.LogError(this.name, "Enemy without polyNavAgent set");
                 }
             }
 
             public void Initialize(PolyNav.PolyNav2D polyNav2D)
             {
-                base.Initialize();
+                this.player = CoreGame.Instance.GetPlayer().transform;
+
+
+                //base.Initialize();
                 FaceDirection(direction);
                 if (this.polyNavAgent != null && this.polyNavAgent.isActiveAndEnabled)
                 {
@@ -80,38 +86,46 @@ namespace HackedDesign
                 }
             }
 
-            public override void FaceDirection(Vector2 direction)
+            public void FaceDirection(Vector2 direction)
             {
-
                 this.direction = NormaliseDirectionVector(direction);
-                //UpdateAlertLight(this.direction);
             }
 
-            // public void UpdateAlertLight(Vector2Int direction)
-            // {
-            //     if (direction == Vector2Int.zero)
-            //     {
-            //         alertLight.rotation = Quaternion.Euler(0, 0, 180);
-            //     }
-            //     if (direction == Vector2Int.down)
-            //     {
-            //         alertLight.rotation = Quaternion.Euler(0, 0, 180);
-            //     }
-            //     if (direction == Vector2Int.up)
-            //     {
-            //         alertLight.rotation = Quaternion.Euler(0, 0, 0);
-            //     }
-            //     if (direction == Vector2Int.left)
-            //     {
-            //         alertLight.rotation = Quaternion.Euler(0, 0, 90);
-            //     }
-            //     if (direction == Vector2Int.right)
-            //     {
-            //         alertLight.rotation = Quaternion.Euler(0, 0, 270);
-            //     }
-            // }
+            protected Vector2Int NormaliseDirectionVector(Vector2 direction)
+            {
+                return Vector2Int.RoundToInt(direction.normalized);
+            }
 
-            public override void UpdateBehaviour()
+            public RaycastHit2D CanSeePlayer()
+            {
+                return Physics2D.Raycast(transform.position, (player.position - transform.position), visibilityDistance, layerMask);
+            }
+
+            public void UpdateAlertLight(Vector2Int direction)
+            {
+                if (direction == Vector2Int.zero)
+                {
+                    alert.rotation = Quaternion.Euler(0, 0, 180);
+                }
+                if (direction == Vector2Int.down)
+                {
+                    alert.rotation = Quaternion.Euler(0, 0, 180);
+                }
+                if (direction == Vector2Int.up)
+                {
+                    alert.rotation = Quaternion.Euler(0, 0, 0);
+                }
+                if (direction == Vector2Int.left)
+                {
+                    alert.rotation = Quaternion.Euler(0, 0, 90);
+                }
+                if (direction == Vector2Int.right)
+                {
+                    alert.rotation = Quaternion.Euler(0, 0, 270);
+                }
+            }
+
+            public void UpdateBehaviour()
             {
 
                 switch (state)
@@ -151,10 +165,6 @@ namespace HackedDesign
                         state = EnemyState.HUNTING;
                     }
                 }
-
-                //currentDirection = Vector2Int.down;
-
-
             }
 
             public void UpdatePatrolling()
@@ -166,8 +176,6 @@ namespace HackedDesign
 
                 if (hit.transform != null)
                 {
-                    //Debug.Log(hit.transform.gameObject.tag);
-
                     if (hostile && hit.transform.gameObject.CompareTag(TagManager.PLAYER))
                     {
                         state = EnemyState.HUNTING;
@@ -177,7 +185,7 @@ namespace HackedDesign
 
                 if (CoreGame.Instance.state.alertTrap != null)
                 {
-                    Debug.Log("Enemy is responding to alert: " + this.name);
+                    Logger.Log(this.name, "Enemy is responding to alert");
                     state = EnemyState.RESPONDING;
                     return;
                 }

@@ -216,7 +216,7 @@ namespace HackedDesign
                         Debug.Log(this.name + ": adding entity " + character.id + " to known entities");
                         character.SetRandomAttributes(); // Unlikely to do anything for NPCs
                         knownCharacters.Add(character);
-                        ActionManager.instance.AddActionMessage("'" + character.id + "' added to " + character.parentInfoCategory);
+                        ActionManager.instance.AddActionMessage("'" + character.id + "' added to " + character.category);
                     }
                     else
                     {
@@ -233,7 +233,7 @@ namespace HackedDesign
                     {
                         Debug.Log(this.name + ": adding entity " + corp.id + " to known entities");
                         knownCorps.Add(corp);
-                        ActionManager.instance.AddActionMessage("'" + corp.id + "' added to " + corp.parentInfoCategory);
+                        ActionManager.instance.AddActionMessage("'" + corp.id + "' added to " + corp.category);
                     }
                     else
                     {

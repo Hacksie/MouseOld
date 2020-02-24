@@ -1,5 +1,5 @@
 using UnityEngine;
-using HackedDesign.Entity;
+using HackedDesign.Entities;
 
 namespace HackedDesign.Story
 {
@@ -68,6 +68,9 @@ namespace HackedDesign.Story
                 case "PreludeCat5":
                     Dialogue.NarrationManager.instance.ShowNarration("PreludeCat5");
                     return true;
+                case "PreludeFridge":
+                    Dialogue.NarrationManager.instance.ShowNarration("PreludeFridge");
+                    return true;
                 case "PreludeExit":
                     PreludeExit();
                     return true;
@@ -92,15 +95,14 @@ namespace HackedDesign.Story
         {
             Debug.Log("PreludeActions: prelude laptop");
             CoreGame.Instance.state.story.prelude_laptop = true;
-            ActionManager.instance.AddActionMessage("Task 'Milk Run' added to Tasks");
-            //taskManager.selectedTask = 
+            ActionManager.instance.AddActionMessage("Task added to current tasks - tutorial");
             InfoManager.instance.AddToKnownCorps("Saika");
             //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kat"));
 
-
-            if (!CoreGame.Instance.state.taskList.Exists(t => t.title == "Milk Run"))
+            // FIXME: This should be a function
+            if (!CoreGame.Instance.state.taskList.Exists(t => t.id == "tutorial"))
             {
-                var task = TaskDefinitionManager.instance.GetTaskInstance("Milk Run");
+                var task = TaskDefinitionManager.instance.GetTaskInstance("tutorial");
                 CoreGame.Instance.state.taskList.Add(task);
                 CoreGame.Instance.state.selectedTask = task;
             }
@@ -108,8 +110,6 @@ namespace HackedDesign.Story
             SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
             CoreGame.Instance.state.state = State.GameStateEnum.SELECTMENU;
         }
-
-
 
 
         public void PreludeExit()

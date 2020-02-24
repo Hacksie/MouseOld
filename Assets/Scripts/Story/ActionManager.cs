@@ -9,7 +9,7 @@ namespace HackedDesign.Story
     public class ActionManager : MonoBehaviour
     {
         public static ActionManager instance;
-        public Entity.EntityManager entityManager;
+        public Entities.EntityManager entityManager;
         public TaskDefinitionManager taskManager;
 
         private Dictionary<string, ILevelActions> actions = new Dictionary<string, ILevelActions>();
@@ -24,7 +24,7 @@ namespace HackedDesign.Story
             instance = this;
         }
 
-        public void Initialize(Entity.EntityManager entityManager, TaskDefinitionManager taskManager)
+        public void Initialize(Entities.EntityManager entityManager, TaskDefinitionManager taskManager)
         {
             this.entityManager = entityManager;
             this.taskManager = taskManager;

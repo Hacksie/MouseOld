@@ -3269,7 +3269,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   direction: {x: 0, y: 0}
-  facePlayer: 1
 --- !u!50 &118749350
 Rigidbody2D:
   serializedVersion: 4
@@ -10828,13 +10827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5909a6d7cead226439b81d6d56b563b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  direction: {x: 0, y: 0}
-  facePlayer: 1
-  character: 
-  text: {fileID: 1734140130}
 --- !u!61 &344657578
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11047,7 +11039,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   direction: {x: 0, y: 0}
-  facePlayer: 1
 --- !u!50 &347236692
 Rigidbody2D:
   serializedVersion: 4
@@ -11846,12 +11837,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 9ebb6ca5ee4094addac513cf8528f1e1, type: 2}
-    m_FontSize: 0
+    m_Font: {fileID: 12800000, guid: 32e945e9e451b8f48949249354bf114c, type: 3}
+    m_FontSize: 12
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 128
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -15108,7 +15099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -25557,13 +25548,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5909a6d7cead226439b81d6d56b563b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  direction: {x: 0, y: 0}
-  facePlayer: 1
-  character: 
-  text: {fileID: 0}
 --- !u!114 &815830113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26585,12 +26569,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 9ebb6ca5ee4094addac513cf8528f1e1, type: 2}
-    m_FontSize: 0
+    m_Font: {fileID: 12800000, guid: 32e945e9e451b8f48949249354bf114c, type: 3}
+    m_FontSize: 12
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 128
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -39242,9 +39226,17 @@ MonoBehaviour:
       creditsCollected: 0
     isRandom: 0
     taskList: []
-    selectedTask: {fileID: 0}
+    selectedTask:
+      id: 
+      title: 
+      description: 
+      giver: 
+      started: 0
+      completed: 0
+      objectives: []
     alertTrap: {fileID: 0}
     currentLight: 0
+    enemyList: []
     entityList: []
     doorList: []
   testPlatform: 11
@@ -45385,13 +45377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5909a6d7cead226439b81d6d56b563b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  direction: {x: 0, y: 0}
-  facePlayer: 1
-  character: 
-  text: {fileID: 1066415940}
 --- !u!50 &1557724821
 Rigidbody2D:
   serializedVersion: 4
@@ -47338,12 +47323,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 9ebb6ca5ee4094addac513cf8528f1e1, type: 2}
-    m_FontSize: 0
+    m_Font: {fileID: 12800000, guid: 32e945e9e451b8f48949249354bf114c, type: 3}
+    m_FontSize: 12
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 128
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -48766,11 +48751,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enabled: 1
-  sprite: {fileID: 1708272203}
-  interactSprite: {fileID: 0}
-  hackSprite: {fileID: 0}
-  overloadSprite: {fileID: 0}
-  bugSprite: {fileID: 0}
   autoInteraction: 0
   allowInteraction: 0
   allowBug: 0
@@ -48778,6 +48758,9 @@ MonoBehaviour:
   allowOverload: 0
   allowRepeatInteractions: 0
   allowNPCAutoInteraction: 0
+  entryActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
   interactActionEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -48798,7 +48781,6 @@ MonoBehaviour:
   overloaded: 0
   hacked: 0
   bugged: 0
-  colliders: []
 --- !u!1 &1651641724
 GameObject:
   m_ObjectHideFlags: 0
@@ -57735,11 +57717,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enabled: 1
-  sprite: {fileID: 405207704}
-  interactSprite: {fileID: 0}
-  hackSprite: {fileID: 0}
-  overloadSprite: {fileID: 0}
-  bugSprite: {fileID: 0}
   autoInteraction: 0
   allowInteraction: 0
   allowBug: 0
@@ -57747,6 +57724,9 @@ MonoBehaviour:
   allowOverload: 0
   allowRepeatInteractions: 0
   allowNPCAutoInteraction: 0
+  entryActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
   interactActionEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -57767,7 +57747,6 @@ MonoBehaviour:
   overloaded: 0
   hacked: 0
   bugged: 0
-  colliders: []
 --- !u!1001 &1883137919
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60269,8 +60248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4241a0dd5c8827469fef27cfb8db1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskList:
-  - {fileID: 11400000, guid: d32970cf9e8b85f4f8a422264b787532, type: 2}
+  taskList: []
+  tasksResource: Tasks/
 --- !u!1 &1941156818
 GameObject:
   m_ObjectHideFlags: 0
@@ -66380,6 +66359,7 @@ MonoBehaviour:
   difficultyDropdown: {fileID: 1530735228}
   enemiesSlider: {fileID: 319722448}
   camerasSlider: {fileID: 1198691679}
+  defaultButton: {fileID: 57919103}
   templates:
   - {fileID: 11400000, guid: 10804d8ad42aafd469180ae74a8e9934, type: 2}
   - {fileID: 11400000, guid: a85655f6bfff98c42a628565ec7aa957, type: 2}
@@ -68852,7 +68832,7 @@ PrefabInstance:
     - target: {fileID: 3362591872161586488, guid: 41daf2ff3f4333c49b3121339734f66a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41daf2ff3f4333c49b3121339734f66a, type: 3}

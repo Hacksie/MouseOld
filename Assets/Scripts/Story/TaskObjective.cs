@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 namespace HackedDesign {
 	namespace Story {
-		[CreateAssetMenu (fileName = "Objective", menuName = "Mouse/Story/Objective")]
-		public class TaskObjective : ScriptableObject {
+		[System.Serializable]
+		public class TaskObjective {
 			public string objective;
+			public string description;
 			public bool completed;
 			public bool optional;
 		}

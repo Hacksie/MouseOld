@@ -32,7 +32,9 @@ namespace HackedDesign.State
         public GlobalLightTypes currentLight;
         
         public List<Triggers.ITrigger> triggerList = new List<Triggers.ITrigger>();
-        public List<Entity.BaseEntity> entityList = new List<Entity.BaseEntity>();
+        //public List<Entities.BaseEntity> npcList = new List<Entities.BaseEntity>();
+        public List<Entities.Enemy> enemyList = new List<Entities.Enemy>();
+        public List<Entities.BaseEntity> entityList = new List<Entities.BaseEntity>();
         public List<Triggers.Door> doorList = new List<Triggers.Door>();
 
         

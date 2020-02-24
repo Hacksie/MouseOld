@@ -21,7 +21,7 @@ namespace HackedDesign
 
         [Header("Game")]
         [SerializeField]
-        private Entity.EntityManager entityManager = null;
+        private Entities.EntityManager entityManager = null;
         [SerializeField]
         private CharacterSpriteManager characterSpriteManager = null;
 
@@ -167,6 +167,7 @@ namespace HackedDesign
 
             narrationManager.Initialize(inputController);
             infoManager.Initialize();
+            taskManager.Initialize();
             characterSpriteManager.Initialize(infoManager);
             mobileInputUI.Initialize(inputController);
             actionConsolePanel.Initialize(actionManager);
@@ -272,9 +273,10 @@ namespace HackedDesign
 
             this.state.doorList.AddRange(levelRenderer.PopulateLevelDoors(this.state.currentLevel));
 
-            levelRenderer.PopulateNPCSpawns(this.state.currentLevel, this.state.entityList);
-            this.state.entityList.AddRange(levelRenderer.PopulateEnemySpawns(this.state.currentLevel));
-            this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.state.currentLevel));
+            
+            levelRenderer.PopulateNPCSpawns(this.state.currentLevel, this.state.entityList); 
+            levelRenderer.PopulateEnemySpawns(this.state.currentLevel, this.state.enemyList);
+            //this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.state.currentLevel));
 
             levelMapPanel.Initialize(selectMenuManager, state.currentLevel);
             minimapPanel.Initialize(state.currentLevel);
@@ -297,6 +299,16 @@ namespace HackedDesign
                 }
             }
 
+            foreach (var npc in state.enemyList)
+            {
+                var charSprite = npc.gameObject.GetComponent<CharacterSprite>();
+                if (charSprite != null)
+                {
+                    Logger.Log(this.name, "character sprite added - ", charSprite.gameObject.name);
+                    characterSprites.Add(charSprite);
+                }
+            }
+
             SceneTriggersInitialize();
             CreateAlert();
             timerPanel.Initialize(state.currentLevel.timer);
@@ -307,7 +319,6 @@ namespace HackedDesign
             {
                 Story.ActionManager.instance.Invoke(state.currentLevel.template.startingAction);
             }
-
 
             RepaintAllUI();
         }
@@ -565,7 +576,8 @@ namespace HackedDesign
         {
 
             playerController.UpdateMovement(inputController);
-            PlayingNPCUpdate();
+            //PlayingNPCUpdate();
+            PlayingEnemyUpdate();
             PlayingTriggerUpdate();
             state.currentLevel.timer.Update();
         }
@@ -578,13 +590,21 @@ namespace HackedDesign
             }
         }
 
-        void PlayingNPCUpdate()
+        void PlayingEnemyUpdate()
         {
-            foreach (Entity.BaseEntity npc in state.entityList)
+            foreach (var enemy in state.enemyList)
             {
-                npc.UpdateBehaviour();
+                enemy.UpdateBehaviour();
             }
         }
+
+        //void PlayingNPCUpdate()
+        //{
+        //    foreach (Entities.BaseEntity npc in state.entityList)
+        //    {
+        //        npc.UpdateBehaviour();
+        //    }
+        //}
 
         void PlayingFixedUpdate()
         {

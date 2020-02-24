@@ -1,5 +1,5 @@
 using UnityEngine;
-using HackedDesign.Entity;
+using HackedDesign.Entities;
 
 namespace HackedDesign.Story
 {

@@ -72,7 +72,7 @@ namespace HackedDesign {
 				return currentNarration;
 			}
 
-			public class NarrationHolder {
+			private class NarrationHolder {
 				public List<Narration> narrations;
 			}
 		}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HackedDesign {
-    namespace Entity {
+    namespace Entities {
         public class BaseTrap : BaseEntity {
 
             public Collider2D trigger;

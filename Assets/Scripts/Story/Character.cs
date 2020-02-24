@@ -11,7 +11,6 @@ namespace HackedDesign
             public string handle;
             public string corp;
             public string serial;
-            public string category;
 
             public CharacterSpriteManager.BodyTypes body;
             public int skin;

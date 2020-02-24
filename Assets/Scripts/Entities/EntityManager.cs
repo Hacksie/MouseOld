@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HackedDesign
 {
-    namespace Entity
+    namespace Entities
     {
         public class EntityManager : MonoBehaviour
         {
@@ -17,7 +17,7 @@ namespace HackedDesign
             [SerializeField]
             private List<GameObject> npcPrefabList = null;
 
-            private List<Entity.BaseEntity> npcPool = new List<Entity.BaseEntity>();
+            private List<Entities.BaseEntity> npcPool = new List<Entities.BaseEntity>();
             public GameObject npcParent;
 
 
@@ -45,7 +45,7 @@ namespace HackedDesign
                     var go = GameObject.Instantiate(npc, Vector3.zero, Quaternion.identity, npcParent.transform);
                     go.name = npc.name; // We don't want the (cloned) label
                     Debug.Log(this.name + ": instantiating NPC " + npc.name + " " + go.name);
-                    Entity.BaseEntity entity = go.GetComponent<Entity.BaseEntity>();
+                    Entities.BaseEntity entity = go.GetComponent<Entities.BaseEntity>();
 
                     npcPool.Add(entity);
                     go.SetActive(false);

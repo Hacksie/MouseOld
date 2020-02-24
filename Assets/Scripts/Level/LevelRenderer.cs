@@ -21,17 +21,17 @@ namespace HackedDesign
             public GameObject exitewPrefab;
             public GameObject exitnsPrefab;
             public GameObject entryewPrefab;
-            public GameObject entrynsPrefab;            
+            public GameObject entrynsPrefab;
 
             private GameObject levelParent;
             private GameObject npcParent;
             private PolyNav.PolyNav2D polyNav2D;
 
-            private Entity.EntityManager entityManager;
+            private Entities.EntityManager entityManager;
             private CharacterSpriteManager characterSpriteManager;
             private Story.InfoManager infoManager;
 
-            public void Initialize(Entity.EntityManager entityManager, Story.InfoManager infoManager, CharacterSpriteManager characterSpriteManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
+            public void Initialize(Entities.EntityManager entityManager, Story.InfoManager infoManager, CharacterSpriteManager characterSpriteManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
             {
                 this.levelParent = levelParent;
                 this.npcParent = npcParent;
@@ -48,7 +48,7 @@ namespace HackedDesign
                 PopulateLevelTilemap(level);
 
 
-                
+
 
                 //PopulateCameraSpawns (level);
 
@@ -343,57 +343,91 @@ namespace HackedDesign
                 return results;
             }
 
-            public List<Entity.BaseEnemy> PopulateEnemySpawns(Level level)
+            public void PopulateNPCSpawns(Level level, List<Entities.BaseEntity> entityList)
             {
-                Debug.Log(this.name + ": populating enemy spawns");
+                if (level.npcSpawnLocationList == null)
+                {
+                    return;
+                }
 
-                List<Entity.BaseEnemy> results = new List<Entity.BaseEnemy>();
+                for (int i = 0; i < level.npcSpawnLocationList.Count; i++)
+                {
+                    Debug.Log(this.name + ": attempting to spawn " + level.npcSpawnLocationList[i].name);
+                    Entities.BaseEntity npc = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
+
+
+                    if (npc == null)
+                    {
+                        Debug.LogError(this.name + ": unable to find pooled NPC");
+                        continue;
+                    }
+
+                    CharacterSprite cs = npc.gameObject.GetComponent<CharacterSprite>(); // FIXME: Check null
+                    Debug.Log(this.name + ": moving " + npc.name);
+                    npc.transform.position = level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset;
+                    npc.gameObject.SetActive(true);
+                    cs.Initialize(characterSpriteManager);
+                    npc.Initialize();
+                    entityList.Add(npc);
+
+                }
+            }
+
+            public void PopulateEnemySpawns(Level level, List<Entities.Enemy> enemyList)
+            {
+                Logger.Log(this.name, "Populating enemy spawns");
 
                 if (entityManager.enemies.Count <= 0)
                 {
-                    Debug.Log(this.name + ": No enemies to spawn");
-                    return results;
+                    Logger.Log(this.name, "No enemies to spawn");
+                    return;
                 }
 
                 if (level.enemySpawnLocationList == null)
                 {
-                    return results;
+                    return;
                 }
 
                 for (int i = 0; i < level.enemySpawnLocationList.Count; i++)
                 {
-                    Debug.Log(this.name +": attempting to spawn" + level.enemySpawnLocationList[i].name);
-                    //int rand = UnityEngine.Random.Range(0, enemyEasyPrefabs.Count);
+                    Logger.Log(this.name, "Attempting to spawn " + level.enemySpawnLocationList[i].name);
 
-                    GameObject enemyGameObj = entityManager.enemies.FirstOrDefault(g => g != null && g.name == level.enemySpawnLocationList[i].name);
+                    GameObject enemyPrefab = entityManager.enemies.FirstOrDefault(g => g != null && g.name == level.enemySpawnLocationList[i].name);
 
-                    if (enemyGameObj != null)
+                    if (enemyPrefab == null)
                     {
-                        var go = GameObject.Instantiate(enemyGameObj, level.ConvertLevelPosToWorld(level.enemySpawnLocationList[i].levelLocation) + level.enemySpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
-                        Entity.BaseEnemy npc = go.GetComponent<Entity.BaseEnemy>();
-                        Story.Enemy uniqueEnemy = infoManager.GenerateRandomEnemy(npc.enemy);
-                        CharacterSprite cs = go.GetComponent<CharacterSprite>();
-                        if (npc != null && cs != null)
-                        {
-                            cs.uniqueId = uniqueEnemy.uniqueId;
-                            cs.character = uniqueEnemy.id;
-                            cs.Initialize(characterSpriteManager);
-                            npc.Initialize(polyNav2D);
-                            
-                            //CoreGame.instance.state.entityList.Add(npc);
-                            results.Add(npc);
-                        }
+                        continue;
                     }
+
+                    var go = Instantiate(enemyPrefab, level.ConvertLevelPosToWorld(level.enemySpawnLocationList[i].levelLocation) + level.enemySpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
+                    Entities.Enemy enemy = go.GetComponent<Entities.Enemy>();
+
+
+                    if (enemy == null)
+                    {
+                        Logger.LogError(this.name, "Null Enemy object");
+                        continue;
+                    }
+
+                    enemy.Initialize(CoreGame.Instance.GetPlayer().transform, polyNav2D);
+
+                    Story.Enemy uniqueEnemy = infoManager.GenerateRandomEnemy(enemy.enemy);
+                    CharacterSprite cs = go.GetComponent<CharacterSprite>();
+                    if (cs != null)
+                    {
+                        cs.uniqueId = uniqueEnemy.uniqueId;
+                        cs.character = uniqueEnemy.id;
+                        cs.Initialize(characterSpriteManager);
+                    }
+
+                    enemyList.Add(enemy);
                 }
-
-                return results;
-
             }
 
 
-            public List<Entity.BaseTrap> PopulateTrapSpawns(Level level)
+            public List<Entities.BaseTrap> PopulateTrapSpawns(Level level)
             {
-                List<Entity.BaseTrap> results = new List<Entity.BaseTrap>();
+                List<Entities.BaseTrap> results = new List<Entities.BaseTrap>();
 
                 //Level level = CoreGame.instance.state.level;
                 if (level.trapSpawnLocationList == null)
@@ -416,7 +450,7 @@ namespace HackedDesign
                     if (trapGameObj != null)
                     {
                         var go = GameObject.Instantiate(trapGameObj, level.ConvertLevelPosToWorld(level.trapSpawnLocationList[i].levelLocation) + level.trapSpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
-                        Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
+                        Entities.BaseTrap npc = go.GetComponent<Entities.BaseTrap>();
                         if (npc != null)
                         {
                             npc.Initialize();
@@ -429,39 +463,7 @@ namespace HackedDesign
                 return results;
             }
 
-            public void PopulateNPCSpawns(Level level, List<Entity.BaseEntity> results)
-            {
-                //List<Entity.BaseEntity> results = new List<Entity.BaseEntity>();
 
-                if (level.npcSpawnLocationList == null)
-                {
-                    return;
-                }
-
-                for (int i = 0; i < level.npcSpawnLocationList.Count; i++)
-                {
-                    Debug.Log(this.name + ": attempting to spawn " + level.npcSpawnLocationList[i].name);
-                    Entity.BaseEntity npc = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
-                    
-                    
-                    if (npc != null)
-                    {
-                        CharacterSprite cs = npc.gameObject.GetComponent<CharacterSprite>(); // FIXME: Check null
-                        Debug.Log(this.name + ": moving " + npc.name);
-                        npc.transform.position = level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset;
-                        npc.gameObject.SetActive(true);
-                        cs.Initialize(characterSpriteManager);
-                        npc.Initialize();
-                        results.Add(npc);
-                    }
-                    else 
-                    {
-                        Debug.LogError(this.name + ": unable to find pooled NPC");
-                    }
-                }
-
-                //return results;
-            }
 
         }
     }

@@ -6,7 +6,6 @@ namespace HackedDesign {
             void Invoke (UnityEngine.GameObject source);
             void Overload(UnityEngine.GameObject source);
             void Hack(UnityEngine.GameObject source);
-            //void Keycard(UnityEngine.GameObject source);
             void Bug(UnityEngine.GameObject source);
             void Leave(UnityEngine.GameObject source);
             void UpdateTrigger(Input.IInputController inputController);

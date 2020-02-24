@@ -9,6 +9,7 @@ namespace HackedDesign {
 			public string id;
 			public string name;
 			public bool read = false;
+			public string category;
 			public string parentInfoCategory;
 			public string description;
 		}

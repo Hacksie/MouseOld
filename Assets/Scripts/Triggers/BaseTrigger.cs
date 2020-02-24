@@ -5,19 +5,11 @@ using UnityEngine.Events;
 
 namespace HackedDesign.Triggers
 {
-
+    [RequireComponent(typeof(Collider2D))]
     public class BaseTrigger : MonoBehaviour, ITrigger
     {
         protected new Collider2D collider;
         public new bool enabled = true;
-
-        [Header("Sprites")]
-        public SpriteRenderer sprite;
-        public SpriteRenderer interactSprite;
-        public SpriteRenderer hackSprite;
-        //public SpriteRenderer keycardSprite;
-        public SpriteRenderer overloadSprite;
-        public SpriteRenderer bugSprite;
 
         [Header("Settings")]
         public bool autoInteraction = false;
@@ -25,11 +17,12 @@ namespace HackedDesign.Triggers
         public bool allowBug = false;
         public bool allowHack = false;
         public bool allowOverload = false;
-        
+
         public bool allowRepeatInteractions = false;
         public bool allowNPCAutoInteraction = false;
 
         [Header("Actions")]
+        public UnityEvent entryActionEvent;
         public UnityEvent interactActionEvent;
         public UnityEvent bugActionEvent;
         public UnityEvent hackActionEvent;
@@ -42,18 +35,13 @@ namespace HackedDesign.Triggers
         public bool overloaded = false;
         public bool hacked = false;
         public bool bugged = false;
-        public List<GameObject> colliders = new List<GameObject>();
+        private List<GameObject> colliders = new List<GameObject>();
 
-        public void Start()
+        protected void Start()
         {
-            if (this.tag != TagManager.TRIGGER)
+            if (!CompareTag(TagManager.TRIGGER))
             {
                 Debug.LogError(this.name + ": trigger is not tagged: " + this.name);
-            }
-
-            if (sprite != null && sprite.gameObject.activeInHierarchy)
-            {
-                sprite.gameObject.SetActive(false);
             }
         }
 
@@ -95,17 +83,15 @@ namespace HackedDesign.Triggers
 
             for (int i = colliders.Count - 1; i >= 0; i--)
             {
-                var other = colliders[i];
-
-                if (other.CompareTag(TagManager.NPC) && allowNPCAutoInteraction)
+                if (colliders[i].CompareTag(TagManager.NPC) && allowNPCAutoInteraction)
                 {
-                    Invoke(other.gameObject);
+                    Invoke(colliders[i].gameObject);
                     colliders.RemoveAt(i);
                 }
 
-                if (other.CompareTag(TagManager.PLAYER))
+                if (colliders[i].CompareTag(TagManager.PLAYER))
                 {
-                    if (CheckPlayerActions(other.gameObject, inputController))
+                    if (CheckPlayerActions(colliders[i].gameObject, inputController))
                     {
                         colliders.RemoveAt(i);
                     }
@@ -113,71 +99,48 @@ namespace HackedDesign.Triggers
             }
         }
 
-        public virtual void Invoke(UnityEngine.GameObject source)
+        public virtual void Entry(GameObject source)
         {
-            interactActionEvent.Invoke();
-            //if (!string.IsNullOrWhiteSpace(triggerAction))
-            //{
-            //    Story.ActionManager.instance.Invoke(triggerAction);
-            //}
+            entryActionEvent.Invoke();
         }
 
-        public virtual void Overload(UnityEngine.GameObject source)
+        public virtual void Invoke(GameObject source)
         {
-            
+            interactActionEvent.Invoke();
+        }
+
+        public virtual void Overload(GameObject source)
+        {
+
             overloaded = true;
             overloadActionEvent.Invoke();
             CoreGame.Instance.state.player.ConsumeOverload();
-            //if (!string.IsNullOrWhiteSpace(overloadAction))
-            //{
-            //    Story.ActionManager.instance.Invoke(overloadAction);
-            //}
         }
 
-        public virtual void Hack(UnityEngine.GameObject source)
+        public virtual void Hack(GameObject source)
         {
             hackActionEvent.Invoke();
             if (CoreGame.Instance.state.player.ConsumeHack())
             {
                 hacked = true;
-                //if (!string.IsNullOrWhiteSpace(hackAction))
-                //{
-                //    Story.ActionManager.instance.Invoke(hackAction);
-                //}
             }
         }
 
-        public virtual void Bug(UnityEngine.GameObject source)
+        public virtual void Bug(GameObject source)
         {
             bugged = true;
             hacked = true;
             bugActionEvent.Invoke();
             CoreGame.Instance.state.player.ConsumeBug();
-            //if (!string.IsNullOrWhiteSpace(bugAction))
-            //{
-            //    Story.ActionManager.instance.Invoke(bugAction);
-            //}
         }
 
-        public virtual void Leave(UnityEngine.GameObject source)
+        public virtual void Leave(GameObject source)
         {
             leaveActionEvent.Invoke();
-            //if (!string.IsNullOrWhiteSpace(leaveAction))
-            //{
-            //    Story.ActionManager.instance.Invoke(leaveAction);
-            //}
         }
 
         protected bool CheckPlayerActions(GameObject source, Input.IInputController inputController)
         {
-            //Debug.Log(!overloaded && !hacked && !bugged && CoreGame.Instance.state.player.CanHack() && inputController.HackButtonUp() && !requireBug);
-            //FIXME: have 4 different sprites for each possible action. 
-            // Show the sprite permanently if the object is hacked or overloaded
-            if (sprite != null && !sprite.gameObject.activeInHierarchy)
-            {
-                sprite.gameObject.SetActive(true);
-            }
-
             if (autoInteraction)
             {
                 Invoke(source);
@@ -194,11 +157,6 @@ namespace HackedDesign.Triggers
                 Overload(source);
                 return true;
             }
-            // if (!string.IsNullOrWhiteSpace(keycardAction) && CoreGame.Instance.State.player.CanKeycard() && inputController.KeycardButtonUp() && !requireInteraction && !requireHack && !requireKeycard && !requireOverload)
-            // {
-            //     triggered = true;
-            //     Keycard();
-            // }
             if (!overloaded && !hacked && !bugged && CoreGame.Instance.state.player.CanBug() && inputController.BugButtonUp() && allowBug)
             {
                 Bug(source);
@@ -228,6 +186,7 @@ namespace HackedDesign.Triggers
             if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)) && !colliders.Contains(other.gameObject))
             {
                 colliders.Add(other.gameObject);
+                Entry(other.gameObject);
             }
         }
 
@@ -261,40 +220,7 @@ namespace HackedDesign.Triggers
                 //Debug.Log(this.name + ": removed from collider list " + other.gameObject);
                 if (colliders.Contains(other.gameObject))
                     colliders.Remove(other.gameObject);
-
-                if (other.CompareTag(TagManager.PLAYER))
-                {
-                    if (sprite != null && sprite.gameObject.activeInHierarchy)
-                    {
-                        sprite.gameObject.SetActive(false);
-                    }
-                }
-
-
             }
-
-            /*
-            if (other.CompareTag(TagManager.NPC) && allowNPCAutoInteraction)
-            {
-                npcTriggered = false;
-                Leave(other.gameObject);
-            }
-
-            if (other.CompareTag(TagManager.PLAYER))
-            {
-                if (sprite != null && sprite.gameObject.activeInHierarchy)
-                {
-                    sprite.gameObject.SetActive(false);
-                }
-
-                if (triggered)
-                {
-                    triggered = false;
-                    Leave(other.gameObject);
-                }
-            }*/
-
-
         }
     }
 

@@ -12,7 +12,6 @@ namespace HackedDesign
             public string handle;
             public string corp;
             public string serial;
-            public string category;
 
             public CharacterSpriteManager.BodyTypes body;
             public int skin;
@@ -29,11 +28,7 @@ namespace HackedDesign
 
             public void SetRandomAttributes()
             {
-                Debug.Log("AA" + body);
                 body = body == CharacterSpriteManager.BodyTypes.RandomHuman ? (CharacterSpriteManager.BodyTypes)Random.Range(0, 2) : body;
-                Debug.Log("BB" + body);
-                //Color c = ColorUtility.
-
                 //FIXME: Pull these from config
                 skin = skin < 0 ? Random.Range(0, 4) : skin;
                 eyes = eyes < 0 ? Random.Range(1, 8) : eyes;
