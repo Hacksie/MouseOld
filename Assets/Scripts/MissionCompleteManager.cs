@@ -4,10 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace HackedDesign {
-	public class MissionCompleteManager : MonoBehaviour {
+	public class MissionCompleteManager : MonoBehaviour 
+	{
+		Story.ActionManager actionManager = null;
+
+		public void Initialize(Story.ActionManager actionManager)
+		{
+			this.actionManager = actionManager;
+		}
+
 		public void ResumeEvent () {
-            //FIXME: This would return to hub room
-			CoreGame.Instance.EndGame ();
+			//FIXME: This would return to hub room
+			actionManager.Invoke(CoreGame.Instance.state.currentLevel.template.exitAction);
+			//CoreGame.Instance.EndGame ();
 		}        
     }
 }

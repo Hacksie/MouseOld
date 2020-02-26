@@ -7,10 +7,22 @@ using UnityEngine.SceneManagement;
 namespace HackedDesign {
 	public class WorldMapManager : MonoBehaviour {
 
+		
+		public void Initialize()
+		{
+
+		}
+
+		private void LoadBuildings()
+		{
+
+		}
+
+		/*
 		public List<Map.Sector> sectors = new List<Map.Sector> ();
 		public Map.Sector selectedSector;
 		public Map.Building selectedBuilding;
-		public Map.Location selectedLocation;
+		public Map.Location selectedLocation;*/
 
 		public void CancelEvent () {
 			CoreGame.Instance.SetPlaying ();
@@ -31,6 +43,8 @@ namespace HackedDesign {
 			}
 		}
 
+
+		/*
 		public Map.Sector GetSelectedSector () {
 			return selectedSector;
 		}
@@ -70,6 +84,6 @@ namespace HackedDesign {
 
 		public List<Map.Building> GetBuildings (string sector) {
 			return sectors.Find (s => s.title == sector).buildings;
-		}
+		}*/
 	}
 }

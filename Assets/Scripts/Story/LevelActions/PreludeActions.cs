@@ -17,6 +17,19 @@ namespace HackedDesign.Story
                     InfoManager.instance.AddToKnownCorps("Arisana");
                     InfoManager.instance.AddToKnownCharacters("ManagerLyon");
                     InfoManager.instance.AddToKnownCharacters("Cat");
+                    ActionManager.instance.AddActionMessage("Task added to current tasks - tutorial");
+                    InfoManager.instance.AddToKnownCorps("Saika");
+                    //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kat"));
+
+
+                    if (!CoreGame.Instance.state.taskList.Exists(t => t.id == "tutorial"))
+                    {
+                        var task = TaskDefinitionManager.instance.GetTaskInstance("tutorial");
+                        CoreGame.Instance.state.taskList.Add(task);
+                        CoreGame.Instance.state.selectedTask = task;
+                    }
+                    CoreGame.Instance.state.currentLevel.completed = true;
+
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
                     return true;
                 case "Prelude2":
@@ -83,11 +96,11 @@ namespace HackedDesign.Story
 
         public void PreludeCat3()
         {
-            
+
         }
         public void PreludeCat4()
         {
-            
+
         }
 
 
@@ -95,35 +108,35 @@ namespace HackedDesign.Story
         {
             Debug.Log("PreludeActions: prelude laptop");
             CoreGame.Instance.state.story.prelude_laptop = true;
-            ActionManager.instance.AddActionMessage("Task added to current tasks - tutorial");
-            InfoManager.instance.AddToKnownCorps("Saika");
-            //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kat"));
-
-            // FIXME: This should be a function
-            if (!CoreGame.Instance.state.taskList.Exists(t => t.id == "tutorial"))
-            {
-                var task = TaskDefinitionManager.instance.GetTaskInstance("tutorial");
-                CoreGame.Instance.state.taskList.Add(task);
-                CoreGame.Instance.state.selectedTask = task;
-            }
-
             SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
             CoreGame.Instance.state.state = State.GameStateEnum.SELECTMENU;
+
+            
         }
 
 
         public void PreludeExit()
         {
-            if (CoreGame.Instance.state.taskList.Exists(t => t.title == "Milk Run"))
+            if (CoreGame.Instance.state.currentLevel.completed)
             {
-                Debug.Log("PreludeActions: can exit");
-                CoreGame.Instance.LoadNewLevel("Arisana Bar");
-
+                CoreGame.Instance.SetWorldMap();
+                //CoreGame.Instance.LoadNewLevel("Bootstrap");
             }
             else
             {
                 Debug.Log("PreludeActions: can't exit, haven't received mission");
             }
+            /*
+            if (CoreGame.Instance.state.taskList.Exists(t => t.title == "Milk Run"))
+            {
+                Debug.Log("PreludeActions: can exit");
+                
+
+            }
+            else
+            {
+                Debug.Log("PreludeActions: can't exit, haven't received mission");
+            }*/
         }
     }
 }

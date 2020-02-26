@@ -14,6 +14,7 @@ namespace HackedDesign {
 		public Transform locationButtonParent;
 
 		public Text descriptionText;
+		public List<Button> buildings;
 
 		public void Initialize (WorldMapManager worldMapManager) {
 			this.worldMapManager = worldMapManager;
@@ -40,14 +41,16 @@ namespace HackedDesign {
 			}
 
 			Reset ();
-			RepaintSectors (worldMapManager.GetSectors ());
+			
+			//RepaintSectors (worldMapManager.GetSectors ());
 		}
 
 		private void Reset () {
 			EventSystem.current.SetSelectedGameObject (null);
-			UpdateDescription ("");
+			//UpdateDescription ("");
 		}
 
+		/*
 		private void RepaintSectors (List<Map.Sector> sectors) {
 			Debug.Log ("Repaint sectors");
 
@@ -202,6 +205,8 @@ namespace HackedDesign {
 			worldMapManager.SetSelectedLocation (lb.location);
 			UpdateDescription (lb.location.description);
 		}
+
+	*/
 
 	}
 }

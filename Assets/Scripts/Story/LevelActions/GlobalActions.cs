@@ -28,14 +28,14 @@ namespace HackedDesign.Story
                     Debug.Log("GlobalActions: invoke TimerStart");
                     return true;
                 case "TimerAlert":
-                    Debug.Log("GlobalActions: invoke TimerAlert");
+                    Logger.Log("GlobalActions", "invoke TimerAlert");
                     return true;
                 case "TimerExpired":
-                    Debug.Log("GlobalActions: invoke TimerEnd");
+                    Logger.Log("GlobalActions", "invoke TimerEnd");
                     CoreGame.Instance.state.currentLight = State.GlobalLightTypes.Alert;
                     return true;
                 case "EndComputer":
-                    Debug.Log("GlobalActions: invoke EndComputer");
+                    Logger.Log("GlobalActions", "invoke EndComputer");
                     ActionManager.instance.AddActionMessage("Alert shutdown");
                     CoreGame.Instance.state.currentLevel.timer.Start(CoreGame.Instance.state.player.baselevelTimer);
                     CoreGame.Instance.state.currentLight = State.GlobalLightTypes.Default;
@@ -44,15 +44,27 @@ namespace HackedDesign.Story
                 case "Captured":
                     return true;
                 case "LevelExit":
-                    Debug.Log("GlobalActions: invoke LevelExit");
+                    Logger.Log("GlobalActions", "invoke LevelExit");
                     if(CoreGame.Instance.state.currentLevel.completed)
                     {
-                        ActionManager.instance.AddActionMessage("Mission completed");
-                        CoreGame.Instance.state.currentLevel.timer.Stop();
-                        Debug.Log("Level Over");
-                        CoreGame.Instance.SetMissionComplete();
-                        
-                        //Show end screen!
+                        if (CoreGame.Instance.state.currentLevel.template.hostile)
+                        {
+                            ActionManager.instance.AddActionMessage("Mission completed");
+                            CoreGame.Instance.state.currentLevel.timer.Stop();
+                            Logger.Log("GlobalActions", "Level Over");
+                            CoreGame.Instance.SetMissionComplete();
+                        }
+                        else
+                        {
+                            ActionManager.instance.AddActionMessage("Level completed");
+                            CoreGame.Instance.state.currentLevel.timer.Stop();
+                            Logger.Log("GlobalActions", "Level Over");
+                            CoreGame.Instance.SetLevelComplete();
+                        }
+                    }
+                    else
+                    {
+                        CoreGame.Instance.denied.Play();
                     }
                     return true;
             }

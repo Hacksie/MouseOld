@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace HackedDesign
@@ -16,11 +17,13 @@ namespace HackedDesign
             public List<Character> characters = new List<Character>();
             public List<Corp> corps = new List<Corp>();
             public List<Enemy> enemies = new List<Enemy>();
+            public List<Location> locations = new List<Location>();
 
             public string categoryResource = @"Info/Categories/";
             public string corpsResource = @"Info/Corps/";
             public string charactersResource = @"Info/Characters/";
             public string enemiesResource = @"Info/Enemies/";
+            public string locationsResource = @"Info/Locations/";
 
             [Header("State")]
             //public List<InfoEntity> knownEntities = new List<InfoEntity>();
@@ -28,6 +31,7 @@ namespace HackedDesign
             public List<Corp> knownCorps = new List<Corp>();
             public List<Enemy> knownEnemies = new List<Enemy>();
             public List<Enemy> uniqueEnemies = new List<Enemy>();
+            public List<Location> knownLocations = new List<Location>();
 
 
             public string selectedInfoCategory;
@@ -44,6 +48,7 @@ namespace HackedDesign
                 LoadCorps();
                 LoadCharacters();
                 LoadEnemies();
+                LoadLocations();
 
             }
 
@@ -68,7 +73,6 @@ namespace HackedDesign
                     var corp = JsonUtility.FromJson<Corp>(file.text);
                     Debug.Log(this.name + " corp added: " + corp.id);
                     corps.Add(corp);
-                    //entities.Add(corp);
                 }
             }
 
@@ -92,11 +96,22 @@ namespace HackedDesign
                 {
                     var character = JsonUtility.FromJson<Enemy>(file.text);
 
-                    //character.SetRandomAttributes();
                     enemies.Add(character);
-                    //entities.Add(character);
-                    Debug.Log(this.name + " enemy added: " + character.id);
-                }                
+                    Logger.Log(this.name, "enemy added - ", character.id);
+                }
+            }
+
+            public void LoadLocations()
+            {
+                var jsonTextFiles = Resources.LoadAll<TextAsset>(locationsResource);
+
+                foreach (var file in jsonTextFiles)
+                {
+                    var location = JsonUtility.FromJson<Location>(file.text);
+                    locations.Add(location);
+                    Logger.Log(this.name, "location added - ", location.id);
+                }
+
             }
 
             public List<InfoCategory> GetCategories()
@@ -142,7 +157,35 @@ namespace HackedDesign
                         return v;
                 }
                 return null;
-            }            
+            }
+
+            public List<InfoEntity> GetKnownEntities(string category)
+            {
+                //FIXME: despecialize these lists
+                var infocategory = categories.First(e => e.id == category);
+
+                if(infocategory == null)
+                {
+                    return null;
+                }
+
+                switch(infocategory.lookupList)
+                {
+                    case "characters":
+                        return knownCharacters.FindAll(e => e.category == category).ConvertAll<InfoEntity>(e => e);
+                    case "enemies":
+                        return knownEnemies.FindAll(e => e.category == category).ConvertAll<InfoEntity>(e => e);
+                    case "corps":
+                        return knownCorps.FindAll(e => e.category == category).ConvertAll<InfoEntity>(e => e);
+                    case "locations":
+                        return knownLocations.FindAll(e => e.category == category).ConvertAll<InfoEntity>(e => e);
+                    case "items":
+                        return new List<InfoEntity>();
+
+                }
+
+                return null;
+            }
 
             public void AddToKnownEnemies(string id)
             {
@@ -168,12 +211,13 @@ namespace HackedDesign
                 int uniqueId = uniqueEnemies.Count;
                 var enemy = GetEnemy(id);
 
-                if(enemy == null)
+                if (enemy == null)
                 {
                     Debug.LogError(this.name + ": enemy not found: " + id);
                 }
 
-                var newEnemy = new Enemy {
+                var newEnemy = new Enemy
+                {
                     id = enemy.id,
                     uniqueId = enemy.id + uniqueId.ToString(),
                     name = enemy.name,
@@ -241,24 +285,6 @@ namespace HackedDesign
                     }
                 }
             }
-
-            // public void AddToKnownEntities(string id)
-            // {
-            //     if (!knownEntities.Exists(e=> e.id == id))
-            //     {
-            // 		var entity = entities.Find(e => e.id == id);
-            // 		if(entity != null)
-            // 		{
-            //         Debug.Log(this.name + ": adding entity " + entity.id + " to known entities");
-            //         knownEntities.Add(entity);
-            // 		ActionManager.instance.AddActionMessage("'" + entity.id + "' added to " + entity.parentInfoCategory);
-            // 		}
-            // 		else 
-            // 		{
-            // 			Debug.LogError(this.name + ":  entity not found: " + id);
-            // 		}
-            //     }
-            // }
         }
     }
 }

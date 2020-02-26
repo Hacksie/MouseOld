@@ -7,7 +7,7 @@ namespace HackedDesign
 {
     namespace Story
     {
-        public class TaskDefinitionManager : MonoBehaviour
+        public partial class TaskDefinitionManager : MonoBehaviour
         {
             public List<Task> taskList = new List<Task>();
 
@@ -31,24 +31,15 @@ namespace HackedDesign
 
                 foreach (var file in jsonTextFiles)
                 {
-                    Logger.Log(this.name, file.name);
-                    Logger.Log(this.name, file.text);
                     
                     var tasksHolder = JsonUtility.FromJson<TasksHolder>(file.text);
                     Logger.Log(this.name, "tasks added - " + tasksHolder.tasks.Count);
-                    Logger.Log(this.name, tasksHolder.tasks[0].id);
-
-                    taskList.AddRange(tasksHolder.tasks);
-                    
+                    taskList.AddRange(tasksHolder.tasks);                  
                 }
             }
 
-
-            //public Task selectedTask;
-
             public Task GetTaskDefinition(string id)
             {
-                //return null;
                 return taskList.FirstOrDefault(t => t.id == id);
             }
 
@@ -94,11 +85,6 @@ namespace HackedDesign
             public List<Task> GetTasks()
             {
                 return taskList;
-            }
-
-            private class TasksHolder
-            {
-                public List<Task> tasks;
             }
         }
     }

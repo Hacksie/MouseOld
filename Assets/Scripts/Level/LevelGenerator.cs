@@ -29,21 +29,21 @@ namespace HackedDesign
 
             public Level GenerateLevel(string template, int length, int height, int width, int difficulty, int enemies, int cameras)
             {
-                Debug.Log(this.name + ": generating Level");
+                
 
                 if (string.IsNullOrEmpty(template))
                 {
-                    Debug.LogError(this.name + ": no level template set");
+                    Logger.LogError(name, "no level template set");
                     return null;
                 }
 
                 if (string.IsNullOrEmpty(name))
                 {
-                    Debug.LogError(this.name + ": no level name set");
+                    Logger.LogError(name, "no level name set");
                     return null;
                 }
 
-                Debug.Log(this.name + ": using template - " + template);
+                Logger.Log(name, "using template - " + template);
 
                 var genTemplate = GetLevelGenTemplate(template);
 
@@ -67,9 +67,11 @@ namespace HackedDesign
 
                 if (genTemplate == null)
                 {
-                    Debug.LogError(this.name + ": no level gen template found: " + template);
+                    Logger.LogError(this.name, "no level gen template found - ", template);
                     return null;
                 }
+
+                Logger.Log(name, "generating Level ", genTemplate.levelLength.ToString(), " x ", genTemplate.levelWidth.ToString(), " x ", genTemplate.levelHeight.ToString());
 
                 Level level;
 
@@ -93,7 +95,7 @@ namespace HackedDesign
             protected Level LoadLevelFromFile(LevelGenTemplate genTemplate)
             {
                 Level level = new Level(genTemplate);
-                Debug.Log(this.name + ": loading level from file: Levels/" + genTemplate.levelResource + @".json");
+                Logger.Log(this.name, "loading level from file: Levels/" + genTemplate.levelResource + @".json");
                 var jsonTextFile = Resources.Load<TextAsset>(@"Levels/" + genTemplate.levelResource);
                 if (jsonTextFile == null)
                 {
@@ -160,7 +162,7 @@ namespace HackedDesign
                 // The end room is considered special
                 if (lengthRemaining == 1)
                 {
-                    Debug.Log(this.name + ": end of main chain");
+                    Logger.Log(this.name, "end of main chain");
 
                     level.map[newLocation.y].rooms[newLocation.x] = GenerateRoom(newLocation, new List<string>() { ProxyRoom.WALL }, true, level); // Place a new tile here
                     level.map[newLocation.y].rooms[newLocation.x].isEnd = true;

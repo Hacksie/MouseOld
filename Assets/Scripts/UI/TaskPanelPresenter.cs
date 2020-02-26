@@ -46,7 +46,7 @@ namespace HackedDesign
             {
                 for (int i = 0; i < taskButtonParent.transform.childCount; i++)
                 {
-                    GameObject.Destroy(taskButtonParent.transform.GetChild(i).gameObject);
+                    Destroy(taskButtonParent.transform.GetChild(i).gameObject);
                 }
 
                 for (int i = 0; i < CoreGame.Instance.state.taskList.Count; i++)
@@ -66,7 +66,6 @@ namespace HackedDesign
                 if (CoreGame.Instance.state.selectedTask == null)
                 {
                     taskDescription.text = "";
-
                 }
                 else
                 {

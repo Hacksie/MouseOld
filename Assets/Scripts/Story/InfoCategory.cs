@@ -9,6 +9,7 @@ namespace HackedDesign {
 			public string id;
 			public string text;
 			public bool available = true;
+			public string lookupList;
 		}
 	}
 }

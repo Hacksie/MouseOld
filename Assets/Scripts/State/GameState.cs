@@ -11,9 +11,10 @@ namespace HackedDesign.State
 
         [Header("Game State")]
         public GameStateEnum state = GameStateEnum.GAMEOVER;
+        public PlayingStateEnum playingState = PlayingStateEnum.DEFAULT;
 
         [Header("Player State")]
-        public State.PlayerState player = null;
+        public PlayerState player = null;
 
         [Header("Story State")]
 		public StoryState story = new StoryState();
@@ -60,7 +61,8 @@ namespace HackedDesign.State
         SELECTMENU,
         GAMEOVER,
         CAPTURED,
-        MISSIONCOMPLETE
+        MISSIONCOMPLETE,
+        LEVELCOMPLETE
     }
 
     public enum PlayingStateEnum

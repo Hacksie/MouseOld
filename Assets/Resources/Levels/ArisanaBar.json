@@ -4,7 +4,7 @@
         "name": "mouse",
         "levelLocation": {
             "x": 0,
-            "y": 0
+            "y": 1
         },
         "worldOffset": {
             "x": 0,
@@ -78,7 +78,7 @@
             "rooms": [
                 {
                     "left": "w",
-                    "top": "e",
+                    "top": "d",
                     "bottom": "o",
                     "right": "o",
                     "isEntry": true,
@@ -86,22 +86,23 @@
                     "topLeft": [
                         {
                             "type": "fixed",
-                            "name": "securitycam_1_tl_aa"
-                        }
-                    ],
-                    "topRight": [
-                        {
-                            "type": "fixed",
-                            "name": "sign_1_tr_az"
+                            "name": "bar_1_tl_aa"
                         }
                     ]
                 },
                 {
                     "left": "o",
-                    "top": "w",
+                    "top": "d",
                     "bottom": "o",
-                    "right": "w"
+                    "right": "w",
+                    "topLeft": [
+                        {
+                            "type": "fixed",
+                            "name": "bar_2_tl_aa"
+                        }
+                    ]                          
                 }
+          
             ]
         },
         {
@@ -109,14 +110,8 @@
                 {
                     "left": "w",
                     "top": "o",
-                    "bottom": "w",
-                    "right": "o",
-                    "topLeft": [
-                        {
-                            "type": "fixed",
-                            "name": "bar_1_tl_aa"
-                        }
-                    ]
+                    "bottom": "e",
+                    "right": "o"
                 },
                 {
                     "left": "o",

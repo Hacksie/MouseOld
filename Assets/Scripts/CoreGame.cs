@@ -26,6 +26,8 @@ namespace HackedDesign
         private CharacterSpriteManager characterSpriteManager = null;
 
         private List<CharacterSprite> characterSprites = new List<CharacterSprite>();
+        [SerializeField]
+        public AudioSource denied;
 
         [Header("Player")]
         [SerializeField]
@@ -82,10 +84,6 @@ namespace HackedDesign
         [SerializeField]
         private SelectMenuPanelPresenter selectMenuPanel = null;
         [SerializeField]
-        private WorldMapManager worldMapManager = null;
-        [SerializeField]
-        private WorldMapPanelPresenter worldMapPanel = null;
-        [SerializeField]
         private ActionPanelPresenter actionPanel = null;
         [SerializeField]
         private Story.InfoManager infoManager = null;
@@ -106,15 +104,21 @@ namespace HackedDesign
         [SerializeField]
         private MissionCompleteManager missionCompleteManager = null;
         [SerializeField]
+        private LevelCompleteManager levelCompleteManager = null;
+        [SerializeField]
+        private LevelCompletePresenter levelCompletePresenter = null;
+        [SerializeField]
         private MissionCompletePresenter missionCompletePanel = null;
         [SerializeField]
         private Level.MinimapPresenter minimapPanel = null;
         [SerializeField]
-        private StatsPresenter statsPanel = null;
-        [SerializeField]
         private TitlecardPresenter titlecardPanel = null;
         [SerializeField]
         private Level.LevelMapPanelPresenter levelMapPanel = null;
+        [SerializeField]
+        private WorldMapManager worldMapManager = null;
+        [SerializeField]
+        private WorldMapPanelPresenter worldMapPanelPresenter = null;
 
         [SerializeField]
         private TimerPanelPresenter timerPanel = null;
@@ -168,6 +172,8 @@ namespace HackedDesign
             narrationManager.Initialize(inputController);
             infoManager.Initialize();
             taskManager.Initialize();
+            missionCompleteManager.Initialize(actionManager);
+            levelCompleteManager.Initialize(actionManager);
             characterSpriteManager.Initialize(infoManager);
             mobileInputUI.Initialize(inputController);
             actionConsolePanel.Initialize(actionManager);
@@ -175,15 +181,15 @@ namespace HackedDesign
             stashPanel.Initialize(selectMenuManager);
             psychPanel.Initialize(selectMenuManager);
             taskPanel.Initialize(selectMenuManager);
-            startMenuPanel.Initialize(startMenuManager);
+            startMenuPanel.Initialize(state, startMenuManager);
             selectMenuPanel.Initialize(selectMenuManager, infoPanel, taskPanel, stashPanel, psychPanel, levelMapPanel);
             narrationPanel.Initialize(narrationManager, infoManager, characterSpriteManager);
-            worldMapPanel.Initialize(worldMapManager);
-            statsPanel.Initialize();
             actionPanel.Initialize();
             titlecardPanel.Initialize(actionManager);
             levelRenderer.Initialize(entityManager, infoManager, characterSpriteManager, levelParent, npcParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
+            levelCompletePresenter.Initialize(levelCompleteManager);
+            worldMapPanelPresenter.Initialize(worldMapManager);
 
             RepaintAllUI();
             ShowPlayer(false);
@@ -331,17 +337,17 @@ namespace HackedDesign
             selectMenuPanel.Repaint();
             startMenuPanel.Repaint();
             missionCompletePanel.Repaint();
+            levelCompletePresenter.Repaint();
             stashPanel.Repaint();
             psychPanel.Repaint();
             levelMapPanel.Repaint();
-            worldMapPanel.Repaint();
             actionPanel.Repaint();
             timerPanel.Repaint();
             mobileInputUI.Repaint();
             minimapPanel.Repaint();
             cursorPresenter.Repaint();
             titlecardPanel.Repaint();
-            statsPanel.Repaint();
+            worldMapPanelPresenter.Repaint();
         }
 
         // FIXME: There's probably a better way to do this these days
@@ -416,6 +422,14 @@ namespace HackedDesign
             RepaintAllUI();
         }
 
+        public void SetLevelComplete()
+        {
+            Logger.Log(this.name, "state set to LEVEL COMPLETE");
+            Time.timeScale = 0;
+            state.state = State.GameStateEnum.LEVELCOMPLETE;
+            RepaintAllUI();
+        }
+
         public void SetWorldMap()
         {
             Logger.Log(this.name, "state set to WORLDMAP");
@@ -478,20 +492,19 @@ namespace HackedDesign
 
         void Update()
         {
-
             switch (state.state)
             {
                 case State.GameStateEnum.PLAYING:
                     PlayingUpdate();
                     if (inputController.StartButtonUp())
                     {
-                        Logger.Log(this.name, "show start menu");
+                        Logger.Log(name, "show start menu");
                         state.state = State.GameStateEnum.STARTMENU;
                     }
 
                     if (inputController.SelectButtonUp())
                     {
-                        Logger.Log(this.name, "show select menu");
+                        Logger.Log(name, "show select menu");
                         state.state = State.GameStateEnum.SELECTMENU;
                     }
                     break;
@@ -499,7 +512,7 @@ namespace HackedDesign
                 case State.GameStateEnum.STARTMENU:
                     if (inputController.StartButtonUp())
                     {
-                        Logger.Log(this.name, "hide start menu");
+                        Logger.Log(name, "hide start menu");
                         SetPlaying();
                     }
                     break;
@@ -507,7 +520,7 @@ namespace HackedDesign
                 case State.GameStateEnum.SELECTMENU:
                     if (inputController.SelectButtonUp())
                     {
-                        Logger.Log(this.name, "hide select menu");
+                        Logger.Log(name, "hide select menu");
                         SetPlaying();
                     }
                     break;
@@ -543,6 +556,7 @@ namespace HackedDesign
                 case State.GameStateEnum.DIALOGUE:
                 case State.GameStateEnum.GAMEOVER:
                 case State.GameStateEnum.MISSIONCOMPLETE:
+                case State.GameStateEnum.LEVELCOMPLETE:
                 case State.GameStateEnum.SELECTMENU:
                 case State.GameStateEnum.STARTMENU:
                 case State.GameStateEnum.WORLDMAP:

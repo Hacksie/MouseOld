@@ -8,7 +8,7 @@ namespace HackedDesign
         [SerializeField]
         private bool show = true;
         [SerializeField]
-        private Text statsText;
+        private Text statsText = null;
 
         float deltaTime = 0.0f;
         

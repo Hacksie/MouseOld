@@ -10,14 +10,14 @@
     {
         "id": "Prelude2",
         "speaker": "Mouse",
-        "text": "\"Cat, please, kill that alarm.\"",
+        "text": "\"Cat, please, kill the alarm.\"",
         "action": "Prelude3",
         "button":"arrowright"
     },
     {
         "id": "Prelude3",
         "speaker": "Cat",
-        "text": "<color='#B0B0B0'>*purrs*</color> \"Of course Miss. There is a message from your manager waiting for you on your laptop. I would start a coffee pot for you, but once again you're out. Also, if you have the time, I could really use a few more scratches behind the ears.\"",
+        "text": "<color='#B0B0B0'>*purrs*</color> \"Of course Miss. The details of your job are waiting for you on your laptop. I would start a coffee pot for you, but once again you're out. Also, if you have the time, I could really use a few more scratches behind the ears.\"",
         "action": "Prelude4",
         "button":"arrowright"
     },
@@ -97,6 +97,13 @@
         "text": "<color='#B0B0B0'>You know damn well there's nothing in here</color>",
         "action": "",
         "button": "arrowright"
+      },
+      {
+        "id": "PreludeExitFail",
+        "speaker": "Mouse",
+        "text": "<color='#B0B0B0'>We should read the message from Manager Lyon before we leave</color>",
+        "action": "",
+        "button": "arrowright"          
       }
 ]
 }

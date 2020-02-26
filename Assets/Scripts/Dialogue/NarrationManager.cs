@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace HackedDesign {
-	namespace Dialogue {
-		public class NarrationManager : MonoBehaviour, INarrationManager {
+namespace HackedDesign
+{
+	namespace Dialogue
+	{
+		public partial class NarrationManager : MonoBehaviour, INarrationManager {
 			public static NarrationManager instance;
 
 			public Narration currentNarration;
@@ -33,13 +35,12 @@ namespace HackedDesign {
 				{
 					var narrations = JsonUtility.FromJson<NarrationHolder>(file.text);
 					narrationList.AddRange(narrations.narrations);
-					Debug.Log(this.name +": narration added");
+					Logger.Log(name, "narration added - " + file.name);
 				}				
 			}
 
 			public void ShowNarration (Narration narration) {
 				input.ResetInput(); // Is there a better way of doing this? Move to the presenter
-				//Input.ResetInputAxes();
 				if (narration != null) {
 					Debug.Log(this.name + ": show narration " + narration.id);
 					currentNarration = narration;
@@ -70,10 +71,6 @@ namespace HackedDesign {
 
 			public Narration GetCurrentNarration () {
 				return currentNarration;
-			}
-
-			private class NarrationHolder {
-				public List<Narration> narrations;
 			}
 		}
 	}

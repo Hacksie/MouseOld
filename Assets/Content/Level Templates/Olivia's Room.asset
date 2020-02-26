@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
   m_Name: Olivia's Room
   m_EditorClassIdentifier: 
+  corp: Arisana
+  building: ArisanaBarracks
+  level: 239
   levelLength: 1
   levelWidth: 1
   levelHeight: 1
@@ -23,6 +26,7 @@ MonoBehaviour:
   exitAction: PreludeExit
   levelResource: OliviasRoom
   generateNavMesh: 0
+  hostile: 0
   floors:
   - {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
   levelElements:
@@ -71,3 +75,6 @@ MonoBehaviour:
   randomProps: []
   trapProps: []
   fixedProps: []
+  easyEnemies: []
+  mediumEnemies: []
+  hardEnemies: []

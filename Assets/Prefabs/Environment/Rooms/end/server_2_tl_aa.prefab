@@ -961,6 +961,7 @@ GameObject:
   - component: {fileID: 2806367383422436396}
   - component: {fileID: 3498391276811320796}
   - component: {fileID: 877853335477200184}
+  - component: {fileID: 3976441244241673504}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Trigger
@@ -1022,7 +1023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabled: 1
   autoInteraction: 0
-  allowInteraction: 0
+  allowInteraction: 1
   allowBug: 0
   allowHack: 0
   allowOverload: 0
@@ -1046,7 +1047,19 @@ MonoBehaviour:
         m_CallState: 2
   interactActionEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3976441244241673504}
+        m_TargetAssemblyTypeName: HackedDesign.Story.ActionInvoker, Assembly-CSharp
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   bugActionEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1077,6 +1090,19 @@ MonoBehaviour:
   overloaded: 0
   hacked: 0
   bugged: 0
+--- !u!114 &3976441244241673504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4213007361700707588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da42ddf162ce4e549ae84e8e1f140427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: EndComputer
 --- !u!1001 &6099033431835443045
 PrefabInstance:
   m_ObjectHideFlags: 0
