@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
   m_Name: Arisana Corp
   m_EditorClassIdentifier: 
+  corp: Arisana
+  location: ArisanaHQ
+  level: 
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
@@ -21,9 +24,10 @@ MonoBehaviour:
   startingRoomString: wdww
   startingAction: 
   exitAction: 
-  isRandom: 1
+  levelResource: 
   generateNavMesh: 1
-  floor: {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
+  hostile: 1
+  floors: []
   levelElements:
   - {fileID: 1873802445332644, guid: 1836e21abf55f0b4399a60ea4c8e8523, type: 3}
   - {fileID: 1996918847672242, guid: 4f588a18087ef534387d0244e321a69a, type: 3}
@@ -157,5 +161,7 @@ MonoBehaviour:
   - {fileID: 6797104490100697780, guid: ecf5fbd55c4786c43afaada007f25fd4, type: 3}
   - {fileID: 8387367927353284284, guid: 0133037e36f623a48a2ff29e12716aa6, type: 3}
   - {fileID: 6150267684878857572, guid: 2ffcfcbb737fe244eac99e723d74062f, type: 3}
-  mapWallsRows: []
-  mapPropsRows: []
+  fixedProps: []
+  easyEnemies: []
+  mediumEnemies: []
+  hardEnemies: []

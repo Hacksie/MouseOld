@@ -18,6 +18,7 @@ namespace HackedDesign
             public List<Corp> corps = new List<Corp>();
             public List<Enemy> enemies = new List<Enemy>();
             public List<Location> locations = new List<Location>();
+            public Dictionary<string, InfoEntity> entities = new Dictionary<string, InfoEntity>();
 
             public string categoryResource = @"Info/Categories/";
             public string corpsResource = @"Info/Corps/";
@@ -26,7 +27,7 @@ namespace HackedDesign
             public string locationsResource = @"Info/Locations/";
 
             [Header("State")]
-            //public List<InfoEntity> knownEntities = new List<InfoEntity>();
+            public Dictionary<string, InfoEntity> knownEntities = new Dictionary<string, InfoEntity>();
             public List<Character> knownCharacters = new List<Character>();
             public List<Corp> knownCorps = new List<Corp>();
             public List<Enemy> knownEnemies = new List<Enemy>();
@@ -73,6 +74,7 @@ namespace HackedDesign
                     var corp = JsonUtility.FromJson<Corp>(file.text);
                     Debug.Log(this.name + " corp added: " + corp.id);
                     corps.Add(corp);
+                    entities.Add(corp.id, corp);
                 }
             }
 
@@ -84,6 +86,7 @@ namespace HackedDesign
                 {
                     var character = JsonUtility.FromJson<Character>(file.text);
                     characters.Add(character);
+                    entities.Add(character.id, character);
                     Debug.Log(this.name + " character added: " + character.id);
                 }
             }
@@ -95,8 +98,8 @@ namespace HackedDesign
                 foreach (var file in jsonTextFiles)
                 {
                     var character = JsonUtility.FromJson<Enemy>(file.text);
-
                     enemies.Add(character);
+                    entities.Add(character.id, character);
                     Logger.Log(this.name, "enemy added - ", character.id);
                 }
             }
@@ -109,6 +112,7 @@ namespace HackedDesign
                 {
                     var location = JsonUtility.FromJson<Location>(file.text);
                     locations.Add(location);
+                    entities.Add(location.id, location);
                     Logger.Log(this.name, "location added - ", location.id);
                 }
 
@@ -119,23 +123,34 @@ namespace HackedDesign
                 return categories;
             }
 
+            public InfoEntity GetEntity(string id)
+            {
+                if (entities.ContainsKey(id))
+                {
+                    return entities[id] as Character;
+                }
+
+                return null;
+
+            }
+
             public Character GetCharacter(string id)
             {
-                foreach (var v in characters)
+                if(entities.ContainsKey(id))
                 {
-                    if (v.id == id)
-                        return v;
+                    return entities[id] as Character;
                 }
+
                 return null;
             }
 
             public Enemy GetEnemy(string id)
             {
-                foreach (var v in enemies)
+                if (entities.ContainsKey(id))
                 {
-                    if (v.id == id)
-                        return v;
+                    return entities[id] as Enemy;
                 }
+
                 return null;
             }
 
@@ -151,58 +166,24 @@ namespace HackedDesign
 
             public Corp GetCorp(string id)
             {
-                foreach (var v in corps)
+                if (entities.ContainsKey(id))
                 {
-                    if (v.id == id)
-                        return v;
+                    return entities[id] as Corp;
                 }
+
                 return null;
             }
 
             public List<InfoEntity> GetKnownEntities(string category)
             {
-                //FIXME: despecialize these lists
-                var infocategory = categories.First(e => e.id == category);
+                var infocategory = categories.FirstOrDefault(e => e.id == category);
 
                 if(infocategory == null)
                 {
                     return null;
                 }
 
-                switch(infocategory.lookupList)
-                {
-                    case "characters":
-                        return knownCharacters.FindAll(e => e.category == category).ConvertAll<InfoEntity>(e => e);
-                    case "enemies":
-                        return knownEnemies.FindAll(e => e.category == category).ConvertAll<InfoEntity>(e => e);
-                    case "corps":
-                        return knownCorps.FindAll(e => e.category == category).ConvertAll<InfoEntity>(e => e);
-                    case "locations":
-                        return knownLocations.FindAll(e => e.category == category).ConvertAll<InfoEntity>(e => e);
-                    case "items":
-                        return new List<InfoEntity>();
-
-                }
-
-                return null;
-            }
-
-            public void AddToKnownEnemies(string id)
-            {
-                if (!knownEnemies.Exists(e => e.id == id))
-                {
-                    var character = GetEnemy(id);
-                    if (character != null)
-                    {
-                        Debug.Log(this.name + ": adding entity " + character.id + " to known entities");
-                        knownEnemies.Add(character);
-                        ActionManager.instance.AddActionMessage("'" + character.id + "' added to " + character.parentInfoCategory);
-                    }
-                    else
-                    {
-                        Debug.LogError(this.name + ":  entity not found: " + id);
-                    }
-                }
+                return knownEntities.Where(kv => kv.Value.category == category).Select(kv => kv.Value).ToList();
             }
 
             public Enemy GenerateRandomEnemy(string id)
@@ -243,18 +224,57 @@ namespace HackedDesign
                 };
 
                 newEnemy.SetRandomAttributes();
-
                 uniqueEnemies.Add(newEnemy);
-
                 return newEnemy;
-
             }
+
+            public bool AddToKnownEntities(string id)
+            {
+                if (!knownEntities.ContainsKey(id))
+                {
+                    if(entities.ContainsKey(id))
+                    {
+                        var entity = entities[id];
+                        Logger.Log(name, "adding entity ", entity.id, " to known entities");
+                        knownEntities.Add(id, entity);
+                        ActionManager.instance.AddActionMessage("'" + entity.id + "' added to " + entity.category);
+                    }
+                    else
+                    {
+                        Debug.LogError(this.name + ":  entity not found: " + id);
+                        return false;
+                    }
+                }
+
+                return false;
+            }
+
+            /*
+            public void AddToKnownEnemies(string id)
+            {
+                if(!knownEntities.ContainsKey(id))
+                {
+                    var character = GetEnemy(id);
+                    if(character != null)
+                    {
+                        Logger.Log(name, "adding entity ", character.id, " to known entities");
+                        knownEntities.Add(id, character);
+                        ActionManager.instance.AddActionMessage("'" + character.id + "' added to " + character.category);
+                    }
+                    else
+                    {
+                        Debug.LogError(this.name + ":  entity not found: " + id);
+                    }
+                }
+            }
+
+
 
             public void AddToKnownCharacters(string id)
             {
-                if (!knownCharacters.Exists(e => e.id == id))
+                if (!knownEntities.ContainsKey(id))
                 {
-                    var character = characters.Find(e => e.id == id);
+                    var character = GetCharacter(id);
                     if (character != null)
                     {
                         Debug.Log(this.name + ": adding entity " + character.id + " to known entities");
@@ -285,6 +305,7 @@ namespace HackedDesign
                     }
                 }
             }
+            */
         }
     }
 }

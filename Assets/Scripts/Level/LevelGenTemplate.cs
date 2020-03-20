@@ -11,7 +11,7 @@ namespace HackedDesign
         public class LevelGenTemplate : ScriptableObject
         {
 			public string corp;
-			public string building;
+			public string location;
 			public string level;
 
 			public int levelLength = 7;

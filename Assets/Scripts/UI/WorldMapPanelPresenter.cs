@@ -1,23 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using HackedDesign.Story;
 
 namespace HackedDesign {
 	public class WorldMapPanelPresenter : MonoBehaviour {
 
 		WorldMapManager worldMapManager;
-
-		public Transform sectorButtonParent;
-		public Transform buildingButtonParent;
-		public Transform locationButtonParent;
+		Story.InfoManager infoManager;
 
 		public Text descriptionText;
 		public List<Button> buildings;
 
-		public void Initialize (WorldMapManager worldMapManager) {
+		public void Initialize (WorldMapManager worldMapManager, InfoManager infoManager) {
 			this.worldMapManager = worldMapManager;
+			this.infoManager = infoManager;
 		}
 
 		public void Repaint () {
@@ -41,13 +39,48 @@ namespace HackedDesign {
 			}
 
 			Reset ();
+			SetCurrentLocation();
 			
 			//RepaintSectors (worldMapManager.GetSectors ());
 		}
 
 		private void Reset () {
 			EventSystem.current.SetSelectedGameObject (null);
-			//UpdateDescription ("");
+			UpdateDescription ("");
+		}
+
+		private void SetCurrentLocation()
+		{
+			//var location = CoreGame.Instance.state.currentLevel.template.location
+		}
+
+		public void SelectLocationEvent()
+		{
+			var descriptor = EventSystem.current.currentSelectedGameObject.GetComponent<InfoEntityDescriptor>();
+			var location = infoManager.GetEntity(descriptor.id);
+			Logger.Log(name, descriptor.id);
+			UpdateDescription(location.description);
+			/*
+			Map.SectorBehaviour sb = EventSystem.current.currentSelectedGameObject.GetComponent<Map.SectorBehaviour>();
+			if (sb == null)
+			{
+				Debug.LogWarning("No SectorBehaviour available");
+				return;
+			}
+			worldMapManager.SetSelectedSector(sb.sector);
+			RepaintBuildings(sb.sector.buildings);
+			*/
+		}
+
+		private void UpdateDescription(string text)
+		{
+			if (descriptionText == null)
+			{
+				Debug.LogWarning("No world map description text object set");
+				return;
+			}
+
+			descriptionText.text = text;
 		}
 
 		/*
@@ -161,14 +194,7 @@ namespace HackedDesign {
 			}
 		}
 
-		private void UpdateDescription (string text) {
-			if (descriptionText == null) {
-				Debug.LogWarning ("No world map description text object set");
-				return;
-			}
-
-			descriptionText.text = text;
-		}
+		
 
 		public void SelectSectorEvent () {
 			Map.SectorBehaviour sb = EventSystem.current.currentSelectedGameObject.GetComponent<Map.SectorBehaviour> ();

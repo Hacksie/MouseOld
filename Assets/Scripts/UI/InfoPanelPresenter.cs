@@ -7,34 +7,35 @@ using UnityEngine.UI;
 
 namespace HackedDesign.Story
 {
-
     public class InfoPanelPresenter : MonoBehaviour
     {
-
         public Transform infoCategoriesParent;
         public Transform infoEntitiesParent;
         public Transform infoDescriptionParent;
         InfoManager infoManager;
         SelectMenuManager selectMenuManager;
+        [SerializeField]
+        private Text description = null;
 
         public void Start()
         {
             if (infoCategoriesParent == null)
             {
                 Debug.LogError("No infoCategoriesParent set");
-                return;
             }
 
             if (infoEntitiesParent == null)
             {
                 Debug.LogError("No infoEntitiesParent set");
-                return;
             }
 
             if (infoDescriptionParent == null)
             {
                 Debug.LogError("No infoDescriptionParent set");
-                return;
+            }
+            if (description == null)
+            {
+                Logger.LogError(name, "No description set");
             }
         }
 
@@ -81,6 +82,11 @@ namespace HackedDesign.Story
 
             var categories = infoManager.categories.Where(e => e.available).ToList();
 
+            if (string.IsNullOrWhiteSpace(infoManager.selectedInfoCategory))
+            {
+                infoManager.selectedInfoCategory = categories[0].id;
+            }
+
             for (int i = 0; i < infoCategoriesParent.childCount; i++)
             {
                 Transform cbt = infoCategoriesParent.GetChild(i);
@@ -93,108 +99,121 @@ namespace HackedDesign.Story
 
                     cbt.name = categories[i].text;
 
-                    // if(currentCategory == infoManager.selectedInfoCategory)
-                    // {
-                    //     b.Select();
-                    // }
+                    var infoEntityDescriptor = cbt.gameObject.GetComponent<InfoEntityDescriptor>();
 
-                    //sb.sector = currentSector;
+                    if (infoEntityDescriptor == null)
+                    {
+                        infoEntityDescriptor = cbt.gameObject.AddComponent<InfoEntityDescriptor>();
+                    }
+
+                    infoEntityDescriptor.id = categories[i].id;
                     t.text = categories[i].text;
 
+                    if (infoManager.selectedInfoCategory == categories[i].id)
+                    {
+                        EventSystem.current.SetSelectedGameObject(cbt.gameObject);
+                    }
                 }
                 else
                 {
                     cbt.gameObject.SetActive(false);
                 }
-
             }
+           
 
             RepaintEntities();
-
         }
 
         public void SelectCategory()
         {
-            Debug.Log(EventSystem.current.currentSelectedGameObject.name);
-            // This is flakey as fuck
-            this.infoManager.selectedInfoCategory = EventSystem.current.currentSelectedGameObject.name;
-            RepaintEntities();
-        }
+            var infoEntityDescriptor = EventSystem.current.currentSelectedGameObject.GetComponent<InfoEntityDescriptor>();
 
-        public void SelectEntity()
-        {
-            Debug.Log(EventSystem.current.currentSelectedGameObject.name);
-            // This is flakey as fuck
-            this.infoManager.selectedInfoEntity = EventSystem.current.currentSelectedGameObject.name;
-            RepaintDescription();
+            if (infoEntityDescriptor != null)
+            {
+                infoManager.selectedInfoCategory = infoEntityDescriptor.id;
+                RepaintEntities();
+            }
         }
 
         public void RepaintEntities()
         {
             var entities = infoManager.GetKnownEntities(infoManager.selectedInfoCategory);
 
+            if (entities == null)
+            {
+                return;
+            }
 
+            if (string.IsNullOrWhiteSpace(infoManager.selectedInfoEntity))
+            {
+                infoManager.selectedInfoEntity = entities[0].id;
+            }
+
+            var entitiesArray = entities.ToArray(); // FIXME: can we just use the iterator
             for (int i = 0; i < infoEntitiesParent.childCount; i++)
             {
                 Transform cbt = infoEntitiesParent.GetChild(i);
-                Text t = cbt.GetComponentInChildren<Text>();
+                Text t = cbt.GetComponentInChildren<Text>(); // FIXME: Cache this
 
-                if (entities.Count > i)
+                if (entities != null && entitiesArray.Length > i)
                 {
                     cbt.gameObject.SetActive(true); // Just in case it isn't active
-                    cbt.name = entities[i].name;
-                    t.text = entities[i].name;
+                    cbt.name = entitiesArray[i].name;
+                    t.text = entitiesArray[i].name;
+
+                    var infoEntityDescriptor = cbt.gameObject.GetComponent<InfoEntityDescriptor>();
+
+                    if (infoEntityDescriptor == null)
+                    {
+                        infoEntityDescriptor = cbt.gameObject.AddComponent<InfoEntityDescriptor>();
+                    }
+
+                    infoEntityDescriptor.id = entities[i].id;
+
+                    if (infoManager.selectedInfoEntity == entities[i].id)
+                    {
+                        EventSystem.current.SetSelectedGameObject(cbt.gameObject);
+                    }
                 }
                 else
                 {
                     cbt.gameObject.SetActive(false);
                 }
-
             }
-
-
-
-
-            /*
-                            var entities = infoManager.knownEntities.Where (e => e.parentInfoCategory == infoManager.selectedInfoCategory).ToList ();
-
-                            for (int i = 0; i < infoEntitiesParent.childCount; i++) {
-                                Transform cbt = infoEntitiesParent.GetChild (i);
-                                //Button b = cbt.GetComponent<Button> ();
-                                Text t = cbt.GetComponentInChildren<Text> ();
-
-                                if (entities.Count > i) {
-                                    cbt.gameObject.SetActive (true); // Just in case it isn't active
-                                    cbt.name = entities[i].name;
-                                    t.text = entities[i].name;
-
-                                } else {
-                                    cbt.gameObject.SetActive (false);
-                                }
-
-                            }
-
-                            RepaintDescription ();*/
-
         }
+
+        public void SelectEntity()
+        {
+            var infoEntityDescriptor = EventSystem.current.currentSelectedGameObject.GetComponent<InfoEntityDescriptor>();
+
+            if (infoEntityDescriptor != null)
+            {
+                infoManager.selectedInfoEntity = infoEntityDescriptor.id;
+                RepaintDescription();
+            }
+        }
+
 
         public void RepaintDescription()
         {
+
             //Transform cbt = infoDescriptionParent.GetChild (i);
             //Button b = cbt.GetComponent<Button> ();
-            /*
-                            Text t = infoDescriptionParent.GetComponentInChildren<Text> ();
 
-                            var entity = infoManager.entities.FirstOrDefault (e => e.parentInfoCategory == infoManager.selectedInfoCategory && e.name == infoManager.selectedInfoEntity);
+            //Text t = infoDescriptionParent.GetComponentInChildren<Text>();
 
-                            if (entity != null) {
+            var entity = infoManager.GetEntity(infoManager.selectedInfoEntity);
 
-                                t.text = entity.description;
-                            } else 
-                            {
-                                t.text = "";
+            if (entity != null)
+            {
 
-                            }*/
+                description.text = entity.description;
+            }
+            else
+            {
+                description.text = "<entity not found>";
+
+            }
 
         }
     }

@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
   m_Name: Arisana Bar
   m_EditorClassIdentifier: 
+  corp: Arisana Bar
+  location: ArisanaContractorBarracks
+  level: 
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
@@ -23,6 +26,7 @@ MonoBehaviour:
   exitAction: 
   levelResource: ArisanaBar
   generateNavMesh: 1
+  hostile: 1
   floors:
   - {fileID: 2321086600638492910, guid: c409cac4fd99a674ba575458284fb178, type: 3}
   levelElements:

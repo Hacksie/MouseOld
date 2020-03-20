@@ -14,14 +14,13 @@ namespace HackedDesign.Story
                     return true;
                 case "Prelude1":
                     Debug.Log("PreludeActions: invoke Prelude1");
-                    InfoManager.instance.AddToKnownCorps("Arisana");
-                    InfoManager.instance.AddToKnownCharacters("ManagerLyon");
-                    InfoManager.instance.AddToKnownCharacters("Cat");
+                    InfoManager.instance.AddToKnownEntities("Mouse");
+                    InfoManager.instance.AddToKnownEntities("Arisana");
+                    InfoManager.instance.AddToKnownEntities("ManagerLyon");
+                    InfoManager.instance.AddToKnownEntities("Cat");
+                    InfoManager.instance.AddToKnownEntities("Saika");
+
                     ActionManager.instance.AddActionMessage("Task added to current tasks - tutorial");
-                    InfoManager.instance.AddToKnownCorps("Saika");
-                    //InfoManager.instance.AddToKnownEntities(InfoManager.instance.entities.Find(e => e.name == "Kat"));
-
-
                     if (!CoreGame.Instance.state.taskList.Exists(t => t.id == "tutorial"))
                     {
                         var task = TaskDefinitionManager.instance.GetTaskInstance("tutorial");

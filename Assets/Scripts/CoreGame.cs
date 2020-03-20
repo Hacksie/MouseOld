@@ -189,7 +189,7 @@ namespace HackedDesign
             levelRenderer.Initialize(entityManager, infoManager, characterSpriteManager, levelParent, npcParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
             levelCompletePresenter.Initialize(levelCompleteManager);
-            worldMapPanelPresenter.Initialize(worldMapManager);
+            worldMapPanelPresenter.Initialize(worldMapManager, infoManager);
 
             RepaintAllUI();
             ShowPlayer(false);

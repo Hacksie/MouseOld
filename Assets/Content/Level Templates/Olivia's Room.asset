@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Olivia's Room
   m_EditorClassIdentifier: 
   corp: Arisana
-  building: ArisanaBarracks
+  location: ArisanaContractorBarracks
   level: 239
   levelLength: 1
   levelWidth: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
   generateNavMesh: 0
   hostile: 0
   floors:
-  - {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
+  - {fileID: 4608003317889900369, guid: 52742319db5e20546a40eef7308bcc53, type: 3}
   levelElements:
   - {fileID: 1873802445332644, guid: 1836e21abf55f0b4399a60ea4c8e8523, type: 3}
   - {fileID: 1996918847672242, guid: 4f588a18087ef534387d0244e321a69a, type: 3}
