@@ -11,27 +11,18 @@ namespace HackedDesign
 
         public State.GameState state;
 
-        private Input.IInputController inputController;
+        //private Input.IInputController inputController;
 
         [Header("Test Flags")]
-        [SerializeField]
-        private RuntimePlatform testPlatform = RuntimePlatform.WindowsEditor;
-        [SerializeField]
-        private bool testPlatformFlag = false;
+        [SerializeField] private RuntimePlatform testPlatform = RuntimePlatform.WindowsEditor;
+        [SerializeField] private bool testPlatformFlag = false;
 
         [Header("Game")]
-        [SerializeField]
-        private Entities.EntityManager entityManager = null;
-        [SerializeField]
-        private CharacterSpriteManager characterSpriteManager = null;
-
-        private List<CharacterSprite> characterSprites = new List<CharacterSprite>();
-        [SerializeField]
-        public AudioSource denied;
+        [SerializeField] private Entities.EntityManager entityManager = null;
+        [SerializeField] public AudioSource denied;
 
         [Header("Player")]
-        [SerializeField]
-        private GameObject player = null;
+        [SerializeField] private GameObject player = null;
         private PlayerController playerController = null;
 
         [Header("Level")]
@@ -169,13 +160,12 @@ namespace HackedDesign
 
             SetPlatformInput();
 
-            narrationManager.Initialize(inputController);
+            narrationManager.Initialize();
             infoManager.Initialize();
             taskManager.Initialize();
             missionCompleteManager.Initialize(actionManager);
             levelCompleteManager.Initialize(actionManager);
-            characterSpriteManager.Initialize(infoManager);
-            mobileInputUI.Initialize(inputController);
+            mobileInputUI.Initialize();
             actionConsolePanel.Initialize(actionManager);
             infoPanel.Initialize(infoManager, selectMenuManager);
             stashPanel.Initialize(selectMenuManager);
@@ -183,10 +173,10 @@ namespace HackedDesign
             taskPanel.Initialize(selectMenuManager);
             startMenuPanel.Initialize(state, startMenuManager);
             selectMenuPanel.Initialize(selectMenuManager, infoPanel, taskPanel, stashPanel, psychPanel, levelMapPanel);
-            narrationPanel.Initialize(narrationManager, infoManager, characterSpriteManager);
+            narrationPanel.Initialize(narrationManager, infoManager);
             actionPanel.Initialize();
             titlecardPanel.Initialize(actionManager);
-            levelRenderer.Initialize(entityManager, infoManager, characterSpriteManager, levelParent, npcParent, polyNav2D);
+            levelRenderer.Initialize(entityManager, infoManager, levelParent, npcParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
             levelCompletePresenter.Initialize(levelCompleteManager);
             worldMapPanelPresenter.Initialize(worldMapManager, infoManager);
@@ -197,6 +187,7 @@ namespace HackedDesign
 
         private void SetPlatformInput()
         {
+            /*
             switch (testPlatformFlag ? testPlatform : Application.platform)
             {
                 case RuntimePlatform.Android:
@@ -207,7 +198,7 @@ namespace HackedDesign
                     Logger.Log(this.name, "input platform Default");
                     inputController = new Input.DesktopInputController();
                     break;
-            }
+            }*/
         }
 
         public void LoadNewGame()
@@ -216,7 +207,7 @@ namespace HackedDesign
             state.state = State.GameStateEnum.LOADING;
             entityManager.Initialize(npcParent);
             actionManager.Initialize(entityManager, taskManager);
-            state.currentLevel = levelGenerator.GenerateLevel(newGameLevel, 1, 1, 1, 0, 0, 0);
+            state.currentLevel = levelGenerator.GenerateLevel(newGameLevel, 0, 0, 0);
             state.isRandom = false;
             state.player = new State.PlayerState();
             CoreGame.Instance.SceneInitialize();
@@ -289,31 +280,7 @@ namespace HackedDesign
 
             player.transform.position = state.currentLevel.ConvertLevelPosToWorld(state.currentLevel.playerSpawn.levelLocation) + state.currentLevel.playerSpawn.worldOffset;
 
-            characterSprites.Clear();
             playerController = player.GetComponent<PlayerController>();
-            var playerSprite = player.GetComponent<CharacterSprite>();
-            playerSprite.Initialize(characterSpriteManager);
-            characterSprites.Add(playerSprite);
-
-            foreach (var npc in state.entityList)
-            {
-                var charSprite = npc.gameObject.GetComponent<CharacterSprite>();
-                if (charSprite != null)
-                {
-                    Logger.Log(this.name,"character sprite added - ", charSprite.gameObject.name);
-                    characterSprites.Add(charSprite);
-                }
-            }
-
-            foreach (var npc in state.enemyList)
-            {
-                var charSprite = npc.gameObject.GetComponent<CharacterSprite>();
-                if (charSprite != null)
-                {
-                    Logger.Log(this.name, "character sprite added - ", charSprite.gameObject.name);
-                    characterSprites.Add(charSprite);
-                }
-            }
 
             SceneTriggersInitialize();
             CreateAlert();
@@ -355,7 +322,7 @@ namespace HackedDesign
         {
 
             state.triggerList.Clear();
-            Logger.Log(this.name, "initializing triggers");
+            Logger.Log(name, "initializing triggers");
 
             foreach (var triggerObject in GameObject.FindGameObjectsWithTag(TagManager.TRIGGER))
             {
@@ -364,7 +331,7 @@ namespace HackedDesign
                     continue;
                 }
 
-                Logger.Log(this.name, "initializing trigger - ", triggerObject.name);
+                Logger.Log(name, "initializing trigger - ", triggerObject.name);
                 Triggers.ITrigger trigger = triggerObject.GetComponent<Triggers.ITrigger>();
                 if (trigger != null)
                 {
@@ -381,34 +348,34 @@ namespace HackedDesign
 
         public void GameOver()
         {
-            Logger.Log(this.name, "GameOver");
+            Logger.Log(name, "GameOver");
             state.state = State.GameStateEnum.GAMEOVER;
         }
 
         public void SetTitlecard()
         {
-            Logger.Log(this.name, "state set to TITLECARD");
+            Logger.Log(name, "state set to TITLECARD");
             Time.timeScale = 0;
             state.state = State.GameStateEnum.TITLECARD;
         }
 
         public void SetPlaying()
         {
-            Logger.Log(this.name, "state set to PLAYING");
+            Logger.Log(name, "state set to PLAYING");
             Time.timeScale = 1;
             state.state = State.GameStateEnum.PLAYING;
         }
 
         public void SetDialogue()
         {
-            Logger.Log(this.name, "state set to DIALOGUE");
+            Logger.Log(name, "state set to DIALOGUE");
             Time.timeScale = 0;
             state.state = State.GameStateEnum.DIALOGUE;
         }
 
         public void SetNarration()
         {
-            Logger.Log(this.name, "state set to NARRATION");
+            Logger.Log(name, "state set to NARRATION");
             Time.timeScale = 0;
             state.state = State.GameStateEnum.NARRATION;
             RepaintAllUI();
@@ -416,7 +383,7 @@ namespace HackedDesign
 
         public void SetMissionComplete()
         {
-            Logger.Log(this.name, "state set to MISSION COMPLETE");
+            Logger.Log(name, "state set to MISSION COMPLETE");
             Time.timeScale = 0;
             state.state = State.GameStateEnum.MISSIONCOMPLETE;
             RepaintAllUI();
@@ -424,7 +391,7 @@ namespace HackedDesign
 
         public void SetLevelComplete()
         {
-            Logger.Log(this.name, "state set to LEVEL COMPLETE");
+            Logger.Log(name, "state set to LEVEL COMPLETE");
             Time.timeScale = 0;
             state.state = State.GameStateEnum.LEVELCOMPLETE;
             RepaintAllUI();
@@ -432,36 +399,60 @@ namespace HackedDesign
 
         public void SetWorldMap()
         {
-            Logger.Log(this.name, "state set to WORLDMAP");
+            Logger.Log(name, "state set to WORLDMAP");
             Time.timeScale = 0;
             state.state = State.GameStateEnum.WORLDMAP;
         }
 
+        public void ToggleStart()
+        {
+            if(state.state == State.GameStateEnum.PLAYING)
+            {
+                state.state = State.GameStateEnum.STARTMENU;
+            }
+            else if(state.state == State.GameStateEnum.STARTMENU)
+            {
+                state.state = State.GameStateEnum.PLAYING;
+            }
+        }
+
+        public void ToggleSelect()
+        {
+            if (state.state == State.GameStateEnum.PLAYING)
+            {
+                state.state = State.GameStateEnum.SELECTMENU;
+            }
+            else if (state.state == State.GameStateEnum.SELECTMENU)
+            {
+                state.state = State.GameStateEnum.PLAYING;
+            }
+        }
+
         public void CreateAlert()
         {
-            this.roomAlert = GameObject.Instantiate(roomAlertPrefab, Vector3.zero, Quaternion.identity, levelParent.transform);
+            this.roomAlert = Instantiate(roomAlertPrefab, Vector3.zero, Quaternion.identity, levelParent.transform);
             ClearAlert();
         }
 
         public void SetAlert(GameObject trap)
         {
-            Logger.Log(this.name, "level alert set");
-            this.state.alertTrap = trap;
-            this.roomAlert.transform.position = trap.transform.position;
-            this.roomAlert.SetActive(true);
+            Logger.Log(name, "level alert set");
+            state.alertTrap = trap;
+            roomAlert.transform.position = trap.transform.position;
+            roomAlert.SetActive(true);
         }
 
         public void ClearAlert()
         {
-            this.state.alertTrap = null;
-            this.roomAlert.SetActive(false);
+            state.alertTrap = null;
+            roomAlert.SetActive(false);
         }
 
         public void SaveGame()
         {
             string json = JsonUtility.ToJson(state);
             string path = Path.Combine(Application.persistentDataPath, "SaveFile" + state.gameSlot + ".json");
-            Logger.Log(this.name, "saving ", path);
+            Logger.Log(name, "saving ", path);
             File.WriteAllText(path, json);
         }
 
@@ -496,6 +487,7 @@ namespace HackedDesign
             {
                 case State.GameStateEnum.PLAYING:
                     PlayingUpdate();
+                    /*
                     if (inputController.StartButtonUp())
                     {
                         Logger.Log(name, "show start menu");
@@ -506,10 +498,11 @@ namespace HackedDesign
                     {
                         Logger.Log(name, "show select menu");
                         state.state = State.GameStateEnum.SELECTMENU;
-                    }
+                    }*/
                     break;
 
                 case State.GameStateEnum.STARTMENU:
+                    /*
                     if (inputController.StartButtonUp())
                     {
                         Logger.Log(name, "hide start menu");
@@ -522,7 +515,7 @@ namespace HackedDesign
                     {
                         Logger.Log(name, "hide select menu");
                         SetPlaying();
-                    }
+                    }*/
                     break;
                 case State.GameStateEnum.MISSIONCOMPLETE:
                     break;
@@ -539,13 +532,16 @@ namespace HackedDesign
 
         }
 
-        public void UpdateCharacterSprites()
+        public bool IsPlaying()
         {
-            for (int i = 0; i < characterSprites.Count; i++)
-            {
-                characterSprites[i].UpdateSprites();
-            }
+            return state.state == State.GameStateEnum.PLAYING;
         }
+
+        public bool IsInGame()
+        {
+            return state.state == State.GameStateEnum.PLAYING || state.state == State.GameStateEnum.NARRATION || CoreGame.Instance.state.state == State.GameStateEnum.STARTMENU || CoreGame.Instance.state.state == State.GameStateEnum.SELECTMENU || CoreGame.Instance.state.state == State.GameStateEnum.LEVELCOMPLETE;
+        }
+
 
         void LateUpdate()
         {
@@ -562,7 +558,6 @@ namespace HackedDesign
                 case State.GameStateEnum.WORLDMAP:
                 case State.GameStateEnum.NARRATION:
                 case State.GameStateEnum.PLAYING:
-                    UpdateCharacterSprites();
                     UpdateDoorAnimations();
                     break;
             }
@@ -589,7 +584,7 @@ namespace HackedDesign
         void PlayingUpdate()
         {
 
-            playerController.UpdateMovement(inputController);
+            //playerController.UpdateMovement(inputController);
             //PlayingNPCUpdate();
             PlayingEnemyUpdate();
             PlayingTriggerUpdate();
@@ -600,7 +595,7 @@ namespace HackedDesign
         {
             foreach (var trigger in state.triggerList)
             {
-                trigger.UpdateTrigger(inputController);
+                //trigger.UpdateTrigger(inputController);
             }
         }
 
@@ -622,7 +617,7 @@ namespace HackedDesign
 
         void PlayingFixedUpdate()
         {
-            playerController.UpdateTransform();
+            //playerController.UpdateTransform();
         }
     }
 }

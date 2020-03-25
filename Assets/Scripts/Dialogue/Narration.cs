@@ -9,6 +9,7 @@ namespace HackedDesign {
 		public class Narration {
 			public string id;
 			public string speaker;
+			public string speakerEmotion;
 			[TextArea]
 			public string text;
 			public Sprite button;

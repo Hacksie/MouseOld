@@ -25,6 +25,7 @@ namespace HackedDesign
             if (CoreGame.Instance.state.state == State.GameStateEnum.PLAYING)
             {
                 Show(true);
+                UpdateLines();
             }
             else
             {
@@ -34,12 +35,11 @@ namespace HackedDesign
 
         private void Show(bool flag)
         {
-            this.gameObject.SetActive(flag);
+            gameObject.SetActive(flag);
+        }
 
-            if (!flag)
-            {
-                return;
-            }
+        private void UpdateLines()
+        {
             panel.sizeDelta = new Vector2(panel.sizeDelta.x, 0);
 
             //FIXME: fix the GC alloc

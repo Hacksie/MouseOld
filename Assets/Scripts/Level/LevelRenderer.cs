@@ -11,6 +11,10 @@ namespace HackedDesign
         public class LevelRenderer : MonoBehaviour
         {
 
+            [Header("Settings")]
+            //public float spanHorizontal = 4;
+            //public float spanVertical = 4;
+                
             const string TOPLEFT = "tl";
             const string TOPRIGHT = "tr";
             const string BOTTOMLEFT = "bl";
@@ -28,17 +32,15 @@ namespace HackedDesign
             private PolyNav.PolyNav2D polyNav2D;
 
             private Entities.EntityManager entityManager;
-            private CharacterSpriteManager characterSpriteManager;
             private Story.InfoManager infoManager;
 
-            public void Initialize(Entities.EntityManager entityManager, Story.InfoManager infoManager, CharacterSpriteManager characterSpriteManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
+            public void Initialize(Entities.EntityManager entityManager, Story.InfoManager infoManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
             {
                 this.levelParent = levelParent;
                 this.npcParent = npcParent;
                 this.polyNav2D = polyNav2D;
                 this.entityManager = entityManager;
                 this.infoManager = infoManager;
-                this.characterSpriteManager = characterSpriteManager;
             }
 
             public void Render(Level level)
@@ -54,7 +56,7 @@ namespace HackedDesign
 
                 BoxCollider2D boxCollider = levelParent.GetComponent<BoxCollider2D>();
 
-                boxCollider.size = new Vector2(level.template.levelWidth * 4, level.template.levelHeight * 4);
+                boxCollider.size = new Vector2(level.template.levelWidth * level.template.spanHorizontal, level.template.levelHeight * level.template.spanVertical);
                 boxCollider.offset = (boxCollider.size / 2);
 
                 if (level.template.generateNavMesh)
@@ -87,7 +89,7 @@ namespace HackedDesign
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
 
-                        Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4), 0);
+                        Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical), 0);
 
                         if (level.map[i].rooms[j] != null)
                         {
@@ -109,10 +111,8 @@ namespace HackedDesign
                             }
 
                             // BL
-                            //Debug.Log(this.name + ": bl count " + level.map[i].rooms[j].bottomLeft.Count);
                             for (int e = 0; e < level.map[i].rooms[j].bottomLeft.Count; e++)
                             {
-                                //Debug.Log(level.map[i].rooms[j].bottomLeft[e].type + level.map[i].rooms[j].bottomLeft[e].name + level.template.name);
                                 var go = FindRoomEntity(level.map[i].rooms[j].bottomLeft[e].type, level.map[i].rooms[j].bottomLeft[e].name, level.template);
                                 if (go == null)
                                 {
@@ -134,10 +134,8 @@ namespace HackedDesign
                             }
 
                             // BR
-                            //Debug.Log(this.name + ": br count " + level.map[i].rooms[j].bottomRight.Count);
                             for (int e = 0; e < level.map[i].rooms[j].bottomRight.Count; e++)
                             {
-                                //Debug.Log(level.map[i].rooms[j].bottomRight[e].type + level.map[i].rooms[j].bottomRight[e].name + level.template.name);
                                 var go = FindRoomEntity(level.map[i].rooms[j].bottomRight[e].type, level.map[i].rooms[j].bottomRight[e].name, level.template);
                                 if (go == null)
                                 {
@@ -154,12 +152,9 @@ namespace HackedDesign
                             }
 
                             // TL
-                            //Debug.Log(this.name + ": tl count " + level.map[i].rooms[j].topLeft.Count);
                             for (int e = 0; e < level.map[i].rooms[j].topLeft.Count; e++)
                             {
-                                // if(level.map[i].rooms[j].isEntry) {
-                                // Debug.Log(this.name + ": tl " + level.map[i].rooms[j].topLeft[e].type + " " + level.map[i].rooms[j].topLeft[e].name);
-                                // }
+  
                                 var go = FindRoomEntity(level.map[i].rooms[j].topLeft[e].type, level.map[i].rooms[j].topLeft[e].name, level.template);
                                 if (go == null)
                                 {
@@ -177,7 +172,6 @@ namespace HackedDesign
                             }
 
                             //TR
-                            //Debug.Log(this.name + ": tr count " + level.map[i].rooms[j].topRight.Count);
                             for (int e = 0; e < level.map[i].rooms[j].topRight.Count; e++)
                             {
                                 var go = FindRoomEntity(level.map[i].rooms[j].topRight[e].type, level.map[i].rooms[j].topRight[e].name, level.template);
@@ -265,7 +259,7 @@ namespace HackedDesign
 
                         if (room.top == ProxyRoom.DOOR)
                         {
-                            Vector3 pos = new Vector3(j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                            Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(doorewPrefab, pos, Quaternion.identity, levelParent.transform);
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
@@ -276,7 +270,7 @@ namespace HackedDesign
 
                         if (room.left == ProxyRoom.DOOR)
                         {
-                            Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
+                            Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + (level.template.spanVertical /2), 0);
                             var go = Instantiate(doornsPrefab, pos, Quaternion.identity, levelParent.transform);
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
@@ -287,7 +281,7 @@ namespace HackedDesign
 
                         if (room.top == ProxyRoom.EXIT)
                         {
-                            Vector3 pos = new Vector3(j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                            Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
@@ -298,7 +292,7 @@ namespace HackedDesign
 
                         if (room.left == ProxyRoom.EXIT)
                         {
-                            Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
+                            Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + (level.template.spanVertical /2), 0);
                             var go = Instantiate(exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
@@ -308,7 +302,7 @@ namespace HackedDesign
                         }
                         if (room.bottom == ProxyRoom.EXIT)
                         {
-                            Vector3 pos = new Vector3(j * 4 + 2, (i + 1) * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                            Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), (i + 1) * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
@@ -318,7 +312,7 @@ namespace HackedDesign
                         }
                         if (room.top == ProxyRoom.ENTRY)
                         {
-                            Vector3 pos = new Vector3(j * 4 + 2, i * -4 + ((level.template.levelHeight - 1) * 4) + 4, 0);
+                            Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(entryewPrefab, pos, Quaternion.identity, levelParent.transform);
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
@@ -329,7 +323,7 @@ namespace HackedDesign
 
                         if (room.left == ProxyRoom.ENTRY)
                         {
-                            Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4) + 2, 0);
+                            Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + (level.template.spanVertical /2), 0);
                             var go = Instantiate(entrynsPrefab, pos, Quaternion.identity, levelParent.transform);
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
@@ -362,11 +356,8 @@ namespace HackedDesign
                         continue;
                     }
 
-                    CharacterSprite cs = npc.gameObject.GetComponent<CharacterSprite>(); // FIXME: Check null
-                    Debug.Log(this.name + ": moving " + npc.name);
                     npc.transform.position = level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset;
                     npc.gameObject.SetActive(true);
-                    cs.Initialize(characterSpriteManager);
                     npc.Initialize();
                     entityList.Add(npc);
 
@@ -375,11 +366,11 @@ namespace HackedDesign
 
             public void PopulateEnemySpawns(Level level, List<Entities.Enemy> enemyList)
             {
-                Logger.Log(this.name, "Populating enemy spawns");
+                Logger.Log(name, "Populating enemy spawns");
 
                 if (entityManager.enemies.Count <= 0)
                 {
-                    Logger.Log(this.name, "No enemies to spawn");
+                    Logger.Log(name, "No enemies to spawn");
                     return;
                 }
 
@@ -390,7 +381,7 @@ namespace HackedDesign
 
                 for (int i = 0; i < level.enemySpawnLocationList.Count; i++)
                 {
-                    Logger.Log(this.name, "Attempting to spawn " + level.enemySpawnLocationList[i].name);
+                    Logger.Log(name, "Attempting to spawn " + level.enemySpawnLocationList[i].name);
 
                     GameObject enemyPrefab = entityManager.enemies.FirstOrDefault(g => g != null && g.name == level.enemySpawnLocationList[i].name);
 
@@ -412,14 +403,6 @@ namespace HackedDesign
                     enemy.Initialize(CoreGame.Instance.GetPlayer().transform, polyNav2D);
 
                     Story.Enemy uniqueEnemy = infoManager.GenerateRandomEnemy(enemy.enemy);
-                    CharacterSprite cs = go.GetComponent<CharacterSprite>();
-                    if (cs != null)
-                    {
-                        cs.uniqueId = uniqueEnemy.uniqueId;
-                        cs.character = uniqueEnemy.id;
-                        cs.Initialize(characterSpriteManager);
-                    }
-
                     enemyList.Add(enemy);
                 }
             }
@@ -429,13 +412,10 @@ namespace HackedDesign
             {
                 List<Entities.BaseTrap> results = new List<Entities.BaseTrap>();
 
-                //Level level = CoreGame.instance.state.level;
                 if (level.trapSpawnLocationList == null)
                 {
                     return results;
                 }
-
-
 
                 if (entityManager.traps.Count <= 0)
                 {
@@ -454,7 +434,6 @@ namespace HackedDesign
                         if (npc != null)
                         {
                             npc.Initialize();
-                            //CoreGame.instance.state.entityList.Add(npc);
                             results.Add(npc);
                         }
                     }
@@ -462,9 +441,6 @@ namespace HackedDesign
 
                 return results;
             }
-
-
-
         }
     }
 }

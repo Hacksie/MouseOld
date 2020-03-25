@@ -9,6 +9,18 @@ namespace HackedDesign.Story
         {
             switch (actionName)
             {
+                case "Bootstrap":
+                    CoreGame.Instance.SetTitlecard();
+                    break;
+                case "Bootstrap1":
+                    Debug.Log("PreludeActions: invoke Prelude1");
+                    InfoManager.instance.AddToKnownEntities("Mouse");
+                    InfoManager.instance.AddToKnownEntities("Arisana");
+                    InfoManager.instance.AddToKnownEntities("ManagerLyon");
+                    InfoManager.instance.AddToKnownEntities("Cat");
+                    InfoManager.instance.AddToKnownEntities("Saika");
+                    Dialogue.NarrationManager.instance.ShowNarration("Bootstrap1");
+                    break;
                 case "Prelude":
                     CoreGame.Instance.SetTitlecard();
                     return true;

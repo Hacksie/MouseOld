@@ -1,45 +1,139 @@
-﻿using UnityEngine;
+﻿using HackedDesign.Triggers;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace HackedDesign {
 
+	[RequireComponent(typeof(Animator))]
 	public class PlayerController : MonoBehaviour {
 
 		private float movementEpsilon = 0.1f; //An axis value above this is considered movement.		
 
 		[Range (0.0f, 10.0f)]
 		[Tooltip ("The movement speed of the controller.")]
-		[SerializeField]
-		private float baseMovementSpeed = 1.0f;
+		[SerializeField] private float baseMovementSpeed = 1.5f;
 
 		private Vector2 movementVector; 
-		private Animator anim; 
+		private Animator anim;
 
-		
+		private List<ITrigger> triggers = new List<ITrigger>();
+
+
 		void Start () {
 			anim = transform.GetComponent<Animator> ();
 		}
 
-		public void UpdateMovement (Input.IInputController inputController) {
+		public void MovementEvent (InputAction.CallbackContext context) 
+		{
+			
+			movementVector = context.ReadValue<Vector2>();
+		}
 
-			movementVector = inputController.GetMovementAxis ();
+		public void InteractEvent(InputAction.CallbackContext context)
+		{
+			if (context.performed)
+			{
+				foreach (var trigger in triggers)
+				{
+					trigger.Invoke(gameObject);
+				}
+			}
+		}
 
-			if (movementVector.sqrMagnitude > (movementEpsilon * movementEpsilon)) {
-				anim.SetFloat ("moveX", movementVector.x);
-				anim.SetFloat ("moveY", movementVector.y);
-				//anim.SetFloat ("directionX", movementVector.x);
-				//anim.SetFloat ("directionY", movementVector.y);
-				anim.SetBool ("isMoving", true);
-			} else {
+		public void BugEvent(InputAction.CallbackContext context)
+		{
+			if (context.performed)
+			{
+				foreach (var trigger in triggers)
+				{
+					trigger.Bug(gameObject);
+				}
+			}
+		}
+
+		public void HackEvent(InputAction.CallbackContext context)
+		{
+			if (context.performed)
+			{
+				foreach (var trigger in triggers)
+				{
+					trigger.Hack(gameObject);
+				}
+			}
+		}
+
+		public void OverloadEvent(InputAction.CallbackContext context)
+		{
+			if (context.performed)
+			{
+				foreach (var trigger in triggers)
+				{
+					trigger.Overload(gameObject);
+				}
+			}
+		}
+
+		public void StartEvent(InputAction.CallbackContext context)
+		{
+			if (context.performed)
+			{
+				CoreGame.Instance.ToggleStart();
+			}
+		}
+
+		public void SelectEvent(InputAction.CallbackContext context)
+		{
+			if (context.performed)
+			{
+				CoreGame.Instance.ToggleSelect();
+			}
+		}
+
+		public void RegisterTrigger(ITrigger trigger)
+		{
+			if(!triggers.Contains(trigger))
+			{
+				triggers.Add(trigger);
+			}
+		}
+
+		public void UnregisterTrigger(ITrigger trigger)
+		{
+			if (triggers.Contains(trigger))
+			{
+				triggers.Remove(trigger);
+			}
+		}
+
+		public void Update()
+		{
+			UpdateTransform();
+		}
+
+		public void LateUpdate()
+		{
+			if (movementVector.sqrMagnitude > (movementEpsilon * movementEpsilon))
+			{
+				//anim.SetFloat ("moveX", movementVector.x);
+				//anim.SetFloat ("moveY", movementVector.y);
+				anim.SetFloat("directionX", movementVector.x);
+				anim.SetFloat("directionY", movementVector.y);
+				anim.SetBool("isMoving", true);
+			}
+			else
+			{
 				movementVector = Vector2.zero;
-				if (anim != null) {
-					anim.SetBool ("isMoving", false);
+				if (anim != null)
+				{
+					anim.SetBool("isMoving", false);
 				}
 			}
 		}
 
 		public void UpdateTransform () {
 			// Movement augments (0 - 10) are reduced by a factor of 10
-			transform.Translate (movementVector * (baseMovementSpeed + (CoreGame.Instance.state.player.movementAugments / 10.0f)) * Time.fixedDeltaTime);
+			transform.Translate (movementVector * (baseMovementSpeed + (CoreGame.Instance.state.player.movementAugments / 10.0f)) * Time.deltaTime);
 		}
 	}
 }

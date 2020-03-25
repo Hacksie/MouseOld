@@ -20,23 +20,22 @@ namespace HackedDesign
             public Text shortNameText;
             public Text categoryText;
             public Text corpText;
-            public Image avatarBodySprite;
+            public Image avatarSprite;
+            /*
             public Image avatarHairSprite;
             public Image avatarEyesSprite;
             public Image avatarPantsSprite;
             public Image avatarShirtSprite;
-            public Image avatarShoesSprite;
+            public Image avatarShoesSprite;*/
 
             private Story.InfoManager infoManager;
             private INarrationManager narrationManager;
-            private CharacterSpriteManager characterSpriteManager;
 
 
-            public void Initialize(INarrationManager narrationManager, Story.InfoManager info, CharacterSpriteManager characterSpriteManager)
+            public void Initialize(INarrationManager narrationManager, Story.InfoManager info)
             {
                 this.narrationManager = narrationManager;
                 this.infoManager = info;
-                this.characterSpriteManager = characterSpriteManager;
 
                 if (text == null) Debug.LogError("Text is null");
                 if (actionButton == null) Debug.LogError("Button is null");
@@ -80,43 +79,27 @@ namespace HackedDesign
                 var corp = infoManager.GetCorp(speaker.corp);
                 handleText.text = speaker.handle;
                 shortNameText.text = speaker.name;
-                categoryText.text = speaker.category;
+
+                switch (currentNarration.speakerEmotion)
+                {
+                    case "tired":
+                        avatarSprite.sprite = speaker.avatarTired;
+                        break;
+                    case "thinking":
+                        avatarSprite.sprite = speaker.avatarThinking;
+                        break;
+                    case "happy":
+                        avatarSprite.sprite = speaker.avatarHappy;
+                        break;
+                    case "angry":
+                        avatarSprite.sprite = speaker.avatarAngry;
+                        break;
+                    default:
+                        avatarSprite.sprite = speaker.avatar;
+                        break;
+                }
+
                 corpText.text = "<color=\"" + corp.color + "\">" + corp.name + "</color>";
-                //CharacterSpriteManager.BodyTypes body = characterSpriteManager.GetBody(speaker.id);
-                var bodySprites = characterSpriteManager.GetSkin(speaker.id);
-                var hairSprites = characterSpriteManager.GetHair(speaker.id);
-                var eyesSprites = characterSpriteManager.GetEyes(speaker.id);
-                var shirtSprites = characterSpriteManager.GetShirt(speaker.id);
-                var pantsSprites = characterSpriteManager.GetPants(speaker.id);
-                var shoesSprites = characterSpriteManager.GetShoes(speaker.id);
-                var hairColor = characterSpriteManager.GetHairColor(speaker.id);
-                var shirtColor = characterSpriteManager.GetShirtColor(speaker.id);
-                var pantsColor = characterSpriteManager.GetPantsColor(speaker.id);
-                var shoesColor = characterSpriteManager.GetShoesColor(speaker.id);
-
-                avatarBodySprite.gameObject.SetActive(bodySprites != null);
-                avatarHairSprite.gameObject.SetActive(hairSprites != null);
-                avatarEyesSprite.gameObject.SetActive(eyesSprites != null);
-                avatarShirtSprite.gameObject.SetActive(shirtSprites != null);
-                avatarPantsSprite.gameObject.SetActive(pantsSprites != null);
-                avatarShoesSprite.gameObject.SetActive(shoesSprites != null);
-
-                var offset = characterSpriteManager.GetSpriteOffset(speaker.id);
-
-
-                avatarBodySprite.sprite = bodySprites != null ? bodySprites[offset] : null;
-                avatarHairSprite.sprite = hairSprites != null ? hairSprites[offset] : null;
-                avatarEyesSprite.sprite = eyesSprites != null ? eyesSprites[offset] : null;
-                avatarShirtSprite.sprite = shirtSprites != null ? shirtSprites[offset] : null;
-                avatarPantsSprite.sprite = pantsSprites != null ? pantsSprites[offset] : null;
-                avatarShoesSprite.sprite = shoesSprites != null ? shoesSprites[offset] : null;
-
-                avatarHairSprite.color = hairColor != null ? hairColor : Color.magenta;
-                avatarShirtSprite.color = shirtColor != null ? shirtColor : Color.magenta;
-                avatarPantsSprite.color = pantsColor != null ? pantsColor : Color.magenta;
-                avatarShoesSprite.color = shoesColor != null ? shoesColor : Color.magenta;
-
-
                 text.text = currentNarration.text;
 
                 EventSystem.current.SetSelectedGameObject(null);

@@ -5,7 +5,8 @@ using UnityEngine;
 namespace HackedDesign {
 	namespace Story {
 		[System.Serializable]
-		public class InfoCategory {
+		[CreateAssetMenu(fileName = "Category", menuName = "Mouse/Content/Info Category")]
+		public class InfoCategory : ScriptableObject {
 			public string id;
 			public string text;
 			public bool available = true;

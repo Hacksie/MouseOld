@@ -7,7 +7,7 @@ namespace HackedDesign
         public partial class NarrationManager
         {
             private class NarrationHolder {
-				public List<Narration> narrations;
+				public List<Narration> narrations = null;
 			}
 		}
 	}

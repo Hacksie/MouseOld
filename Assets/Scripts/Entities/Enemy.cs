@@ -17,9 +17,9 @@ namespace HackedDesign.Entities
 
         [Header("Settings")]
         [SerializeField]
-        public string enemy = "";
+        public Story.Enemy enemy = null;
         [SerializeField]
-        private LayerMask layerMask;
+        private LayerMask playerLayerMask = 0;
         [SerializeField]
         private float visibilityDistance = 3.2f;
         [SerializeField]
@@ -169,6 +169,7 @@ namespace HackedDesign.Entities
             }
         }
 
+
         public void SetAlert()
         {
 
@@ -176,6 +177,9 @@ namespace HackedDesign.Entities
 
         public void UpdateDetection()
         {
+            if (detection == null)
+                return;
+
             detection.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, direction));
         }
 
@@ -186,14 +190,27 @@ namespace HackedDesign.Entities
                 return;
             }
 
-            animator.SetFloat("moveX", direction.x);
-            animator.SetFloat("moveY", direction.y);
-            animator.SetBool("isMoving", this.polyNavAgent != null && this.polyNavAgent.currentSpeed > 0.01f);
+            if (this.polyNavAgent != null && this.polyNavAgent.currentSpeed > Vector2.kEpsilon)
+            {
+                //anim.SetFloat ("moveX", movementVector.x);
+                //anim.SetFloat ("moveY", movementVector.y);
+                animator.SetFloat("directionX", direction.x);
+                animator.SetFloat("directionY", direction.y);
+                animator.SetBool("isMoving", true);
+            }
+            else
+            {
+                direction = Vector2.zero;
+                if (animator != null)
+                {
+                    animator.SetBool("isMoving", false);
+                }
+            }
         }
 
         public RaycastHit2D CanSeePlayer()
         {
-            return Physics2D.Raycast(transform.position, (player.position - transform.position), visibilityDistance, layerMask);
+            return Physics2D.Raycast(transform.position, (player.position - transform.position), visibilityDistance, playerLayerMask);
         }
 
         public void OnTriggerEnter2D(Collider2D other)

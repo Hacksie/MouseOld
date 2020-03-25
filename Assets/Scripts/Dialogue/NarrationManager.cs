@@ -15,14 +15,12 @@ namespace HackedDesign
 			public List<Narration> narrationList = new List<Narration> ();
 			public string narrationResource = @"Narration/";
 
-			private Input.IInputController input;
 
 			NarrationManager () {
 				instance = this;
 			}
 
-			public void Initialize (Input.IInputController input) {
-				this.input = input;
+			public void Initialize () {
 				LoadNarration();
 			}
 
@@ -40,7 +38,6 @@ namespace HackedDesign
 			}
 
 			public void ShowNarration (Narration narration) {
-				input.ResetInput(); // Is there a better way of doing this? Move to the presenter
 				if (narration != null) {
 					Debug.Log(this.name + ": show narration " + narration.id);
 					currentNarration = narration;

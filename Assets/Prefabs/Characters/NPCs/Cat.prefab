@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 95456605444658094}
   - component: {fileID: 4523880731136029641}
   - component: {fileID: 4523880731083409617}
-  - component: {fileID: 1321504269350858128}
   - component: {fileID: 3021137816465174578}
   - component: {fileID: 3133352561426004893}
   m_Layer: 9
@@ -103,7 +102,7 @@ Animator:
   m_GameObject: {fileID: 1422101999507088}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 20a6cf81bc7533b46a91f87bae04cec0, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8efbf92c83a7f0a4e8ecd4d589c8800f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -159,28 +158,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1321504269350858128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422101999507088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 547f349d6cfbc394ab33edc4c645e19a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterSpriteManager: {fileID: 0}
-  bodySpriteRenderer: {fileID: 212236620607918638}
-  eyesSpriteRenderer: {fileID: 0}
-  hairSpriteRenderer: {fileID: 0}
-  shirtSpriteRenderer: {fileID: 0}
-  pantsSpriteRenderer: {fileID: 0}
-  shoesSpriteRenderer: {fileID: 0}
-  isEnemy: 0
-  character: Cat
-  uniqueId: 
 --- !u!114 &3021137816465174578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +187,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   direction: {x: 0, y: 0}
-  facePlayer: 1
 --- !u!1 &6295968191483358888
 GameObject:
   m_ObjectHideFlags: 0

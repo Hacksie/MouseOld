@@ -45,11 +45,12 @@ namespace HackedDesign
 
             public void Initialize()
             {
-                LoadCategories();
+
+                //LoadCategories();
                 LoadCorps();
                 LoadCharacters();
-                LoadEnemies();
-                LoadLocations();
+                //LoadEnemies();
+                //LoadLocations();
 
             }
 
@@ -67,6 +68,11 @@ namespace HackedDesign
 
             public void LoadCorps()
             {
+                foreach (var c in corps)
+                {
+                    entities.Add(c.id, c);
+                }
+                /*
                 var jsonTextFiles = Resources.LoadAll<TextAsset>(corpsResource);
 
                 foreach (var file in jsonTextFiles)
@@ -75,11 +81,16 @@ namespace HackedDesign
                     Debug.Log(this.name + " corp added: " + corp.id);
                     corps.Add(corp);
                     entities.Add(corp.id, corp);
-                }
+                }*/
             }
 
             public void LoadCharacters()
             {
+                foreach(var c in characters)
+                {
+                    entities.Add(c.id, c);
+                }
+                /*
                 var jsonTextFiles = Resources.LoadAll<TextAsset>(charactersResource);
 
                 foreach (var file in jsonTextFiles)
@@ -88,7 +99,8 @@ namespace HackedDesign
                     characters.Add(character);
                     entities.Add(character.id, character);
                     Debug.Log(this.name + " character added: " + character.id);
-                }
+                    
+                }*/
             }
 
             public void LoadEnemies()
@@ -186,17 +198,20 @@ namespace HackedDesign
                 return knownEntities.Where(kv => kv.Value.category == category).Select(kv => kv.Value).ToList();
             }
 
-            public Enemy GenerateRandomEnemy(string id)
+            public Enemy GenerateRandomEnemy(Enemy enemy)
             {
-                Debug.Log(this.name + ": generating unique enemy " + id);
-                int uniqueId = uniqueEnemies.Count;
-                var enemy = GetEnemy(id);
-
                 if (enemy == null)
                 {
-                    Debug.LogError(this.name + ": enemy not found: " + id);
+                    Logger.LogError(name, "enemy can't be null");
+                    return null;
                 }
 
+                Logger.Log(name, "generating unique enemy " + enemy.id);
+                int uniqueId = uniqueEnemies.Count;
+                //var enemy = GetEnemy(template.id);
+
+                
+                
                 var newEnemy = new Enemy
                 {
                     id = enemy.id,
@@ -209,21 +224,9 @@ namespace HackedDesign
                     corp = enemy.corp,
                     serial = enemy.serial,
                     category = enemy.category,
-                    body = enemy.body,
-                    skin = enemy.skin,
-                    eyes = enemy.eyes,
-                    shirt = enemy.shirt,
-                    pants = enemy.pants,
-                    shoes = enemy.shoes,
-                    hair = enemy.hair,
-                    shirtcolor = enemy.shirtcolor,
-                    pantscolor = enemy.pantscolor,
-                    shoescolor = enemy.shoescolor,
-                    haircolor = enemy.haircolor,
-                    spriteOffset = enemy.spriteOffset
                 };
 
-                newEnemy.SetRandomAttributes();
+                //newEnemy.SetRandomAttributes();
                 uniqueEnemies.Add(newEnemy);
                 return newEnemy;
             }

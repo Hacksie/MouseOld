@@ -136,20 +136,18 @@ namespace HackedDesign
 
             public Vector2 ConvertLevelPosToWorld(Vector2Int pos)
             {
-                return new Vector2(pos.x * 4 + 2, pos.y * -4 + ((template.levelHeight - 1) * 4) + 2);
+                return new Vector2(pos.x * template.spanHorizontal + (template.spanHorizontal/2), pos.y * -template.spanVertical + ((template.levelHeight - 1) * template.spanVertical) + (template.spanVertical/2));
             }
 
             public Vector2Int ConvertWorldToLevelPos(Vector2 pos)
             {
-
-                //i * -4 + ((level.template.levelHeight - 1) * 4)
-                return new Vector2Int((int)((pos.x) / 4), (int)((template.levelHeight) - (pos.y / 4)));
+                return new Vector2Int((int)((pos.x) / template.spanHorizontal), (int)((template.levelHeight) - (pos.y / template.spanVertical)));
             }
 
 
             public void Print()
             {
-                Debug.Log("Level: printing level");
+                Logger.Log("Level", "Printing level");
                 for (int i = 0; i < map.Count(); i++)
                 {
                     string line = "";
@@ -184,7 +182,7 @@ namespace HackedDesign
                         }
                     }
 
-                    Debug.Log("Level: " + line);
+                    Logger.Log("Level", line);
                 }
             }
         }

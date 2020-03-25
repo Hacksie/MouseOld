@@ -8,7 +8,7 @@ namespace HackedDesign
         {
             private class TasksHolder
             {
-                public List<Task> tasks;
+                public List<Task> tasks = null;
             }
         }
     }

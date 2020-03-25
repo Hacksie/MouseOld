@@ -183,11 +183,18 @@ namespace HackedDesign.Triggers
                 return;
             }
 
-            if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)) && !colliders.Contains(other.gameObject))
+            if (other.CompareTag(TagManager.PLAYER))
             {
-                colliders.Add(other.gameObject);
+                PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+                playerController.RegisterTrigger(this);
                 Entry(other.gameObject);
             }
+
+            //if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)) && !colliders.Contains(other.gameObject))
+            //{
+            //    colliders.Add(other.gameObject);
+            //    Entry(other.gameObject);
+            //}
         }
 
         //FIXME: Move input code outside of physics update
@@ -198,13 +205,14 @@ namespace HackedDesign.Triggers
                 return;
             }
 
+            /*    
             if (allowRepeatInteractions)
             {
                 if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)) && !colliders.Contains(other.gameObject))
                 {
                     colliders.Add(other.gameObject);
                 }
-            }
+            }*/
         }
 
         protected virtual void OnTriggerExit2D(Collider2D other)
@@ -214,13 +222,20 @@ namespace HackedDesign.Triggers
                 return;
             }
 
+            if (other.CompareTag(TagManager.PLAYER))
+            {
+                PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+                playerController.UnregisterTrigger(this);
+                Leave(other.gameObject);
+            }
+            /*
             if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)))
             {
-                Leave(other.gameObject);
+                
                 //Debug.Log(this.name + ": removed from collider list " + other.gameObject);
                 if (colliders.Contains(other.gameObject))
                     colliders.Remove(other.gameObject);
-            }
+            }*/
         }
     }
 

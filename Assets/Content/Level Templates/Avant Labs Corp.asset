@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
   m_Name: Avant Labs Corp
   m_EditorClassIdentifier: 
+  corp: 
+  location: 
+  level: 
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
-  enemies: 8
+  spanHorizontal: 5
+  spanVertical: 5
+  enemies: 0
   traps: 0
   generateDoors: 1
   startingRoomString: wnew_entry
@@ -23,6 +28,7 @@ MonoBehaviour:
   exitAction: 
   levelResource: 
   generateNavMesh: 1
+  hostile: 1
   floors:
   - {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
   levelElements:

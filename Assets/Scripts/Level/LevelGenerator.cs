@@ -27,9 +27,14 @@ namespace HackedDesign
                 return GenerateLevel(template, 0, 0, 0, 0, 0, 0);
             }
 
-            public Level GenerateLevel(string template, int length, int height, int width, int difficulty, int enemies, int cameras)
+            public Level GenerateLevel(string template, int difficulty, int enemies, int cameras)
             {
-                
+                return GenerateLevel(template, 0, 0, 0, difficulty, enemies, cameras);
+            }
+
+            public Level GenerateLevel(string template, int length, int height, int width, int difficulty, int enemies, int traps)
+            {
+
 
                 if (string.IsNullOrEmpty(template))
                 {
@@ -62,12 +67,19 @@ namespace HackedDesign
                     genTemplate.levelWidth = width;
                 }
 
-                genTemplate.enemies = enemies;
-                genTemplate.traps = cameras;
+                if (enemies > 0)
+                {
+                    genTemplate.enemies = enemies;
+                }
+
+                if (traps > 0)
+                {
+                    genTemplate.traps = traps;
+                }
 
                 if (genTemplate == null)
                 {
-                    Logger.LogError(this.name, "no level gen template found - ", template);
+                    Logger.LogError(name, "no level gen template found - ", template);
                     return null;
                 }
 
@@ -86,10 +98,10 @@ namespace HackedDesign
                     GenerateEnemySpawns(level, difficulty);
                     GenerateTrapSpawns(level, difficulty);
                     GenerateEntities(level, true);
+
                 }
                 level.Print();
                 return level;
-
             }
 
             protected Level LoadLevelFromFile(LevelGenTemplate genTemplate)
@@ -279,7 +291,7 @@ namespace HackedDesign
                     response.left = splitString[0].Substring(0, 1);
                     response.top = splitString[0].Substring(1, 1);
                     response.bottom = splitString[0].Substring(2, 1);
-                    response.right = splitString[0].Substring(3, 1);                   
+                    response.right = splitString[0].Substring(3, 1);
                 }
 
                 if (splitString.Length > 1)
@@ -505,22 +517,16 @@ namespace HackedDesign
 
             void GenerateEntities(Level level, bool genProps)
             {
-
                 for (int i = 0; i < level.map.Count(); i++)
                 {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
-
-                        Vector3 pos = new Vector3(j * 4, i * -4 + ((level.template.levelHeight - 1) * 4), 0);
-
                         if (level.map[i].rooms[j] != null)
                         {
-
                             GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_WALL, level.template, false);
 
-                            if (genProps)
+                            if (genProps && level.template.generateProps)
                             {
-
                                 if (level.map[i].rooms[j].isEntry)
                                 {
 
@@ -535,14 +541,9 @@ namespace HackedDesign
                                     GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_RANDOM, level.template, true);
                                 }
                             }
-
-                            //GenerateRoomEntities(level.map[i].rooms[j], ProxyRoom.OBJ_TYPE_FIXED, level.template, true);
-
                         }
                     }
                 }
-
-
             }
 
             void GenerateRoomEntities(ProxyRoom proxyRoom, string type, LevelGenTemplate template, bool allowTraps)
@@ -584,7 +585,7 @@ namespace HackedDesign
                 }
 
                 // BL
-                goBLList = FindRoomObject(BOTTOMLEFT,proxyRoom.left, proxyRoom.bottom, type, template).ToList();
+                goBLList = FindRoomObject(BOTTOMLEFT, proxyRoom.left, proxyRoom.bottom, type, template).ToList();
                 goBLList.Randomize();
 
                 if (goBLList.FirstOrDefault() != null)
@@ -599,7 +600,7 @@ namespace HackedDesign
                 }
 
                 // BR
-                goBRList = FindRoomObject(BOTTOMRIGHT,proxyRoom.right, proxyRoom.bottom, type, template).ToList();
+                goBRList = FindRoomObject(BOTTOMRIGHT, proxyRoom.right, proxyRoom.bottom, type, template).ToList();
                 goBRList.Randomize();
 
                 if (goBRList.FirstOrDefault() != null)
@@ -702,7 +703,13 @@ namespace HackedDesign
 
                 candidates.Randomize();
 
-                var enemyList = difficulty == 0? level.template.easyEnemies : difficulty == 1? level.template.mediumEnemies : level.template.hardEnemies;
+                var enemyList = difficulty == 0 ? level.template.easyEnemies : difficulty == 1 ? level.template.mediumEnemies : level.template.hardEnemies;
+
+                if(enemyList.Count == 0)
+                {
+                    Logger.Log(name, "No enemies in template");
+                    return;
+                }
 
                 foreach (var candidate in candidates.Take(level.template.enemies))
                 {

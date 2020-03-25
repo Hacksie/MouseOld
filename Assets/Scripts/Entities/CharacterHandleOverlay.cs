@@ -17,7 +17,8 @@ namespace HackedDesign.Entities
 
         private void Update()
         {
-            SetHandleText();
+            if(CoreGame.Instance.IsInGame())
+                SetHandleText();
         }
 
         void SetHandleText()
@@ -27,10 +28,9 @@ namespace HackedDesign.Entities
             {
                 return;
             }
+            
             var c = InfoManager.instance.GetCharacter(character);
             text.text = c.handle;
-
-
         }
 
 

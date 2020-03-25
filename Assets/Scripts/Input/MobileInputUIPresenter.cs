@@ -24,20 +24,20 @@ namespace HackedDesign
             public bool mobileKeycard;
             public bool mobileBug;
             public Vector2 mobileAxis;
-            private Input.IInputController inputController;
+            //private Input.IInputController inputController;
             private Vector2 mobilePointerPosition;
 
 
 
-            public void Initialize(Input.IInputController inputController)
+            public void Initialize()
             {
-                this.inputController = inputController;
-                UnityEngine.Input.simulateMouseWithTouches = true;
+                //this.inputController = inputController;
+                //UnityEngine.Input.simulateMouseWithTouches = true;
             }
 
             public void Repaint()
             {
-                if (CoreGame.Instance.state.state == State.GameStateEnum.PLAYING && inputController.ShowMobileInput())
+                if (CoreGame.Instance.state.state == State.GameStateEnum.PLAYING && false)
                 {
                     if (!this.gameObject.activeInHierarchy)
                     {

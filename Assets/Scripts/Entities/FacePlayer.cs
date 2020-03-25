@@ -13,20 +13,23 @@ namespace HackedDesign.Entities
             if (animator == null)
             {
                 Logger.LogError(this.name, "No animation set");
-            }          
+            }
         }
 
         private void Update()
         {
+            if (!CoreGame.Instance.IsPlaying())
+                return;
 
             var tempdirection = NormaliseDirectionVector(DirectionToPlayer());
 
             if (animator != null)
             {
-                animator.SetFloat("moveX", tempdirection.x);
-                animator.SetFloat("moveY", tempdirection.y);
+                animator.SetFloat("directionX", tempdirection.x);
+                animator.SetFloat("directionY", tempdirection.y);
                 //animator.SetBool("isMoving", true);
             }
+
         }
 
         protected Vector2Int NormaliseDirectionVector(Vector2 direction)

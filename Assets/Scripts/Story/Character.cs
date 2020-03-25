@@ -4,6 +4,7 @@ namespace HackedDesign
 {
     namespace Story
     {
+        [CreateAssetMenu(fileName = "Character", menuName = "Mouse/Content/Character")]
         [System.Serializable]
         public class Character : InfoEntity
         {
@@ -11,7 +12,13 @@ namespace HackedDesign
             public string handle;
             public string corp;
             public string serial;
+            public Sprite avatar;
+            public Sprite avatarTired;
+            public Sprite avatarAngry;
+            public Sprite avatarHappy;
+            public Sprite avatarThinking;
 
+            /*
             public CharacterSpriteManager.BodyTypes body;
             public int skin;
             public int eyes;
@@ -42,7 +49,7 @@ namespace HackedDesign
                 pantscolor = pantscolor == "" ? CharacterSpriteManager.RandomColors[Random.Range(0, CharacterSpriteManager.RandomColors.Length)] : pantscolor;
                 shoescolor = shoescolor == "" ? CharacterSpriteManager.RandomColors[Random.Range(0, CharacterSpriteManager.RandomColors.Length)] : shoescolor;
                 haircolor = haircolor == "" ? CharacterSpriteManager.RandomColors[Random.Range(0, CharacterSpriteManager.RandomColors.Length)] : haircolor;
-            }
+            }*/
         }
     }
 }

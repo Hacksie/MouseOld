@@ -50,6 +50,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -74,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 150
-  m_Sprite: {fileID: 8188274691229062057, guid: c360a1a8e855e3044b4c6b32fc4ac3e2,
+  m_Sprite: {fileID: -7176642048599898694, guid: a55a0e1e35e5d304690258d891d4f650,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -117,15 +119,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f28d8d6fa1e3c4b8172b541b8847cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  facePlayer: 1
-  direction: {x: 0, y: 0}
+  polyNavAgent: {fileID: 8020559233910902632}
+  alert: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 257
-  polyNavAgent: {fileID: 8020559233910902632}
+  enemy: 
+  state: 1
   patrolWait: 7
   patrolSpeed: 0.75
   huntSpeed: 1
+  hostile: 1
+  direction: {x: 0, y: 0}
   patrolLastCheck: 0
   currentDirection: {x: 0, y: 0}
   currentDirections: []
@@ -133,7 +138,6 @@ MonoBehaviour:
   seekTime: 5
   fightDistance: 1.5
   lastKnownLocation: {x: 0, y: 0, z: 0}
-  state: 1
 --- !u!61 &8020559234273113207
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -151,7 +155,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.53125, y: 0.90625}
+    oldSize: {x: 0.5, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

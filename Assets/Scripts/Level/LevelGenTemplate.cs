@@ -17,10 +17,13 @@ namespace HackedDesign
 			public int levelLength = 7;
 			public int levelWidth = 10;
 			public int levelHeight = 10;
+			public float spanHorizontal = 4;
+			public float spanVertical = 4;
 			public int enemies = 0;
 			public int traps = 0;
 
 			public bool generateDoors = true;
+			public bool generateProps = true;
 
 			public string startingRoomString = "wnww_entry";
 			public string startingAction;

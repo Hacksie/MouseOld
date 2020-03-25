@@ -33,7 +33,7 @@ namespace HackedDesign.Triggers
 
         public void UpdateAnimation()
         {
-            if (animate && animator != null)
+            if (animate && animator != null && animator.enabled)
             {
                 animator.SetBool("open", open);
             }
