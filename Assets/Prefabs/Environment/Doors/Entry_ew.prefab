@@ -160,6 +160,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5950933447067635145}
+        m_TargetAssemblyTypeName: HackedDesign.Story.ActionInvoker, Assembly-CSharp
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   bugActionEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -278,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da42ddf162ce4e549ae84e8e1f140427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: HackEntry
+  action: TriggerEntry
 --- !u!1 &5655707733936147515
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +385,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8443eb14618754aaf83caa2da390ce84,
+      objectReference: {fileID: 21300000, guid: c344fd524f6fd4245bae55504ebea3ef,
         type: 3}
     - target: {fileID: 1205910083837189476, guid: 468b9302c01989d4780290de629c1591,
         type: 3}

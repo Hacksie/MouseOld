@@ -120,7 +120,7 @@ namespace HackedDesign.Story
             Debug.Log("PreludeActions: prelude laptop");
             CoreGame.Instance.state.story.prelude_laptop = true;
             SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
-            CoreGame.Instance.state.state = State.GameStateEnum.SELECTMENU;
+            CoreGame.Instance.state.state = GameState.GameStateEnum.SELECTMENU;
 
             
         }

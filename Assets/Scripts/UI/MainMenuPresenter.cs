@@ -41,7 +41,7 @@ namespace HackedDesign {
 
 		public void Repaint()
 		{
-			if(CoreGame.Instance.state.state == State.GameStateEnum.MAINMENU)
+			if(CoreGame.Instance.state.state == GameState.GameStateEnum.MAINMENU)
 			{
 				if(!this.gameObject.activeInHierarchy) {
 					this.gameObject.SetActive(true);
@@ -95,9 +95,10 @@ namespace HackedDesign {
 		}
 
 		public void RandomGameEvent () {
-			Debug.Log (this.name + ": Random Game Event");
-			UnityEngine.Random.InitState (UnityEngine.Random.seed);
-			seedInput.text = UnityEngine.Random.seed.ToString ();
+			Debug.Log (name + ": Random Game Event");
+			var seed = Random.Range(0, int.MaxValue);
+			Random.InitState (seed);
+			seedInput.text = seed.ToString ();
 			ShowCreditsPanel (false);
 			ShowOptionsPanel (false);
 			ShowRandomPanel (true);
@@ -113,21 +114,21 @@ namespace HackedDesign {
 			CoreGame.Instance.LoadRandomGame (templateDropdown.options[templateDropdown.value].text, (int) lengthSlider.value, (int) heightSlider.value, (int) widthSlider.value, difficultyDropdown.value, (int) enemiesSlider.value, (int) camerasSlider.value);		}
 
 		public void OptionsEvent () {
-			Debug.Log (this.name + ": Options Event");
+			Debug.Log (name + ": Options Event");
 			ShowCreditsPanel (false);
 			ShowOptionsPanel (true);
 			ShowRandomPanel (false);
 		}
 
 		public void CreditsEvent () {
-			Debug.Log (this.name + ": Credits Event");
+			Debug.Log (name + ": Credits Event");
 			ShowCreditsPanel (true);
 			ShowOptionsPanel (false);
 			ShowRandomPanel (false);
 		}
 
 		public void QuitEvent () {
-			Debug.Log (this.name + ": Quit Event");
+			Debug.Log (name + ": Quit Event");
 			Application.Quit ();
 		}
 

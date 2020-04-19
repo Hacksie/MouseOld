@@ -4,13 +4,12 @@ using System.Collections.Generic;
 
 namespace HackedDesign.Entities
 {
+    [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(PolyNav.PolyNavAgent))]
     public class Enemy : MonoBehaviour
     {
         [Header("Game Objects")]
-        [SerializeField]
         private Animator animator = null; //The parent animator.
-        [SerializeField]
         private PolyNav.PolyNavAgent polyNavAgent = null;
         [SerializeField]
         private Transform detection = null;
@@ -41,8 +40,15 @@ namespace HackedDesign.Entities
         private Transform player;
         private bool playerSeen;
 
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+            polyNavAgent = GetComponent<PolyNav.PolyNavAgent>();
+        }
+
         protected void Start()
         {
+
             if (animator == null)
             {
                 Logger.LogError(this.name, "Enemy without animator set");
@@ -52,10 +58,10 @@ namespace HackedDesign.Entities
                 Logger.LogError(this.name, "Enemy without polyNavAgent set");
             }
 
-            if (detection == null)
-            {
-                Logger.LogError(this.name, "Enemy without Alert set");
-            }
+            //if (detection == null)
+            //{
+            //    Logger.LogError(this.name, "Enemy without Alert set");
+            //}
         }
 
         public void Initialize(Transform player, PolyNav.PolyNav2D polyNav2D)
@@ -97,8 +103,6 @@ namespace HackedDesign.Entities
                     break;
 
             }
-
-
 
             UpdateDetection();
             Animate();

@@ -5,15 +5,15 @@ namespace HackedDesign {
 
         public void Repaint () {
             switch (CoreGame.Instance.state.state) {
-                case State.GameStateEnum.MAINMENU:
-                case State.GameStateEnum.DIALOGUE:
-                case State.GameStateEnum.NARRATION:
-                case State.GameStateEnum.SELECTMENU:
-                case State.GameStateEnum.STARTMENU:
-                case State.GameStateEnum.WORLDMAP:
-                case State.GameStateEnum.GAMEOVER:
-                case State.GameStateEnum.MISSIONCOMPLETE:
-                case State.GameStateEnum.CAPTURED:
+                case GameState.GameStateEnum.MAINMENU:
+                case GameState.GameStateEnum.DIALOGUE:
+                case GameState.GameStateEnum.NARRATION:
+                case GameState.GameStateEnum.SELECTMENU:
+                case GameState.GameStateEnum.STARTMENU:
+                case GameState.GameStateEnum.WORLDMAP:
+                case GameState.GameStateEnum.GAMEOVER:
+                case GameState.GameStateEnum.MISSIONCOMPLETE:
+                case GameState.GameStateEnum.CAPTURED:
                     Cursor.visible = true;
                     break;
                 default:

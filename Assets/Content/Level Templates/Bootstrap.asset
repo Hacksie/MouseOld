@@ -16,14 +16,14 @@ MonoBehaviour:
   location: Terra
   level: 43
   levelLength: 10
-  levelWidth: 10
-  levelHeight: 10
+  levelWidth: 5
+  levelHeight: 20
   spanHorizontal: 5
   spanVertical: 5
-  enemies: 4
-  traps: 0
+  enemyCount: 5
+  trapCount: 0
   generateDoors: 1
-  generateProps: 0
+  generateProps: 1
   startingRoomString: wnew_entry
   startingAction: Bootstrap
   exitAction: BootstrapExit
@@ -32,6 +32,8 @@ MonoBehaviour:
   hostile: 0
   floors:
   - {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
+  mainChainFloor:
+  - {fileID: 3159581908670498229, guid: 56ab50df8194b014a9454ad02da0207b, type: 3}
   levelElements:
   - {fileID: 1873802445332644, guid: f0754e3af946b5041ad63056dc0094af, type: 3}
   - {fileID: 1996918847672242, guid: c00fcf358a4f8ec43a00018f7539d6f4, type: 3}
@@ -69,17 +71,99 @@ MonoBehaviour:
   - {fileID: 1658733296911224, guid: 1d6f822899d6b32458286e45ac660a7a, type: 3}
   - {fileID: 1834760793944152, guid: 6e3b0393de9bb664f93ca6bbc9006864, type: 3}
   - {fileID: 1329331660628060, guid: 1a6ceddd579bd774da163356a1c4b1a6, type: 3}
-  endProps: []
-  startProps: []
-  randomProps: []
+  endProps:
+  - {fileID: 3856033177084095198, guid: 4425540a0736e514f9f5796826ae1112, type: 3}
+  startProps:
+  - {fileID: 9100286997832094552, guid: 7f6559daec1552e4c95d98078d062944, type: 3}
+  - {fileID: 7424645663985265724, guid: 05a78a39cab898f44a8776be5b6e30ea, type: 3}
+  - {fileID: 918775567803419041, guid: 72261c3dc32e6d44ca9c5a267600d678, type: 3}
+  - {fileID: 1493339843470481702, guid: 5ac8c31d9bfc9ad419cfc017640ff04a, type: 3}
+  randomProps:
+  - {fileID: 1114031188972121203, guid: 806f519ef973ae44082ad4fac1e58699, type: 3}
+  - {fileID: 1158710630545997016, guid: 2ef739642772be245b5bcb976ae9f7da, type: 3}
+  - {fileID: 2604995719559044577, guid: 0b99577228582e34dbace07b74c681b0, type: 3}
+  - {fileID: 7994825663506050669, guid: 20c70af05878eab46bcaf27f3e467242, type: 3}
+  - {fileID: 8156737721505873390, guid: c945e07cb166b8c45a2457135ca0078e, type: 3}
+  - {fileID: 8186747693313736770, guid: 3bf227e9221916b44bb92acaac18f306, type: 3}
+  - {fileID: 2200324214325920102, guid: 73403f63f25876441b30b07999c8c085, type: 3}
+  - {fileID: 6075109751336382323, guid: 13e2c7c4d2988354ca975767b6931fd7, type: 3}
+  - {fileID: 5095660238446655960, guid: 58c266874618e57408c6768fffeb82fe, type: 3}
+  - {fileID: 4408583562092106552, guid: 1325c4d298b691c42bcd2375d73afc6c, type: 3}
+  - {fileID: 1467693813535992239, guid: 2a55cdf1173b28141b7e010b3f4fefcc, type: 3}
+  - {fileID: 5917162668619426609, guid: ab380fbde9adf904ba9bb5ee20cec85e, type: 3}
+  - {fileID: 3099313690549905355, guid: cc57a3a176f29ff4f8e023728e20fee0, type: 3}
+  - {fileID: 630787996091360250, guid: ed4e0b459d484c144a9112b1c79fccc9, type: 3}
+  - {fileID: 5161503217927402102, guid: 226fde493f520844da939a69c7240fc9, type: 3}
+  - {fileID: 132341695172575286, guid: af28682c83848fe49b6a97b59d9be9d0, type: 3}
+  - {fileID: 7508991562854054177, guid: b4332947c0675b64593877fd0f5279c6, type: 3}
+  - {fileID: 8791280900773653803, guid: 0896322fde52807408c98a623d6e0c8b, type: 3}
+  - {fileID: 5893732692651586480, guid: 7fe22a414653311478a0a7de0255fbe3, type: 3}
+  - {fileID: 4084650688487018006, guid: 38f4c6e5dbcc68847b0f424af7357dcd, type: 3}
+  - {fileID: 6381638640335444761, guid: 5cc732e8bb3136945bd34bd04d577728, type: 3}
+  - {fileID: 7940634398362624112, guid: 17b717e61a4d10d45ad2a749e325e3a7, type: 3}
+  - {fileID: 2385092213004769927, guid: 99b0926b3da0a6c4fa6d56205b22dc31, type: 3}
+  - {fileID: 4353416052163756070, guid: d28cabbef93bcd54cbec97328690db16, type: 3}
+  - {fileID: 8587613988743162523, guid: 9da678ae1fe81d2449dcf7c906ccd5e2, type: 3}
+  - {fileID: 7798081559866740142, guid: cca85880cbdad2842884bead8a111991, type: 3}
+  - {fileID: 901951639741708695, guid: a7afa1128d83e6d46a08f3f28582c99e, type: 3}
+  - {fileID: 7458331993369145893, guid: 6ca56c05fd9e62148836386ea3ea22a2, type: 3}
+  - {fileID: 2177291476371734487, guid: 4cfc77367e39aea4799b0ac90e46bdd7, type: 3}
+  - {fileID: 2360344858586288755, guid: 1af142f6203a5104182fb4bd054e9b1f, type: 3}
+  - {fileID: 8148244244184211426, guid: 28fadfe4045a04e49a01528187d02353, type: 3}
+  - {fileID: 2297313207777178214, guid: 83213de42ca1f774388d0f849bc1759a, type: 3}
+  - {fileID: 235702832877015648, guid: 919d5412b9e5b9b43b72ce6167cd2adc, type: 3}
+  - {fileID: 4416248278692272671, guid: 057cb84a80308a944ab99e55c2c8c707, type: 3}
+  - {fileID: 3479840002594409621, guid: da0280b49bc427c43b1d3b0387f62951, type: 3}
+  - {fileID: 6130169847324732583, guid: e615dc57b26ecd44d809d4bff2175c1d, type: 3}
+  - {fileID: 5999871477721683403, guid: 9fce7754ab333ad4c95ebc67eaa6939b, type: 3}
+  - {fileID: 7214734485046054791, guid: e7804b7e61d8e2f44820b6bc75abc63b, type: 3}
+  - {fileID: 5139169760644369869, guid: 59888089558f39146b1dcb262cd9adb4, type: 3}
+  - {fileID: 2115085602328702604, guid: 4cc9917b5e35afd48b6a101d73f62c2f, type: 3}
+  - {fileID: 2943505836508270376, guid: 5a3636c52f7091b43871878f94cfafd5, type: 3}
+  - {fileID: 499725082354056486, guid: d45a266bf0a595040b661030d0c5077b, type: 3}
+  - {fileID: 7167018008554408549, guid: 5b220c43e692bcf4ba8c18871956d6f9, type: 3}
+  - {fileID: 9179805690679997751, guid: 4e05215807a9bf648a84ad03565958c1, type: 3}
+  - {fileID: 8670194585971869068, guid: 66257967955487144a8a1d6117fb15b2, type: 3}
+  - {fileID: 8806618537344498217, guid: 066316de4a940004ab12077cd4de63f4, type: 3}
+  - {fileID: 7579149852121724890, guid: f14347c5165faca48bce337a429cfd95, type: 3}
+  - {fileID: 6866473139339170620, guid: e45f84ddbd485424b9cf855d7629f704, type: 3}
+  - {fileID: 8895103969839370417, guid: ad84d4905fbb0d64ba745fe70820ad56, type: 3}
+  - {fileID: 8480918483135503540, guid: d5c0ee0a9369bb741aa6b595e143c8c9, type: 3}
+  - {fileID: 3693445932282878330, guid: 0f21e5d6a66a2114f9efb132d944f4c1, type: 3}
+  - {fileID: 12584822610662033, guid: 120a0898c3741da429d833f0cbf964e9, type: 3}
+  - {fileID: 4236894204427049163, guid: cdf5f16e53ff9b640808aee48d69cf08, type: 3}
+  - {fileID: 6496330575161395771, guid: 1b020153dd347894aa00e7517366b2de, type: 3}
+  - {fileID: 4909607301858534454, guid: 9d8ea14a459b0ef4690ae0201f897265, type: 3}
+  - {fileID: 3191058203523335062, guid: 40c01fe9d80b3944da2afca26b51e5ac, type: 3}
+  - {fileID: 1901545307898924371, guid: c53cf41c4d229094d978d7b096ffa6d6, type: 3}
+  - {fileID: 8672254858636637142, guid: d1a3ac896e4b8f74885ca277c88f38a9, type: 3}
+  - {fileID: 5265134828915599791, guid: 4a28d356fccffa14a9127db7d4073ca7, type: 3}
+  - {fileID: 2277588184247656018, guid: e513252a5de30024bb2766948fdba810, type: 3}
+  - {fileID: 4938097423312694285, guid: 55e42afe5fece6c41b48fac5272fb300, type: 3}
+  - {fileID: 6299788574508204470, guid: 96eaa527f27179e4d8f6f675db8d5505, type: 3}
+  - {fileID: 5024319575263141732, guid: 745a08b033bd45d4fa29918459ace5a8, type: 3}
+  - {fileID: 8227057498982410539, guid: b1e303aaccf577e4a853d7cc2e1fa742, type: 3}
+  - {fileID: 343318884243244253, guid: af0807fbc02023d4fa1126bd459cdc5b, type: 3}
+  - {fileID: 3733128976365409795, guid: 576fcf74b96c9614b94c888d3471f3a6, type: 3}
+  - {fileID: 9151214129826998721, guid: 25a5d30b1f4b4454f851c64e5d6b2f94, type: 3}
+  - {fileID: 7435269134508407217, guid: 142cb061a90eda543b0cfaf0a2c2c2db, type: 3}
+  - {fileID: 7304761779035818967, guid: 1fb90a738f5b5684c903db3ce84ac05f, type: 3}
+  - {fileID: 8593047374120388806, guid: 45076e52c75db0945babc139212c708a, type: 3}
+  - {fileID: 5692619750364164475, guid: b388489dcd386f844953c8df016354f5, type: 3}
+  - {fileID: 5411019968779873026, guid: fcf385e66fd59204fbd7da347accd044, type: 3}
+  - {fileID: 8275172330535528418, guid: 123b6d66753378a49a8d82a8cee8028d, type: 3}
+  - {fileID: 5391511978800667068, guid: c26e0e4afff66e84cb94157bdc3c4c26, type: 3}
   trapProps: []
   fixedProps: []
-  easyEnemies:
+  enemies:
   - Male Tech 1
   - Male Tech 2
-  mediumEnemies:
-  - Male Tech 1
-  - Male Tech 2
-  hardEnemies:
-  - Male Tech 1
-  - Male Tech 2
+  - Female Tech 1
+  - Female Tech 2
+  - Male Guard Brown 1
+  - Security Dog 1
+  - Security Dog 2
+  - Security Dog 3
+  - Security Dog 4
+  - Android 1
+  - Droid 1

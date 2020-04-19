@@ -20,18 +20,22 @@ namespace HackedDesign.Level
         public string right = "";
 
         // We'd use an enum, but I'm too lazy to write a serializer
-        public const string WALL = "w";
-        public const string OPEN = "o";
-        public const string DOOR = "d";
-        public const string EXIT = "e";
-        public const string ENTRY = "n";
+        public const string Wall = "w";
+        public const string Open = "o";
+        public const string Door = "d";
+        public const string Exit = "e";
+        public const string Entry = "n";
+        public const string Any = "a";
+        public const string OpenOrDoor = "x";
+        public const string OpenOrWall = "y";
+        public const string DoorOrWall = "z";
 
-        public const string OBJ_TYPE_WALL = "wall";
-        public const string OBJ_TYPE_ENTRY = "entry";
-        public const string OBJ_TYPE_END = "end";
-        public const string OBJ_TYPE_TRAP = "trap";
-        public const string OBJ_TYPE_RANDOM = "random";
-        public const string OBJ_TYPE_FIXED = "fixed";
+        public const string ObjTypeWall = "wall";
+        public const string ObjTypeEntry = "entry";
+        public const string ObjTypeEnd = "end";
+        public const string ObjTypeTrap = "trap";
+        public const string ObjTypeRandom = "random";
+        public const string ObjTypeFixed = "fixed";
 
 
 
@@ -44,23 +48,13 @@ namespace HackedDesign.Level
         //public bool visited = false;     
 
         // FIXME: Create individual as strings
-        public string AsPrintableString()
+        public override string ToString()
         {
             string s = "" + left + top + bottom + right;
             return s;
         }
-
-        // public char SideToString (RoomSide side) {
-        //     return (char) side;
-        // }
     }
 
-    // public enum RoomSide {
-    //     Wall = 'w',
-    //     Open = 'o',
-    //     Door = 'd',
-    //     Exit = 'e'
-    // }
 
     [System.Serializable]
     public class Corner

@@ -2,17 +2,23 @@
 
 namespace HackedDesign.Entities
 {
+    [RequireComponent(typeof(Animator))]
     public class FacePlayer : MonoBehaviour
     {
         [Header("Game Objects")]
         [SerializeField]
         private Animator animator = null; //The parent animator.
 
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
+
         protected void Start()
         {
             if (animator == null)
             {
-                Logger.LogError(this.name, "No animation set");
+                Logger.LogError(name, "No animation set");
             }
         }
 
@@ -43,3 +49,4 @@ namespace HackedDesign.Entities
         }
     }
 }
+

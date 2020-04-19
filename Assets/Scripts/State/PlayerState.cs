@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HackedDesign.State
+namespace HackedDesign.GameState
 {
 	[System.Serializable]
     public class PlayerState

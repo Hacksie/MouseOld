@@ -9,15 +9,16 @@ namespace HackedDesign.Story
         {
             switch (actionName)
             {
-                case "HackEntry":
-                    Logger.Log("GlobalActions", "GlobalActions: invoke HackEntry");
+                case "TriggerEntry":
+                    Logger.Log("GlobalActions", "GlobalActions: invoke TriggerEntry");
                     // FIXME: Check if any other condition exists first!
-                    ActionManager.instance.AddActionMessage("entry hacked");
-                    ActionManager.instance.AddActionMessage("security systems activated!");
-                    ActionManager.instance.AddActionMessage($"{CoreGame.Instance.state.player.baselevelTimer.ToString()} second timer initiated!");
+                    ActionManager.instance.AddActionMessage("Entry triggered");
+                    var timer = CoreGame.Instance.state.currentLevel.template.levelLength * 10;
+
+                    ActionManager.instance.AddActionMessage($"{timer} seconds until security triggers!");
                     CoreGame.Instance.state.currentLevel.startTime = Time.time;
-                    CoreGame.Instance.state.currentLevel.timer.Start(CoreGame.Instance.state.player.baselevelTimer);
-                    CoreGame.Instance.state.currentLight = State.GlobalLightTypes.Warn;
+                    CoreGame.Instance.state.currentLevel.timer.Start(timer);
+                    //CoreGame.Instance.state.currentLight = GameState.GlobalLightTypes.Warn;
                     return true;
                 case "BatteryFill":
                     Logger.Log("GlobalActions", "GlobalActions: invoke BatteryFill");
@@ -32,13 +33,13 @@ namespace HackedDesign.Story
                     return true;
                 case "TimerExpired":
                     Logger.Log("GlobalActions", "invoke TimerEnd");
-                    CoreGame.Instance.state.currentLight = State.GlobalLightTypes.Alert;
+                    CoreGame.Instance.state.currentLight = GameState.GlobalLightTypes.Alert;
                     return true;
                 case "EndComputer":
                     Logger.Log("GlobalActions", "invoke EndComputer");
                     ActionManager.instance.AddActionMessage("alert shutdown");
                     CoreGame.Instance.state.currentLevel.timer.Start(CoreGame.Instance.state.player.baselevelTimer);
-                    CoreGame.Instance.state.currentLight = State.GlobalLightTypes.Default;
+                    CoreGame.Instance.state.currentLight = GameState.GlobalLightTypes.Default;
                     CoreGame.Instance.state.currentLevel.completed = true;
                     return true;
                 case "Captured":
@@ -64,7 +65,7 @@ namespace HackedDesign.Story
                     }
                     else
                     {
-                        CoreGame.Instance.denied.Play();
+                        //CoreGame.Instance.denied.Play();
                     }
                     return true;
             }

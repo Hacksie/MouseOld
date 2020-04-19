@@ -3,20 +3,20 @@
 namespace HackedDesign {
 	public class StartMenuPanelPresenter : MonoBehaviour {
 
-		State.GameState state;
+		GameState.GameState state;
 		StartMenuManager startMenuManager = null;
 
 
 		public void Repaint()
 		{
-			if (state.state == State.GameStateEnum.STARTMENU && !gameObject.activeInHierarchy) {
+			if (state.state == GameState.GameStateEnum.STARTMENU && !gameObject.activeInHierarchy) {
 				Show (true);
-			} else if (state.state != State.GameStateEnum.STARTMENU && gameObject.activeInHierarchy) {
+			} else if (state.state != GameState.GameStateEnum.STARTMENU && gameObject.activeInHierarchy) {
 				Show (false);
 			}
 		}
 
-		public void Initialize(State.GameState state, StartMenuManager startMenuManager)
+		public void Initialize(GameState.GameState state, StartMenuManager startMenuManager)
 		{
 			this.state = state;
 			this.startMenuManager = startMenuManager;

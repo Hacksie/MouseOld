@@ -8,6 +8,8 @@ namespace HackedDesign
         public Image batterySprite;
         public Text bugsCountText;
         private Vector2 batterySpriteMaxSize;
+        [SerializeField] private Image dashCooldown = null;
+        [SerializeField] private PlayerController playerController;
 
         public void Initialize()
         {
@@ -16,15 +18,15 @@ namespace HackedDesign
 
         public void Repaint()
         {
-            if (CoreGame.Instance.state.state == State.GameStateEnum.PLAYING)
+            if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
             {
-                if (!this.gameObject.activeInHierarchy)
+                if (!gameObject.activeInHierarchy)
                 {
                     Show(true);
                 }
                 RepaintCounts();
             }
-            else if (this.gameObject.activeInHierarchy)
+            else if (gameObject.activeInHierarchy)
             {
                 Show(false);
             }
@@ -37,7 +39,8 @@ namespace HackedDesign
 
         private void RepaintCounts()
         {
-            bugsCountText.text = CoreGame.Instance.state.player.bugs.ToString();
+            dashCooldown.fillAmount = 1 - playerController.DashPercentageComplete;
+            //bugsCountText.text = CoreGame.Instance.state.player.bugs.ToString();
             batterySprite.rectTransform.sizeDelta = new Vector2(batterySpriteMaxSize.x * CoreGame.Instance.state.player.battery / CoreGame.Instance.state.player.maxBattery, batterySpriteMaxSize.y);
         }
     }

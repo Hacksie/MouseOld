@@ -19,8 +19,8 @@ namespace HackedDesign
 			public int levelHeight = 10;
 			public float spanHorizontal = 4;
 			public float spanVertical = 4;
-			public int enemies = 0;
-			public int traps = 0;
+			public int enemyCount = 0;
+			public int trapCount = 0;
 
 			public bool generateDoors = true;
 			public bool generateProps = true;
@@ -36,6 +36,7 @@ namespace HackedDesign
 			public bool hostile = true;
 
 			public List<GameObject> floors;
+			public List<GameObject> mainChainFloor;
 			public List<GameObject> levelElements;     
 			public List<GameObject> endProps;
 			public List<GameObject> startProps;
@@ -43,10 +44,7 @@ namespace HackedDesign
 			public List<GameObject> trapProps;
 			public List<GameObject> fixedProps;
 
-			public List<string> easyEnemies;
-			public List<string> mediumEnemies;
-			public List<string> hardEnemies;
-		                
+			public List<string> enemies;
         }
     }
 }

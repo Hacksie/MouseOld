@@ -35,7 +35,7 @@ namespace HackedDesign
 
         public void Repaint()
         {
-            if (CoreGame.Instance.state.state == State.GameStateEnum.SELECTMENU && !this.gameObject.activeInHierarchy)
+            if (CoreGame.Instance.state.state == GameState.GameStateEnum.SELECTMENU && !this.gameObject.activeInHierarchy)
             {
                 Show(true);
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
@@ -60,7 +60,7 @@ namespace HackedDesign
                 }
 
             }
-            else if (CoreGame.Instance.state.state != State.GameStateEnum.SELECTMENU && this.gameObject.activeInHierarchy)
+            else if (CoreGame.Instance.state.state != GameState.GameStateEnum.SELECTMENU && this.gameObject.activeInHierarchy)
             {
                 Show(false);
             }

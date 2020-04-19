@@ -18,7 +18,7 @@ namespace HackedDesign
 
         public void Repaint()
         {
-            if (CoreGame.Instance.state.state == State.GameStateEnum.TITLECARD)
+            if (CoreGame.Instance.state.state == GameState.GameStateEnum.TITLECARD)
             {
                 if (!this.gameObject.activeInHierarchy)
                 {

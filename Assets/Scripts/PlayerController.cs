@@ -6,27 +6,48 @@ using UnityEngine.InputSystem;
 namespace HackedDesign {
 
 	[RequireComponent(typeof(Animator))]
-	public class PlayerController : MonoBehaviour {
-
-		private float movementEpsilon = 0.1f; //An axis value above this is considered movement.		
-
+	public class PlayerController : MonoBehaviour 
+	{
 		[Range (0.0f, 10.0f)]
 		[Tooltip ("The movement speed of the controller.")]
 		[SerializeField] private float baseMovementSpeed = 1.5f;
+		[SerializeField] private float dashDistance = 2.5f;
+		[SerializeField] private float dashCooldown = 5.0f;
+		[SerializeField] private float dashTimeToComplete = 0.2f;
 
 		private Vector2 movementVector; 
 		private Animator anim;
+		private bool dash = false;
+		
+		private float dashTimer = 0;
 
-		private List<ITrigger> triggers = new List<ITrigger>();
+		public bool IsDashing
+		{
+			get
+			{
+				return dash;
+			}
+		}
+		
+		public float DashPercentageComplete
+		{
+			get
+			{
+				return (Time.time - dashTimer > dashCooldown) ? 1 : (Time.time - dashTimer) / dashCooldown;
+			}
+		}
 
 
-		void Start () {
+		private readonly List<ITrigger> triggers = new List<ITrigger>();
+
+
+		private void Start () 
+		{
 			anim = transform.GetComponent<Animator> ();
 		}
 
 		public void MovementEvent (InputAction.CallbackContext context) 
 		{
-			
 			movementVector = context.ReadValue<Vector2>();
 		}
 
@@ -37,6 +58,18 @@ namespace HackedDesign {
 				foreach (var trigger in triggers)
 				{
 					trigger.Invoke(gameObject);
+				}
+			}
+		}
+
+		public void DashEvent(InputAction.CallbackContext context)
+		{
+			if(context.performed)
+			{
+				if ((Time.time - dashTimer) > dashCooldown)
+				{
+					dash = true;
+					dashTimer = Time.time;
 				}
 			}
 		}
@@ -113,7 +146,7 @@ namespace HackedDesign {
 
 		public void LateUpdate()
 		{
-			if (movementVector.sqrMagnitude > (movementEpsilon * movementEpsilon))
+			if (movementVector.sqrMagnitude > Vector2.kEpsilon)
 			{
 				//anim.SetFloat ("moveX", movementVector.x);
 				//anim.SetFloat ("moveY", movementVector.y);
@@ -133,6 +166,16 @@ namespace HackedDesign {
 
 		public void UpdateTransform () {
 			// Movement augments (0 - 10) are reduced by a factor of 10
+			if(dash)
+			{
+				transform.Translate(movementVector * dashDistance * Time.deltaTime); 
+				//performedDashDistance += dashDistance * Time.deltaTime;
+				if ((Time.time - dashTimer)>  dashTimeToComplete)
+				{
+					dash = false;
+				}
+			}
+
 			transform.Translate (movementVector * (baseMovementSpeed + (CoreGame.Instance.state.player.movementAugments / 10.0f)) * Time.deltaTime);
 		}
 	}

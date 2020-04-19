@@ -43,7 +43,7 @@ namespace HackedDesign
 
             public void Repaint()
             {
-                if (CoreGame.Instance.state.state == State.GameStateEnum.NARRATION)
+                if (CoreGame.Instance.state.state == GameState.GameStateEnum.NARRATION)
                 {
                     if (!this.gameObject.activeInHierarchy || currentNarration != narrationManager.GetCurrentNarration())
                     {

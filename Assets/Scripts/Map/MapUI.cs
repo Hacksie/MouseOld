@@ -29,7 +29,7 @@ namespace HackedDesign {
                     for (int j = 0; j < level.template.levelWidth; j++) {
 
                         if (level.map[i].rooms[j] != null) {
-                            string chunkString = level.map[i].rooms[j].AsPrintableString ();
+                            string chunkString = level.map[i].rooms[j].ToString ();
 
                             Sprite blSprite = FindChunkObject ("bl", chunkString.Substring (0, 1), chunkString.Substring (2, 1));
                             Sprite brSprite = FindChunkObject ("br", chunkString.Substring (3, 1), chunkString.Substring (2, 1));

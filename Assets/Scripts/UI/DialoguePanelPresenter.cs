@@ -36,7 +36,7 @@ namespace HackedDesign.Dialogue
 
         public void Repaint()
         {
-            if (CoreGame.Instance.state.state == State.GameStateEnum.DIALOGUE)
+            if (CoreGame.Instance.state.state == GameState.GameStateEnum.DIALOGUE)
             {
                 if (!this.gameObject.activeInHierarchy)
                 {

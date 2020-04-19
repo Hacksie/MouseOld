@@ -14,9 +14,9 @@ namespace HackedDesign {
 		}        
 
 		public void Repaint () {
-			if (CoreGame.Instance.state.state == State.GameStateEnum.LEVELCOMPLETE && !this.gameObject.activeInHierarchy) {
+			if (CoreGame.Instance.state.state == GameState.GameStateEnum.LEVELCOMPLETE && !this.gameObject.activeInHierarchy) {
 				Show (true);
-			} else if (CoreGame.Instance.state.state != State.GameStateEnum.LEVELCOMPLETE && this.gameObject.activeInHierarchy) {
+			} else if (CoreGame.Instance.state.state != GameState.GameStateEnum.LEVELCOMPLETE && this.gameObject.activeInHierarchy) {
 				Show (false);
 			}
 		}

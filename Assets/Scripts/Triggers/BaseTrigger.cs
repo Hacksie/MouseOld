@@ -106,23 +106,36 @@ namespace HackedDesign.Triggers
 
         public virtual void Invoke(GameObject source)
         {
-            interactActionEvent.Invoke();
+            if (allowInteraction || hacked || bugged || overloaded)
+            {
+                interactActionEvent.Invoke();
+            }
         }
 
         public virtual void Overload(GameObject source)
         {
+            if (!overloaded && !hacked && !bugged && CoreGame.Instance.state.player.CanOverload() && allowOverload)
+            {
+                overloaded = true;
 
-            overloaded = true;
-            overloadActionEvent.Invoke();
-            CoreGame.Instance.state.player.ConsumeOverload();
+                overloadActionEvent.Invoke();
+                CoreGame.Instance.state.player.ConsumeOverload();
+            }
         }
 
         public virtual void Hack(GameObject source)
         {
-            hackActionEvent.Invoke();
-            if (CoreGame.Instance.state.player.ConsumeHack())
+            if (!overloaded && !hacked && !bugged && CoreGame.Instance.state.player.CanHack() && allowHack)
             {
-                hacked = true;
+                if (CoreGame.Instance.state.player.ConsumeHack())
+                {
+                    hackActionEvent.Invoke();
+                    hacked = true;
+                }
+            }
+            else if (hacked)
+            {
+                interactActionEvent.Invoke();
             }
         }
 
@@ -167,7 +180,7 @@ namespace HackedDesign.Triggers
                 Hack(source);
                 return true;
             }
-            if ((hacked || bugged) && inputController.InteractButtonUp())
+            if ((overloaded || hacked || bugged) && inputController.InteractButtonUp())
             {
                 Invoke(source);
                 return true;
@@ -231,7 +244,7 @@ namespace HackedDesign.Triggers
             /*
             if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)))
             {
-                
+
                 //Debug.Log(this.name + ": removed from collider list " + other.gameObject);
                 if (colliders.Contains(other.gameObject))
                     colliders.Remove(other.gameObject);

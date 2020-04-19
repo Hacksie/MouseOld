@@ -22,7 +22,7 @@ namespace HackedDesign
 
             public void Repaint()
             {
-                if (CoreGame.Instance.state.state == State.GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.TASKS)
+                if (CoreGame.Instance.state.state == GameState.GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.TASKS)
                 {
                     if (!this.gameObject.activeInHierarchy)
                     {

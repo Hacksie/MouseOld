@@ -99,14 +99,24 @@ namespace HackedDesign
 
                                 if (floor != null)
                                 {
-                                    GameObject.Instantiate(floor, pos, Quaternion.identity, levelParent.transform);
+                                    Instantiate(floor, pos, Quaternion.identity, levelParent.transform);
                                 }
                             }
                             else
                             {
-                                if (level.template.floors.Count > 0 && level.template.floors != null)
+                                if (level.map[i].rooms[j].isMainChain)
                                 {
-                                    GameObject.Instantiate(level.template.floors[0], pos, Quaternion.identity, levelParent.transform);
+                                    if (level.template.mainChainFloor.Count > 0 && level.template.mainChainFloor != null)
+                                    {
+                                        Instantiate(level.template.mainChainFloor[0], pos, Quaternion.identity, levelParent.transform);
+                                    }
+                                }
+                                else
+                                {
+                                    if (level.template.floors.Count > 0 && level.template.floors != null)
+                                    {
+                                        Instantiate(level.template.floors[0], pos, Quaternion.identity, levelParent.transform);
+                                    }
                                 }
                             }
 
@@ -200,10 +210,10 @@ namespace HackedDesign
 
                 switch (type)
                 {
-                    case ProxyRoom.OBJ_TYPE_WALL:
+                    case ProxyRoom.ObjTypeWall:
                         return levelGenTemplate.levelElements.FirstOrDefault(g => g != null && g.name == name);
 
-                    case ProxyRoom.OBJ_TYPE_ENTRY:
+                    case ProxyRoom.ObjTypeEntry:
                         result = levelGenTemplate.startProps.FirstOrDefault(g => g != null && g.name == name);
 
                         if (result == null)
@@ -213,7 +223,7 @@ namespace HackedDesign
 
                         break;
 
-                    case ProxyRoom.OBJ_TYPE_END:
+                    case ProxyRoom.ObjTypeEnd:
                         result = levelGenTemplate.endProps.FirstOrDefault(g => g != null && g.name == name);
                         if (result == null)
                         {
@@ -222,13 +232,13 @@ namespace HackedDesign
 
                         break;
 
-                    case ProxyRoom.OBJ_TYPE_TRAP:
+                    case ProxyRoom.ObjTypeTrap:
                         return levelGenTemplate.trapProps.FirstOrDefault(g => g != null && g.name == name);
 
-                    case ProxyRoom.OBJ_TYPE_RANDOM:
+                    case ProxyRoom.ObjTypeRandom:
                         return levelGenTemplate.randomProps.FirstOrDefault(g => g != null && g.name == name);
 
-                    case ProxyRoom.OBJ_TYPE_FIXED:
+                    case ProxyRoom.ObjTypeFixed:
                         return levelGenTemplate.fixedProps.FirstOrDefault(g => g != null && g.name == name);
                 }
 
@@ -257,7 +267,7 @@ namespace HackedDesign
                             continue;
                         }
 
-                        if (room.top == ProxyRoom.DOOR)
+                        if (room.top == ProxyRoom.Door)
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(doorewPrefab, pos, Quaternion.identity, levelParent.transform);
@@ -268,7 +278,7 @@ namespace HackedDesign
                             }
                         }
 
-                        if (room.left == ProxyRoom.DOOR)
+                        if (room.left == ProxyRoom.Door)
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + (level.template.spanVertical /2), 0);
                             var go = Instantiate(doornsPrefab, pos, Quaternion.identity, levelParent.transform);
@@ -279,7 +289,7 @@ namespace HackedDesign
                             }
                         }
 
-                        if (room.top == ProxyRoom.EXIT)
+                        if (room.top == ProxyRoom.Exit)
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
@@ -290,7 +300,7 @@ namespace HackedDesign
                             }
                         }
 
-                        if (room.left == ProxyRoom.EXIT)
+                        if (room.left == ProxyRoom.Exit)
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + (level.template.spanVertical /2), 0);
                             var go = Instantiate(exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
@@ -300,7 +310,7 @@ namespace HackedDesign
                                 results.Add(door);
                             }
                         }
-                        if (room.bottom == ProxyRoom.EXIT)
+                        if (room.bottom == ProxyRoom.Exit)
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), (i + 1) * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
@@ -310,7 +320,7 @@ namespace HackedDesign
                                 results.Add(door);
                             }
                         }
-                        if (room.top == ProxyRoom.ENTRY)
+                        if (room.top == ProxyRoom.Entry)
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(entryewPrefab, pos, Quaternion.identity, levelParent.transform);
@@ -321,7 +331,7 @@ namespace HackedDesign
                             }
                         }
 
-                        if (room.left == ProxyRoom.ENTRY)
+                        if (room.left == ProxyRoom.Entry)
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + (level.template.spanVertical /2), 0);
                             var go = Instantiate(entrynsPrefab, pos, Quaternion.identity, levelParent.transform);

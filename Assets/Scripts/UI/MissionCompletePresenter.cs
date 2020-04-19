@@ -22,9 +22,9 @@ namespace HackedDesign {
 		}        
 
 		public void Repaint () {
-			if (CoreGame.Instance.state.state == State.GameStateEnum.MISSIONCOMPLETE && !this.gameObject.activeInHierarchy) {
+			if (CoreGame.Instance.state.state == GameState.GameStateEnum.MISSIONCOMPLETE && !this.gameObject.activeInHierarchy) {
 				Show (true);
-			} else if (CoreGame.Instance.state.state != State.GameStateEnum.MISSIONCOMPLETE && this.gameObject.activeInHierarchy) {
+			} else if (CoreGame.Instance.state.state != GameState.GameStateEnum.MISSIONCOMPLETE && this.gameObject.activeInHierarchy) {
 				Show (false);
 			}
 		}

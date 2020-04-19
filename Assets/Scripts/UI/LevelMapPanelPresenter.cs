@@ -50,7 +50,7 @@ namespace HackedDesign {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++) {
 
                         if (level.map[i].rooms[j] != null) {
-                            string chunkString = level.map[i].rooms[j].AsPrintableString ();
+                            string chunkString = level.map[i].rooms[j].ToString ();
 
                             Sprite blSprite = FindChunkObject ("bl", chunkString.Substring (0, 1), chunkString.Substring (2, 1));
                             Sprite brSprite = FindChunkObject ("br", chunkString.Substring (3, 1), chunkString.Substring (2, 1));
@@ -89,7 +89,7 @@ namespace HackedDesign {
 
             public void Repaint () {
 
-                if (CoreGame.Instance.state.state == State.GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.MAP) {
+                if (CoreGame.Instance.state.state == GameState.GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.MAP) {
                     if(!this.gameObject.activeInHierarchy) {
                         this.gameObject.SetActive(true);
                     }

@@ -37,7 +37,7 @@ namespace HackedDesign
 
             public void Repaint()
             {
-                if (CoreGame.Instance.state.state == State.GameStateEnum.PLAYING && false)
+                if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING && false)
                 {
                     if (!this.gameObject.activeInHierarchy)
                     {

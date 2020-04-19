@@ -35,7 +35,7 @@ public class @MouseControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Bug"",
+                    ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""83d96d3a-22dc-4646-ba58-5322c87e6e28"",
                     ""expectedControlType"": """",
@@ -193,7 +193,7 @@ public class @MouseControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Bug"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -204,7 +204,7 @@ public class @MouseControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Bug"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -872,7 +872,7 @@ public class @MouseControls : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_Bug = m_Player.FindAction("Bug", throwIfNotFound: true);
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Hack = m_Player.FindAction("Hack", throwIfNotFound: true);
         m_Player_Overload = m_Player.FindAction("Overload", throwIfNotFound: true);
         m_Player_Start = m_Player.FindAction("Start", throwIfNotFound: true);
@@ -940,7 +940,7 @@ public class @MouseControls : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_Bug;
+    private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Hack;
     private readonly InputAction m_Player_Overload;
     private readonly InputAction m_Player_Start;
@@ -951,7 +951,7 @@ public class @MouseControls : IInputActionCollection, IDisposable
         public PlayerActions(@MouseControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @Bug => m_Wrapper.m_Player_Bug;
+        public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Hack => m_Wrapper.m_Player_Hack;
         public InputAction @Overload => m_Wrapper.m_Player_Overload;
         public InputAction @Start => m_Wrapper.m_Player_Start;
@@ -971,9 +971,9 @@ public class @MouseControls : IInputActionCollection, IDisposable
                 @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
-                @Bug.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBug;
-                @Bug.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBug;
-                @Bug.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBug;
+                @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Hack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHack;
                 @Hack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHack;
                 @Hack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHack;
@@ -996,9 +996,9 @@ public class @MouseControls : IInputActionCollection, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @Bug.started += instance.OnBug;
-                @Bug.performed += instance.OnBug;
-                @Bug.canceled += instance.OnBug;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
                 @Hack.started += instance.OnHack;
                 @Hack.performed += instance.OnHack;
                 @Hack.canceled += instance.OnHack;
@@ -1169,7 +1169,7 @@ public class @MouseControls : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnBug(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
         void OnHack(InputAction.CallbackContext context);
         void OnOverload(InputAction.CallbackContext context);
         void OnStart(InputAction.CallbackContext context);
