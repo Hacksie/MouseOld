@@ -14,11 +14,11 @@ namespace HackedDesign
             [Header("Prefabs")]
             public List<GameObject> enemies = null;
             public List<GameObject> traps = null;
-            [SerializeField]
-            private List<GameObject> npcPrefabList = null;
+            [SerializeField] private List<GameObject> npcPrefabList = null;
 
-            private List<Entities.BaseEntity> npcPool = new List<Entities.BaseEntity>();
-            public GameObject npcParent;
+            public List<BaseEntity> npcPool = new List<BaseEntity>();
+
+            [SerializeField] private GameObject npcPoolParent;
 
 
             EntityManager()
@@ -26,13 +26,11 @@ namespace HackedDesign
                 instance = this;
             }
 
-
-
-            public void Initialize(GameObject npcParent)
+            public void Initialize()
             {
-                if (npcParent == null)
+                if (npcPoolParent == null)
                 {
-                    Debug.LogError(this.name + ": npcParent is null");
+                    Logger.LogError(name, "npcParent is null");
                 }
 
                 foreach (var npc in npcPrefabList)
@@ -42,24 +40,24 @@ namespace HackedDesign
                         continue;
                     }
 
-                    var go = GameObject.Instantiate(npc, Vector3.zero, Quaternion.identity, npcParent.transform);
+                    var go = Instantiate(npc, Vector3.zero, Quaternion.identity, npcPoolParent.transform);
                     go.name = npc.name; // We don't want the (cloned) label
-                    Debug.Log(this.name + ": instantiating NPC " + npc.name + " " + go.name);
-                    Entities.BaseEntity entity = go.GetComponent<Entities.BaseEntity>();
+                    Logger.Log(name, "instantiating NPC ", npc.name, " ", go.name);
+                    BaseEntity entity = go.GetComponent<BaseEntity>();
 
                     npcPool.Add(entity);
-                    go.SetActive(false);
+                    //go.SetActive(false);
                 }
             }
 
             public BaseEntity GetPooledNPC(string name)
             {
                 //return null;
-                for(int i=0;i<npcParent.transform.childCount;i++)
+                for(int i=0;i<npcPoolParent.transform.childCount;i++)
                 {
-                    if(npcParent.transform.GetChild(i).name == name)
+                    if(npcPoolParent.transform.GetChild(i).name == name)
                     {
-                        return npcParent.transform.GetChild(i).gameObject.GetComponent<BaseEntity>();
+                        return npcPoolParent.transform.GetChild(i).gameObject.GetComponent<BaseEntity>();
                     }
                 }
                 return null;

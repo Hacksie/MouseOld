@@ -68,6 +68,17 @@ namespace HackedDesign.Story
                         //CoreGame.Instance.denied.Play();
                     }
                     return true;
+                case "Act1":
+                    ActionManager.instance.Invoke("Prelude1");
+                    return true;
+                case "Act2":
+                    return true;
+                case "Act3":
+                    return true;
+                case "Act4":
+                    return true;
+                case "Act5":
+                    return true;
             }
             return false;
         }

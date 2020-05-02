@@ -8,7 +8,7 @@ namespace HackedDesign
         [System.Serializable]
         public class Character : InfoEntity
         {
-            //public string fullName;
+            public string fullName;
             public string handle;
             public string corp;
             public string serial;

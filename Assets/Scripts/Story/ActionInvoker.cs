@@ -15,13 +15,13 @@ namespace HackedDesign.Story
         {
             if (string.IsNullOrEmpty(action))
             {
-                Logger.LogWarning(this.name, "action is empty");
+                Logger.LogWarning(name, "Action is empty");
             }
         }
 
         public void Invoke()
         {
-            Debug.Log("Invoke");
+            Logger.Log(name,"Invoke");
             ActionManager.instance.Invoke(action);
         }
     }

@@ -3,6 +3,7 @@
     using System.IO;
     using UnityEngine;
     using UnityEngine.Rendering;
+    using UnityEngine.Experimental.Rendering.Universal;
 
     public class CoreGame : MonoBehaviour
     {
@@ -22,7 +23,7 @@
         [SerializeField] private Level.LevelGenerator levelGenerator = null;
         [SerializeField] private Level.LevelRenderer levelRenderer = null;
         [SerializeField] private GameObject levelParent = null;
-        [SerializeField] private GameObject npcParent = null;
+        [SerializeField] private GameObject enemiesParent = null;
         [SerializeField] private PolyNav.PolyNav2D polyNav2D = null;
         [SerializeField] private string newGameLevel = "Olivia's Room";
 
@@ -30,7 +31,7 @@
         [SerializeField] private GameObject roomAlert = null;
 
         [Header("Lights")]
-        [SerializeField] private UnityEngine.Experimental.Rendering.Universal.Light2D globalLight;
+        [SerializeField] private Light2D globalLight;
         [SerializeField] private Color lightsDefault;
         [SerializeField] private Color lightsWarn;
         [SerializeField] private Color lightsAlert;
@@ -80,12 +81,12 @@
         {
             Logger.Log(name, "Loading new game");
             state.state = GameState.GameStateEnum.LOADING;
-            entityManager.Initialize(npcParent);
+            entityManager.Initialize();
             actionManager.Initialize(entityManager, taskManager);
             state.currentLevel = levelGenerator.GenerateLevel(newGameLevel, 0, 0, 0);
             state.isRandom = false;
             state.player = new GameState.PlayerState();
-            Instance.SceneInitialize();
+            SceneInitialize();
         }
 
         public void LoadRandomGame(string template, int length, int height, int width, int difficulty, int enemies, int traps)
@@ -95,7 +96,7 @@
             state.currentLevel = levelGenerator.GenerateLevel(template, length, height, width, difficulty, enemies, traps);
             state.isRandom = true;
             state.player = new GameState.PlayerState();
-            entityManager.Initialize(npcParent);
+            entityManager.Initialize();
             actionManager.Initialize(entityManager, taskManager);
             SceneInitialize();
         }
@@ -106,7 +107,7 @@
             state.state = GameState.GameStateEnum.LOADING;
             state.entityList.Clear();
             state.currentLevel = levelGenerator.GenerateLevel(template);
-            entityManager.Initialize(npcParent);
+            entityManager.Initialize();
             actionManager.Initialize(entityManager, taskManager);
             SceneInitialize();
         }
@@ -420,7 +421,7 @@
             narrationPanel.Initialize(narrationManager, infoManager);
             actionPanel.Initialize();
             titlecardPanel.Initialize(actionManager);
-            levelRenderer.Initialize(entityManager, infoManager, levelParent, npcParent, polyNav2D);
+            levelRenderer.Initialize(entityManager, infoManager, levelParent, enemiesParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
             levelCompletePresenter.Initialize(levelCompleteManager);
             RepaintAllUI();

@@ -78,7 +78,7 @@ namespace HackedDesign
                 var speaker = infoManager.GetCharacter(currentNarration.speaker);
                 var corp = infoManager.GetCorp(speaker.corp);
                 handleText.text = speaker.handle;
-                shortNameText.text = speaker.name;
+                shortNameText.text = speaker.fullName;
 
                 switch (currentNarration.speakerEmotion)
                 {

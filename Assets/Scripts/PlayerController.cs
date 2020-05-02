@@ -53,56 +53,71 @@ namespace HackedDesign {
 
 		public void InteractEvent(InputAction.CallbackContext context)
 		{
-			if (context.performed)
+			if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
 			{
-				foreach (var trigger in triggers)
+				if (context.performed)
 				{
-					trigger.Invoke(gameObject);
+					foreach (var trigger in triggers)
+					{
+						trigger.Invoke(gameObject);
+					}
 				}
 			}
 		}
 
 		public void DashEvent(InputAction.CallbackContext context)
 		{
-			if(context.performed)
+			if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
 			{
-				if ((Time.time - dashTimer) > dashCooldown)
+				if (context.performed)
 				{
-					dash = true;
-					dashTimer = Time.time;
+					if ((Time.time - dashTimer) > dashCooldown)
+					{
+						dash = true;
+						dashTimer = Time.time;
+					}
 				}
 			}
 		}
 
 		public void BugEvent(InputAction.CallbackContext context)
 		{
-			if (context.performed)
+			if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
 			{
-				foreach (var trigger in triggers)
+				if (context.performed)
 				{
-					trigger.Bug(gameObject);
+					foreach (var trigger in triggers)
+					{
+						trigger.Bug(gameObject);
+					}
 				}
 			}
 		}
 
 		public void HackEvent(InputAction.CallbackContext context)
 		{
-			if (context.performed)
+			if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
 			{
-				foreach (var trigger in triggers)
+				if (context.performed)
 				{
-					trigger.Hack(gameObject);
+					foreach (var trigger in triggers)
+					{
+						trigger.Hack(gameObject);
+					}
 				}
 			}
 		}
 
 		public void OverloadEvent(InputAction.CallbackContext context)
 		{
-			if (context.performed)
+			if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
 			{
-				foreach (var trigger in triggers)
+				if (context.performed)
 				{
-					trigger.Overload(gameObject);
+					foreach (var trigger in triggers)
+					{
+						trigger.Overload(gameObject);
+					}
 				}
 			}
 		}

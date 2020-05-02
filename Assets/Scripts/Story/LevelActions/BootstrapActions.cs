@@ -10,10 +10,10 @@ namespace HackedDesign.Story
             switch (actionName)
             {
                 case "Bootstrap":
-                    CoreGame.Instance.SetTitlecard();
+                    Logger.Log("BootstrapActions", "Invoke Bootstrap");
                     return true;
                 case "Bootstrap1":
-                    Debug.Log("PreludeActions: invoke Prelude1");
+                    Logger.Log("BootstrapActions", "Invoke Bootstrap1");
                     InfoManager.instance.AddToKnownEntities("Mouse");
                     InfoManager.instance.AddToKnownEntities("Arisana");
                     InfoManager.instance.AddToKnownEntities("ManagerLyon");

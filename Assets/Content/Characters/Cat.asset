@@ -17,7 +17,12 @@ MonoBehaviour:
   category: AI
   parentInfoCategory: Characters
   description: Cat
-  handle: Cat
+  fullName: C.A.T
+  handle: '"Cat"'
   corp: Arisana
   serial: abc123
   avatar: {fileID: 21300000, guid: 8f919db70c434cf4987d9758bbb16ad2, type: 3}
+  avatarTired: {fileID: 0}
+  avatarAngry: {fileID: 0}
+  avatarHappy: {fileID: 0}
+  avatarThinking: {fileID: 0}

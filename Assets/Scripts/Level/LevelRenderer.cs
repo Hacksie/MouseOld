@@ -20,24 +20,28 @@ namespace HackedDesign
             const string BOTTOMLEFT = "bl";
             const string BOTTOMRIGHT = "br";
 
+            [Header("Prefabs")]
             public GameObject doorewPrefab;
             public GameObject doornsPrefab;
             public GameObject exitewPrefab;
             public GameObject exitnsPrefab;
             public GameObject entryewPrefab;
             public GameObject entrynsPrefab;
+            public GameObject pointOfInterestPrefab;
 
+            [Header("Configured Game Objects")]
             private GameObject levelParent;
-            private GameObject npcParent;
+            private GameObject enemiesParent;
             private PolyNav.PolyNav2D polyNav2D;
 
+            [Header("Runtime Game Objects")]
             private Entities.EntityManager entityManager;
             private Story.InfoManager infoManager;
 
-            public void Initialize(Entities.EntityManager entityManager, Story.InfoManager infoManager, GameObject levelParent, GameObject npcParent, PolyNav.PolyNav2D polyNav2D)
+            public void Initialize(Entities.EntityManager entityManager, Story.InfoManager infoManager, GameObject levelParent, GameObject enemiesParent, PolyNav.PolyNav2D polyNav2D)
             {
                 this.levelParent = levelParent;
-                this.npcParent = npcParent;
+                this.enemiesParent = enemiesParent;
                 this.polyNav2D = polyNav2D;
                 this.entityManager = entityManager;
                 this.infoManager = infoManager;
@@ -45,40 +49,36 @@ namespace HackedDesign
 
             public void Render(Level level)
             {
-                Debug.Log(this.name + ": rendering level");
+                Logger.Log(name, "rendering level");
                 DestroyLevel();
                 PopulateLevelTilemap(level);
-
-
-
-
-                //PopulateCameraSpawns (level);
-
-                BoxCollider2D boxCollider = levelParent.GetComponent<BoxCollider2D>();
-
-                boxCollider.size = new Vector2(level.template.levelWidth * level.template.spanHorizontal, level.template.levelHeight * level.template.spanVertical);
-                boxCollider.offset = (boxCollider.size / 2);
+                UpdateLevelBoundingBox(level);
 
                 if (level.template.generateNavMesh)
                 {
                     polyNav2D.GenerateMap();
                 }
+            }
 
-
+            public void UpdateLevelBoundingBox(Level level)
+            {
+                BoxCollider2D boxCollider = levelParent.GetComponent<BoxCollider2D>();
+                boxCollider.size = new Vector2(level.template.levelWidth * level.template.spanHorizontal, level.template.levelHeight * level.template.spanVertical);
+                boxCollider.offset = (boxCollider.size / 2);
             }
 
             public void DestroyLevel()
             {
                 // Destroy NPCs
-                for (int i = 0; i < npcParent.transform.childCount; i++)
+                for (int i = 0; i < enemiesParent.transform.childCount; i++)
                 {
-                    GameObject.Destroy(npcParent.transform.GetChild(i).gameObject);
+                    Destroy(enemiesParent.transform.GetChild(i).gameObject);
                 }
 
                 // Destroy Tiles
                 for (int k = 0; k < levelParent.transform.childCount; k++)
                 {
-                    GameObject.Destroy(levelParent.transform.GetChild(k).gameObject);
+                    Destroy(levelParent.transform.GetChild(k).gameObject);
                 }
             }
 
@@ -88,118 +88,89 @@ namespace HackedDesign
                 {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
+                        Vector3 roomPosition = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical), 0);
 
-                        Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical), 0);
-
-                        if (level.map[i].rooms[j] != null)
+                        if (level.map[i].rooms[j] == null)
                         {
-                            if (!string.IsNullOrWhiteSpace(level.map[i].rooms[j].floor))
-                            {
-                                var floor = level.template.floors.FirstOrDefault(o => o != null && o.name == level.map[i].rooms[j].floor);
+                            continue;
+                        }
 
-                                if (floor != null)
+
+                        if (!string.IsNullOrWhiteSpace(level.map[i].rooms[j].floor))
+                        {
+                            var floor = level.template.floors.FirstOrDefault(o => o != null && o.name == level.map[i].rooms[j].floor);
+
+                            if (floor != null)
+                            {
+                                Instantiate(floor, roomPosition, Quaternion.identity, levelParent.transform);
+                            }
+                        }
+                        else
+                        {
+                            if (level.map[i].rooms[j].isMainChain)
+                            {
+                                if (level.template.mainChainFloor.Count > 0 && level.template.mainChainFloor != null)
                                 {
-                                    Instantiate(floor, pos, Quaternion.identity, levelParent.transform);
+                                    Instantiate(level.template.mainChainFloor[0], roomPosition, Quaternion.identity, levelParent.transform);
                                 }
                             }
                             else
                             {
-                                if (level.map[i].rooms[j].isMainChain)
+                                if (level.template.floors.Count > 0 && level.template.floors != null)
                                 {
-                                    if (level.template.mainChainFloor.Count > 0 && level.template.mainChainFloor != null)
-                                    {
-                                        Instantiate(level.template.mainChainFloor[0], pos, Quaternion.identity, levelParent.transform);
-                                    }
+                                    Instantiate(level.template.floors[0], roomPosition, Quaternion.identity, levelParent.transform);
                                 }
-                                else
-                                {
-                                    if (level.template.floors.Count > 0 && level.template.floors != null)
-                                    {
-                                        Instantiate(level.template.floors[0], pos, Quaternion.identity, levelParent.transform);
-                                    }
-                                }
-                            }
-
-                            // BL
-                            for (int e = 0; e < level.map[i].rooms[j].bottomLeft.Count; e++)
-                            {
-                                var go = FindRoomEntity(level.map[i].rooms[j].bottomLeft[e].type, level.map[i].rooms[j].bottomLeft[e].name, level.template);
-                                if (go == null)
-                                {
-                                    Debug.LogError(this.name + ": null game object returned from FindRoomEntity");
-                                }
-                                GameObject.Instantiate(go, pos, Quaternion.identity, levelParent.transform);
-
-                                // if (level.map[i].rooms[j].bottomLeft[e].isTrap)
-                                // {
-                                //     Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
-                                //     npc.Initialize();
-                                //     CoreGame.Instance.CoreState.entityList.Add(npc);
-                                //     //results.Add (npc);
-                                // }
-
-                                // 		Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap> ();
-                                // 		npc.Initialize ();
-                                // 		results.Add (npc);
-                            }
-
-                            // BR
-                            for (int e = 0; e < level.map[i].rooms[j].bottomRight.Count; e++)
-                            {
-                                var go = FindRoomEntity(level.map[i].rooms[j].bottomRight[e].type, level.map[i].rooms[j].bottomRight[e].name, level.template);
-                                if (go == null)
-                                {
-                                    Debug.LogError("null go");
-                                }
-                                GameObject.Instantiate(go, pos, Quaternion.identity, levelParent.transform);
-                                // if (level.map[i].rooms[j].bottomRight[e].isTrap)
-                                // {
-                                //     Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
-                                //     npc.Initialize();
-                                //     CoreGame.Instance.CoreState.entityList.Add(npc);
-                                //     //results.Add (npc);
-                                // }
-                            }
-
-                            // TL
-                            for (int e = 0; e < level.map[i].rooms[j].topLeft.Count; e++)
-                            {
-  
-                                var go = FindRoomEntity(level.map[i].rooms[j].topLeft[e].type, level.map[i].rooms[j].topLeft[e].name, level.template);
-                                if (go == null)
-                                {
-                                    Debug.LogError("null go");
-                                }
-                                GameObject.Instantiate(go, pos, Quaternion.identity, levelParent.transform);
-
-                                // if (level.map[i].rooms[j].topLeft[e].isTrap)
-                                // {
-                                //     Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
-                                //     npc.Initialize();
-                                //     CoreGame.Instance.CoreState.entityList.Add(npc);
-                                //     //results.Add (npc);
-                                // }
-                            }
-
-                            //TR
-                            for (int e = 0; e < level.map[i].rooms[j].topRight.Count; e++)
-                            {
-                                var go = FindRoomEntity(level.map[i].rooms[j].topRight[e].type, level.map[i].rooms[j].topRight[e].name, level.template);
-                                if (go == null)
-                                {
-                                    Debug.LogError("null go");
-                                }
-                                GameObject.Instantiate(go, pos, Quaternion.identity, levelParent.transform);
-
-                                // if (level.map[i].rooms[j].topRight[e].isTrap)
-                                // {
-                                //     Entity.BaseTrap npc = go.GetComponent<Entity.BaseTrap>();
-                                //     npc.Initialize();
-                                //     CoreGame.Instance.CoreState.entityList.Add(npc);
-                                //     //results.Add (npc);
-                                // }
                             }
                         }
+
+                        // BL
+                        for (int e = 0; e < level.map[i].rooms[j].bottomLeft.Count; e++)
+                        {
+                            var go = FindRoomEntity(level.map[i].rooms[j].bottomLeft[e].type, level.map[i].rooms[j].bottomLeft[e].name, level.template);
+                            if (go == null)
+                            {
+                                Logger.LogError(name, "null game object returned from FindRoomEntity");
+                            }
+                            Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
+                        }
+
+                        // BR
+                        for (int e = 0; e < level.map[i].rooms[j].bottomRight.Count; e++)
+                        {
+                            var go = FindRoomEntity(level.map[i].rooms[j].bottomRight[e].type, level.map[i].rooms[j].bottomRight[e].name, level.template);
+                            if (go == null)
+                            {
+                                Logger.LogError(name, "null game object returned from FindRoomEntity");
+                            }
+                            Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
+                        }
+
+                        // TL
+                        for (int e = 0; e < level.map[i].rooms[j].topLeft.Count; e++)
+                        {
+
+                            var go = FindRoomEntity(level.map[i].rooms[j].topLeft[e].type, level.map[i].rooms[j].topLeft[e].name, level.template);
+                            if (go == null)
+                            {
+                                Logger.LogError(name, "null game object returned from FindRoomEntity");
+                            }
+                            Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
+
+ 
+                        }
+
+                        //TR
+                        for (int e = 0; e < level.map[i].rooms[j].topRight.Count; e++)
+                        {
+                            var go = FindRoomEntity(level.map[i].rooms[j].topRight[e].type, level.map[i].rooms[j].topRight[e].name, level.template);
+                            if (go == null)
+                            {
+                                Logger.LogError(name, "null game object returned from FindRoomEntity");
+                            }
+                            Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
+                          }
+
+                        Instantiate(pointOfInterestPrefab, roomPosition + new Vector3(level.template.spanHorizontal / 2, level.template.spanVertical / 2, 0), Quaternion.identity, levelParent.transform);
                     }
                 }
             }
@@ -351,18 +322,19 @@ namespace HackedDesign
             {
                 if (level.npcSpawnLocationList == null)
                 {
+                    Logger.Log(name, "empty npc spawn location list");
                     return;
                 }
 
                 for (int i = 0; i < level.npcSpawnLocationList.Count; i++)
                 {
-                    Debug.Log(this.name + ": attempting to spawn " + level.npcSpawnLocationList[i].name);
+                    Logger.Log(name, "attempting to spawn", level.npcSpawnLocationList[i].name);
                     Entities.BaseEntity npc = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
 
 
                     if (npc == null)
                     {
-                        Debug.LogError(this.name + ": unable to find pooled NPC");
+                        Logger.LogError(name, "unable to find pooled NPC", level.npcSpawnLocationList[i].name);
                         continue;
                     }
 
@@ -400,7 +372,7 @@ namespace HackedDesign
                         continue;
                     }
 
-                    var go = Instantiate(enemyPrefab, level.ConvertLevelPosToWorld(level.enemySpawnLocationList[i].levelLocation) + level.enemySpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
+                    var go = Instantiate(enemyPrefab, level.ConvertLevelPosToWorld(level.enemySpawnLocationList[i].levelLocation) + level.enemySpawnLocationList[i].worldOffset, Quaternion.identity, enemiesParent.transform);
                     Entities.Enemy enemy = go.GetComponent<Entities.Enemy>();
 
 
@@ -439,7 +411,7 @@ namespace HackedDesign
 
                     if (trapGameObj != null)
                     {
-                        var go = GameObject.Instantiate(trapGameObj, level.ConvertLevelPosToWorld(level.trapSpawnLocationList[i].levelLocation) + level.trapSpawnLocationList[i].worldOffset, Quaternion.identity, npcParent.transform);
+                        var go = GameObject.Instantiate(trapGameObj, level.ConvertLevelPosToWorld(level.trapSpawnLocationList[i].levelLocation) + level.trapSpawnLocationList[i].worldOffset, Quaternion.identity, enemiesParent.transform);
                         Entities.BaseTrap npc = go.GetComponent<Entities.BaseTrap>();
                         if (npc != null)
                         {
