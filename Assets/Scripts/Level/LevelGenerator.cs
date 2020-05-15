@@ -32,8 +32,6 @@ namespace HackedDesign.Level
 
         public Level GenerateLevel(string template, int length, int height, int width, int difficulty, int enemies, int traps)
         {
-
-
             if (string.IsNullOrEmpty(template))
             {
                 Logger.LogError(name, "no level template set");

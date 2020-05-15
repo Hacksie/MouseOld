@@ -217,14 +217,14 @@ namespace HackedDesign
 
             }
 
-            public List<Triggers.Door> PopulateLevelDoors(Level level)
+            public void PopulateLevelDoors(Level level, List<Triggers.Door> doorList)
             {
-                List<Triggers.Door> results = new List<Triggers.Door>();
+                //List<Triggers.Door> results = new List<Triggers.Door>();
 
                 if (!level.template.generateDoors)
                 {
-                    Debug.Log("Skipping doors");
-                    return results;
+                    Logger.Log(name, "Skipping doors");
+                    return;
                 }
                 //FIXME: swap i & j to be consistent!
                 for (int i = 0; i < level.map.Count(); i++)
@@ -245,7 +245,7 @@ namespace HackedDesign
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
                             {
-                                results.Add(door);
+                                doorList.Add(door);
                             }
                         }
 
@@ -256,7 +256,7 @@ namespace HackedDesign
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
                             {
-                                results.Add(door);
+                                doorList.Add(door);
                             }
                         }
 
@@ -267,7 +267,7 @@ namespace HackedDesign
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
                             {
-                                results.Add(door);
+                                doorList.Add(door);
                             }
                         }
 
@@ -278,7 +278,7 @@ namespace HackedDesign
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
                             {
-                                results.Add(door);
+                                doorList.Add(door);
                             }
                         }
                         if (room.bottom == ProxyRoom.Exit)
@@ -288,7 +288,7 @@ namespace HackedDesign
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
                             {
-                                results.Add(door);
+                                doorList.Add(door);
                             }
                         }
                         if (room.top == ProxyRoom.Entry)
@@ -298,7 +298,7 @@ namespace HackedDesign
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
                             {
-                                results.Add(door);
+                                doorList.Add(door);
                             }
                         }
 
@@ -309,13 +309,13 @@ namespace HackedDesign
                             Triggers.Door door = go.GetComponent<Triggers.Door>();
                             if (door != null)
                             {
-                                results.Add(door);
+                                doorList.Add(door);
                             }
                         }
                     }
                 }
 
-                return results;
+                return;
             }
 
             public void PopulateNPCSpawns(Level level, List<Entities.BaseEntity> entityList)

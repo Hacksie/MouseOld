@@ -768,7 +768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &940564941261954393
 Transform:
   m_ObjectHideFlags: 0
@@ -1560,6 +1560,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InteractionSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205910083837189476, guid: 468b9302c01989d4780290de629c1591,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8026239461692429522, guid: 468b9302c01989d4780290de629c1591,
         type: 3}

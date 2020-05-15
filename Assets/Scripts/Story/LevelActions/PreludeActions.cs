@@ -32,10 +32,10 @@ namespace HackedDesign.Story
                     InfoManager.instance.AddToKnownEntities("Cat");
                     InfoManager.instance.AddToKnownEntities("Saika");
 
-                    ActionManager.instance.AddActionMessage("Task added to current tasks - tutorial");
-                    if (!CoreGame.Instance.state.taskList.Exists(t => t.id == "tutorial"))
+                    ActionManager.instance.AddActionMessage("Task added to current tasks - Bootstrap");
+                    if (!CoreGame.Instance.state.taskList.Exists(t => t.id == "bootstrap"))
                     {
-                        var task = TaskDefinitionManager.instance.GetTaskInstance("tutorial");
+                        var task = TaskDefinitionManager.instance.GetTaskInstance("bootstrap");
                         CoreGame.Instance.state.taskList.Add(task);
                         CoreGame.Instance.state.selectedTask = task;
                     }

@@ -17,18 +17,10 @@ namespace HackedDesign {
 
 		private Vector2 movementVector; 
 		private Animator anim;
-		private bool dash = false;
-		
 		private float dashTimer = 0;
 
-		public bool IsDashing
-		{
-			get
-			{
-				return dash;
-			}
-		}
-		
+		public bool IsDashing { get; private set; } = false;
+
 		public float DashPercentageComplete
 		{
 			get
@@ -73,7 +65,7 @@ namespace HackedDesign {
 				{
 					if ((Time.time - dashTimer) > dashCooldown)
 					{
-						dash = true;
+						IsDashing = true;
 						dashTimer = Time.time;
 					}
 				}
@@ -156,7 +148,10 @@ namespace HackedDesign {
 
 		public void Update()
 		{
-			UpdateTransform();
+			if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
+			{
+				UpdateTransform();
+			}
 		}
 
 		public void LateUpdate()
@@ -181,13 +176,13 @@ namespace HackedDesign {
 
 		public void UpdateTransform () {
 			// Movement augments (0 - 10) are reduced by a factor of 10
-			if(dash)
+			if(IsDashing)
 			{
 				transform.Translate(movementVector * dashDistance * Time.deltaTime); 
 				//performedDashDistance += dashDistance * Time.deltaTime;
 				if ((Time.time - dashTimer)>  dashTimeToComplete)
 				{
-					dash = false;
+					IsDashing = false;
 				}
 			}
 

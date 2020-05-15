@@ -67,6 +67,7 @@
         [SerializeField] private TitlecardPresenter titlecardPanel = null;
         [SerializeField] private Level.LevelMapPanelPresenter levelMapPanel = null;
         [SerializeField] private TimerPanelPresenter timerPanel = null;
+        [SerializeField] private Level.WorldMapPresenter worldMapPanel = null;
 
         private CoreGame()
         {
@@ -134,8 +135,7 @@
 
             levelRenderer.Render(state.currentLevel);
 
-            state.doorList.AddRange(levelRenderer.PopulateLevelDoors(state.currentLevel));
-
+            levelRenderer.PopulateLevelDoors(state.currentLevel, state.doorList);
             levelRenderer.PopulateNPCSpawns(state.currentLevel, state.entityList); 
             levelRenderer.PopulateEnemySpawns(state.currentLevel, state.enemyList);
             //this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.state.currentLevel));
@@ -310,7 +310,7 @@
 
         public bool IsInGame()
         {
-            return state.state == GameState.GameStateEnum.PLAYING || state.state == GameState.GameStateEnum.NARRATION || CoreGame.Instance.state.state == GameState.GameStateEnum.STARTMENU || CoreGame.Instance.state.state == GameState.GameStateEnum.SELECTMENU || CoreGame.Instance.state.state == GameState.GameStateEnum.LEVELCOMPLETE;
+            return state.state == GameState.GameStateEnum.PLAYING || state.state == GameState.GameStateEnum.NARRATION || state.state == GameState.GameStateEnum.STARTMENU || state.state == GameState.GameStateEnum.SELECTMENU || CoreGame.Instance.state.state == GameState.GameStateEnum.LEVELCOMPLETE || state.state == GameState.GameStateEnum.WORLDMAP;
         }
 
         /// <summary>
@@ -424,6 +424,7 @@
             levelRenderer.Initialize(entityManager, infoManager, levelParent, enemiesParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
             levelCompletePresenter.Initialize(levelCompleteManager);
+            worldMapPanel.Initialize();
             RepaintAllUI();
             ShowPlayer(false);
         }
@@ -484,6 +485,7 @@
             minimapPanel.Repaint();
             cursorPresenter.Repaint();
             titlecardPanel.Repaint();
+            worldMapPanel.Repaint();
         }
 
         private void ShowPlayer(bool flag)

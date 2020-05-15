@@ -37,7 +37,7 @@ namespace HackedDesign {
             private void DestroyWallSprites () {
 
                 for (int i = 0; i < wallSpriteParent.transform.childCount; i++) {
-                    GameObject.Destroy (wallSpriteParent.transform.GetChild (i).gameObject);
+                    Destroy (wallSpriteParent.transform.GetChild (i).gameObject);
                 }
             }
 

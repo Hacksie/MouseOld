@@ -54,11 +54,10 @@ namespace HackedDesign.Story
                     Show(true);
                 }
             }
-            else if (this.gameObject.activeInHierarchy)
+            else if (gameObject.activeInHierarchy)
             {
                 Show(false);
             }
-
         }
 
         private void Show(bool flag)
@@ -196,17 +195,10 @@ namespace HackedDesign.Story
 
         public void RepaintDescription()
         {
-
-            //Transform cbt = infoDescriptionParent.GetChild (i);
-            //Button b = cbt.GetComponent<Button> ();
-
-            //Text t = infoDescriptionParent.GetComponentInChildren<Text>();
-
             var entity = infoManager.GetEntity(infoManager.selectedInfoEntity);
 
             if (entity != null)
             {
-
                 description.text = entity.description;
             }
             else

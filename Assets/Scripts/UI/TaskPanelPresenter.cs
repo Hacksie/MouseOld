@@ -53,8 +53,11 @@ namespace HackedDesign
                 {
 
                     var go = Instantiate(taskButtonPrefab, Vector3.zero, Quaternion.identity, taskButtonParent.transform);
-                    var goText = go.GetComponentInChildren<UnityEngine.UI.Text>();
-                    goText.text = CoreGame.Instance.state.taskList[i].title;
+                    var goTaskItem = go.GetComponent<TaskListItem>();
+                    goTaskItem.task = CoreGame.Instance.state.taskList[i];
+                    goTaskItem.Repaint();
+                    //var goText = go.GetComponentInChildren<UnityEngine.UI.Text>();
+                    //goText.text = CoreGame.Instance.state.taskList[i].title;
                 }
 
                 RepaintTaskDescription(CoreGame.Instance.state.selectedTask);

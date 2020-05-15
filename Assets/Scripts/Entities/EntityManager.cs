@@ -18,7 +18,7 @@ namespace HackedDesign
 
             public List<BaseEntity> npcPool = new List<BaseEntity>();
 
-            [SerializeField] private GameObject npcPoolParent;
+            [SerializeField] private GameObject npcPoolParent = null;
 
 
             EntityManager()

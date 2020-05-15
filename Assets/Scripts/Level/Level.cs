@@ -24,6 +24,7 @@ namespace HackedDesign.Level
         public bool completed = false;
         public float startTime = 0;
         public int infoCollected = 0;
+        public int alertLevel = 0;
         public int maxInfo = 10;
         public int completeCredits = 500;
         public int creditsCollected = 0;
