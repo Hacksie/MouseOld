@@ -31,11 +31,11 @@
         [SerializeField] private GameObject roomAlert = null;
 
         [Header("Lights")]
-        [SerializeField] private Light2D globalLight;
-        [SerializeField] private Color lightsDefault;
-        [SerializeField] private Color lightsWarn;
-        [SerializeField] private Color lightsAlert;
-        [SerializeField] private Color lightsBar;
+        [SerializeField] private Light2D globalLight = null;
+        [SerializeField] private Color lightsDefault = Color.black;
+        [SerializeField] private Color lightsWarn = Color.black;
+        [SerializeField] private Color lightsAlert = Color.black;
+        [SerializeField] private Color lightsBar = Color.black;
 
         [Header("Mobile UI")]
         [SerializeField] private Input.MobileInputUIPresenter mobileInputUI = null;
@@ -74,9 +74,71 @@
             Instance = this;
         }
 
+
         public static CoreGame Instance { get; private set; }
 
         public GameState.GameState state { get; private set; }
+
+        /// <summary>
+        /// Run in editor
+        /// </summary>
+        void Start()
+        {
+            CheckBindings();
+            Initialization();
+        }
+
+        void Update()
+        {
+            switch (state.state)
+            {
+                case GameState.GameStateEnum.PLAYING:
+                    PlayingUpdate();
+                    break;
+                case GameState.GameStateEnum.STARTMENU:
+                    break;
+                case GameState.GameStateEnum.MISSIONCOMPLETE:
+                    break;
+                case GameState.GameStateEnum.GAMEOVER:
+                    EndGame();
+                    break;
+                default:
+                    break;
+            }
+
+            UpdateLights();
+            RepaintAllUI();
+        }
+
+        void LateUpdate()
+        {
+            actionManager.UpdateBehaviour();
+            switch (state.state)
+            {
+                case GameState.GameStateEnum.CAPTURED:
+                case GameState.GameStateEnum.DIALOGUE:
+                case GameState.GameStateEnum.GAMEOVER:
+                case GameState.GameStateEnum.MISSIONCOMPLETE:
+                case GameState.GameStateEnum.LEVELCOMPLETE:
+                case GameState.GameStateEnum.SELECTMENU:
+                case GameState.GameStateEnum.STARTMENU:
+                case GameState.GameStateEnum.WORLDMAP:
+                case GameState.GameStateEnum.NARRATION:
+                case GameState.GameStateEnum.PLAYING:
+                    UpdateDoorAnimations();
+                    break;
+            }
+        }
+
+        void FixedUpdate()
+        {
+            switch (state.state)
+            {
+                case GameState.GameStateEnum.PLAYING:
+                    PlayingFixedUpdate();
+                    break;
+            }
+        }
 
         public void LoadNewGame()
         {
@@ -145,7 +207,7 @@
 
             player.transform.position = state.currentLevel.ConvertLevelPosToWorld(state.currentLevel.playerSpawn.levelLocation) + state.currentLevel.playerSpawn.worldOffset;
 
-            playerController = player.GetComponent<PlayerController>();
+            
 
             SceneTriggersInitialize();
             CreateAlert();
@@ -313,66 +375,7 @@
             return state.state == GameState.GameStateEnum.PLAYING || state.state == GameState.GameStateEnum.NARRATION || state.state == GameState.GameStateEnum.STARTMENU || state.state == GameState.GameStateEnum.SELECTMENU || CoreGame.Instance.state.state == GameState.GameStateEnum.LEVELCOMPLETE || state.state == GameState.GameStateEnum.WORLDMAP;
         }
 
-        /// <summary>
-        /// Run in editor
-        /// </summary>
-        private void Start()
-        {
-            CheckBindings();
-            Initialization();
-        }
 
-        private void Update()
-        {
-            switch (state.state)
-            {
-                case GameState.GameStateEnum.PLAYING:
-                    PlayingUpdate();
-                    break;
-                case GameState.GameStateEnum.STARTMENU:
-                    break;
-                case GameState.GameStateEnum.MISSIONCOMPLETE:
-                    break;
-                case GameState.GameStateEnum.GAMEOVER:
-                    EndGame();
-                    break;
-                default:
-                    break;
-            }
-
-            UpdateLights();
-            RepaintAllUI();
-        }
-
-        private void LateUpdate()
-        {
-            actionManager.UpdateBehaviour();
-            switch (state.state)
-            {
-                case GameState.GameStateEnum.CAPTURED:
-                case GameState.GameStateEnum.DIALOGUE:
-                case GameState.GameStateEnum.GAMEOVER:
-                case GameState.GameStateEnum.MISSIONCOMPLETE:
-                case GameState.GameStateEnum.LEVELCOMPLETE:
-                case GameState.GameStateEnum.SELECTMENU:
-                case GameState.GameStateEnum.STARTMENU:
-                case GameState.GameStateEnum.WORLDMAP:
-                case GameState.GameStateEnum.NARRATION:
-                case GameState.GameStateEnum.PLAYING:
-                    UpdateDoorAnimations();
-                    break;
-            }
-        }
-
-        private void FixedUpdate()
-        {
-            switch (state.state)
-            {
-                case GameState.GameStateEnum.PLAYING:
-                    PlayingFixedUpdate();
-                    break;
-            }
-        }
 
         private void CheckBindings()
         {
@@ -402,7 +405,8 @@
             GraphicsSettings.transparencySortMode = TransparencySortMode.CustomAxis;
             GraphicsSettings.transparencySortAxis = new Vector3(0.0f, 1.0f, 0.0f);
 
-            
+            playerController = player.GetComponent<PlayerController>();
+
             UI.SetActive(true);
             SetPlatformInput();
             narrationManager.Initialize();
@@ -419,7 +423,7 @@
             startMenuPanel.Initialize(state, startMenuManager);
             selectMenuPanel.Initialize(selectMenuManager, infoPanel, taskPanel, stashPanel, psychPanel, levelMapPanel);
             narrationPanel.Initialize(narrationManager, infoManager);
-            actionPanel.Initialize();
+            actionPanel.Initialize(playerController);
             titlecardPanel.Initialize(actionManager);
             levelRenderer.Initialize(entityManager, infoManager, levelParent, enemiesParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);

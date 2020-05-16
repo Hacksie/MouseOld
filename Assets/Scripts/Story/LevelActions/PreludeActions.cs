@@ -74,6 +74,12 @@ namespace HackedDesign.Story
                 case "PreludeLaptop":
                     PreludeLaptop();
                     return true;
+                case "PreludeGun":
+                    Dialogue.NarrationManager.instance.ShowNarration("PreludeGun");
+                    return true;
+                case "PreludeClothes":
+                    Dialogue.NarrationManager.instance.ShowNarration("PreludeClothes");
+                    return true;
                 case "PreludeCat":
                 case "PreludeCat1":
                     Debug.Log("PreludeActions: prelude Cat");

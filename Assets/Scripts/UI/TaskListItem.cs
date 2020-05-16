@@ -8,8 +8,8 @@ namespace HackedDesign
     {
         public Story.Task task;
 
-        [Header("Configured GameObjects")]
-        [SerializeField] private UnityEngine.UI.Text label;
+        [Header("Reference GameObjects")]
+        [SerializeField] private UnityEngine.UI.Text label = null;
 
         void Awake()
         {

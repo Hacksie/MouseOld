@@ -9,10 +9,11 @@ namespace HackedDesign
         public Text bugsCountText;
         private Vector2 batterySpriteMaxSize;
         [SerializeField] private Image dashCooldown = null;
-        [SerializeField] private PlayerController playerController;
+        [SerializeField] private PlayerController playerController = null;
 
-        public void Initialize()
+        public void Initialize(PlayerController playerController)
         {
+            this.playerController = playerController;
             batterySpriteMaxSize = batterySprite.rectTransform.sizeDelta;
         }
 
