@@ -52,7 +52,7 @@ namespace HackedDesign
                 Logger.Log(name, "rendering level");
                 DestroyLevel();
                 PopulateLevelTilemap(level);
-                UpdateLevelBoundingBox(level);
+                //UpdateLevelBoundingBox(level);
 
                 if (level.template.generateNavMesh)
                 {
@@ -65,6 +65,7 @@ namespace HackedDesign
                 BoxCollider2D boxCollider = levelParent.GetComponent<BoxCollider2D>();
                 boxCollider.size = new Vector2(level.template.levelWidth * level.template.spanHorizontal, level.template.levelHeight * level.template.spanVertical);
                 boxCollider.offset = (boxCollider.size / 2);
+                //boxCollider.enabled = true;
             }
 
             public void DestroyLevel()
@@ -378,7 +379,7 @@ namespace HackedDesign
 
                     if (enemy == null)
                     {
-                        Logger.LogError(this.name, "Null Enemy object");
+                        Logger.LogError(name, "Null Enemy object");
                         continue;
                     }
 

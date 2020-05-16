@@ -37,8 +37,7 @@ namespace HackedDesign.GameState
         public List<Entities.Enemy> enemyList = new List<Entities.Enemy>();
         public List<Entities.BaseEntity> entityList = new List<Entities.BaseEntity>();
         public List<Triggers.Door> doorList = new List<Triggers.Door>();
-
-        
+ 
     }
 
 	public class StoryState {

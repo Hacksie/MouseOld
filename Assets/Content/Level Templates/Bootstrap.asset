@@ -16,15 +16,15 @@ MonoBehaviour:
   location: Terra
   level: 43
   levelLength: 10
-  levelWidth: 5
-  levelHeight: 20
+  levelWidth: 10
+  levelHeight: 10
   spanHorizontal: 5
   spanVertical: 5
-  enemyCount: 5
+  enemyCount: 20
   trapCount: 0
   generateDoors: 1
   generateProps: 1
-  startingRoomString: wnew_entry
+  startingRoomString: wnww_entry
   startingAction: Bootstrap
   exitAction: BootstrapExit
   levelResource: 

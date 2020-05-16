@@ -25,5 +25,15 @@ namespace HackedDesign {
 			this.levelCompleteManager = levelCompleteManager;
 		}        
 
+		public void CancelEvent()
+		{
+			CoreGame.Instance.SetPlaying();
+		}
+
+		public void OkEvent()
+		{
+			levelCompleteManager.NextLevel();
+		}
+
     }
 }

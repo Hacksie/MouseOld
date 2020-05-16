@@ -150,7 +150,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 957fe943e9f99b941bb91bab70a52807, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -172,10 +172,15 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  poiLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  poiDistance: 5
   visibilityDistance: 3.2
   randomStartingDirection: 1
   direction: {x: 0, y: -1}
-  stationary: 1
+  stationary: 0
+  patrolSpeed: 10
   playerSeenEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -200,20 +205,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _map: {fileID: 0}
   maxSpeed: 1
-  mass: 20
-  stoppingDistance: 0.1
+  mass: 1
+  stoppingDistance: 0.05
   slowingDistance: 0.2
   accelerationRate: 2
   decelerationRate: 2
   lookAheadDistance: 1
-  avoidRadius: 0.1
-  avoidanceConsiderStuckedTime: 3
+  avoidRadius: 0.33
+  avoidanceConsiderStuckedTime: 0.2
   avoidanceConsiderReachedDistance: 1
   rotateTransform: 0
   rotateSpeed: 350
   centerOffset: {x: 0, y: 0}
   repath: 1
-  restrict: 0
+  restrict: 1
   closerPointOnInvalid: 1
   debugPath: 1
 --- !u!114 &4289150459336598597
@@ -223,7 +228,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333874426056673837}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 221a7d1d2e8087848940fa66c039dff7, type: 3}
   m_Name: 

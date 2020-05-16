@@ -13,7 +13,7 @@ namespace HackedDesign
         {
 #if UNITY_EDITOR
             StringBuilder builder = new StringBuilder(gameObject);
-            builder.Append(": ");
+            builder.Append(" - ");
             foreach(var s in messages)
             {
                 builder.Append(s);
@@ -25,7 +25,7 @@ namespace HackedDesign
         public static void LogError(string gameObject, params string[] messages)
         {
             StringBuilder builder = new StringBuilder(gameObject);
-            builder.Append(": ");
+            builder.Append(" - ");
             foreach(var s in messages)
             {
                 builder.Append(s);
@@ -36,7 +36,7 @@ namespace HackedDesign
         public static void LogWarning(string gameObject, params string[] messages)
         {
             StringBuilder builder = new StringBuilder(gameObject);
-            builder.Append(": ");
+            builder.Append(" - ");
             foreach (var s in messages)
             {
                 builder.Append(s);

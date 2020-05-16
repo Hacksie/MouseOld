@@ -13,10 +13,9 @@ namespace HackedDesign {
 			this.actionManager = actionManager;
 		}
 
-		public void ResumeEvent () {
-			//FIXME: This would return to hub room
+		public void NextLevel()
+		{
 			actionManager.Invoke(CoreGame.Instance.state.currentLevel.template.exitAction);
-			//CoreGame.Instance.EndGame ();
 		}
 	}
 }

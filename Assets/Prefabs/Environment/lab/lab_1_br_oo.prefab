@@ -45,7 +45,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 16
-      m_TileSpriteIndex: 16
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 6
       m_TileObjectToInstantiateIndex: 65535
@@ -121,10 +121,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 204763146342851836, guid: b5275883f703b8340b7def6dd9ce76bb, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 204763146342851836, guid: b5275883f703b8340b7def6dd9ce76bb, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 1
     m_Data:
@@ -491,8 +491,9 @@ GameObject:
   - component: {fileID: 4580851894924926}
   - component: {fileID: 1222255481636818818}
   - component: {fileID: 6562953998319188105}
+  - component: {fileID: 1130628406591950518}
   m_Layer: 0
-  m_Name: cyan_1_br_oo
+  m_Name: lab_1_br_oo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,7 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 0
-  extraOffset: 0
+  extraOffset: 0.2
   invertPolygon: 0
 --- !u!60 &6562953998319188105
 PolygonCollider2D:
@@ -557,6 +558,32 @@ PolygonCollider2D:
       - {x: 4.5, y: 0}
       - {x: 5, y: 0}
       - {x: 5, y: 1}
+--- !u!114 &1130628406591950518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450963272310362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 6b08fb8107137e3eafba2450e128ad1025b6858d00000000231218f2097bf7c3
+  m_ShapePath:
+  - {x: 4.5, y: 0, z: 0}
+  - {x: 5, y: 0, z: 0}
+  - {x: 5, y: 1.5, z: 0}
+  - {x: 4.5, y: 1.5, z: 0}
+  m_ShapePathHash: 1775629589
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -625390
 --- !u!1 &1515007542992386
 GameObject:
   m_ObjectHideFlags: 0

@@ -208,25 +208,20 @@ namespace HackedDesign
 
                 Logger.Log(name, "generating unique enemy " + enemy.id);
                 int uniqueId = uniqueEnemies.Count;
-                //var enemy = GetEnemy(template.id);
-
                 
-                
-                var newEnemy = new Enemy
-                {
-                    id = enemy.id,
-                    uniqueId = enemy.id + uniqueId.ToString(),
-                    name = enemy.name,
-                    read = enemy.read,
-                    parentInfoCategory = enemy.parentInfoCategory,
-                    description = enemy.description,
-                    handle = enemy.handle,
-                    corp = enemy.corp,
-                    serial = enemy.serial,
-                    category = enemy.category,
-                };
+                var newEnemy = ScriptableObject.CreateInstance<Enemy>();
 
-                //newEnemy.SetRandomAttributes();
+                newEnemy.id = enemy.id;
+                newEnemy.uniqueId = enemy.id + uniqueId.ToString();
+                newEnemy.name = enemy.name;
+                newEnemy.read = enemy.read;
+                newEnemy.parentInfoCategory = enemy.parentInfoCategory;
+                newEnemy.description = enemy.description;
+                newEnemy.handle = enemy.handle;
+                newEnemy.corp = enemy.corp;
+                newEnemy.serial = enemy.serial;
+                newEnemy.category = enemy.category;
+                
                 uniqueEnemies.Add(newEnemy);
                 return newEnemy;
             }

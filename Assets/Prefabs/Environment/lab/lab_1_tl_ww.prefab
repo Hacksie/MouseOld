@@ -671,7 +671,7 @@ GameObject:
   - component: {fileID: 8425620755605348265}
   - component: {fileID: 2053672737396634061}
   m_Layer: 0
-  m_Name: cyan_1_tl_ww
+  m_Name: lab_1_tl_ww
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 0
-  extraOffset: 0
+  extraOffset: 0.2
   invertPolygon: 0
 --- !u!60 &2053672737396634061
 PolygonCollider2D:

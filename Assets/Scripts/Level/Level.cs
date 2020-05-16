@@ -175,7 +175,7 @@ namespace HackedDesign.Level
                         else
                         {
 
-                            line += "(" + map[i].rooms[j].ToString() + ")";
+                            line += "-" + map[i].rooms[j].ToString() + "-";
                         }
                     }
                     else

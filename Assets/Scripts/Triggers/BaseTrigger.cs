@@ -85,6 +85,7 @@ namespace HackedDesign.Triggers
             {
                 if (colliders[i].CompareTag(TagManager.NPC) && allowNPCAutoInteraction)
                 {
+                    Logger.Log(name, "NPC hit door", " ", colliders[i].gameObject.name);
                     Invoke(colliders[i].gameObject);
                     colliders.RemoveAt(i);
                 }
@@ -198,9 +199,18 @@ namespace HackedDesign.Triggers
 
             if (other.CompareTag(TagManager.PLAYER))
             {
+                //FIXME: cache this
                 PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
                 playerController.RegisterTrigger(this);
                 Entry(other.gameObject);
+            }
+
+            if(other.CompareTag(TagManager.NPC))
+            {
+                if(allowNPCAutoInteraction)
+                {
+                    Invoke(other.gameObject);
+                }
             }
 
             //if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)) && !colliders.Contains(other.gameObject))
@@ -239,6 +249,11 @@ namespace HackedDesign.Triggers
             {
                 PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
                 playerController.UnregisterTrigger(this);
+                Leave(other.gameObject);
+            }
+
+            if (other.CompareTag(TagManager.NPC))
+            {
                 Leave(other.gameObject);
             }
             /*

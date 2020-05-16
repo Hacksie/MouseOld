@@ -13,11 +13,11 @@
 
         [Header("Game")]
         [SerializeField] private Entities.EntityManager entityManager = null;
-        [SerializeField] private AudioSource denied;
-
-        [Header("Player")]
         [SerializeField] private GameObject player = null;
         private PlayerController playerController = null;
+
+        [Header("Audio")]
+        [SerializeField] private AudioSource denied;
 
         [Header("Level")]
         [SerializeField] private Level.LevelGenerator levelGenerator = null;
@@ -26,7 +26,6 @@
         [SerializeField] private GameObject enemiesParent = null;
         [SerializeField] private PolyNav.PolyNav2D polyNav2D = null;
         [SerializeField] private string newGameLevel = "Olivia's Room";
-
         [SerializeField] private GameObject roomAlertPrefab = null;
         [SerializeField] private GameObject roomAlert = null;
 
@@ -37,10 +36,8 @@
         [SerializeField] private Color lightsAlert = Color.black;
         [SerializeField] private Color lightsBar = Color.black;
 
-        [Header("Mobile UI")]
-        [SerializeField] private Input.MobileInputUIPresenter mobileInputUI = null;
-
         [Header("UI")]
+        [SerializeField] private Input.MobileInputUIPresenter mobileInputUI = null;
         [SerializeField] private GameObject UI = null;
         [SerializeField] private CursorPresenter cursorPresenter = null;
         [SerializeField] private MainMenuPresenter mainMenu = null;
@@ -126,16 +123,6 @@
                 case GameState.GameStateEnum.NARRATION:
                 case GameState.GameStateEnum.PLAYING:
                     UpdateDoorAnimations();
-                    break;
-            }
-        }
-
-        void FixedUpdate()
-        {
-            switch (state.state)
-            {
-                case GameState.GameStateEnum.PLAYING:
-                    PlayingFixedUpdate();
                     break;
             }
         }
@@ -457,18 +444,16 @@
 
         private void SetPlatformInput()
         {
-            /*
+            
             switch (testPlatformFlag ? testPlatform : Application.platform)
             {
                 case RuntimePlatform.Android:
-                    Logger.Log(this.name, "input platform Android");
-                    inputController = new Input.AndroidInputController(mobileInputUI);
+                    Logger.Log(name, "input platform Android");
                     break;
                 default:
-                    Logger.Log(this.name, "input platform Default");
-                    inputController = new Input.DesktopInputController();
+                    Logger.Log(name, "input platform Default");
                     break;
-            }*/
+            }
         }
 
         private void RepaintAllUI()
@@ -540,10 +525,5 @@
         //        npc.UpdateBehaviour();
         //    }
         //}
-
-        private void PlayingFixedUpdate()
-        {
-            //playerController.UpdateTransform();
-        }
     }
 }

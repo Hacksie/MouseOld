@@ -12,6 +12,7 @@ namespace HackedDesign.Triggers
         public Animator animator;
         public BaseTrigger trigger;
 
+        public int count = 0;
         public bool open = false;
         public bool animate = true;
 
@@ -35,17 +36,19 @@ namespace HackedDesign.Triggers
         {
             if (animate && animator != null && animator.enabled)
             {
-                animator.SetBool("open", open);
+                animator.SetBool("open", count != 0);
             }
         }
 
         public void Open()
         {
+            count++;
             open = true;
         }
 
         public void Close()
         {
+            count--;
             open = false;
         }
     }

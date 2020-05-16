@@ -14,7 +14,7 @@ namespace HackedDesign
             public Transform alert;
 
             [Header("Settings")]
-            public LayerMask layerMask;
+            public LayerMask playerLayerMask;
             public string enemy = "";
             public EnemyState state = EnemyState.STANDING;
             public float patrolWait = 6.0f;
@@ -54,9 +54,9 @@ namespace HackedDesign
                 }
             }
 
-            public void Initialize(PolyNav.PolyNav2D polyNav2D)
+            public void Initialize(PolyNav.PolyNav2D polyNav2D, PlayerController player)
             {
-                this.player = CoreGame.Instance.GetPlayer().transform;
+                this.player = player.transform;
 
 
                 //base.Initialize();
@@ -98,7 +98,7 @@ namespace HackedDesign
 
             public RaycastHit2D CanSeePlayer()
             {
-                return Physics2D.Raycast(transform.position, (player.position - transform.position), visibilityDistance, layerMask);
+                return Physics2D.Raycast(transform.position, (player.position - transform.position), visibilityDistance, playerLayerMask);
             }
 
             public void UpdateAlertLight(Vector2Int direction)
@@ -160,7 +160,7 @@ namespace HackedDesign
 
                 if (hit.transform != null)
                 {
-                    if (hit.transform.gameObject.tag == TagManager.PLAYER)
+                    if (hit.transform.gameObject.CompareTag(TagManager.PLAYER))
                     {
                         state = EnemyState.HUNTING;
                     }
@@ -185,7 +185,7 @@ namespace HackedDesign
 
                 if (CoreGame.Instance.state.alertTrap != null)
                 {
-                    Logger.Log(this.name, "Enemy is responding to alert");
+                    Logger.Log(name, "Enemy is responding to alert");
                     state = EnemyState.RESPONDING;
                     return;
                 }
@@ -237,7 +237,7 @@ namespace HackedDesign
                     return;
                 }
 
-                if (CoreGame.Instance.state.currentLevel.ConvertWorldToLevelPos(this.transform.position) == CoreGame.Instance.state.currentLevel.ConvertWorldToLevelPos(CoreGame.Instance.state.alertTrap.transform.position))
+                if (CoreGame.Instance.state.currentLevel.ConvertWorldToLevelPos(transform.position) == CoreGame.Instance.state.currentLevel.ConvertWorldToLevelPos(CoreGame.Instance.state.alertTrap.transform.position))
                 {
                     Debug.Log("Enemy is clearing alert: " + this.name);
                     CoreGame.Instance.ClearAlert();

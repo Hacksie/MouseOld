@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace HackedDesign
 {
     public class TitlecardPresenter : MonoBehaviour
     {
-        public string[] titleStrings;
+        [Header("Referenced GameObjects")]
         public Text titleText;
+        public Button continueButton;
+        [Header("Settings")]
+        public string[] titleStrings;
         public string[] nextActions;
 
         private Story.ActionManager actionManager;
@@ -20,13 +24,14 @@ namespace HackedDesign
         {
             if (CoreGame.Instance.state.state == GameState.GameStateEnum.TITLECARD)
             {
-                if (!this.gameObject.activeInHierarchy)
+                if (!gameObject.activeInHierarchy)
                 {
                     Show(true);
+                    EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
                 }
                 
             }
-            else if (this.gameObject.activeInHierarchy)
+            else if (gameObject.activeInHierarchy)
             {
                 Show(false);
             }
@@ -34,15 +39,13 @@ namespace HackedDesign
 
         public void ClickEvent()
         {
-            actionManager.Invoke(this.nextActions[CoreGame.Instance.state.story.act]);
+            actionManager.Invoke(nextActions[CoreGame.Instance.state.story.act]);
         }        
 
         private void Show(bool flag)
         {
-            this.gameObject.SetActive(flag);
-            this.titleText.text = titleStrings[CoreGame.Instance.state.story.act];
+            gameObject.SetActive(flag);
+            titleText.text = titleStrings[CoreGame.Instance.state.story.act];
         }   
-
-
     }
 }

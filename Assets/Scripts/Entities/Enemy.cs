@@ -8,25 +8,25 @@ namespace HackedDesign.Entities
     [RequireComponent(typeof(PolyNav.PolyNavAgent))]
     public class Enemy : MonoBehaviour
     {
-        [Header("Game Objects")]
+        [Header("Runtime Game Objects")]
         private Animator animator = null; //The parent animator.
         private PolyNav.PolyNavAgent polyNavAgent = null;
-        [SerializeField]
-        private Transform detection = null;
+
+        [Header("Referenced Game Objects")]
+        [SerializeField] private Transform detection = null;
 
         [Header("Settings")]
-        [SerializeField]
-        public Story.Enemy enemy = null;
-        [SerializeField]
-        private LayerMask playerLayerMask = 0;
-        [SerializeField]
-        private float visibilityDistance = 3.2f;
-        [SerializeField]
-        private bool randomStartingDirection = true;
-        [SerializeField]
-        private Vector2 direction = Vector2.down;
-        [SerializeField]
-        private bool stationary = true;
+        [SerializeField] public Story.Enemy enemy = null;
+        [SerializeField] private LayerMask playerLayerMask = 0;
+        [SerializeField] private LayerMask poiLayerMask = 0;
+        [SerializeField] private float poiDistance = 5f;
+
+        [SerializeField] private float visibilityDistance = 3.2f;
+        [SerializeField] private bool randomStartingDirection = true;
+        [SerializeField] private Vector2 direction = Vector2.down;
+        [SerializeField] private bool stationary = true;
+        [SerializeField] private float patrolSpeed = 10f; 
+
 
         [Header("Events")]
         public UnityEvent playerSeenEvent;
@@ -36,6 +36,8 @@ namespace HackedDesign.Entities
         [Header("State")]
         public EnemyState state = EnemyState.PASSIVE;
 
+        private float patrolTimer = 0;
+
         private readonly List<GameObject> colliders = new List<GameObject>();
         private Transform player;
         private bool playerSeen;
@@ -44,6 +46,7 @@ namespace HackedDesign.Entities
         {
             animator = GetComponent<Animator>();
             polyNavAgent = GetComponent<PolyNav.PolyNavAgent>();
+            
         }
 
         protected void Start()
@@ -51,11 +54,11 @@ namespace HackedDesign.Entities
 
             if (animator == null)
             {
-                Logger.LogError(this.name, "Enemy without animator set");
+                Logger.LogError(name, "Enemy without animator set");
             }
             if (polyNavAgent == null)
             {
-                Logger.LogError(this.name, "Enemy without polyNavAgent set");
+                Logger.LogError(name, "Enemy without polyNavAgent set");
             }
 
             //if (detection == null)
@@ -67,9 +70,9 @@ namespace HackedDesign.Entities
         public void Initialize(Transform player, PolyNav.PolyNav2D polyNav2D)
         {
             this.player = player;
-            if (this.polyNavAgent != null && this.polyNavAgent.isActiveAndEnabled)
+            if (polyNavAgent != null && polyNavAgent.isActiveAndEnabled)
             {
-                this.polyNavAgent.map = polyNav2D;
+                polyNavAgent.map = polyNav2D;
             }
 
             if(randomStartingDirection)
@@ -90,7 +93,6 @@ namespace HackedDesign.Entities
                 direction = polyNavAgent.movingDirection.normalized;
             }
 
-
             switch(state)
             {
                 case EnemyState.PASSIVE:
@@ -101,7 +103,6 @@ namespace HackedDesign.Entities
                     break;
                 default:
                     break;
-
             }
 
             UpdateDetection();
@@ -110,6 +111,7 @@ namespace HackedDesign.Entities
 
         private void UpdatePassive()
         {
+            // The player triggered our detection, but there anything in the way?
             if (colliders.Contains(CoreGame.Instance.GetPlayer()))
             {
                 var hit = CanSeePlayer();
@@ -118,27 +120,27 @@ namespace HackedDesign.Entities
                     playerSeen = true;
                     playerSeenEvent.Invoke();
                     state = EnemyState.ALERTED;
+                    return;
                 }
             }
 
-            if (playerSeen && !colliders.Contains(CoreGame.Instance.GetPlayer()))
-            {
-                playerSeen = false;
-                playerLeaveEvent.Invoke();
-            }
 
-            if (playerSeen)
+            if (!stationary && (Time.time - patrolTimer) >= patrolSpeed)
             {
-                if (stationary)
+                patrolTimer = Time.time;
+
+                var pointsOfInterest = GetPointsOfInterestNearby();
+                if (pointsOfInterest.Length > 0)
                 {
-                    direction = player.transform.position - this.transform.position;
+                    var point = pointsOfInterest[Random.Range(0, pointsOfInterest.Length)];
+
+                    polyNavAgent.SetDestination(point.transform.position);
                 }
                 else
                 {
-                    polyNavAgent.SetDestination(player.transform.position);
+                    Logger.Log(name, "No points of interest nearby");
                 }
             }
-
         }
 
         private void UpdateAlerted()
@@ -164,11 +166,11 @@ namespace HackedDesign.Entities
             {
                 if (stationary)
                 {
-                    direction = player.transform.position - this.transform.position;
+                    direction = player.transform.position - transform.position;
                 }
                 else
                 {
-                    polyNavAgent.SetDestination(player.transform.position);
+                    //polyNavAgent.SetDestination(player.transform.position);
                 }
             }
         }
@@ -187,6 +189,34 @@ namespace HackedDesign.Entities
             detection.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, direction));
         }
 
+        public RaycastHit2D CanSeePlayer()
+        {
+            return Physics2D.Raycast(transform.position, (player.position - transform.position), visibilityDistance, playerLayerMask);
+        }
+
+
+        public void OnTriggerEnter2D(Collider2D other)
+        {
+            if ((other.CompareTag(TagManager.PLAYER)) && !colliders.Contains(other.gameObject))
+            {
+                colliders.Add(other.gameObject);
+            }
+        }
+
+        public void OnTriggerExit2D(Collider2D other)
+        {
+            if ((other.CompareTag(TagManager.PLAYER)) && colliders.Contains(other.gameObject))
+            {
+                colliders.Remove(other.gameObject);
+            }
+        }
+
+        private Collider2D[] GetPointsOfInterestNearby()
+        {
+            return Physics2D.OverlapCircleAll(transform.position, poiDistance, poiLayerMask);
+        }
+
+
         private void Animate()
         {
             if (animator == null)
@@ -194,7 +224,7 @@ namespace HackedDesign.Entities
                 return;
             }
 
-            if (this.polyNavAgent != null && this.polyNavAgent.currentSpeed > Vector2.kEpsilon)
+            if (polyNavAgent != null && polyNavAgent.currentSpeed > Vector2.kEpsilon)
             {
                 //anim.SetFloat ("moveX", movementVector.x);
                 //anim.SetFloat ("moveY", movementVector.y);
@@ -212,26 +242,7 @@ namespace HackedDesign.Entities
             }
         }
 
-        public RaycastHit2D CanSeePlayer()
-        {
-            return Physics2D.Raycast(transform.position, (player.position - transform.position), visibilityDistance, playerLayerMask);
-        }
 
-        public void OnTriggerEnter2D(Collider2D other)
-        {
-            if ((other.CompareTag(TagManager.PLAYER)) && !colliders.Contains(other.gameObject))
-            {
-                colliders.Add(other.gameObject);
-            }
-        }
-
-        public void OnTriggerExit2D(Collider2D other)
-        {
-            if ((other.CompareTag(TagManager.PLAYER)) && colliders.Contains(other.gameObject))
-            {
-                colliders.Remove(other.gameObject);
-            }
-        }
 
         public enum EnemyState
         {

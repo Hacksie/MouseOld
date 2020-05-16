@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 61823095927018240}
   - component: {fileID: 4763328188394681162}
   - component: {fileID: 4539015788125069565}
+  - component: {fileID: 5198075432659134212}
   m_Layer: 0
   m_Name: Door_ew
   m_TagString: Trigger
@@ -309,8 +310,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 95934519643766982}
   trigger: {fileID: 4763328188394681162}
+  count: 0
   open: 0
   animate: 1
+--- !u!114 &5198075432659134212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503932064757186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 6b08fb8107137e3eafba2450e128ad1025b6858d00000000231218f2097bf7c3
+  m_ShapePath:
+  - {x: -0.5, y: -0.012500048, z: 0}
+  - {x: 0.5, y: -0.012500048, z: 0}
+  - {x: 0.50957525, y: 1.2752788, z: 0}
+  - {x: -0.5, y: 1.2752787, z: 0}
+  m_ShapePathHash: -29049569
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 376918
 --- !u!1001 &5162221139226345383
 PrefabInstance:
   m_ObjectHideFlags: 0

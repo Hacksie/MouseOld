@@ -658,8 +658,9 @@ GameObject:
   - component: {fileID: 4358842949958936}
   - component: {fileID: 8758833580839513534}
   - component: {fileID: 2569892113848426661}
+  - component: {fileID: 5384739207949092243}
   m_Layer: 0
-  m_Name: cyan_1_bl_wd
+  m_Name: lab_1_bl_wd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -693,7 +694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 0
-  extraOffset: 0
+  extraOffset: 0.2
   invertPolygon: 0
 --- !u!60 &2569892113848426661
 PolygonCollider2D:
@@ -726,3 +727,31 @@ PolygonCollider2D:
       - {x: 2, y: 1}
       - {x: 0.5, y: 1}
       - {x: 0.5, y: 3.5}
+--- !u!114 &5384739207949092243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614294342454436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 6b08fb8107137e3eafba2450e128ad1025b6858d00000000231218f2097bf7c3
+  m_ShapePath:
+  - {x: 0, y: 0, z: 0}
+  - {x: 2, y: 0, z: 0}
+  - {x: 2, y: 1.5, z: 0}
+  - {x: 0.5, y: 1.5, z: 0}
+  - {x: 0.5, y: 3.5, z: 0}
+  - {x: 0, y: 3.5, z: 0}
+  m_ShapePathHash: 1115129757
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -561730
