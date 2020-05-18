@@ -33,17 +33,17 @@ namespace HackedDesign
 				{
 					var narrations = JsonUtility.FromJson<NarrationHolder>(file.text);
 					narrationList.AddRange(narrations.narrations);
-					Logger.Log(name, "narration added - " + file.name);
+					Logger.Log(name, "Narration added " + file.name);
 				}				
 			}
 
 			public void ShowNarration (Narration narration) {
 				if (narration != null) {
-					Debug.Log(this.name + ": show narration " + narration.id);
+					Logger.Log(name, "Show narration " + narration.id);
 					currentNarration = narration;
 					CoreGame.Instance.SetNarration ();
 				} else {
-					Debug.LogError (this.name + ": no narration to show");
+					Logger.LogError (name, "No narration to show");
 				}
 			}
 
@@ -52,7 +52,7 @@ namespace HackedDesign
 			}
 
 			public void NarrationButtonEvent () {
-				Debug.Log (this.name + ": narration button event");
+				Logger.Log (name, "Narration button event");
 
 				string nextAction = currentNarration.action;
 
@@ -60,10 +60,6 @@ namespace HackedDesign
 				CoreGame.Instance.SetPlaying ();
 
 				Story.ActionManager.instance.Invoke (nextAction);
-			}
-
-			public void SetCurrentDialogue (string name) {
-
 			}
 
 			public Narration GetCurrentNarration () {

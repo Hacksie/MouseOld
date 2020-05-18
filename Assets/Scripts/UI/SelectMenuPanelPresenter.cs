@@ -74,8 +74,7 @@ namespace HackedDesign
 
         private void Show(bool flag)
         {
-            Debug.Log(this.name + ": repaint");
-            this.gameObject.SetActive(flag);
+            gameObject.SetActive(flag);
               
         }
 

@@ -36,6 +36,7 @@ namespace HackedDesign.Level
         public const string ObjTypeTrap = "trap";
         public const string ObjTypeRandom = "random";
         public const string ObjTypeFixed = "fixed";
+        public const string ObjTypeLineOfSight = "los";
 
 
 

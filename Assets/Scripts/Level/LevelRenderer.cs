@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace HackedDesign
 {
@@ -27,6 +28,7 @@ namespace HackedDesign
             public GameObject exitnsPrefab;
             public GameObject entryewPrefab;
             public GameObject entrynsPrefab;
+            public GameObject roomCenterPrefab;
             public GameObject pointOfInterestPrefab;
 
             [Header("Configured Game Objects")]
@@ -52,12 +54,19 @@ namespace HackedDesign
                 Logger.Log(name, "rendering level");
                 DestroyLevel();
                 PopulateLevelTilemap(level);
-                //UpdateLevelBoundingBox(level);
+                UpdateLevelBoundingBox(level);
 
                 if (level.template.generateNavMesh)
                 {
                     polyNav2D.GenerateMap();
                 }
+
+                //navMeshSurface = new NavMeshSurface();
+                //navMeshSurface.
+
+                //navMeshSurface.transform.localScale = new Vector2(level.template.levelWidth * level.template.spanHorizontal, level.template.levelHeight * level.template.spanVertical);
+                
+                //navMeshSurface.BuildNavMesh();
             }
 
             public void UpdateLevelBoundingBox(Level level)
@@ -171,6 +180,7 @@ namespace HackedDesign
                             Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
                           }
 
+                        Instantiate(roomCenterPrefab, roomPosition + new Vector3(level.template.spanHorizontal / 2, level.template.spanVertical / 2, 0), Quaternion.identity, levelParent.transform);
                         Instantiate(pointOfInterestPrefab, roomPosition + new Vector3(level.template.spanHorizontal / 2, level.template.spanVertical / 2, 0), Quaternion.identity, levelParent.transform);
                     }
                 }
@@ -212,6 +222,10 @@ namespace HackedDesign
 
                     case ProxyRoom.ObjTypeFixed:
                         return levelGenTemplate.fixedProps.FirstOrDefault(g => g != null && g.name == name);
+
+                    case ProxyRoom.ObjTypeLineOfSight: 
+                        return levelGenTemplate.lineOfSightProps.FirstOrDefault(g => g != null && g.name == name);
+
                 }
 
                 return result;
@@ -323,19 +337,19 @@ namespace HackedDesign
             {
                 if (level.npcSpawnLocationList == null)
                 {
-                    Logger.Log(name, "empty npc spawn location list");
+                    Logger.Log(name, "Empty NPC spawn location list");
                     return;
                 }
 
                 for (int i = 0; i < level.npcSpawnLocationList.Count; i++)
                 {
-                    Logger.Log(name, "attempting to spawn", level.npcSpawnLocationList[i].name);
+                    Logger.Log(name, "Attempting to spawn ", level.npcSpawnLocationList[i].name);
                     Entities.BaseEntity npc = entityManager.GetPooledNPC(level.npcSpawnLocationList[i].name);
 
 
                     if (npc == null)
                     {
-                        Logger.LogError(name, "unable to find pooled NPC", level.npcSpawnLocationList[i].name);
+                        Logger.LogError(name, "Unable to find pooled NPC", level.npcSpawnLocationList[i].name);
                         continue;
                     }
 

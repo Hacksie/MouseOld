@@ -33,7 +33,7 @@ namespace HackedDesign
                 {
                     
                     var tasksHolder = JsonUtility.FromJson<TasksHolder>(file.text);
-                    Logger.Log(this.name, "tasks added - " + tasksHolder.tasks.Count);
+                    Logger.Log(name, tasksHolder.tasks.Count.ToString(), " Tasks added");
                     taskList.AddRange(tasksHolder.tasks);                  
                 }
             }
@@ -49,11 +49,11 @@ namespace HackedDesign
 
                 if (t == null)
                 {
-                    Logger.LogError(this.name, "task definition not found - " + id);
+                    Logger.LogError(name, id, " task definition not found");
                     return null;
                 }
 
-                Logger.Log(this.name, "get task instance - " + t.id);
+                Logger.Log(name, "get task instance ", t.id);
 
                 Task instance = new Task
                 {

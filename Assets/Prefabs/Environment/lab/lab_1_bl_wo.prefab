@@ -86,6 +86,15 @@ Tilemap:
       m_TileColorIndex: 6
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
+  - first: {x: 0, y: 7, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 16
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 6
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 0
@@ -120,8 +129,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 028fc0df01bec5c4b9d223d8deaf09d7, type: 2}
   - m_RefCount: 5
     m_Data: {fileID: 11400000, guid: 33ea4ad4458541947968812f95330470, type: 2}
   m_TileSpriteArray:
@@ -157,13 +166,14 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 2146237914416634620, guid: b5275883f703b8340b7def6dd9ce76bb,
+      type: 3}
   - m_RefCount: 5
     m_Data: {fileID: -4247256274861330967, guid: b5275883f703b8340b7def6dd9ce76bb,
       type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 5
+  - m_RefCount: 6
     m_Data:
       e00: 1
       e01: 0
@@ -194,7 +204,7 @@ Tilemap:
     m_Data: {r: 2.1e-44, g: 2.1e-44, b: 2.1e-44, a: 2.1e-44}
   - m_RefCount: 0
     m_Data: {r: 0, g: 0, b: 0, a: 0}
-  - m_RefCount: 5
+  - m_RefCount: 6
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -280,6 +290,7 @@ GameObject:
   - component: {fileID: 1828564913360504826}
   - component: {fileID: 2139248328508889968}
   - component: {fileID: 2127503333777772742}
+  - component: {fileID: 492689252849171775}
   m_Layer: 0
   m_Name: lab_1_bl_wo
   m_TagString: Untagged
@@ -315,7 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 0
-  extraOffset: 0.2
+  extraOffset: -0.25
   invertPolygon: 0
 --- !u!60 &2139248328508889968
 PolygonCollider2D:
@@ -342,10 +353,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 3.5}
+    - - {x: 0, y: 4}
       - {x: 0, y: 0}
       - {x: 0.5, y: 0}
-      - {x: 0.5, y: 3.5}
+      - {x: 0.5, y: 4}
 --- !u!114 &2127503333777772742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,13 +376,26 @@ MonoBehaviour:
   m_SelfShadows: 1
   m_ApplyToSortingLayers: 6b08fb8107137e3eafba2450e128ad1025b6858d00000000231218f2097bf7c3
   m_ShapePath:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0.5, y: 0, z: 0}
-  - {x: 0.5, y: 3.5, z: 0}
-  - {x: 0, y: 3.5, z: 0}
-  m_ShapePathHash: 0
+  - {x: 0, y: 1, z: 0}
+  - {x: 0.5, y: 1, z: 0}
+  - {x: 0.5, y: 4, z: 0}
+  - {x: 0, y: 4, z: 0}
+  m_ShapePathHash: -275385067
   m_Mesh: {fileID: 0}
-  m_InstanceId: -567380
+  m_InstanceId: 227566
+--- !u!114 &492689252849171775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231448585167876}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f4246eb21b3eca4a89762bb1515dca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disableDistance: 8
 --- !u!1 &1279156397693488
 GameObject:
   m_ObjectHideFlags: 0

@@ -43,6 +43,8 @@ namespace HackedDesign
 			public List<GameObject> randomProps;
 			public List<GameObject> trapProps;
 			public List<GameObject> fixedProps;
+			public List<GameObject> lineOfSightProps;
+
 
 			public List<string> enemies;
         }

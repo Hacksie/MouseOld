@@ -29,8 +29,8 @@ namespace HackedDesign.Entities
                 return;
             }
             
-            var c = InfoManager.instance.GetCharacter(character);
-            text.text = c.handle;
+            var character = InfoManager.instance.GetCharacter(this.character);
+            text.text = character.handle;
         }
 
 

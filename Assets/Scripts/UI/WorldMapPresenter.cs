@@ -29,8 +29,6 @@ namespace HackedDesign.Level
 
         private void Show(bool flag)
         {
-            Logger.Log(name, "Set World Map Panel ", flag.ToString());
-
             gameObject.SetActive(flag);
 
             if (!flag)

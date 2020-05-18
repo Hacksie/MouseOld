@@ -329,6 +329,7 @@
 
         public void UpdateLights()
         {
+            /*
             switch (state.currentLight)
             {
                 case GameState.GlobalLightTypes.Warn:
@@ -344,7 +345,7 @@
                 default:
                     globalLight.color = lightsDefault;
                     break;
-            }
+            }*/
         }
 
         public void SetLight(GameState.GlobalLightTypes light)

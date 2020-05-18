@@ -18,13 +18,13 @@ MonoBehaviour:
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
-  spanHorizontal: 5
-  spanVertical: 5
-  enemyCount: 20
+  spanHorizontal: 6
+  spanVertical: 6
+  enemyCount: 10
   trapCount: 0
   generateDoors: 1
   generateProps: 1
-  startingRoomString: wnww_entry
+  startingRoomString: wnew_entry
   startingAction: Bootstrap
   exitAction: BootstrapExit
   levelResource: 
@@ -155,6 +155,19 @@ MonoBehaviour:
   - {fileID: 5391511978800667068, guid: c26e0e4afff66e84cb94157bdc3c4c26, type: 3}
   trapProps: []
   fixedProps: []
+  lineOfSightProps:
+  - {fileID: 1269763883601425757, guid: b9bb06532a5eae4429bbd468e0f04010, type: 3}
+  - {fileID: 6694734379668138023, guid: 28da606af132c3d4e98e88934a10f49c, type: 3}
+  - {fileID: 7851266242867022584, guid: d0fbf17d85ee61048b48e7f66c8724db, type: 3}
+  - {fileID: 7295076565845142856, guid: 2b9ce309304afa446a642e18fcc20edb, type: 3}
+  - {fileID: 9147610307559257962, guid: 4158ba97f51ebbe44bef163f4cd95ce5, type: 3}
+  - {fileID: 526812744032390188, guid: bb8c143e26cf9bc4580f9773d5d207fa, type: 3}
+  - {fileID: 2000888955271724858, guid: 65464e0e4e71eb146a34210cfa6c7acb, type: 3}
+  - {fileID: 7709790182162618613, guid: 667e7ef5f3ca2074cb321c8c51411103, type: 3}
+  - {fileID: 9093627450238331899, guid: d6960a8cc59ae9e48858b378dbb1bbb4, type: 3}
+  - {fileID: 6168785757606735488, guid: b05f9cf8fd58fc44ebf72243cae9e962, type: 3}
+  - {fileID: 4056947807493302813, guid: b31c30a623571b1479dc10762e04dc8e, type: 3}
+  - {fileID: 958328520692377571, guid: 0a8d6806ef3e9d940b223c9a2a69e01b, type: 3}
   enemies:
   - Male Tech 1
   - Male Tech 2

@@ -336,6 +336,7 @@ GameObject:
   - component: {fileID: 4003191477423442}
   - component: {fileID: 7281040215008091766}
   - component: {fileID: 8612838395874382390}
+  - component: {fileID: 2942947892001583797}
   m_Layer: 0
   m_Name: magenta_1_br_dd
   m_TagString: Untagged
@@ -371,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 0
-  extraOffset: 0
+  extraOffset: -0.25
   invertPolygon: 0
 --- !u!60 &8612838395874382390
 PolygonCollider2D:
@@ -404,6 +405,34 @@ PolygonCollider2D:
       - {x: 4, y: 2}
       - {x: 3.75, y: 2}
       - {x: 3.75, y: 1}
+--- !u!114 &2942947892001583797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582213199776308}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 6b08fb8107137e3eafba2450e128ad1025b6858d00000000231218f2097bf7c3
+  m_ShapePath:
+  - {x: 2.5, y: 1, z: 0}
+  - {x: 4, y: 1, z: 0}
+  - {x: 4, y: 2.5, z: 0}
+  - {x: 3.75, y: 2.5, z: 0}
+  - {x: 3.75, y: 1.25, z: 0}
+  - {x: 2.5, y: 1.25, z: 0}
+  m_ShapePathHash: 852985757
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 365954
 --- !u!1 &1675504894558838
 GameObject:
   m_ObjectHideFlags: 0

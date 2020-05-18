@@ -46,13 +46,11 @@ namespace HackedDesign
                     BaseEntity entity = go.GetComponent<BaseEntity>();
 
                     npcPool.Add(entity);
-                    //go.SetActive(false);
                 }
             }
 
             public BaseEntity GetPooledNPC(string name)
             {
-                //return null;
                 for(int i=0;i<npcPoolParent.transform.childCount;i++)
                 {
                     if(npcPoolParent.transform.GetChild(i).name == name)
@@ -61,7 +59,6 @@ namespace HackedDesign
                     }
                 }
                 return null;
-                //return npcPool.FirstOrDefault(g => g.gameObject.name == name);
 
             }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace HackedDesign.Triggers
 {
@@ -9,6 +10,7 @@ namespace HackedDesign.Triggers
     public class BaseTrigger : MonoBehaviour, ITrigger
     {
         protected new Collider2D collider;
+        protected ShadowCaster2D shadow;
         public new bool enabled = true;
 
         [Header("Settings")]
@@ -41,7 +43,7 @@ namespace HackedDesign.Triggers
         {
             if (!CompareTag(TagManager.TRIGGER))
             {
-                Debug.LogError(this.name + ": trigger is not tagged: " + this.name);
+                Logger.LogError(name,"trigger is not tagged: " + name);
             }
         }
 
@@ -50,6 +52,8 @@ namespace HackedDesign.Triggers
             triggered = false;
             npcTriggered = false;
             collider = GetComponent<Collider2D>();
+            shadow = GetComponent<ShadowCaster2D>();
+
             colliders.Clear();
 
             if (enabled)
@@ -68,6 +72,10 @@ namespace HackedDesign.Triggers
             {
                 collider.enabled = true;
             }
+            if(shadow != null)
+            {
+                shadow.enabled = true;
+            }
         }
 
         public void Deactivate()
@@ -75,6 +83,7 @@ namespace HackedDesign.Triggers
             if (collider != null)
             {
                 collider.enabled = false;
+                shadow.enabled = false;
             }
         }
 

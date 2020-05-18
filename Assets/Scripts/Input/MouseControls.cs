@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/MouseControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Settings/MouseControls.inputactions'
 
 using System;
 using System.Collections;
@@ -166,6 +166,17 @@ public class @MouseControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""4a64a634-d12c-4be8-804e-98baea000efa"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""0012c36c-05b8-40f4-b1c5-315aff44b2b2"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
@@ -182,17 +193,6 @@ public class @MouseControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4a64a634-d12c-4be8-804e-98baea000efa"",
-                    ""path"": ""<Keyboard>/enter"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

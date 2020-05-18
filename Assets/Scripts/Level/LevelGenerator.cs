@@ -34,17 +34,17 @@ namespace HackedDesign.Level
         {
             if (string.IsNullOrEmpty(template))
             {
-                Logger.LogError(name, "no level template set");
+                Logger.LogError(name, "No level template set");
                 return null;
             }
 
             if (string.IsNullOrEmpty(name))
             {
-                Logger.LogError(name, "no level name set");
+                Logger.LogError(name, "No level name set");
                 return null;
             }
 
-            Logger.Log(name, "using template - " + template);
+            Logger.Log(name, "Using template - " + template);
 
             var genTemplate = GetLevelGenTemplate(template);
 
@@ -75,11 +75,11 @@ namespace HackedDesign.Level
 
             if (genTemplate == null)
             {
-                Logger.LogError(name, "no level gen template found - ", template);
+                Logger.LogError(name, "No level gen template found - ", template);
                 return null;
             }
 
-            Logger.Log(name, "generating Level ", genTemplate.levelLength.ToString(), " x ", genTemplate.levelWidth.ToString(), " x ", genTemplate.levelHeight.ToString());
+            Logger.Log(name, "Generating Level ", genTemplate.levelLength.ToString(), " x ", genTemplate.levelWidth.ToString(), " x ", genTemplate.levelHeight.ToString());
 
             Level level;
 
@@ -103,11 +103,11 @@ namespace HackedDesign.Level
         protected Level LoadLevelFromFile(LevelGenTemplate genTemplate)
         {
             Level level = new Level(genTemplate);
-            Logger.Log(this.name, "loading level from file: Levels/" + genTemplate.levelResource + @".json");
+            Logger.Log(name, "Loading level from file: Levels/" + genTemplate.levelResource + @".json");
             var jsonTextFile = Resources.Load<TextAsset>(@"Levels/" + genTemplate.levelResource);
             if (jsonTextFile == null)
             {
-                Debug.LogError(this.name + ": file not loaded");
+                Logger.LogError(name, "File not loaded");
                 return null;
             }
 
@@ -142,7 +142,7 @@ namespace HackedDesign.Level
 
         Vector2Int GenerateStartingLocation(Level level)
         {
-            Debug.Log(this.name + ": generating Starting Location");
+            Logger.Log(name, "Generating Starting Location");
 
             // Starting at the bottom and going up means we should never create a chain that fails completely and rolls all the way back to the entry
             // This is important!				
@@ -165,12 +165,12 @@ namespace HackedDesign.Level
                 return true;
             }
 
-            Debug.Log(this.name + ": generating main chain");
+            Logger.Log(name, "Generating main chain");
 
             // The end room is considered special
             if (lengthRemaining == 1)
             {
-                Logger.Log(this.name, "end of main chain");
+                Logger.Log(name, "End of main chain");
 
                 level.map[newLocation.y].rooms[newLocation.x] = GenerateRoom(newLocation, new List<string>() { ProxyRoom.Wall }, true, level); // Place a new tile here
                 level.map[newLocation.y].rooms[newLocation.x].isEnd = true;
@@ -201,7 +201,7 @@ namespace HackedDesign.Level
             // Fixme: we probably have to change a side because of this
             if (!result)
             {
-                Debug.Log(this.name + ": abandoning chain, roll back one step");
+                Logger.Log(name, "Abandoning chain, rolling back one step");
             }
 
             return result;
@@ -301,7 +301,7 @@ namespace HackedDesign.Level
 
         void GenerateAuxRooms(Level level)
         {
-            Debug.Log(this.name + ": generating Aux Rooms");
+            Logger.Log(name, "Generating Aux Rooms");
             bool newRooms = true;
 
             // iterate through every position, checking for neighbours and creating rooms accordingly. 
@@ -503,22 +503,23 @@ namespace HackedDesign.Level
                 {
                     if (level.map[i].rooms[j] != null)
                     {
-                        GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeWall, level.template, false);
+                        GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeWall, level.template);
 
                         if (genProps && level.template.generateProps)
                         {
                             if (level.map[i].rooms[j].isEntry)
                             {
 
-                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeEntry, level.template, false);
+                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeEntry, level.template);
                             }
                             else if (level.map[i].rooms[j].isEnd)
                             {
-                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeEnd, level.template, false);
+                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeEnd, level.template);
                             }
                             else
                             {
-                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeRandom, level.template, true);
+                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeRandom, level.template);
+                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeLineOfSight, level.template);
                             }
                         }
                     }
@@ -526,7 +527,7 @@ namespace HackedDesign.Level
             }
         }
 
-        void GenerateRoomElements(ProxyRoom proxyRoom, string type, LevelGenTemplate template, bool allowTraps)
+        void GenerateRoomElements(ProxyRoom proxyRoom, string type, LevelGenTemplate template)
         {
             //string roomString = proxyRoom.AsPrintableString();
             List<GameObject> goBLList;
@@ -536,10 +537,11 @@ namespace HackedDesign.Level
 
             // TL
             goTLList = FindRoomElements(TOPLEFT, proxyRoom.left, proxyRoom.top, type, template).ToList();
-            goTLList.Randomize();
-
-            if (goTLList.FirstOrDefault() != null)
+            if (goTLList != null && goTLList.Count > 0)
             {
+                goTLList.Randomize();
+
+
                 proxyRoom.topLeft.Add(
                     new Corner()
                     {
@@ -551,10 +553,12 @@ namespace HackedDesign.Level
 
             // TR
             goTRList = FindRoomElements(TOPRIGHT, proxyRoom.right, proxyRoom.top, type, template).ToList();
-            goTRList.Randomize();
 
-            if (goTRList.FirstOrDefault() != null)
+            if (goTRList != null && goTRList.Count > 0)
             {
+
+                goTRList.Randomize();
+
                 proxyRoom.topRight.Add(
                     new Corner()
                     {
@@ -566,10 +570,10 @@ namespace HackedDesign.Level
 
             // BL
             goBLList = FindRoomElements(BOTTOMLEFT, proxyRoom.left, proxyRoom.bottom, type, template).ToList();
-            goBLList.Randomize();
-
-            if (goBLList.FirstOrDefault() != null)
+            if (goBLList != null && goBLList.Count > 0)
             {
+                goBLList.Randomize();
+
                 proxyRoom.bottomLeft.Add(
                     new Corner()
                     {
@@ -581,10 +585,10 @@ namespace HackedDesign.Level
 
             // BR
             goBRList = FindRoomElements(BOTTOMRIGHT, proxyRoom.right, proxyRoom.bottom, type, template).ToList();
-            goBRList.Randomize();
 
-            if (goBRList.FirstOrDefault() != null)
+            if (goBRList != null && goBRList.Count > 0)
             {
+                goBRList.Randomize();
 
                 proxyRoom.bottomRight.Add(
                     new Corner()
@@ -634,6 +638,9 @@ namespace HackedDesign.Level
 
                 case ProxyRoom.ObjTypeFixed:
                     results = levelGenTemplate.fixedProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
+                    break;
+                case ProxyRoom.ObjTypeLineOfSight:
+                    results = levelGenTemplate.lineOfSightProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
                     break;
 
             }

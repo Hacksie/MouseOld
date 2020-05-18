@@ -8,7 +8,6 @@ namespace HackedDesign
         [System.Serializable]
         public class Enemy : InfoEntity
         {
-            //public string fullName;
             public string uniqueId;
             public string handle;
             public string corp;

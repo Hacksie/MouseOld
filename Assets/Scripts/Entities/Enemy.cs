@@ -61,10 +61,7 @@ namespace HackedDesign.Entities
                 Logger.LogError(name, "Enemy without polyNavAgent set");
             }
 
-            //if (detection == null)
-            //{
-            //    Logger.LogError(this.name, "Enemy without Alert set");
-            //}
+            
         }
 
         public void Initialize(Transform player, PolyNav.PolyNav2D polyNav2D)
@@ -75,20 +72,17 @@ namespace HackedDesign.Entities
                 polyNavAgent.map = polyNav2D;
             }
 
-            if(randomStartingDirection)
+            direction = Vector2.down;
+
+            if (randomStartingDirection)
             {
                 direction = Quaternion.Euler(0, 0, Random.Range(0, 360)) * Vector2.up;
-            }
-
-            if(direction == Vector2.zero)
-            {
-                direction = Vector2.down;
             }
         }
 
         public void UpdateBehaviour()
         {
-            if(polyNavAgent.currentSpeed > 0.01f)
+            if(polyNavAgent.hasPath)
             {
                 direction = polyNavAgent.movingDirection.normalized;
             }
@@ -124,12 +118,16 @@ namespace HackedDesign.Entities
                 }
             }
 
+            
 
             if (!stationary && (Time.time - patrolTimer) >= patrolSpeed)
             {
+                
                 patrolTimer = Time.time;
 
                 var pointsOfInterest = GetPointsOfInterestNearby();
+                Logger.Log(name, "Patrol ", pointsOfInterest.Length.ToString());
+
                 if (pointsOfInterest.Length > 0)
                 {
                     var point = pointsOfInterest[Random.Range(0, pointsOfInterest.Length)];
@@ -186,7 +184,10 @@ namespace HackedDesign.Entities
             if (detection == null)
                 return;
 
-            detection.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, direction));
+            if (direction != Vector2.zero)
+            {
+                detection.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, direction));
+            }
         }
 
         public RaycastHit2D CanSeePlayer()
@@ -197,7 +198,7 @@ namespace HackedDesign.Entities
 
         public void OnTriggerEnter2D(Collider2D other)
         {
-            if ((other.CompareTag(TagManager.PLAYER)) && !colliders.Contains(other.gameObject))
+            if (other.CompareTag(TagManager.PLAYER) && !colliders.Contains(other.gameObject))
             {
                 colliders.Add(other.gameObject);
             }
@@ -205,7 +206,7 @@ namespace HackedDesign.Entities
 
         public void OnTriggerExit2D(Collider2D other)
         {
-            if ((other.CompareTag(TagManager.PLAYER)) && colliders.Contains(other.gameObject))
+            if (other.CompareTag(TagManager.PLAYER) && colliders.Contains(other.gameObject))
             {
                 colliders.Remove(other.gameObject);
             }

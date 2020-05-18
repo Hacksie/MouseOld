@@ -154,7 +154,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &5924158499906977701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,10 +176,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   poiDistance: 5
-  visibilityDistance: 3.2
+  visibilityDistance: 2
   randomStartingDirection: 1
   direction: {x: 0, y: -1}
-  stationary: 1
+  stationary: 0
   patrolSpeed: 10
   playerSeenEvent:
     m_PersistentCalls:
