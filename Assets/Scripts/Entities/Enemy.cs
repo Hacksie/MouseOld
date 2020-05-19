@@ -17,15 +17,15 @@ namespace HackedDesign.Entities
 
         [Header("Settings")]
         [SerializeField] public Story.Enemy enemy = null;
+        [SerializeField] private float patrolSpeed = 0.5f;
         [SerializeField] private LayerMask playerLayerMask = 0;
         [SerializeField] private LayerMask poiLayerMask = 0;
         [SerializeField] private float poiDistance = 5f;
-
         [SerializeField] private float visibilityDistance = 3.2f;
         [SerializeField] private bool randomStartingDirection = true;
         [SerializeField] private Vector2 direction = Vector2.down;
         [SerializeField] private bool stationary = true;
-        [SerializeField] private float patrolSpeed = 10f; 
+        [SerializeField] private float patrolTime = 10.0f; 
 
 
         [Header("Events")]
@@ -78,6 +78,8 @@ namespace HackedDesign.Entities
             {
                 direction = Quaternion.Euler(0, 0, Random.Range(0, 360)) * Vector2.up;
             }
+
+            polyNavAgent.maxSpeed = patrolSpeed;
         }
 
         public void UpdateBehaviour()
@@ -120,13 +122,13 @@ namespace HackedDesign.Entities
 
             
 
-            if (!stationary && (Time.time - patrolTimer) >= patrolSpeed)
+            if (!stationary && (Time.time - patrolTimer) >= patrolTime)
             {
                 
                 patrolTimer = Time.time;
 
                 var pointsOfInterest = GetPointsOfInterestNearby();
-                Logger.Log(name, "Patrol ", pointsOfInterest.Length.ToString());
+                Logger.Log(name, "Patroling");
 
                 if (pointsOfInterest.Length > 0)
                 {

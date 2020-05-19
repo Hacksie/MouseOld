@@ -169,6 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detection: {fileID: 8684542586344216349}
   enemy: {fileID: 11400000, guid: acdb27d379c12a64e91be3fcba08c41a, type: 2}
+  patrolSpeed: 0.75
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -180,7 +181,7 @@ MonoBehaviour:
   randomStartingDirection: 1
   direction: {x: 0, y: -1}
   stationary: 0
-  patrolSpeed: 15
+  patrolTime: 10
   playerSeenEvent:
     m_PersistentCalls:
       m_Calls: []

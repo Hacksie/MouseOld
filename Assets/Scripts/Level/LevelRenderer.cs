@@ -98,17 +98,20 @@ namespace HackedDesign
                 {
                     for (int j = 0; j < level.map[i].rooms.Count(); j++)
                     {
-                        Vector3 roomPosition = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical), 0);
 
-                        if (level.map[i].rooms[j] == null)
+                        var room = level.map[i].rooms[j];
+
+                        if (room == null)
                         {
                             continue;
                         }
 
+                        Vector3 roomPosition = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical), 0);
 
-                        if (!string.IsNullOrWhiteSpace(level.map[i].rooms[j].floor))
+
+                        if (!string.IsNullOrWhiteSpace(room.floor))
                         {
-                            var floor = level.template.floors.FirstOrDefault(o => o != null && o.name == level.map[i].rooms[j].floor);
+                            var floor = level.template.floors.FirstOrDefault(o => o != null && o.name == room.floor);
 
                             if (floor != null)
                             {
@@ -117,7 +120,7 @@ namespace HackedDesign
                         }
                         else
                         {
-                            if (level.map[i].rooms[j].isMainChain)
+                            if (room.isMainChain)
                             {
                                 if (level.template.mainChainFloor.Count > 0 && level.template.mainChainFloor != null)
                                 {
@@ -134,9 +137,9 @@ namespace HackedDesign
                         }
 
                         // BL
-                        for (int e = 0; e < level.map[i].rooms[j].bottomLeft.Count; e++)
+                        for (int e = 0; e < room.bottomLeft.Count; e++)
                         {
-                            var go = FindRoomEntity(level.map[i].rooms[j].bottomLeft[e].type, level.map[i].rooms[j].bottomLeft[e].name, level.template);
+                            var go = FindRoomEntity(room.bottomLeft[e].type, room.bottomLeft[e].name, level.template);
                             if (go == null)
                             {
                                 Logger.LogError(name, "null game object returned from FindRoomEntity");
@@ -145,9 +148,9 @@ namespace HackedDesign
                         }
 
                         // BR
-                        for (int e = 0; e < level.map[i].rooms[j].bottomRight.Count; e++)
+                        for (int e = 0; e < room.bottomRight.Count; e++)
                         {
-                            var go = FindRoomEntity(level.map[i].rooms[j].bottomRight[e].type, level.map[i].rooms[j].bottomRight[e].name, level.template);
+                            var go = FindRoomEntity(room.bottomRight[e].type, room.bottomRight[e].name, level.template);
                             if (go == null)
                             {
                                 Logger.LogError(name, "null game object returned from FindRoomEntity");
@@ -156,10 +159,10 @@ namespace HackedDesign
                         }
 
                         // TL
-                        for (int e = 0; e < level.map[i].rooms[j].topLeft.Count; e++)
+                        for (int e = 0; e < room.topLeft.Count; e++)
                         {
 
-                            var go = FindRoomEntity(level.map[i].rooms[j].topLeft[e].type, level.map[i].rooms[j].topLeft[e].name, level.template);
+                            var go = FindRoomEntity(room.topLeft[e].type, room.topLeft[e].name, level.template);
                             if (go == null)
                             {
                                 Logger.LogError(name, "null game object returned from FindRoomEntity");
@@ -170,9 +173,9 @@ namespace HackedDesign
                         }
 
                         //TR
-                        for (int e = 0; e < level.map[i].rooms[j].topRight.Count; e++)
+                        for (int e = 0; e < room.topRight.Count; e++)
                         {
-                            var go = FindRoomEntity(level.map[i].rooms[j].topRight[e].type, level.map[i].rooms[j].topRight[e].name, level.template);
+                            var go = FindRoomEntity(room.topRight[e].type, room.topRight[e].name, level.template);
                             if (go == null)
                             {
                                 Logger.LogError(name, "null game object returned from FindRoomEntity");
@@ -181,7 +184,11 @@ namespace HackedDesign
                           }
 
                         Instantiate(roomCenterPrefab, roomPosition + new Vector3(level.template.spanHorizontal / 2, level.template.spanVertical / 2, 0), Quaternion.identity, levelParent.transform);
-                        Instantiate(pointOfInterestPrefab, roomPosition + new Vector3(level.template.spanHorizontal / 2, level.template.spanVertical / 2, 0), Quaternion.identity, levelParent.transform);
+
+                        if (!(room.isEntry || room.isEnd))
+                        {
+                            Instantiate(pointOfInterestPrefab, roomPosition + new Vector3(level.template.spanHorizontal / 2, level.template.spanVertical / 2, 0), Quaternion.identity, levelParent.transform);
+                        }
                     }
                 }
             }
