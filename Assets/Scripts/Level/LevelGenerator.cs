@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+
 
 namespace HackedDesign.Level
 {
@@ -13,6 +15,8 @@ namespace HackedDesign.Level
         private const string TOPRIGHT = "tr";
         private const string BOTTOMLEFT = "bl";
         private const string BOTTOMRIGHT = "br";
+        private const string IS_ENTRY = "entry";
+        private const string IS_END = "end";
 
         [SerializeField]
         private Entities.EntityManager entityManager = null;
@@ -265,9 +269,8 @@ namespace HackedDesign.Level
             return res;
         }
 
-        ProxyRoom RoomFromString(string str)
+        private ProxyRoom RoomFromString(string str)
         {
-
             if (string.IsNullOrWhiteSpace(str))
             {
                 return null;
@@ -292,8 +295,8 @@ namespace HackedDesign.Level
 
             if (splitString.Length > 1)
             {
-                response.isEntry = splitString[1] == "entry";
-                response.isEnd = splitString[1] == "end";
+                response.isEntry = splitString[1] == IS_ENTRY;
+                response.isEnd = splitString[1] == IS_END;
             }
 
             return response;
@@ -485,41 +488,34 @@ namespace HackedDesign.Level
             return sides;
         }
 
-        bool PositionHasRoom(Vector2Int pos, Level level)
-        {
-            if (pos.x >= level.template.levelWidth || pos.y >= level.template.levelHeight || pos.x < 0 || pos.y < 0)
-            {
-                return true; // If we go outside the level, pretend we already put a room here
-            }
-            return (!(level.map[pos.y].rooms[pos.x] == null));
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool PositionHasRoom(Vector2Int pos, Level level) => ((pos.x >= level.template.levelWidth || pos.y >= level.template.levelHeight || pos.x < 0 || pos.y < 0) || (level.map[pos.y].rooms[pos.x] != null));
 
-
-        void GenerateElements(Level level, bool genProps)
+        private void GenerateElements(Level level, bool genProps)
         {
-            for (int i = 0; i < level.map.Count(); i++)
+            for (int y = 0; y < level.map.Count(); y++)
             {
-                for (int j = 0; j < level.map[i].rooms.Count(); j++)
+                for (int x = 0; x < level.map[y].rooms.Count(); x++)
                 {
-                    if (level.map[i].rooms[j] != null)
+                    if (level.map[y].rooms[x] != null)
                     {
-                        GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeWall, level.template);
+                        GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeWall, level.template);
 
                         if (genProps && level.template.generateProps)
                         {
-                            if (level.map[i].rooms[j].isEntry)
+                            if (level.map[y].rooms[x].isEntry)
                             {
 
-                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeEntry, level.template);
+                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeEntry, level.template);
                             }
-                            else if (level.map[i].rooms[j].isEnd)
+                            else if (level.map[y].rooms[x].isEnd)
                             {
-                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeEnd, level.template);
+                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeEnd, level.template);
                             }
                             else
                             {
-                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeRandom, level.template);
-                                GenerateRoomElements(level.map[i].rooms[j], ProxyRoom.ObjTypeLineOfSight, level.template);
+                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeRandom, level.template);
+                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeLineOfSight, level.template);
                             }
                         }
                     }
@@ -527,9 +523,8 @@ namespace HackedDesign.Level
             }
         }
 
-        void GenerateRoomElements(ProxyRoom proxyRoom, string type, LevelGenTemplate template)
+        private void GenerateRoomElements(ProxyRoom proxyRoom, string type, LevelGenTemplate template)
         {
-            //string roomString = proxyRoom.AsPrintableString();
             List<GameObject> goBLList;
             List<GameObject> goBRList;
             List<GameObject> goTLList;
@@ -609,7 +604,7 @@ namespace HackedDesign.Level
         /// <param name="type"></param>
         /// <param name="levelGenTemplate"></param>
         /// <returns></returns>
-        IEnumerable<GameObject> FindRoomElements(string corner, string wall1, string wall2, string type, LevelGenTemplate levelGenTemplate)
+        private IEnumerable<GameObject> FindRoomElements(string corner, string wall1, string wall2, string type, LevelGenTemplate levelGenTemplate)
         {
 
             IEnumerable<GameObject> results = null;
@@ -617,30 +612,30 @@ namespace HackedDesign.Level
             switch (type)
             {
                 case ProxyRoom.ObjTypeWall:
-                    results = levelGenTemplate.levelElements.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
+                    results = levelGenTemplate.levelElements.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));
                     break;
 
                 case ProxyRoom.ObjTypeEntry:
-                    results = levelGenTemplate.startProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
+                    results = levelGenTemplate.startProps.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));
                     break;
 
                 case ProxyRoom.ObjTypeEnd:
-                    results = levelGenTemplate.endProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
+                    results = levelGenTemplate.endProps.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));
                     break;
 
                 case ProxyRoom.ObjTypeTrap:
-                    results = levelGenTemplate.trapProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
+                    results = levelGenTemplate.trapProps.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));
                     break;
 
                 case ProxyRoom.ObjTypeRandom:
-                    results = levelGenTemplate.randomProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
+                    results = levelGenTemplate.randomProps.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));
                     break;
 
                 case ProxyRoom.ObjTypeFixed:
-                    results = levelGenTemplate.fixedProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
+                    results = levelGenTemplate.fixedProps.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));
                     break;
                 case ProxyRoom.ObjTypeLineOfSight:
-                    results = levelGenTemplate.lineOfSightProps.Where(g => g != null && MatchSpriteName(g.name, corner, wall1, wall2));
+                    results = levelGenTemplate.lineOfSightProps.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));
                     break;
 
             }
@@ -656,7 +651,7 @@ namespace HackedDesign.Level
         /// <param name="wall1"></param>
         /// <param name="wall2"></param>
         /// <returns></returns>
-        bool MatchSpriteName(string prefabName, string corner, string wall1, string wall2)
+        private bool MatchPrefabName(string prefabName, string corner, string wall1, string wall2)
         {
             string[] nameSplit = prefabName.ToLower().Split('_');
 
@@ -676,20 +671,20 @@ namespace HackedDesign.Level
             string second = nameSplit[3].Substring(1, 1);
 
             return (nameSplit[2] == corner.ToLower() &&
-                ((wall1.ToLower() == "o" && open.IndexOf(first) >= 0) ||
-                    (wall1.ToLower() == "d" && door.IndexOf(first) >= 0) ||
-                    (wall1.ToLower() == "w" && wall.IndexOf(first) >= 0) ||
-                    (wall1.ToLower() == "e" && exit.IndexOf(first) >= 0) ||
-                    (wall1.ToLower() == "n" && entry.IndexOf(first) >= 0)) &&
-                ((wall2.ToLower() == "o" && open.IndexOf(second) >= 0) ||
-                    (wall2.ToLower() == "d" && door.IndexOf(second) >= 0) ||
-                    (wall2.ToLower() == "w" && wall.IndexOf(second) >= 0) ||
-                    (wall2.ToLower() == "e" && exit.IndexOf(second) >= 0) ||
-                    (wall2.ToLower() == "n" && entry.IndexOf(second) >= 0))
+                ((wall1.ToLower() == ProxyRoom.Open && open.IndexOf(first) >= 0) ||
+                    (wall1.ToLower() == ProxyRoom.Door && door.IndexOf(first) >= 0) ||
+                    (wall1.ToLower() == ProxyRoom.Wall && wall.IndexOf(first) >= 0) ||
+                    (wall1.ToLower() == ProxyRoom.Exit && exit.IndexOf(first) >= 0) ||
+                    (wall1.ToLower() == ProxyRoom.Entry && entry.IndexOf(first) >= 0)) &&
+                ((wall2.ToLower() == ProxyRoom.Open && open.IndexOf(second) >= 0) ||
+                    (wall2.ToLower() == ProxyRoom.Door && door.IndexOf(second) >= 0) ||
+                    (wall2.ToLower() == ProxyRoom.Wall && wall.IndexOf(second) >= 0) ||
+                    (wall2.ToLower() == ProxyRoom.Exit && exit.IndexOf(second) >= 0) ||
+                    (wall2.ToLower() == ProxyRoom.Entry && entry.IndexOf(second) >= 0))
             );
         }
 
-        void GenerateEnemySpawns(Level level)
+        private void GenerateEnemySpawns(Level level)
         {
             var candidates = new List<Vector2Int>();
             level.enemySpawnLocationList = new List<Spawn>();
@@ -717,13 +712,9 @@ namespace HackedDesign.Level
 
             foreach (var candidate in candidates.Take(level.template.enemyCount))
             {
-
-                //int rand = UnityEngine.Random.Range(0, enemyList);
-
                 var enemy = enemyList[UnityEngine.Random.Range(0, enemyList.Count)];
 
                 //FIXME: check the enemy is valid
-
                 level.enemySpawnLocationList.Add(
                     new Spawn()
                     {
@@ -736,7 +727,7 @@ namespace HackedDesign.Level
             }
         }
 
-        void GenerateTrapSpawns(Level level)
+        private void GenerateTrapSpawns(Level level)
         {
             var candidates = new List<Vector2Int>();
             level.trapSpawnLocationList = new List<Spawn>();
@@ -756,9 +747,6 @@ namespace HackedDesign.Level
 
             foreach (var candidate in candidates.Take(level.template.enemyCount))
             {
-
-                //int rand = UnityEngine.Random.Range(0, entityManager.enemies.Count);
-
                 level.trapSpawnLocationList.Add(
                     new Spawn()
                     {

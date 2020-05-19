@@ -25,7 +25,7 @@ namespace HackedDesign.Entities
         [SerializeField] private bool randomStartingDirection = true;
         [SerializeField] private Vector2 direction = Vector2.down;
         [SerializeField] private bool stationary = true;
-        [SerializeField] private float patrolTime = 10.0f; 
+        [SerializeField] private float patrolTime = 10.0f;
 
 
         [Header("Events")]
@@ -42,11 +42,19 @@ namespace HackedDesign.Entities
         private Transform player;
         private bool playerSeen;
 
+        private int directionXAnimId;
+        private int directionYAnimId;
+        private int isMovingAnimId;
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
             polyNavAgent = GetComponent<PolyNav.PolyNavAgent>();
-            
+
+            directionXAnimId = Animator.StringToHash("directionX");
+            directionYAnimId = Animator.StringToHash("directionY");
+            isMovingAnimId = Animator.StringToHash("isMoving");
+
         }
 
         protected void Start()
@@ -61,7 +69,7 @@ namespace HackedDesign.Entities
                 Logger.LogError(name, "Enemy without polyNavAgent set");
             }
 
-            
+
         }
 
         public void Initialize(Transform player, PolyNav.PolyNav2D polyNav2D)
@@ -84,12 +92,12 @@ namespace HackedDesign.Entities
 
         public void UpdateBehaviour()
         {
-            if(polyNavAgent.hasPath)
+            if (polyNavAgent.hasPath)
             {
                 direction = polyNavAgent.movingDirection.normalized;
             }
 
-            switch(state)
+            switch (state)
             {
                 case EnemyState.PASSIVE:
                     UpdatePassive();
@@ -120,11 +128,9 @@ namespace HackedDesign.Entities
                 }
             }
 
-            
-
             if (!stationary && (Time.time - patrolTimer) >= patrolTime)
             {
-                
+
                 patrolTimer = Time.time;
 
                 var pointsOfInterest = GetPointsOfInterestNearby();
@@ -231,17 +237,16 @@ namespace HackedDesign.Entities
             {
                 //anim.SetFloat ("moveX", movementVector.x);
                 //anim.SetFloat ("moveY", movementVector.y);
-                animator.SetFloat("directionX", direction.x);
-                animator.SetFloat("directionY", direction.y);
-                animator.SetBool("isMoving", true);
+                animator.SetFloat(directionXAnimId, direction.x);
+                animator.SetFloat(directionYAnimId, direction.y);
+                animator.SetBool(isMovingAnimId, true);
             }
             else
             {
                 direction = Vector2.zero;
-                if (animator != null)
-                {
-                    animator.SetBool("isMoving", false);
-                }
+
+                animator.SetBool(isMovingAnimId, false);
+
             }
         }
 

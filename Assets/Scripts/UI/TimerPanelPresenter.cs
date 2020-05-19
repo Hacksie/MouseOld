@@ -1,56 +1,58 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace HackedDesign {
-	public class TimerPanelPresenter : MonoBehaviour {
+namespace HackedDesign.UI
+{
+    public class TimerPanelPresenter : AbstractPresenter
+    {
+        private Timer timer;
+        [SerializeField] private Text timerText = null;
+        [SerializeField] private Color defaultColor = Color.white;
+        [SerializeField] private Color warningColor = Color.white;
+        [SerializeField] private Color alertColor = Color.white;
 
-		private Timer timer;
-		public Text timerText;
-		public Color defaultColor;
-		public Color warningColor;
-		public Color alertColor;		
+        public void Initialize(Timer timer)
+        {
+            this.timer = timer;
+        }
 
-		public void Initialize (Timer timer) {
-			this.timer = timer;
-		}
+        public override void Repaint()
+        {
+            if (timer == null)
+            {
+                Hide();
+                return;
+            }
 
-		public void Repaint () {
+            if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
+            {
+                Show();
 
-			if (timer == null) {
-				gameObject.SetActive (false);
-				return;
-			}
+                if (timer.running)
+                {
 
-			if (!timer.running) {
-				gameObject.SetActive (false);
-				return;
-			}
+                    float time = timer.maxTime - (Time.time - timer.startTime);
 
-			if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING) {
+                    if (time < timer.alertTime)
+                    {
+                        timerText.color = alertColor;
+                    }
+                    else if (time < timer.warningTime)
+                    {
+                        timerText.color = warningColor;
+                    }
+                    else
+                    {
+                        timerText.color = defaultColor;
+                    }
 
-				if (timer.running) {
-					if (!gameObject.activeInHierarchy) {
-						gameObject.SetActive (true);
-					}
-
-					float time = timer.maxTime - (Time.time - timer.startTime);
-
-					if (time < timer.alertTime) {
-						timerText.color = alertColor;
-					} else if (time < timer.warningTime) {
-						timerText.color = warningColor;
-					} else {
-						timerText.color = defaultColor;
-					}
-
-					timerText.text = time.ToString ("000");
-				}
-			}
-			else {
-				gameObject.SetActive(false);
-			}
-		}
-	}
+                    timerText.text = time.ToString("000");
+                }
+            }
+            else
+            {
+                Hide();
+            }
+        }
+    }
 }

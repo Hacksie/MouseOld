@@ -256,7 +256,7 @@ MonoBehaviour:
   - {x: -0.125, y: 0.5, z: 0}
   m_ShapePathHash: -342493931
   m_Mesh: {fileID: 0}
-  m_InstanceId: 322184
+  m_InstanceId: 346886
 --- !u!1 &1235507174324560
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +326,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1344584367
-  m_SortingLayer: -3
+  m_SortingLayer: -1
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300004, guid: 664b54a6d8e280a4c9404a8903fd234b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -350,7 +350,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f1ec7aabffdef4b149f447b147c18e74,
+      objectReference: {fileID: 21300000, guid: bfd02f87ffa614e638bc961fd5bd7766,
         type: 3}
     - target: {fileID: 1205910083837189476, guid: 468b9302c01989d4780290de629c1591,
         type: 3}

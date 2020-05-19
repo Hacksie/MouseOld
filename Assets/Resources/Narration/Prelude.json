@@ -1,98 +1,77 @@
 {
-    "narrations":[
-    {
-        "id": "Prelude1",
-        "speaker": "Mouse",
-        "text": "<color='#B0B0B0'>Twas the night before christmas, when all through the city, no creatures were stirring. Except a Mouse... Though if I had my way, I'd leave the creatures to their stirrings and go back to sleep. I'm getting too old for this.</color>",
-        "action": "Prelude2",
-        "button":"arrowright"
-    },
-    {
-        "id": "Prelude2",
-        "speaker": "Mouse",
-        "speakerEmotion":"tired",        
-        "text": "'Please, someone, kill the alarm.'",
-        "action": "Prelude3",
-        "button":"arrowright"
-    },
-    {
-        "id": "Prelude3",
-        "speaker": "Mouse",
-        "text": "<color='#B0B0B0'>Your cat just stares at you and purrs. One of the old companion AI models you... acquired... a while ago. Off grid, so way behind the latest models, but that's the way it has to be. No way they'd let you, a lowly contractor, keep her if they found you had her.</color>",
-        "action": "Prelude4",
-        "button":"arrowright"
-    },
-    {
-        "id": "Prelude4",
-        "speaker": "Mouse",
-        "speakerEmotion": "thinking",
-        "text": "<color='#B0B0B0'>You give her a few scritches behind the ears.</color>\n 'If only I could teach you to make coffee.'\n <color='#B0B0B0'>She just responds by booping you on the head.</color>\n 'Yes I'm getting up.'",
-        "action": "Prelude5",
-        "button":"arrowright"
-    },
-    {
-        "id": "Prelude5",
-        "speaker": "Mouse",
-        "speakerEmotion":"tired",
-        "text": "1AM Christmas morning. Laptop glowing with new work. Time to see what the boss has for you today.",
-        "action": "",
-        "button":"arrowright"
-    },
-    {
-        "id":"PreludeGun",
-        "speaker":"Mouse",
-        "text": "<color='#B0B0B0'>I avoid firearms on jobs. Personal rule. Not worth getting caught with one. But having one in this apartment block...</color>",
-        "action": "",
-        "button":"arrowright"
-    },
-    {
-        "id":"PreludeClothes",
-        "speaker":"Mouse",
-        "text": "<color='#B0B0B0'>Yeah, yeah, I clean up tomorrow. She said, for the 10th time this week.</color>",
-        "action": "",
-        "button":"arrowright"
-    },
-    {
-        "id":"PreludeCat2",
-        "speaker":"Cat",
-        "text":"\"I'd ask you the same question.\"",
-        "action":"PreludeCat3",
-        "button":"arrowright"
-    },
-    {
-        "id":"PreludeCat3",
-        "speaker":"Mouse",
-        "text":"\"Why do I even have you?\"",
-        "action":"PreludeCat4",
-        "button":"arrowright"
-    },
-    {
-        "id":"PreludeCat4",
-        "speaker":"Cat",
-        "text":"\"Because I'm completely adorable?\"",
-        "action":"PreludeCat5",
-        "button":"arrowright"
-    },
-      {
-        "id": "PreludeCat5",
-        "speaker": "Mouse",
-        "text": "<color='#B0B0B0'>*sigh*</color>",
-        "action": "",
-        "button": "arrowright"
-      },
-      {
-        "id": "PreludeFridge",
-        "speaker": "Mouse",
-        "text": "<color='#B0B0B0'>You know damn well there's nothing in here</color>",
-        "action": "",
-        "button": "arrowright"
-      },
-      {
-        "id": "PreludeExitFail",
-        "speaker": "Mouse",
-        "text": "<color='#B0B0B0'>We should read the message from Manager Lyon before we leave</color>",
-        "action": "",
-        "button": "arrowright"          
-      }
-]
+    "narrations": [
+        {
+            "id": "Prelude1",
+            "speaker": "Mouse",
+            "text": "<color='#B0B0B0'>Twas the night before christmas, when all through the city, no creatures were stirring. Except a Mouse... Though if I had my way, I'd leave the creatures to their stirrings and go back to sleep. I'm getting too old for this.</color>",
+            "action": "Prelude2",
+            "button": "arrowright"
+        },
+        {
+            "id": "Prelude2",
+            "speaker": "Mouse",
+            "speakerEmotion": "tired",
+            "text": "'Please, someone, kill the alarm.'",
+            "action": "Prelude3",
+            "button": "arrowright"
+        },
+        {
+            "id": "Prelude3",
+            "speaker": "Mouse",
+            "text": "<color='#B0B0B0'>Your cat just stares at you and purrs. One of the old companion AI models you... acquired... a while ago. Off grid, so way behind the latest models, but that's the way it has to be. No way they'd let you, a lowly contractor, keep her if they found you had her.</color>",
+            "action": "Prelude4",
+            "button": "arrowright"
+        },
+        {
+            "id": "Prelude4",
+            "speaker": "Mouse",
+            "speakerEmotion": "thinking",
+            "text": "<color='#B0B0B0'>You give her a few scritches behind the ears.</color>\n 'If only I could teach you to make coffee.'\n <color='#B0B0B0'>She just responds by booping you on the head.</color>\n 'Yes I'm getting up.'",
+            "action": "Prelude5",
+            "button": "arrowright"
+        },
+        {
+            "id": "Prelude5",
+            "speaker": "Mouse",
+            "speakerEmotion": "tired",
+            "text": "1AM Christmas morning. Laptop glowing with new work. Time to see what the boss has for you today.",
+            "action": "",
+            "button": "arrowright"
+        },
+        {
+            "id": "PreludeGun",
+            "speaker": "Mouse",
+            "text": "<color='#B0B0B0'>I avoid firearms on jobs. Personal rule. Not worth getting caught with one. But having one in this apartment block...</color>",
+            "action": "",
+            "button": "arrowright"
+        },
+        {
+            "id": "PreludeClothes",
+            "speaker": "Mouse",
+            "text": "<color='#B0B0B0'>Yeah, yeah, I clean up tomorrow. She said, for the 10th time this week.</color>",
+            "action": "",
+            "button": "arrowright"
+        },
+        {
+            "id": "PreludeCat1",
+            "speaker": "Mouse",
+            "text": "'Lucky you are adorable'",
+            "action": "",
+            "button": "arrowright"
+        },
+        {
+            "id": "PreludeFridge",
+            "speaker": "Mouse",
+            "text": "<color='#B0B0B0'>You know damn well there's nothing in here</color>",
+            "action": "",
+            "button": "arrowright"
+        },
+        {
+            "id": "PreludeExitFail",
+            "speaker": "Mouse",
+            "text": "<color='#B0B0B0'>We should read the message from Manager Lyon before we leave</color>",
+            "action": "",
+            "button": "arrowright"
+        }
+    ]
 }

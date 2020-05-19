@@ -4,12 +4,11 @@ namespace HackedDesign
 {
     namespace Story
     {
-        public partial class TaskDefinitionManager
+
+        public class TasksHolder
         {
-            private class TasksHolder
-            {
-                public List<Task> tasks = null;
-            }
+            public List<Task> tasks = null;
         }
+
     }
 }

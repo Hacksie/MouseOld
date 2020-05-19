@@ -2,42 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using HackedDesign.Story;
 
-namespace HackedDesign
+namespace HackedDesign.UI
 {
-    public class SelectMenuPanelPresenter : MonoBehaviour
+    public class SelectMenuPanelPresenter : AbstractPresenter
     {
 
         SelectMenuManager selectMenuManager;
 
-        private Story.InfoPanelPresenter infoPanel = null;
-        private Story.TaskPanelPresenter taskPanel = null;
-        private Level.LevelMapPanelPresenter levelMapPanel = null;
+        private InfoPanelPresenter infoPanel = null;
+        private TaskPanelPresenter taskPanel = null;
         private StashPanelPresenter stashPanel = null;
         private PsychPanelPresenter psychPanel = null;
 
-        public Button InfoButton = null;
-        public Button TasksButton = null;
-        public Button StashButton = null;
-        public Button PsychButton = null;
-        public Button MapButton = null;
+        [SerializeField] private Button InfoButton = null;
+        [SerializeField] private Button TasksButton = null;
+        [SerializeField] private Button StashButton = null;
+        [SerializeField] private Button PsychButton = null;
+        [SerializeField] private Button MapButton = null;
 
 
-        public void Initialize(SelectMenuManager selectMenuManager, Story.InfoPanelPresenter infoPanel, Story.TaskPanelPresenter taskPanel, StashPanelPresenter stashPanel, PsychPanelPresenter psychPanel, Level.LevelMapPanelPresenter levelMapPanel)
+        public void Initialize(SelectMenuManager selectMenuManager, InfoPanelPresenter infoPanel, TaskPanelPresenter taskPanel, StashPanelPresenter stashPanel, PsychPanelPresenter psychPanel)
         {
             this.selectMenuManager = selectMenuManager;
             this.infoPanel = infoPanel;
             this.taskPanel = taskPanel;
-            this.levelMapPanel = levelMapPanel;
             this.stashPanel = stashPanel;
             this.psychPanel = psychPanel;
         }
 
-        public void Repaint()
+        public override void Repaint()
         {
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.SELECTMENU && !this.gameObject.activeInHierarchy)
+            if (CoreGame.Instance.state.state == GameState.GameStateEnum.SELECTMENU)
             {
-                Show(true);
+                Show();
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
 
                 switch (selectMenuManager.MenuState)
@@ -60,16 +59,15 @@ namespace HackedDesign
                 }
 
             }
-            else if (CoreGame.Instance.state.state != GameState.GameStateEnum.SELECTMENU && this.gameObject.activeInHierarchy)
+            else
             {
-                Show(false);
+                Hide();
             }
 
             infoPanel.Repaint();
             taskPanel.Repaint();
             stashPanel.Repaint();
             psychPanel.Repaint();
-            levelMapPanel.Repaint();
         }
 
         private void Show(bool flag)

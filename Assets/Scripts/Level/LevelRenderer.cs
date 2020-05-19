@@ -10,16 +10,11 @@ namespace HackedDesign
     namespace Level
     {
         public class LevelRenderer : MonoBehaviour
-        {
-
-            [Header("Settings")]
-            //public float spanHorizontal = 4;
-            //public float spanVertical = 4;
-                
-            const string TOPLEFT = "tl";
-            const string TOPRIGHT = "tr";
-            const string BOTTOMLEFT = "bl";
-            const string BOTTOMRIGHT = "br";
+        {       
+            private const string TOPLEFT = "tl";
+            private const string TOPRIGHT = "tr";
+            private const string BOTTOMLEFT = "bl";
+            private const string BOTTOMRIGHT = "br";
 
             [Header("Prefabs")]
             public GameObject doorewPrefab;
@@ -38,15 +33,14 @@ namespace HackedDesign
 
             [Header("Runtime Game Objects")]
             private Entities.EntityManager entityManager;
-            private Story.InfoManager infoManager;
+            
 
-            public void Initialize(Entities.EntityManager entityManager, Story.InfoManager infoManager, GameObject levelParent, GameObject enemiesParent, PolyNav.PolyNav2D polyNav2D)
+            public void Initialize(Entities.EntityManager entityManager, GameObject levelParent, GameObject enemiesParent, PolyNav.PolyNav2D polyNav2D)
             {
                 this.levelParent = levelParent;
                 this.enemiesParent = enemiesParent;
                 this.polyNav2D = polyNav2D;
                 this.entityManager = entityManager;
-                this.infoManager = infoManager;
             }
 
             public void Render(Level level)
@@ -239,7 +233,7 @@ namespace HackedDesign
 
             }
 
-            public void PopulateLevelDoors(Level level, List<Triggers.Door> doorList)
+            public void PopulateLevelDoors(Level level, List<Door> doorList)
             {
                 //List<Triggers.Door> results = new List<Triggers.Door>();
 
@@ -264,7 +258,7 @@ namespace HackedDesign
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(doorewPrefab, pos, Quaternion.identity, levelParent.transform);
-                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            Door door = go.GetComponent<Door>();
                             if (door != null)
                             {
                                 doorList.Add(door);
@@ -275,7 +269,7 @@ namespace HackedDesign
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + (level.template.spanVertical /2), 0);
                             var go = Instantiate(doornsPrefab, pos, Quaternion.identity, levelParent.transform);
-                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            Door door = go.GetComponent<Door>();
                             if (door != null)
                             {
                                 doorList.Add(door);
@@ -286,7 +280,7 @@ namespace HackedDesign
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
-                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            Door door = go.GetComponent<Door>();
                             if (door != null)
                             {
                                 doorList.Add(door);
@@ -297,7 +291,7 @@ namespace HackedDesign
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + (level.template.spanVertical /2), 0);
                             var go = Instantiate(exitnsPrefab, pos, Quaternion.identity, levelParent.transform);
-                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            Door door = go.GetComponent<Door>();
                             if (door != null)
                             {
                                 doorList.Add(door);
@@ -307,7 +301,7 @@ namespace HackedDesign
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), (i + 1) * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(exitewPrefab, pos, Quaternion.identity, levelParent.transform);
-                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            Door door = go.GetComponent<Door>();
                             if (door != null)
                             {
                                 doorList.Add(door);
@@ -317,7 +311,7 @@ namespace HackedDesign
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal + (level.template.spanHorizontal /2), i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + level.template.spanVertical, 0);
                             var go = Instantiate(entryewPrefab, pos, Quaternion.identity, levelParent.transform);
-                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            Door door = go.GetComponent<Door>();
                             if (door != null)
                             {
                                 doorList.Add(door);
@@ -328,7 +322,7 @@ namespace HackedDesign
                         {
                             Vector3 pos = new Vector3(j * level.template.spanHorizontal, i * -level.template.spanVertical + ((level.template.levelHeight - 1) * level.template.spanVertical) + (level.template.spanVertical /2), 0);
                             var go = Instantiate(entrynsPrefab, pos, Quaternion.identity, levelParent.transform);
-                            Triggers.Door door = go.GetComponent<Triggers.Door>();
+                            Door door = go.GetComponent<Door>();
                             if (door != null)
                             {
                                 doorList.Add(door);
@@ -406,7 +400,7 @@ namespace HackedDesign
 
                     enemy.Initialize(CoreGame.Instance.GetPlayer().transform, polyNav2D);
 
-                    Story.Enemy uniqueEnemy = infoManager.GenerateRandomEnemy(enemy.enemy);
+                    Story.Enemy uniqueEnemy = Story.InfoRepository.Instance.GenerateRandomEnemy(enemy.enemy);
                     enemyList.Add(enemy);
                 }
             }

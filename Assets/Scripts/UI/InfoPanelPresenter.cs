@@ -4,15 +4,16 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using HackedDesign.Story;
 
-namespace HackedDesign.Story
+namespace HackedDesign.UI
 {
-    public class InfoPanelPresenter : MonoBehaviour
+    public class InfoPanelPresenter : AbstractPresenter
     {
         public Transform infoCategoriesParent;
         public Transform infoEntitiesParent;
         public Transform infoDescriptionParent;
-        InfoManager infoManager;
+
         SelectMenuManager selectMenuManager;
         [SerializeField]
         private Text description = null;
@@ -39,51 +40,34 @@ namespace HackedDesign.Story
             }
         }
 
-        public void Initialize(InfoManager infoManager, SelectMenuManager selectMenuManager)
+        public void Initialize(SelectMenuManager selectMenuManager)
         {
-            this.infoManager = infoManager;
             this.selectMenuManager = selectMenuManager;
         }
 
-        public void Repaint()
+        public override void Repaint()
         {
             if (CoreGame.Instance.state.state == GameState.GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.INFO)
             {
-                if (!gameObject.activeInHierarchy)
-                {
-                    Show(true);
-                }
+                Show();
+                RepaintCategories();
             }
-            else if (gameObject.activeInHierarchy)
+            else
             {
-                Show(false);
+                Hide();
             }
         }
 
-        private void Show(bool flag)
-        {
-            Debug.Log("Set Info Panel " + flag);
-
-            this.gameObject.SetActive(flag);
-
-            if (!flag)
-            {
-                return;
-            }
-
-            RepaintCategories();
-        }
-
+ 
         public void RepaintCategories()
         {
-
             EventSystem.current.SetSelectedGameObject(null);
 
-            var categories = infoManager.categories.Where(e => e.available).ToList();
+            var categories = InfoRepository.Instance.categories.Where(e => e.available).ToList();
 
-            if (string.IsNullOrWhiteSpace(infoManager.selectedInfoCategory))
+            if (string.IsNullOrWhiteSpace(InfoRepository.Instance.SelectedInfoCategory))
             {
-                infoManager.selectedInfoCategory = categories[0].id;
+                InfoRepository.Instance.SelectedInfoCategory = categories[0].id;
             }
 
             for (int i = 0; i < infoCategoriesParent.childCount; i++)
@@ -108,7 +92,7 @@ namespace HackedDesign.Story
                     infoEntityDescriptor.id = categories[i].id;
                     t.text = categories[i].text;
 
-                    if (infoManager.selectedInfoCategory == categories[i].id)
+                    if (InfoRepository.Instance.SelectedInfoCategory == categories[i].id)
                     {
                         EventSystem.current.SetSelectedGameObject(cbt.gameObject);
                     }
@@ -118,7 +102,7 @@ namespace HackedDesign.Story
                     cbt.gameObject.SetActive(false);
                 }
             }
-           
+
 
             RepaintEntities();
         }
@@ -129,23 +113,23 @@ namespace HackedDesign.Story
 
             if (infoEntityDescriptor != null)
             {
-                infoManager.selectedInfoCategory = infoEntityDescriptor.id;
+                InfoRepository.Instance.SelectedInfoCategory = infoEntityDescriptor.id;
                 RepaintEntities();
             }
         }
 
         public void RepaintEntities()
         {
-            var entities = infoManager.GetKnownEntities(infoManager.selectedInfoCategory);
+            var entities = InfoRepository.Instance.GetKnownEntities(InfoRepository.Instance.SelectedInfoCategory);
 
             if (entities == null)
             {
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(infoManager.selectedInfoEntity))
+            if (string.IsNullOrWhiteSpace(InfoRepository.Instance.SelectedInfoEntity))
             {
-                infoManager.selectedInfoEntity = entities[0].id;
+                InfoRepository.Instance.SelectedInfoEntity = entities[0].id;
             }
 
             var entitiesArray = entities.ToArray(); // FIXME: can we just use the iterator
@@ -169,7 +153,7 @@ namespace HackedDesign.Story
 
                     infoEntityDescriptor.id = entities[i].id;
 
-                    if (infoManager.selectedInfoEntity == entities[i].id)
+                    if (InfoRepository.Instance.SelectedInfoEntity == entities[i].id)
                     {
                         EventSystem.current.SetSelectedGameObject(cbt.gameObject);
                     }
@@ -187,15 +171,14 @@ namespace HackedDesign.Story
 
             if (infoEntityDescriptor != null)
             {
-                infoManager.selectedInfoEntity = infoEntityDescriptor.id;
+                InfoRepository.Instance.SelectedInfoEntity = infoEntityDescriptor.id;
                 RepaintDescription();
             }
         }
 
-
         public void RepaintDescription()
         {
-            var entity = infoManager.GetEntity(infoManager.selectedInfoEntity);
+            var entity = InfoRepository.Instance.GetEntity(InfoRepository.Instance.SelectedInfoEntity);
 
             if (entity != null)
             {
@@ -204,9 +187,7 @@ namespace HackedDesign.Story
             else
             {
                 description.text = "<entity not found>";
-
             }
-
         }
     }
     //}

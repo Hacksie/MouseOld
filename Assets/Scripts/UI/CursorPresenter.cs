@@ -1,10 +1,14 @@
 using UnityEngine;
 
-namespace HackedDesign {
-    public class CursorPresenter : MonoBehaviour {
-
-        public void Repaint () {
-            switch (CoreGame.Instance.state.state) {
+namespace HackedDesign.UI
+{
+    public class CursorPresenter : AbstractPresenter
+    {
+        [SerializeField] private bool debugCursor = false;
+        public override void Repaint()
+        {
+            switch (CoreGame.Instance.state.state)
+            {
                 case GameState.GameStateEnum.MAINMENU:
                 case GameState.GameStateEnum.DIALOGUE:
                 case GameState.GameStateEnum.NARRATION:
@@ -14,10 +18,12 @@ namespace HackedDesign {
                 case GameState.GameStateEnum.GAMEOVER:
                 case GameState.GameStateEnum.MISSIONCOMPLETE:
                 case GameState.GameStateEnum.CAPTURED:
-                    Cursor.visible = true;
+                    if (!Cursor.visible)
+                        Cursor.visible = true;
                     break;
                 default:
-                    //Cursor.visible = false;
+                    if (Cursor.visible && !debugCursor)
+                         Cursor.visible = false;
                     break;
             }
         }

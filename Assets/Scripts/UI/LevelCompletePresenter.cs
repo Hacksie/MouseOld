@@ -1,39 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace HackedDesign {
-	public class LevelCompletePresenter : MonoBehaviour {
+namespace HackedDesign.UI
+{
+    public class LevelCompletePresenter : AbstractPresenter
+    {
         LevelCompleteManager levelCompleteManager;
 
-		private void Show (bool flag) {
-			Logger.Log (this.name, "Set level complete - " + flag);
-			this.gameObject.SetActive (flag);
-		}        
+        public override void Repaint()
+        {
+            if (CoreGame.Instance.state.state == GameState.GameStateEnum.LEVELCOMPLETE)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
+        }
 
-		public void Repaint () {
-			if (CoreGame.Instance.state.state == GameState.GameStateEnum.LEVELCOMPLETE && !this.gameObject.activeInHierarchy) {
-				Show (true);
-			} else if (CoreGame.Instance.state.state != GameState.GameStateEnum.LEVELCOMPLETE && this.gameObject.activeInHierarchy) {
-				Show (false);
-			}
-		}
+        public void Initialize(LevelCompleteManager levelCompleteManager)
+        {
+            this.levelCompleteManager = levelCompleteManager;
+        }
 
-		public void Initialize (LevelCompleteManager levelCompleteManager) {
-			this.levelCompleteManager = levelCompleteManager;
-		}        
+        public void CancelEvent()
+        {
+            CoreGame.Instance.SetPlaying();
+        }
 
-		public void CancelEvent()
-		{
-			CoreGame.Instance.SetPlaying();
-		}
-
-		public void OkEvent()
-		{
-			levelCompleteManager.NextLevel();
-		}
+        public void OkEvent()
+        {
+            levelCompleteManager.NextLevel();
+        }
 
     }
 }

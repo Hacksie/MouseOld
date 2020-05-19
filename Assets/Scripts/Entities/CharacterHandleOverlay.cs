@@ -23,17 +23,13 @@ namespace HackedDesign.Entities
 
         void SetHandleText()
         {
-
             if (text == null)
             {
                 return;
             }
             
-            var character = InfoManager.instance.GetCharacter(this.character);
+            var character = InfoRepository.Instance.GetCharacter(this.character);
             text.text = character.handle;
         }
-
-
-
     }
 }

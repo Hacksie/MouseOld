@@ -8,7 +8,7 @@ namespace HackedDesign
 {
 	namespace Dialogue
 	{
-		public partial class NarrationManager : MonoBehaviour, INarrationManager {
+		public partial class NarrationManager : MonoBehaviour {
 			public static NarrationManager instance;
 
 			public Narration currentNarration;

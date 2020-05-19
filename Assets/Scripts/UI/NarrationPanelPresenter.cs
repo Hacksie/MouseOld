@@ -3,108 +3,91 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using HackedDesign.Story;
+using HackedDesign.Dialogue;
 
-namespace HackedDesign
+namespace HackedDesign.UI
 {
-    namespace Dialogue
+    public class NarrationPanelPresenter : AbstractPresenter
     {
-        public class NarrationPanelPresenter : MonoBehaviour
+
+        public Narration currentNarration = null;
+        public Text text;
+        public Button actionButton;
+        public Text handleText;
+        public Text shortNameText;
+        public Text categoryText;
+        public Text corpText;
+        public Image avatarSprite;
+
+        private NarrationManager narrationManager;
+
+        public void Initialize(NarrationManager narrationManager)
         {
+            this.narrationManager = narrationManager;
 
-            public Narration currentNarration;
+            if (text == null) Debug.LogError("Text is null");
+            if (actionButton == null) Debug.LogError("Button is null");
+        }
 
-            public Text text;
-            public Button actionButton;
-            //public Image actionButtonImage;
-            public Text handleText;
-            public Text shortNameText;
-            public Text categoryText;
-            public Text corpText;
-            public Image avatarSprite;
-            /*
-            public Image avatarHairSprite;
-            public Image avatarEyesSprite;
-            public Image avatarPantsSprite;
-            public Image avatarShirtSprite;
-            public Image avatarShoesSprite;*/
-
-            private Story.InfoManager infoManager;
-            private INarrationManager narrationManager;
-
-
-            public void Initialize(INarrationManager narrationManager, Story.InfoManager info)
+        public override void Repaint()
+        {
+            if (CoreGame.Instance.state.state == GameState.GameStateEnum.NARRATION)
             {
-                this.narrationManager = narrationManager;
-                this.infoManager = info;
+                Show();
 
-                if (text == null) Debug.LogError("Text is null");
-                if (actionButton == null) Debug.LogError("Button is null");
+                if (currentNarration != narrationManager.GetCurrentNarration())
+                {
+                    RepaintNarration();
+                }
+            }
+            else if (this.gameObject.activeInHierarchy)
+            {
+                Hide();
             }
 
-            public void Repaint()
-            {
-                if (CoreGame.Instance.state.state == GameState.GameStateEnum.NARRATION)
-                {
-                    if (!this.gameObject.activeInHierarchy || currentNarration != narrationManager.GetCurrentNarration())
-                    {
-                        Show(true);
-                    }
-                }
-                else if (this.gameObject.activeInHierarchy)
-                {
-                    Show(false);
-                }
+        }
 
+        private void RepaintNarration()
+        {
+            currentNarration = narrationManager.GetCurrentNarration();
+
+            if (currentNarration == null)
+            {
+                Hide();
+                return;
             }
 
-            private void Show(bool flag)
+            var speaker = InfoRepository.Instance.GetCharacter(currentNarration.speaker);
+            var corp = InfoRepository.Instance.GetCorp(speaker.corp);
+            handleText.text = speaker.handle;
+            shortNameText.text = speaker.fullName;
+
+            switch (currentNarration.speakerEmotion)
             {
-                Debug.Log(this.name + ": show narration " + flag);
-                currentNarration = narrationManager.GetCurrentNarration();
-
-                if (currentNarration == null)
-                {
-                    this.gameObject.SetActive(false);
-                    return;
-                }
-
-                this.gameObject.SetActive(flag);
-
-                if (!flag)
-                {
-                    return;
-                }
-
-                var speaker = infoManager.GetCharacter(currentNarration.speaker);
-                var corp = infoManager.GetCorp(speaker.corp);
-                handleText.text = speaker.handle;
-                shortNameText.text = speaker.fullName;
-
-                switch (currentNarration.speakerEmotion)
-                {
-                    case "tired":
-                        avatarSprite.sprite = speaker.avatarTired;
-                        break;
-                    case "thinking":
-                        avatarSprite.sprite = speaker.avatarThinking;
-                        break;
-                    case "happy":
-                        avatarSprite.sprite = speaker.avatarHappy;
-                        break;
-                    case "angry":
-                        avatarSprite.sprite = speaker.avatarAngry;
-                        break;
-                    default:
-                        avatarSprite.sprite = speaker.avatar;
-                        break;
-                }
-
-                corpText.text = "<color=\"" + corp.color + "\">" + corp.name + "</color>";
-                text.text = currentNarration.text;
-
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(actionButton.gameObject);
+                case "tired":
+                    avatarSprite.sprite = speaker.avatarTired;
+                    break;
+                case "thinking":
+                    avatarSprite.sprite = speaker.avatarThinking;
+                    break;
+                case "happy":
+                    avatarSprite.sprite = speaker.avatarHappy;
+                    break;
+                case "angry":
+                    avatarSprite.sprite = speaker.avatarAngry;
+                    break;
+                default:
+                    avatarSprite.sprite = speaker.avatar;
+                    break;
             }
+
+            corpText.text = "<color=\"" + corp.color + "\">" + corp.name + "</color>";
+            text.text = currentNarration.text;
+
+            //EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(actionButton.gameObject);
         }
     }
+
 }

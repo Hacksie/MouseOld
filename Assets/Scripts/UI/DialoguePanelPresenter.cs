@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using HackedDesign.Dialogue;
 
-namespace HackedDesign.Dialogue
+namespace HackedDesign.UI
 {
     public class DialoguePanelPresenter : MonoBehaviour
     {
@@ -51,7 +52,7 @@ namespace HackedDesign.Dialogue
 
         private void Show(bool flag)
         {
-            Dialogue currentDialogue = dialogueManager.GetCurrentDialogue();
+            Dialogue.Dialogue currentDialogue = dialogueManager.GetCurrentDialogue();
 
             if (currentDialogue == null)
             {

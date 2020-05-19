@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HackedDesign.Story;
 
-namespace HackedDesign
+namespace HackedDesign.UI
 {
-    namespace Story
-    {
-        public class TaskPanelPresenter : MonoBehaviour
+
+        public class TaskPanelPresenter : AbstractPresenter
         {
 
             public GameObject taskButtonParent;
             public GameObject taskButtonPrefab;
             public UnityEngine.UI.Text taskDescription;
+
+            private bool dirty = true;
 
             SelectMenuManager selectMenuManager;
 
@@ -20,26 +22,23 @@ namespace HackedDesign
                 this.selectMenuManager = selectMenuManager;
             }
 
-            public void Repaint()
+            public override void Repaint()
             {
                 if (CoreGame.Instance.state.state == GameState.GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.TASKS)
                 {
-                    if (!this.gameObject.activeInHierarchy)
+                    Show();
+                    if (dirty)
                     {
+                        dirty = false;
                         RepaintTasks();
-                        Show(true);
-                    }
+                    }                    
                 }
-                else if (this.gameObject.activeInHierarchy)
+                else
                 {
-                    Show(false);
+                    dirty = true;
+                    Hide();
+                    
                 }
-            }
-
-            private void Show(bool flag)
-            {
-                Debug.Log(this.name + ": set task panel " + flag);
-                this.gameObject.SetActive(flag);
             }
 
             private void RepaintTasks()
@@ -56,8 +55,6 @@ namespace HackedDesign
                     var goTaskItem = go.GetComponent<TaskListItem>();
                     goTaskItem.task = CoreGame.Instance.state.taskList[i];
                     goTaskItem.Repaint();
-                    //var goText = go.GetComponentInChildren<UnityEngine.UI.Text>();
-                    //goText.text = CoreGame.Instance.state.taskList[i].title;
                 }
 
                 RepaintTaskDescription(CoreGame.Instance.state.selectedTask);
@@ -65,7 +62,6 @@ namespace HackedDesign
 
             public void RepaintTaskDescription(Task selectedTask)
             {
-
                 if (CoreGame.Instance.state.selectedTask == null)
                 {
                     taskDescription.text = "";
@@ -76,7 +72,7 @@ namespace HackedDesign
                     taskDescription.text += "\n";
                     if (CoreGame.Instance.state.selectedTask.objectives != null)
                     {
-                        Logger.Log(this.name, "objectives count - " + CoreGame.Instance.state.selectedTask.objectives.Count);
+                        Logger.Log(this, "Objectives count - " + CoreGame.Instance.state.selectedTask.objectives.Count);
                         foreach (TaskObjective objective in CoreGame.Instance.state.selectedTask.objectives)
                         {
                             taskDescription.text += "\n[" + (objective.completed ? "*" : " ") + "] " + objective.objective + (objective.optional ? "(*)" : "");
@@ -88,8 +84,8 @@ namespace HackedDesign
 
             public void ClickEvent()
             {
-                Debug.Log(this.name + ": clicked");
+                Logger.Log(this, "Clicked");
             }
         }
-    }
+    
 }

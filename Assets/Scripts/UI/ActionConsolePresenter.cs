@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace HackedDesign
+namespace HackedDesign.UI
 {
-    public class ActionConsolePresenter : MonoBehaviour
+    public class ActionConsolePresenter : AbstractPresenter
     {
         public RectTransform panel;
         public Text[] line;
@@ -20,22 +20,17 @@ namespace HackedDesign
             this.actionManager = actionManager;
         }
 
-        public void Repaint()
+        public override void Repaint()
         {
             if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
             {
-                Show(true);
+                Show();
                 UpdateLines();
             }
             else
             {
-                Show(false);
+                Hide();
             }
-        }
-
-        private void Show(bool flag)
-        {
-            gameObject.SetActive(flag);
         }
 
         private void UpdateLines()
@@ -43,9 +38,30 @@ namespace HackedDesign
             panel.sizeDelta = new Vector2(panel.sizeDelta.x, 0);
 
             //FIXME: fix the GC alloc
-            var console = this.actionManager.console.Reverse().Take(line.Count()).Reverse().ToArray();
-            for (int i = 0; i < line.Count(); i++)
+            int min = Mathf.Max(actionManager.console.Count() - line.Count(), 0);
+
+            //var console = this.actionManager.console.Reverse().Take(line.Count()).Reverse().ToArray();
+
+            for (int i = line.Count() - 1; i >= 0; i--)
             {
+                if (actionManager.console.Count() - 1 - i < min)
+                {
+                    line[i].text = "";
+                }
+                else
+                {
+                    line[i].text = actionManager.console[actionManager.console.Count() - 1 - i].message;
+                    panel.sizeDelta = new Vector2(panel.sizeDelta.x, panel.sizeDelta.y + line[i].rectTransform.sizeDelta.y);
+                }
+            }
+
+            /*
+            for (int i = actionManager.console.Count(); i > min; i--)
+            {
+                line[i].text = actionManager.console[i].message;
+                    panel.sizeDelta = new Vector2(panel.sizeDelta.x, panel.sizeDelta.y + line[i].rectTransform.sizeDelta.y);
+
+
                 if (i < console.Count())
                 {
                     line[i].text = console[i].message;
@@ -55,7 +71,7 @@ namespace HackedDesign
                 {
                     line[i].text = "";
                 }
-            }
+            }*/
         }
     }
 }

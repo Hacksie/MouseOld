@@ -14,11 +14,11 @@ namespace HackedDesign.Story
                     break;
                 case "Bootstrap1":
                     Debug.Log("PreludeActions: invoke Prelude1");
-                    InfoManager.instance.AddToKnownEntities("Mouse");
-                    InfoManager.instance.AddToKnownEntities("Arisana");
-                    InfoManager.instance.AddToKnownEntities("ManagerLyon");
-                    InfoManager.instance.AddToKnownEntities("Cat");
-                    InfoManager.instance.AddToKnownEntities("Saika");
+                    InfoRepository.Instance.AddToKnownEntities("Mouse");
+                    InfoRepository.Instance.AddToKnownEntities("Arisana");
+                    InfoRepository.Instance.AddToKnownEntities("ManagerLyon");
+                    InfoRepository.Instance.AddToKnownEntities("Cat");
+                    InfoRepository.Instance.AddToKnownEntities("Saika");
                     Dialogue.NarrationManager.instance.ShowNarration("Bootstrap1");
                     break;
                 case "Prelude":
@@ -26,16 +26,16 @@ namespace HackedDesign.Story
                     return true;
                 case "Prelude1":
                     Debug.Log("PreludeActions: invoke Prelude1");
-                    InfoManager.instance.AddToKnownEntities("Mouse");
-                    InfoManager.instance.AddToKnownEntities("Arisana");
-                    InfoManager.instance.AddToKnownEntities("ManagerLyon");
-                    InfoManager.instance.AddToKnownEntities("Cat");
-                    InfoManager.instance.AddToKnownEntities("Saika");
+                    InfoRepository.Instance.AddToKnownEntities("Mouse");
+                    InfoRepository.Instance.AddToKnownEntities("Arisana");
+                    InfoRepository.Instance.AddToKnownEntities("ManagerLyon");
+                    InfoRepository.Instance.AddToKnownEntities("Cat");
+                    InfoRepository.Instance.AddToKnownEntities("Saika");
 
                     ActionManager.instance.AddActionMessage("Task added to current tasks - Bootstrap");
                     if (!CoreGame.Instance.state.taskList.Exists(t => t.id == "bootstrap"))
                     {
-                        var task = TaskDefinitionManager.instance.GetTaskInstance("bootstrap");
+                        var task = TaskDefinitionRepository.Instance.GetTaskInstance("bootstrap");
                         CoreGame.Instance.state.taskList.Add(task);
                         CoreGame.Instance.state.selectedTask = task;
                     }

@@ -2,40 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HackedDesign.Level
+namespace HackedDesign.UI
 {
-
-    public class WorldMapPresenter : MonoBehaviour
+    public class WorldMapPresenter : AbstractPresenter
     {
         public void Initialize()
         {
-            
+
         }
 
-        public void Repaint()
+        public override void Repaint()
         {
             if (CoreGame.Instance.state.state == GameState.GameStateEnum.WORLDMAP)
             {
-                if (!gameObject.activeInHierarchy)
-                {
-                    Show(true);
-                }
+                Show();
             }
-            else if (gameObject.activeInHierarchy)
+            else
             {
-                Show(false);
-            }
-        }
-
-        private void Show(bool flag)
-        {
-            gameObject.SetActive(flag);
-
-            if (!flag)
-            {
-                return;
+                Hide();
             }
         }
     }
-
 }

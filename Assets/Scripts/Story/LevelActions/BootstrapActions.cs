@@ -14,11 +14,11 @@ namespace HackedDesign.Story
                     return true;
                 case "Bootstrap1":
                     Logger.Log("BootstrapActions", "Invoke Bootstrap1");
-                    InfoManager.instance.AddToKnownEntities("Mouse");
-                    InfoManager.instance.AddToKnownEntities("Arisana");
-                    InfoManager.instance.AddToKnownEntities("ManagerLyon");
-                    InfoManager.instance.AddToKnownEntities("Cat");
-                    InfoManager.instance.AddToKnownEntities("Saika");
+                    InfoRepository.Instance.AddToKnownEntities("Mouse");
+                    InfoRepository.Instance.AddToKnownEntities("Arisana");
+                    InfoRepository.Instance.AddToKnownEntities("ManagerLyon");
+                    InfoRepository.Instance.AddToKnownEntities("Cat");
+                    InfoRepository.Instance.AddToKnownEntities("Saika");
                     Dialogue.NarrationManager.instance.ShowNarration("Bootstrap1");
                     return true;
             }

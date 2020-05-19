@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace HackedDesign.Triggers
+namespace HackedDesign
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BaseTrigger))]
     public class Door : MonoBehaviour
     {
-        public Animator animator;
-        public BaseTrigger trigger;
+        [Header("Settings")]
+        [SerializeField] private bool animate = true;
 
-        public int count = 0;
-        public bool open = false;
-        public bool animate = true;
+        private Animator animator;
+        private BaseTrigger trigger;
 
-        private void Start()
+        private int count = 0;
+
+
+        private void Awake()
         {
             animator = GetComponent<Animator>();
             trigger = GetComponent<BaseTrigger>();
@@ -25,12 +27,6 @@ namespace HackedDesign.Triggers
         public void Initialize()
         {
         }
-
-        // FIXME: Create coregame loop
-        //private void LateUpdate()
-        //{
-        //    UpdateAnimation();
-        //}
 
         public void UpdateAnimation()
         {
@@ -43,13 +39,14 @@ namespace HackedDesign.Triggers
         public void Open()
         {
             count++;
-            open = true;
         }
 
         public void Close()
         {
-            count--;
-            open = false;
+            if (count > 0)
+            {
+                count--;
+            }
         }
     }
 }

@@ -1,28 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace HackedDesign
+namespace HackedDesign.UI
 {
-    public class TaskListItem : MonoBehaviour
+    public class TaskListItem : AbstractPresenter
     {
         public Story.Task task;
 
         [Header("Reference GameObjects")]
         [SerializeField] private UnityEngine.UI.Text label = null;
 
-        void Awake()
-        {
-            //text = GetComponent<UnityEngine.UI.Text>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
-        public void Repaint()
+        public override void Repaint()
         {
             if (task != null)
             {

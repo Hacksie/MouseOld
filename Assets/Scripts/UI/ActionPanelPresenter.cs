@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HackedDesign
+namespace HackedDesign.UI
 {
-    public class ActionPanelPresenter : MonoBehaviour
+    public class ActionPanelPresenter : AbstractPresenter
     {
         public Image batterySprite;
         public Text bugsCountText;
@@ -17,26 +17,18 @@ namespace HackedDesign
             batterySpriteMaxSize = batterySprite.rectTransform.sizeDelta;
         }
 
-        public void Repaint()
+        public override void Repaint()
         {
             if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
             {
-                if (!gameObject.activeInHierarchy)
-                {
-                    Show(true);
-                }
+                Show();
                 RepaintCounts();
             }
-            else if (gameObject.activeInHierarchy)
+            else
             {
-                Show(false);
+                Hide();
             }
         }
-
-        private void Show(bool flag)
-        {
-            this.gameObject.SetActive(flag);
-        }   
 
         private void RepaintCounts()
         {

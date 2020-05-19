@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Experimental.Rendering.Universal;
 
-namespace HackedDesign.Triggers
+namespace HackedDesign
 {
     [RequireComponent(typeof(Collider2D))]
-    public class BaseTrigger : MonoBehaviour, ITrigger
+    public class BaseTrigger : MonoBehaviour
     {
         protected new Collider2D collider;
         protected ShadowCaster2D shadow;
@@ -19,7 +19,6 @@ namespace HackedDesign.Triggers
         public bool allowBug = false;
         public bool allowHack = false;
         public bool allowOverload = false;
-
         public bool allowRepeatInteractions = false;
         public bool allowNPCAutoInteraction = false;
 
@@ -39,11 +38,11 @@ namespace HackedDesign.Triggers
         public bool bugged = false;
         private List<GameObject> colliders = new List<GameObject>();
 
-        protected void Start()
+        private void Start()
         {
             if (!CompareTag(TagManager.TRIGGER))
             {
-                Logger.LogError(name,"trigger is not tagged: " + name);
+                Logger.LogError(this ,"Trigger is not tagged");
             }
         }
 
@@ -221,12 +220,6 @@ namespace HackedDesign.Triggers
                     Invoke(other.gameObject);
                 }
             }
-
-            //if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)) && !colliders.Contains(other.gameObject))
-            //{
-            //    colliders.Add(other.gameObject);
-            //    Entry(other.gameObject);
-            //}
         }
 
         //FIXME: Move input code outside of physics update
@@ -236,15 +229,6 @@ namespace HackedDesign.Triggers
             {
                 return;
             }
-
-            /*    
-            if (allowRepeatInteractions)
-            {
-                if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)) && !colliders.Contains(other.gameObject))
-                {
-                    colliders.Add(other.gameObject);
-                }
-            }*/
         }
 
         protected virtual void OnTriggerExit2D(Collider2D other)
@@ -265,15 +249,6 @@ namespace HackedDesign.Triggers
             {
                 Leave(other.gameObject);
             }
-            /*
-            if ((other.CompareTag(TagManager.PLAYER) || other.CompareTag(TagManager.NPC)))
-            {
-
-                //Debug.Log(this.name + ": removed from collider list " + other.gameObject);
-                if (colliders.Contains(other.gameObject))
-                    colliders.Remove(other.gameObject);
-            }*/
         }
     }
-
 }

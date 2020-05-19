@@ -9,7 +9,7 @@ namespace HackedDesign
     {
         public class EntityManager : MonoBehaviour
         {
-            public static EntityManager instance;
+            public static EntityManager Instance { get; private set;}
 
             [Header("Prefabs")]
             public List<GameObject> enemies = null;
@@ -20,10 +20,9 @@ namespace HackedDesign
 
             [SerializeField] private GameObject npcPoolParent = null;
 
-
             EntityManager()
             {
-                instance = this;
+                Instance = this;
             }
 
             public void Initialize()

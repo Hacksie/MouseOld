@@ -1,10 +1,12 @@
-﻿namespace HackedDesign
-{
-    using System.IO;
-    using UnityEngine;
-    using UnityEngine.Rendering;
-    using UnityEngine.Experimental.Rendering.Universal;
+﻿
+using System.IO;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Experimental.Rendering.Universal;
 
+
+namespace HackedDesign
+{
     public class CoreGame : MonoBehaviour
     {
         [Header("Test Flags")]
@@ -39,38 +41,34 @@
         [Header("UI")]
         [SerializeField] private Input.MobileInputUIPresenter mobileInputUI = null;
         [SerializeField] private GameObject UI = null;
-        [SerializeField] private CursorPresenter cursorPresenter = null;
-        [SerializeField] private MainMenuPresenter mainMenu = null;
+        [SerializeField] private UI.CursorPresenter cursorPresenter = null;
+        [SerializeField] private UI.MainMenuPresenter mainMenu = null;
         [SerializeField] private Story.ActionManager actionManager = null;
-        [SerializeField] private ActionConsolePresenter actionConsolePanel = null;
+        [SerializeField] private UI.ActionConsolePresenter actionConsolePanel = null;
         [SerializeField] private StartMenuManager startMenuManager = null;
-        [SerializeField] private StartMenuPanelPresenter startMenuPanel = null;
+        [SerializeField] private UI.StartMenuPanelPresenter startMenuPanel = null;
         [SerializeField] private SelectMenuManager selectMenuManager = null;
-        [SerializeField] private SelectMenuPanelPresenter selectMenuPanel = null;
-        [SerializeField] private ActionPanelPresenter actionPanel = null;
-        [SerializeField] private Story.InfoManager infoManager = null;
-        [SerializeField] private Story.InfoPanelPresenter infoPanel = null;
-        [SerializeField] private StashPanelPresenter stashPanel = null;
-        [SerializeField] private PsychPanelPresenter psychPanel = null;
-        [SerializeField] private Story.TaskDefinitionManager taskManager = null;
-        [SerializeField] private Story.TaskPanelPresenter taskPanel = null;
+        [SerializeField] private UI.SelectMenuPanelPresenter selectMenuPanel = null;
+        [SerializeField] private UI.ActionPanelPresenter actionPanel = null;
+        [SerializeField] private UI.InfoPanelPresenter infoPanel = null;
+        [SerializeField] private UI.StashPanelPresenter stashPanel = null;
+        [SerializeField] private UI.PsychPanelPresenter psychPanel = null;
+        [SerializeField] private UI.TaskPanelPresenter taskPanel = null;
         [SerializeField] private Dialogue.NarrationManager narrationManager = null;
-        [SerializeField] private Dialogue.NarrationPanelPresenter narrationPanel = null;
+        [SerializeField] private UI.NarrationPanelPresenter narrationPanel = null;
         [SerializeField] private MissionCompleteManager missionCompleteManager = null;
         [SerializeField] private LevelCompleteManager levelCompleteManager = null;
-        [SerializeField] private LevelCompletePresenter levelCompletePresenter = null;
-        [SerializeField] private MissionCompletePresenter missionCompletePanel = null;
-        [SerializeField] private Level.MinimapPresenter minimapPanel = null;
-        [SerializeField] private TitlecardPresenter titlecardPanel = null;
-        [SerializeField] private Level.LevelMapPanelPresenter levelMapPanel = null;
-        [SerializeField] private TimerPanelPresenter timerPanel = null;
-        [SerializeField] private Level.WorldMapPresenter worldMapPanel = null;
+        [SerializeField] private UI.LevelCompletePresenter levelCompletePresenter = null;
+        [SerializeField] private UI.MissionCompletePresenter missionCompletePanel = null;
+        [SerializeField] private UI.MinimapPresenter minimapPanel = null;
+        [SerializeField] private UI.TitlecardPresenter titlecardPanel = null;
+        [SerializeField] private UI.TimerPanelPresenter timerPanel = null;
+        [SerializeField] private UI.WorldMapPresenter worldMapPanel = null;
 
         private CoreGame()
         {
             Instance = this;
         }
-
 
         public static CoreGame Instance { get; private set; }
 
@@ -123,16 +121,17 @@
                 case GameState.GameStateEnum.NARRATION:
                 case GameState.GameStateEnum.PLAYING:
                     UpdateDoorAnimations();
+                    playerController.Animate();
                     break;
             }
         }
 
         public void LoadNewGame()
         {
-            Logger.Log(name, "Loading new game");
+            Logger.Log(this, "Loading new game");
             state.state = GameState.GameStateEnum.LOADING;
             entityManager.Initialize();
-            actionManager.Initialize(entityManager, taskManager);
+            actionManager.Initialize(entityManager);
             state.currentLevel = levelGenerator.GenerateLevel(newGameLevel, 0, 0, 0);
             state.isRandom = false;
             state.player = new GameState.PlayerState();
@@ -141,30 +140,30 @@
 
         public void LoadRandomGame(string template, int length, int height, int width, int difficulty, int enemies, int traps)
         {
-            Logger.Log(name, "Loading random game");
+            Logger.Log(this, "Loading random game");
             state.state = GameState.GameStateEnum.LOADING;
             state.currentLevel = levelGenerator.GenerateLevel(template, length, height, width, difficulty, enemies, traps);
             state.isRandom = true;
             state.player = new GameState.PlayerState();
             entityManager.Initialize();
-            actionManager.Initialize(entityManager, taskManager);
+            actionManager.Initialize(entityManager);
             SceneInitialize();
         }
 
         public void LoadNewLevel(string template)
         {
-            Logger.Log(name, "Loading new level");
+            Logger.Log(this, "Loading new level");
             state.state = GameState.GameStateEnum.LOADING;
             state.entityList.Clear();
             state.currentLevel = levelGenerator.GenerateLevel(template);
             entityManager.Initialize();
-            actionManager.Initialize(entityManager, taskManager);
+            actionManager.Initialize(entityManager);
             SceneInitialize();
         }
 
         public void EndGame()
         {
-            Logger.Log(name, "End Game");
+            Logger.Log(this, "End Game");
             state.state = GameState.GameStateEnum.MAINMENU;
             RepaintAllUI();
             levelRenderer.DestroyLevel();
@@ -178,23 +177,19 @@
         /// </summary>
         public void SceneInitialize()
         {
-            Logger.Log(name, "Scene initialization");
+            Logger.Log(this, "Scene initialization");
             ShowPlayer(true);
             SetLight(GameState.GlobalLightTypes.Default);
 
             levelRenderer.Render(state.currentLevel);
-
             levelRenderer.PopulateLevelDoors(state.currentLevel, state.doorList);
-            levelRenderer.PopulateNPCSpawns(state.currentLevel, state.entityList); 
+            levelRenderer.PopulateNPCSpawns(state.currentLevel, state.entityList);
             levelRenderer.PopulateEnemySpawns(state.currentLevel, state.enemyList);
-            //this.state.entityList.AddRange(levelRenderer.PopulateTrapSpawns(this.state.currentLevel));
-
-            levelMapPanel.Initialize(selectMenuManager, state.currentLevel);
             minimapPanel.Initialize(state.currentLevel);
 
             player.transform.position = state.currentLevel.ConvertLevelPosToWorld(state.currentLevel.playerSpawn.levelLocation) + state.currentLevel.playerSpawn.worldOffset;
 
-            
+
 
             SceneTriggersInitialize();
             CreateAlert();
@@ -217,34 +212,34 @@
 
         public void GameOver()
         {
-            Logger.Log(name, "Game Over");
+            Logger.Log(this, "Game Over");
             state.state = GameState.GameStateEnum.GAMEOVER;
         }
 
         public void SetTitlecard()
         {
-            Logger.Log(name, "State set to TITLECARD");
+            Logger.Log(this, "State set to TITLECARD");
             Time.timeScale = 0;
             state.state = GameState.GameStateEnum.TITLECARD;
         }
 
         public void SetPlaying()
         {
-            Logger.Log(name, "State set to PLAYING");
+            Logger.Log(this, "State set to PLAYING");
             Time.timeScale = 1;
             state.state = GameState.GameStateEnum.PLAYING;
         }
 
         public void SetDialogue()
         {
-            Logger.Log(name, "State set to DIALOGUE");
+            Logger.Log(this, "State set to DIALOGUE");
             Time.timeScale = 0;
             state.state = GameState.GameStateEnum.DIALOGUE;
         }
 
         public void SetNarration()
         {
-            Logger.Log(name, "State set to NARRATION");
+            Logger.Log(this, "State set to NARRATION");
             Time.timeScale = 0;
             state.state = GameState.GameStateEnum.NARRATION;
             RepaintAllUI();
@@ -252,7 +247,7 @@
 
         public void SetMissionComplete()
         {
-            Logger.Log(name, "State set to MISSION COMPLETE");
+            Logger.Log(this, "State set to MISSION COMPLETE");
             Time.timeScale = 0;
             state.state = GameState.GameStateEnum.MISSIONCOMPLETE;
             RepaintAllUI();
@@ -260,7 +255,7 @@
 
         public void SetLevelComplete()
         {
-            Logger.Log(name, "State set to LEVEL COMPLETE");
+            Logger.Log(this, "State set to LEVEL COMPLETE");
             Time.timeScale = 0;
             state.state = GameState.GameStateEnum.LEVELCOMPLETE;
             RepaintAllUI();
@@ -268,7 +263,7 @@
 
         public void SetWorldMap()
         {
-            Logger.Log(name, "State set to WORLDMAP");
+            Logger.Log(this, "State set to WORLDMAP");
             Time.timeScale = 0;
             state.state = GameState.GameStateEnum.WORLDMAP;
         }
@@ -305,7 +300,7 @@
 
         public void SetAlert(GameObject trap)
         {
-            Logger.Log(name, "Set alert");
+            Logger.Log(this, "Set alert");
             state.alertTrap = trap;
             roomAlert.transform.position = trap.transform.position;
             roomAlert.SetActive(true);
@@ -313,18 +308,18 @@
 
         public void ClearAlert()
         {
-            Logger.Log(name, "Clear alert");
+            Logger.Log(this, "Clear alert");
             state.alertTrap = null;
             roomAlert.SetActive(false);
         }
 
         public void SaveGame()
         {
-            Logger.Log(name, "Saving state");
+            Logger.Log(this, "Saving state");
             string json = JsonUtility.ToJson(state);
             string path = Path.Combine(Application.persistentDataPath, $"SaveFile{state.gameSlot}.json");
             File.WriteAllText(path, json);
-            Logger.Log(name, "Saved ", path);
+            Logger.Log(this, "Saved ", path);
         }
 
         public void UpdateLights()
@@ -363,21 +358,15 @@
             return state.state == GameState.GameStateEnum.PLAYING || state.state == GameState.GameStateEnum.NARRATION || state.state == GameState.GameStateEnum.STARTMENU || state.state == GameState.GameStateEnum.SELECTMENU || CoreGame.Instance.state.state == GameState.GameStateEnum.LEVELCOMPLETE || state.state == GameState.GameStateEnum.WORLDMAP;
         }
 
-
-
         private void CheckBindings()
         {
             if (entityManager == null)
             {
-                Logger.Log(name, "entityManager not set");
+                Logger.Log(this, "entityManager not set");
             }
             if (cursorPresenter == null)
             {
-                Logger.Log(name, "cursorPresenter not set");
-            }
-            if (levelMapPanel == null)
-            {
-                Logger.Log(name, "levelMapPanel not set");
+                Logger.Log(this, "cursorPresenter not set");
             }
         }
 
@@ -388,32 +377,30 @@
         {
             state = new GameState.GameState();
             state.state = GameState.GameStateEnum.MAINMENU;
-            Logger.Log(name, "Initialization");
+            Logger.Log(this, "Initialization");
 
-            GraphicsSettings.transparencySortMode = TransparencySortMode.CustomAxis;
-            GraphicsSettings.transparencySortAxis = new Vector3(0.0f, 1.0f, 0.0f);
+            // GraphicsSettings.transparencySortMode = TransparencySortMode.CustomAxis;
+            // GraphicsSettings.transparencySortAxis = new Vector3(0.0f, 1.0f, 0.0f);
 
             playerController = player.GetComponent<PlayerController>();
 
             UI.SetActive(true);
             SetPlatformInput();
             narrationManager.Initialize();
-            infoManager.Initialize();
-            taskManager.Initialize();
             missionCompleteManager.Initialize(actionManager);
             levelCompleteManager.Initialize(actionManager);
             mobileInputUI.Initialize();
             actionConsolePanel.Initialize(actionManager);
-            infoPanel.Initialize(infoManager, selectMenuManager);
+            infoPanel.Initialize(selectMenuManager);
             stashPanel.Initialize(selectMenuManager);
             psychPanel.Initialize(selectMenuManager);
             taskPanel.Initialize(selectMenuManager);
             startMenuPanel.Initialize(state, startMenuManager);
-            selectMenuPanel.Initialize(selectMenuManager, infoPanel, taskPanel, stashPanel, psychPanel, levelMapPanel);
-            narrationPanel.Initialize(narrationManager, infoManager);
+            selectMenuPanel.Initialize(selectMenuManager, infoPanel, taskPanel, stashPanel, psychPanel);
+            narrationPanel.Initialize(narrationManager);
             actionPanel.Initialize(playerController);
             titlecardPanel.Initialize(actionManager);
-            levelRenderer.Initialize(entityManager, infoManager, levelParent, enemiesParent, polyNav2D);
+            levelRenderer.Initialize(entityManager, levelParent, enemiesParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
             levelCompletePresenter.Initialize(levelCompleteManager);
             worldMapPanel.Initialize();
@@ -424,7 +411,7 @@
         private void SceneTriggersInitialize()
         {
             state.triggerList.Clear();
-            Logger.Log(name, "initializing triggers");
+            Logger.Log(this, "Initializing triggers");
 
             foreach (var triggerObject in GameObject.FindGameObjectsWithTag(TagManager.TRIGGER))
             {
@@ -433,8 +420,8 @@
                     continue;
                 }
 
-                Logger.Log(name, "initializing trigger - ", triggerObject.name);
-                Triggers.ITrigger trigger = triggerObject.GetComponent<Triggers.ITrigger>();
+                Logger.Log(this, "Initializing trigger - ", triggerObject.name);
+                BaseTrigger trigger = triggerObject.GetComponent<BaseTrigger>();
                 if (trigger != null)
                 {
                     state.triggerList.Add(trigger);
@@ -445,14 +432,13 @@
 
         private void SetPlatformInput()
         {
-            
             switch (testPlatformFlag ? testPlatform : Application.platform)
             {
                 case RuntimePlatform.Android:
-                    Logger.Log(name, "input platform Android");
+                    Logger.Log(this, "Input platform Android");
                     break;
                 default:
-                    Logger.Log(name, "input platform Default");
+                    Logger.Log(this, "Input platform Default");
                     break;
             }
         }
@@ -468,7 +454,6 @@
             levelCompletePresenter.Repaint();
             stashPanel.Repaint();
             psychPanel.Repaint();
-            levelMapPanel.Repaint();
             actionPanel.Repaint();
             timerPanel.Repaint();
             mobileInputUI.Repaint();
@@ -496,7 +481,7 @@
 
         private void PlayingUpdate()
         {
-            //playerController.UpdateMovement(inputController);
+            playerController.UpdateTransform();
             //PlayingNPCUpdate();
             PlayingEnemyUpdate();
             PlayingTriggerUpdate();

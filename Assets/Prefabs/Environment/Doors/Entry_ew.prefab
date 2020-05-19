@@ -318,7 +318,7 @@ MonoBehaviour:
   - {x: -0.5, y: 1.25, z: 0}
   m_ShapePathHash: 848688405
   m_Mesh: {fileID: 0}
-  m_InstanceId: 322342
+  m_InstanceId: 346926
 --- !u!1 &5655707733936147515
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +388,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1344584367
-  m_SortingLayer: -3
+  m_SortingLayer: -1
   m_SortingOrder: 1
   m_Sprite: {fileID: -2232060510679477986, guid: 664b54a6d8e280a4c9404a8903fd234b,
     type: 3}
@@ -413,7 +413,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: c344fd524f6fd4245bae55504ebea3ef,
+      objectReference: {fileID: 21300000, guid: 0cbce04a4c97248978759bd6abbcfa98,
         type: 3}
     - target: {fileID: 1205910083837189476, guid: 468b9302c01989d4780290de629c1591,
         type: 3}

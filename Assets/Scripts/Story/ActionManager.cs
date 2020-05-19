@@ -10,24 +10,22 @@ namespace HackedDesign.Story
     {
         public static ActionManager instance;
         public Entities.EntityManager entityManager;
-        public TaskDefinitionManager taskManager;
 
         private Dictionary<string, ILevelActions> actions = new Dictionary<string, ILevelActions>();
 
         [SerializeField]
         private float timeOut = 10.0f;
 
-        public Queue<ActionMessage> console = new Queue<ActionMessage>();
+        public List<ActionMessage> console = new List<ActionMessage>();
 
         ActionManager()
         {
             instance = this;
         }
 
-        public void Initialize(Entities.EntityManager entityManager, TaskDefinitionManager taskManager)
+        public void Initialize(Entities.EntityManager entityManager)
         {
             this.entityManager = entityManager;
-            this.taskManager = taskManager;
             actions.Clear();
             actions.Add("Global", new GlobalActions());
             actions.Add("Bootstrap", new BootstrapActions());
@@ -38,7 +36,7 @@ namespace HackedDesign.Story
 
         public void AddActionMessage(string message)
         {
-            console.Enqueue(new ActionMessage()
+            console.Add(new ActionMessage()
             {
                 time = Time.time,
                 message = message
@@ -50,9 +48,9 @@ namespace HackedDesign.Story
             // Pop items off the console one frame at a time
             if (console.Count > 0)
             {
-                if ((Time.time - console.Peek().time) > timeOut)
+                if ((Time.time - console[0].time) > timeOut)
                 {
-                    console.Dequeue();
+                    console.RemoveAt(0);
                 }
             }
         }
@@ -68,7 +66,7 @@ namespace HackedDesign.Story
 
             if (CoreGame.Instance.state.currentLevel == null)
             {
-                Debug.LogError(this.name + ": cannot invoke an action if no level is loaded");
+                Logger.LogError(this,"Cannot invoke an action if no level is loaded");
             }
 
             bool handled = false;
@@ -83,7 +81,7 @@ namespace HackedDesign.Story
 
             if(!handled)
             {
-                Debug.LogError(this.name + ": cannot invoke action: " + actionName + " in current level: " + CoreGame.Instance.state.currentLevel.template.name);
+                Logger.LogError(this, "Cannot invoke action: ", actionName, " in current level: ", CoreGame.Instance.state.currentLevel.template.name);
             }
         }
     }
