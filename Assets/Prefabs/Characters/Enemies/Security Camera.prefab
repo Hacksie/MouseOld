@@ -181,6 +181,7 @@ MonoBehaviour:
   direction: {x: 0, y: -1}
   stationary: 1
   patrolTime: 10
+  rotateSpeed: 45
   playerSeenEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -190,7 +191,6 @@ MonoBehaviour:
   alertEvent:
     m_PersistentCalls:
       m_Calls: []
-  state: 0
 --- !u!114 &1967568288128231760
 MonoBehaviour:
   m_ObjectHideFlags: 0

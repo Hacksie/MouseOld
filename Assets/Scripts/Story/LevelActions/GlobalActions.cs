@@ -13,17 +13,17 @@ namespace HackedDesign.Story
                     Logger.Log("GlobalActions", "GlobalActions: invoke TriggerEntry");
                     // FIXME: Check if any other condition exists first!
                     ActionManager.instance.AddActionMessage("Entry triggered");
-                    var timer = GameManager.Instance.state.currentLevel.template.levelLength * 10;
+                    var timer = GameManager.Instance.GameState.CurrentLevel.template.levelLength * 10;
 
                     ActionManager.instance.AddActionMessage($"{timer} seconds until security triggers!");
-                    GameManager.Instance.state.currentLevel.startTime = Time.time;
-                    GameManager.Instance.state.currentLevel.timer.Start(timer);
+                    GameManager.Instance.GameState.CurrentLevel.startTime = Time.time;
+                    GameManager.Instance.GameState.CurrentLevel.timer.Start(timer);
                     //CoreGame.Instance.state.currentLight = GlobalLightTypes.Warn;
                     return true;
                 case "BatteryFill":
                     Logger.Log("GlobalActions", "GlobalActions: invoke BatteryFill");
                     ActionManager.instance.AddActionMessage("battery filled");
-                    GameManager.Instance.state.player.battery = GameManager.Instance.state.player.maxBattery;
+                    GameManager.Instance.GameState.Player.battery = GameManager.Instance.GameState.Player.maxBattery;
                     return true;
                 case "TimerStart":
                     Logger.Log("GlobalActions", "GlobalActions: invoke TimerStart");
@@ -33,32 +33,32 @@ namespace HackedDesign.Story
                     return true;
                 case "TimerExpired":
                     Logger.Log("GlobalActions", "invoke TimerEnd");
-                    GameManager.Instance.state.currentLight = GlobalLightTypes.Alert;
+                    GameManager.Instance.GameState.currentLight = GlobalLightTypes.Alert;
                     return true;
                 case "EndComputer":
                     Logger.Log("GlobalActions", "invoke EndComputer");
                     ActionManager.instance.AddActionMessage("alert shutdown");
-                    GameManager.Instance.state.currentLevel.timer.Start(GameManager.Instance.state.player.baselevelTimer);
-                    GameManager.Instance.state.currentLight = GlobalLightTypes.Default;
-                    GameManager.Instance.state.currentLevel.completed = true;
+                    GameManager.Instance.GameState.CurrentLevel.timer.Start(GameManager.Instance.GameState.Player.baselevelTimer);
+                    GameManager.Instance.GameState.currentLight = GlobalLightTypes.Default;
+                    GameManager.Instance.GameState.CurrentLevel.completed = true;
                     return true;
                 case "Captured":
                     return true;
                 case "LevelExit":
                     Logger.Log("GlobalActions", "invoke LevelExit");
-                    if(GameManager.Instance.state.currentLevel.completed)
+                    if(GameManager.Instance.GameState.CurrentLevel.completed)
                     {
-                        if (GameManager.Instance.state.currentLevel.template.hostile)
+                        if (GameManager.Instance.GameState.CurrentLevel.template.hostile)
                         {
                             ActionManager.instance.AddActionMessage("mission completed");
-                            GameManager.Instance.state.currentLevel.timer.Stop();
+                            GameManager.Instance.GameState.CurrentLevel.timer.Stop();
                             Logger.Log("GlobalActions", "Level Over");
                             GameManager.Instance.SetMissionComplete();
                         }
                         else
                         {
                             ActionManager.instance.AddActionMessage("level completed");
-                            GameManager.Instance.state.currentLevel.timer.Stop();
+                            GameManager.Instance.GameState.CurrentLevel.timer.Stop();
                             Logger.Log("GlobalActions", "Level Over");
                             GameManager.Instance.SetLevelComplete();
                         }

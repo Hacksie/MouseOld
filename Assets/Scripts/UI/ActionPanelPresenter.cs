@@ -19,7 +19,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.state.state == GameStateEnum.PLAYING)
+            if (GameManager.Instance.GameState.IsPlaying())
             {
                 Show();
                 RepaintCounts();
@@ -34,7 +34,7 @@ namespace HackedDesign.UI
         {
             dashCooldown.fillAmount = 1 - playerController.DashPercentageComplete;
             //bugsCountText.text = CoreGame.Instance.state.player.bugs.ToString();
-            batterySprite.rectTransform.sizeDelta = new Vector2(batterySpriteMaxSize.x * GameManager.Instance.state.player.battery / GameManager.Instance.state.player.maxBattery, batterySpriteMaxSize.y);
+            batterySprite.rectTransform.sizeDelta = new Vector2(batterySpriteMaxSize.x * GameManager.Instance.GameState.Player.battery / GameManager.Instance.GameState.Player.maxBattery, batterySpriteMaxSize.y);
         }
     }
 }

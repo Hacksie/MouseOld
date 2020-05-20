@@ -6,7 +6,7 @@ namespace HackedDesign.UI
 {
     public abstract class AbstractPresenter : MonoBehaviour
     {
-        protected void Show()
+        public void Show()
         {
             if (!gameObject.activeInHierarchy)
             {
@@ -14,7 +14,7 @@ namespace HackedDesign.UI
             }
         }
 
-        protected void Hide()
+        public void Hide()
         {
             if (gameObject.activeInHierarchy)
             {

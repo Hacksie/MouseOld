@@ -32,7 +32,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.state.state == GameStateEnum.NARRATION)
+            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Narration)
             {
                 Show();
 

@@ -24,7 +24,7 @@ namespace HackedDesign.Entities
 
         private void Update()
         {
-            if (!GameManager.Instance.IsPlaying())
+            if (!GameManager.Instance.GameState.IsPlaying())
                 return;
 
             var tempdirection = NormaliseDirectionVector(DirectionToPlayer());

@@ -15,6 +15,7 @@ namespace HackedDesign
         [SerializeField] private float dashDistance = 2.5f;
         [SerializeField] private float dashCooldown = 5.0f;
         [SerializeField] private float dashTimeToComplete = 0.2f;
+        [SerializeField] private float augmentFactor = 0.1f;
 
         private Vector2 movementVector;
         private Animator anim;
@@ -51,7 +52,7 @@ namespace HackedDesign
 
         public void InteractEvent(InputAction.CallbackContext context)
         {
-            if (GameManager.Instance.state.state == GameStateEnum.PLAYING)
+            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Playing)
             {
                 if (context.performed)
                 {
@@ -65,7 +66,7 @@ namespace HackedDesign
 
         public void DashEvent(InputAction.CallbackContext context)
         {
-            if (GameManager.Instance.state.state == GameStateEnum.PLAYING && context.performed && (Time.time - dashTimer) > dashCooldown)
+            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Playing && context.performed && (Time.time - dashTimer) > dashCooldown)
             {
                 IsDashing = true;
                 dashTimer = Time.time;
@@ -74,7 +75,7 @@ namespace HackedDesign
 
         public void BugEvent(InputAction.CallbackContext context)
         {
-            if (GameManager.Instance.state.state != GameStateEnum.PLAYING || !context.performed)
+            if (GameManager.Instance.GameState.PlayState != PlayStateEnum.Playing || !context.performed)
             {
                 return;
             }
@@ -87,7 +88,7 @@ namespace HackedDesign
 
         public void HackEvent(InputAction.CallbackContext context)
         {
-            if (GameManager.Instance.state.state != GameStateEnum.PLAYING || !context.performed)
+            if (GameManager.Instance.GameState.PlayState != PlayStateEnum.Playing || !context.performed)
             {
                 return;
             }
@@ -100,7 +101,7 @@ namespace HackedDesign
 
         public void OverloadEvent(InputAction.CallbackContext context)
         {
-            if (GameManager.Instance.state.state != GameStateEnum.PLAYING || !context.performed)
+            if (GameManager.Instance.GameState.PlayState != PlayStateEnum.Playing || !context.performed)
             {
                 return;
             }
@@ -168,7 +169,6 @@ namespace HackedDesign
             if (IsDashing)
             {
                 transform.Translate(movementVector * dashDistance * Time.deltaTime);
-                //performedDashDistance += dashDistance * Time.deltaTime;
                 if ((Time.time - dashTimer) > dashTimeToComplete)
                 {
                     IsDashing = false;
@@ -180,7 +180,7 @@ namespace HackedDesign
                 movementVector = Vector2.zero;
             }
 
-            transform.Translate(movementVector * (baseMovementSpeed + (GameManager.Instance.state.player.movementAugments / 10.0f)) * Time.deltaTime);
+            transform.Translate(movementVector * (baseMovementSpeed + (GameManager.Instance.GameState.Player.movementAugments * augmentFactor)) * Time.deltaTime);
         }
     }
 }

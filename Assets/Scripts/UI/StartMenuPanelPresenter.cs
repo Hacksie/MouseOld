@@ -4,12 +4,11 @@ namespace HackedDesign.UI
 {
     public class StartMenuPanelPresenter : AbstractPresenter
     {
-        GameState state;
         StartMenuManager startMenuManager = null;
 
         public override void Repaint()
         {
-            if (state.state == GameStateEnum.STARTMENU)
+            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.StartMenu)
             {
                 Show();
             }
@@ -19,9 +18,8 @@ namespace HackedDesign.UI
             }
         }
 
-        public void Initialize(GameState state, StartMenuManager startMenuManager)
+        public void Initialize(StartMenuManager startMenuManager)
         {
-            this.state = state;
             this.startMenuManager = startMenuManager;
         }
 

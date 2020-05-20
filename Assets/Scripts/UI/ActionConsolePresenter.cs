@@ -22,7 +22,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.state.state == GameStateEnum.PLAYING)
+            if (GameManager.Instance.GameState.IsPlaying())
             {
                 Show();
                 UpdateLines();

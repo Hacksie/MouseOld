@@ -33,13 +33,13 @@ namespace HackedDesign.Story
                     InfoRepository.Instance.AddToKnownEntities("Saika");
 
                     ActionManager.instance.AddActionMessage("Task added to current tasks - Bootstrap");
-                    if (!GameManager.Instance.state.taskList.Exists(t => t.id == "bootstrap"))
+                    if (!GameManager.Instance.GameState.TaskList.Exists(t => t.id == "bootstrap"))
                     {
                         var task = TaskDefinitionRepository.Instance.GetTaskInstance("bootstrap");
-                        GameManager.Instance.state.taskList.Add(task);
-                        GameManager.Instance.state.selectedTask = task;
+                        GameManager.Instance.GameState.TaskList.Add(task);
+                        GameManager.Instance.GameState.selectedTask = task;
                     }
-                    GameManager.Instance.state.currentLevel.completed = true;
+                    GameManager.Instance.GameState.CurrentLevel.completed = true;
 
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
                     return true;
@@ -83,7 +83,7 @@ namespace HackedDesign.Story
                 case "PreludeCat":
                 case "PreludeCat1":
                     Debug.Log("PreludeActions: prelude Cat");
-                    GameManager.Instance.state.story.prelude_cat_talk = true;
+                    GameManager.Instance.GameState.Story.prelude_cat_talk = true;
                     Dialogue.NarrationManager.instance.ShowNarration("PreludeCat1");
                     return true;
                 case "PreludeCat2":
@@ -124,9 +124,9 @@ namespace HackedDesign.Story
         public void PreludeLaptop()
         {
             Debug.Log("PreludeActions: prelude laptop");
-            GameManager.Instance.state.story.prelude_laptop = true;
-            SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
-            GameManager.Instance.state.state = GameStateEnum.SELECTMENU;
+            GameManager.Instance.GameState.Story.prelude_laptop = true;
+            SelectMenuManager.instance.MenuState = SelectMenuState.Tasks;
+            GameManager.Instance.GameState.PlayState = PlayStateEnum.SelectMenu;
 
             
         }
@@ -134,7 +134,7 @@ namespace HackedDesign.Story
 
         public void PreludeExit()
         {
-            if (GameManager.Instance.state.currentLevel.completed)
+            if (GameManager.Instance.GameState.CurrentLevel.completed)
             {
                 GameManager.Instance.SetWorldMap();
                 //CoreGame.Instance.LoadNewLevel("Bootstrap");

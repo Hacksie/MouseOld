@@ -13,14 +13,8 @@ namespace HackedDesign {
 			instance = this;
 		}
 
-		public SelectMenuState MenuState { get; set; } = SelectMenuState.INFO;
+		public SelectMenuState MenuState { get; set; } = SelectMenuState.Info;
 
-		public enum SelectMenuState {
-			INFO,
-			TASKS,
-			STASH,
-			PSYCH,
-			MAP
-		}
+
 	}
 }

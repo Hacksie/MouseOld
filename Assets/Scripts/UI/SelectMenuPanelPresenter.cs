@@ -34,26 +34,26 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.state.state == GameStateEnum.SELECTMENU)
+            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.SelectMenu)
             {
                 Show();
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
 
                 switch (selectMenuManager.MenuState)
                 {
-                    case SelectMenuManager.SelectMenuState.INFO:
+                    case SelectMenuState.Info:
                         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(InfoButton.gameObject);
                         break;
-                    case SelectMenuManager.SelectMenuState.TASKS:
+                    case SelectMenuState.Tasks:
                         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(TasksButton.gameObject);
                         break;
-                    case SelectMenuManager.SelectMenuState.STASH:
+                    case SelectMenuState.Stash:
                         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(StashButton.gameObject);
                         break;
-                    case SelectMenuManager.SelectMenuState.PSYCH:
+                    case SelectMenuState.Psych:
                         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(PsychButton.gameObject);
                         break;
-                    case SelectMenuManager.SelectMenuState.MAP:
+                    case SelectMenuState.Map:
                         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(MapButton.gameObject);
                         break;
                 }
@@ -84,35 +84,35 @@ namespace HackedDesign.UI
         public void InfoClickEvent()
         {
             Debug.Log("Select Menu Info Clicked");
-            selectMenuManager.MenuState = SelectMenuManager.SelectMenuState.INFO;
+            selectMenuManager.MenuState = SelectMenuState.Info;
             Show(true);
         }
 
         public void TaskClickEvent()
         {
             Debug.Log("Select Menu Task Clicked");
-            selectMenuManager.MenuState = SelectMenuManager.SelectMenuState.TASKS;
+            selectMenuManager.MenuState = SelectMenuState.Tasks;
             Show(true);
         }
 
         public void StashClickEvent()
         {
             Debug.Log("Select Menu Task Clicked");
-            selectMenuManager.MenuState = SelectMenuManager.SelectMenuState.STASH;
+            selectMenuManager.MenuState = SelectMenuState.Stash;
             Show(true);
         }
 
         public void PsychClickEvent()
         {
             Debug.Log("Select Menu Task Clicked");
-            selectMenuManager.MenuState = SelectMenuManager.SelectMenuState.PSYCH;
+            selectMenuManager.MenuState = SelectMenuState.Psych;
             Show(true);
         }
 
         public void MapClickEvent()
         {
             Debug.Log("Select Menu Task Clicked");
-            selectMenuManager.MenuState = SelectMenuManager.SelectMenuState.MAP;
+            selectMenuManager.MenuState = SelectMenuState.Map;
             Show(true);
         }
 

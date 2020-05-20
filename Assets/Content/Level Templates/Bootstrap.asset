@@ -15,12 +15,12 @@ MonoBehaviour:
   corp: Terra Labs
   location: Terra
   level: 43
-  levelLength: 10
-  levelWidth: 10
-  levelHeight: 10
+  levelLength: 5
+  levelWidth: 5
+  levelHeight: 5
   spanHorizontal: 6
   spanVertical: 6
-  enemyCount: 10
+  enemyCount: 5
   trapCount: 0
   generateDoors: 1
   generateRandomProps: 1
@@ -29,7 +29,7 @@ MonoBehaviour:
   exitAction: BootstrapExit
   levelResource: 
   generateNavMesh: 1
-  hostile: 0
+  hostile: 1
   floors:
   - {fileID: 1263562846799802, guid: e2b79a2de413f9a439c13e9acdbfc49a, type: 3}
   mainChainFloor:

@@ -7,7 +7,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.state.state == GameStateEnum.LEVELCOMPLETE)
+            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.LevelComplete)
             {
                 Show();
             }

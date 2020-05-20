@@ -7,26 +7,18 @@ namespace HackedDesign.UI
         [SerializeField] private bool debugCursor = false;
         public override void Repaint()
         {
-            switch (GameManager.Instance.state.state)
+            if (GameManager.Instance.IsInGame())
             {
-                case GameStateEnum.MAINMENU:
-                case GameStateEnum.DIALOGUE:
-                case GameStateEnum.NARRATION:
-                case GameStateEnum.SELECTMENU:
-                case GameStateEnum.STARTMENU:
-                case GameStateEnum.WORLDMAP:
-                case GameStateEnum.GAMEOVER:
-                case GameStateEnum.MISSIONCOMPLETE:
-                case GameStateEnum.CAPTURED:
-                    if (!Cursor.visible)
-                        Cursor.visible = true;
-                    break;
-                default:
-                    if (Cursor.visible && !debugCursor)
-                         Cursor.visible = false;
-                    break;
+                var show = !GameManager.Instance.GameState.IsPlaying() || debugCursor;
+
+                if(Cursor.visible != show)
+                    Cursor.visible = show;
+            }
+            else
+            {
+                if (!Cursor.visible)
+                    Cursor.visible = true;
             }
         }
-
     }
 }

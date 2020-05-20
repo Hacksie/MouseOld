@@ -26,6 +26,7 @@ namespace HackedDesign.Entities
         [SerializeField] private Vector2 direction = Vector2.down;
         [SerializeField] private bool stationary = true;
         [SerializeField] private float patrolTime = 10.0f;
+        [SerializeField] private float rotateSpeed = 45.0f;
 
 
         [Header("Events")]
@@ -33,8 +34,7 @@ namespace HackedDesign.Entities
         public UnityEvent playerLeaveEvent;
         public UnityEvent alertEvent;
 
-        [Header("State")]
-        public EnemyState state = EnemyState.PASSIVE;
+        public EnemyState State { get; private set; } = EnemyState.PASSIVE;
 
         private float patrolTimer = 0;
 
@@ -54,6 +54,10 @@ namespace HackedDesign.Entities
             directionXAnimId = Animator.StringToHash("directionX");
             directionYAnimId = Animator.StringToHash("directionY");
             isMovingAnimId = Animator.StringToHash("isMoving");
+            if (stationary)
+            {
+                polyNavAgent.enabled = false;
+            }
 
         }
 
@@ -84,7 +88,7 @@ namespace HackedDesign.Entities
 
             if (randomStartingDirection)
             {
-                direction = Quaternion.Euler(0, 0, Random.Range(0, 360)) * Vector2.up;
+                direction = Quaternion.Euler(0, 0, Random.Range(0, Mathf.PI)) * Vector2.up;
             }
 
             polyNavAgent.maxSpeed = patrolSpeed;
@@ -92,12 +96,8 @@ namespace HackedDesign.Entities
 
         public void UpdateBehaviour()
         {
-            if (polyNavAgent.hasPath)
-            {
-                direction = polyNavAgent.movingDirection.normalized;
-            }
 
-            switch (state)
+            switch (State)
             {
                 case EnemyState.PASSIVE:
                     UpdatePassive();
@@ -123,13 +123,23 @@ namespace HackedDesign.Entities
                 {
                     playerSeen = true;
                     playerSeenEvent.Invoke();
-                    state = EnemyState.ALERTED;
+                    State = EnemyState.ALERTED;
                     return;
                 }
             }
 
+            if (stationary)
+            {
+                var arc = Quaternion.Euler(0, 0, rotateSpeed * Time.deltaTime);
+                direction = arc * direction;
+            }
+
             if (!stationary && (Time.time - patrolTimer) >= patrolTime)
             {
+                if (polyNavAgent != null && polyNavAgent.hasPath)
+                {
+                    direction = polyNavAgent.movingDirection.normalized;
+                }
 
                 patrolTimer = Time.time;
 
@@ -163,7 +173,7 @@ namespace HackedDesign.Entities
 
             if (playerSeen && !colliders.Contains(GameManager.Instance.GetPlayer()))
             {
-                state = EnemyState.PASSIVE;
+                State = EnemyState.PASSIVE;
                 playerSeen = false;
                 playerLeaveEvent.Invoke();
             }
@@ -172,7 +182,7 @@ namespace HackedDesign.Entities
             {
                 if (stationary)
                 {
-                    direction = player.transform.position - transform.position;
+                    //direction = player.transform.position - transform.position;
                 }
                 else
                 {
@@ -243,7 +253,7 @@ namespace HackedDesign.Entities
             }
             else
             {
-                direction = Vector2.zero;
+                //direction = Vector2.zero;
 
                 animator.SetBool(isMovingAnimId, false);
 
