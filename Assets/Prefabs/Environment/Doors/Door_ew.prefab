@@ -308,10 +308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af835f2ea87ed844d922ea8b7457e598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 95934519643766982}
-  trigger: {fileID: 4763328188394681162}
-  count: 0
-  open: 0
   animate: 1
 --- !u!114 &5198075432659134212
 MonoBehaviour:
@@ -332,13 +328,13 @@ MonoBehaviour:
   m_SelfShadows: 1
   m_ApplyToSortingLayers: 6b08fb8107137e3eafba2450e128ad1025b6858d00000000231218f2097bf7c3
   m_ShapePath:
-  - {x: -0.5, y: 1, z: 0}
+  - {x: -0.5, y: 0.75, z: 0}
+  - {x: 0.5, y: 0.75, z: 0}
   - {x: 0.5, y: 1, z: 0}
-  - {x: 0.5, y: 1.25, z: 0}
-  - {x: -0.5, y: 1.25, z: 0}
-  m_ShapePathHash: 848688405
+  - {x: -0.5, y: 1, z: 0}
+  m_ShapePathHash: 597030165
   m_Mesh: {fileID: 0}
-  m_InstanceId: 346830
+  m_InstanceId: 151214
 --- !u!1001 &5162221139226345383
 PrefabInstance:
   m_ObjectHideFlags: 0

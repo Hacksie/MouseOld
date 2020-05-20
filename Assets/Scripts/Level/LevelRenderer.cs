@@ -398,7 +398,7 @@ namespace HackedDesign
                         continue;
                     }
 
-                    enemy.Initialize(CoreGame.Instance.GetPlayer().transform, polyNav2D);
+                    enemy.Initialize(GameManager.Instance.GetPlayer().transform, polyNav2D);
 
                     Story.Enemy uniqueEnemy = Story.InfoRepository.Instance.GenerateRandomEnemy(enemy.enemy);
                     enemyList.Add(enemy);

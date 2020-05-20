@@ -48,7 +48,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
+            if (GameManager.Instance.state.state == GameStateEnum.PLAYING)
             {
                 Show();
                 RepaintMap();
@@ -61,7 +61,7 @@ namespace HackedDesign.UI
 
         private void RepaintMap()
         {
-            var pos2d = level.ConvertWorldToLevelPos(CoreGame.Instance.GetPlayer().transform.position);
+            var pos2d = level.ConvertWorldToLevelPos(GameManager.Instance.GetPlayer().transform.position);
             RepaintRoom(0, 0, pos2d.x - 1, pos2d.y - 1);
             RepaintRoom(1, 0, pos2d.x, pos2d.y - 1);
             RepaintRoom(2, 0, pos2d.x + 1, pos2d.y - 1);
@@ -75,7 +75,7 @@ namespace HackedDesign.UI
 
         private void RepaintRoom(int i, int j, int x, int y)
         {
-            if (y < 0 || y >= CoreGame.Instance.state.currentLevel.map.Count() || CoreGame.Instance.state.currentLevel.map[y] == null)
+            if (y < 0 || y >= GameManager.Instance.state.currentLevel.map.Count() || GameManager.Instance.state.currentLevel.map[y] == null)
             {
                 walls[6 * (j * 3 + i)].gameObject.SetActive(false);
                 walls[6 * (j * 3 + i) + 1].gameObject.SetActive(false);
@@ -87,7 +87,7 @@ namespace HackedDesign.UI
             }
 
             // When the map gets serialized, the 'empty' rooms become non null, because fuck me, right?
-            if (x < 0 || x >= CoreGame.Instance.state.currentLevel.map[y].rooms.Count() || CoreGame.Instance.state.currentLevel.map[y].rooms[x] == null || string.IsNullOrWhiteSpace(CoreGame.Instance.state.currentLevel.map[y].rooms[x].left))
+            if (x < 0 || x >= GameManager.Instance.state.currentLevel.map[y].rooms.Count() || GameManager.Instance.state.currentLevel.map[y].rooms[x] == null || string.IsNullOrWhiteSpace(GameManager.Instance.state.currentLevel.map[y].rooms[x].left))
             {
                 walls[6 * (j * 3 + i)].gameObject.SetActive(false);
                 walls[6 * (j * 3 + i) + 1].gameObject.SetActive(false);
@@ -97,7 +97,7 @@ namespace HackedDesign.UI
                 walls[6 * (j * 3 + i) + 5].gameObject.SetActive(false);
                 return;
             }
-            ProxyRoom room = CoreGame.Instance.state.currentLevel.map[y].rooms[x];
+            ProxyRoom room = GameManager.Instance.state.currentLevel.map[y].rooms[x];
 
             Sprite blSprite = FindChunkObject("bl", room.left, room.bottom);
             Sprite brSprite = FindChunkObject("br", room.right, room.bottom);
@@ -114,8 +114,8 @@ namespace HackedDesign.UI
             walls[6 * (j * 3 + i) + 2].gameObject.SetActive(true);
             walls[6 * (j * 3 + i) + 3].sprite = brSprite;
             walls[6 * (j * 3 + i) + 3].gameObject.SetActive(true);
-            walls[6 * (j * 3 + i) + 4].gameObject.SetActive(CoreGame.Instance.state.currentLevel.map[y].rooms[x].isEntry);
-            walls[6 * (j * 3 + i) + 5].gameObject.SetActive(CoreGame.Instance.state.currentLevel.map[y].rooms[x].isEnd);
+            walls[6 * (j * 3 + i) + 4].gameObject.SetActive(GameManager.Instance.state.currentLevel.map[y].rooms[x].isEntry);
+            walls[6 * (j * 3 + i) + 5].gameObject.SetActive(GameManager.Instance.state.currentLevel.map[y].rooms[x].isEnd);
 
         }
         private Sprite FindChunkObject(string corner, string wall1, string wall2)

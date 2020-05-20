@@ -34,7 +34,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.SELECTMENU)
+            if (GameManager.Instance.state.state == GameStateEnum.SELECTMENU)
             {
                 Show();
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
@@ -78,7 +78,7 @@ namespace HackedDesign.UI
 
         public void ResumeClickEvent()
         {
-            CoreGame.Instance.SetPlaying();
+            GameManager.Instance.SetPlaying();
         }
 
         public void InfoClickEvent()

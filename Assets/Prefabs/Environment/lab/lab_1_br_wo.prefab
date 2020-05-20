@@ -420,13 +420,13 @@ MonoBehaviour:
   m_SelfShadows: 1
   m_ApplyToSortingLayers: 6b08fb8107137e3eafba2450e128ad1025b6858d00000000231218f2097bf7c3
   m_ShapePath:
-  - {x: 5.5, y: 1, z: 0}
-  - {x: 6, y: 1, z: 0}
+  - {x: 5.5, y: 0, z: 0}
+  - {x: 6, y: 0, z: 0}
   - {x: 6, y: 4, z: 0}
   - {x: 5.5, y: 4, z: 0}
-  m_ShapePathHash: -275385067
+  m_ShapePathHash: 2140534037
   m_Mesh: {fileID: 0}
-  m_InstanceId: 249906
+  m_InstanceId: 208744
 --- !u!114 &477449472358786699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,8 +493,8 @@ Tilemap:
   - first: {x: 11, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 17
-      m_TileSpriteIndex: 17
+      m_TileIndex: 18
+      m_TileSpriteIndex: 18
       m_TileMatrixIndex: 0
       m_TileColorIndex: 8
       m_TileObjectToInstantiateIndex: 65535
@@ -535,10 +535,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: df66497a5adef5641b7daba96dcd5525, type: 2}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 9fc7b95272e83b74d9df389bc89e4ef7, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 2
+    m_Data: {fileID: 11400000, guid: c29f979fc97fdba49ada90e83fe3ea20, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -574,11 +574,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 8495234968031909104, guid: b5275883f703b8340b7def6dd9ce76bb,
-      type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -6741790369194997946, guid: b5275883f703b8340b7def6dd9ce76bb,
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 2
+    m_Data: {fileID: -5390310304817546038, guid: b5275883f703b8340b7def6dd9ce76bb,
       type: 3}
   m_TileMatrixArray:
   - m_RefCount: 2
@@ -680,7 +679,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1048449799
-  m_SortingLayer: -4
+  m_SortingLayer: -2
   m_SortingOrder: 10
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

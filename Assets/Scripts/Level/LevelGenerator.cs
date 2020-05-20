@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-
 namespace HackedDesign.Level
 {
     public class LevelGenerator : MonoBehaviour
@@ -18,11 +17,10 @@ namespace HackedDesign.Level
         private const string IS_ENTRY = "entry";
         private const string IS_END = "end";
 
-        [SerializeField]
-        private Entities.EntityManager entityManager = null;
-
-        [SerializeField]
-        private LevelGenTemplate[] levelGenTemplates = null;
+        [SerializeField] private Entities.EntityManager entityManager = null;
+        [SerializeField] private LevelGenTemplate[] levelGenTemplates = null;
+        [SerializeField] private float randomChance = 0.75f;
+        [SerializeField] private float lineOfSightChance = 0.4f;
 
         public Level GenerateLevel(string template)
         {
@@ -38,17 +36,11 @@ namespace HackedDesign.Level
         {
             if (string.IsNullOrEmpty(template))
             {
-                Logger.LogError(name, "No level template set");
+                Logger.LogError(this, "No level template set");
                 return null;
             }
 
-            if (string.IsNullOrEmpty(name))
-            {
-                Logger.LogError(name, "No level name set");
-                return null;
-            }
-
-            Logger.Log(name, "Using template - " + template);
+            Logger.Log(this, "Using template - " + template);
 
             var genTemplate = GetLevelGenTemplate(template);
 
@@ -77,27 +69,27 @@ namespace HackedDesign.Level
                 genTemplate.trapCount = traps;
             }
 
-            if (genTemplate == null)
+            if (genTemplate is null)
             {
-                Logger.LogError(name, "No level gen template found - ", template);
+                Logger.LogError(this, "No level gen template found - ", template);
                 return null;
             }
 
-            Logger.Log(name, "Generating Level ", genTemplate.levelLength.ToString(), " x ", genTemplate.levelWidth.ToString(), " x ", genTemplate.levelHeight.ToString());
+            Logger.Log(this, "Generating Level ", genTemplate.levelLength.ToString(), " x ", genTemplate.levelWidth.ToString(), " x ", genTemplate.levelHeight.ToString());
 
             Level level;
 
             if (!string.IsNullOrWhiteSpace(genTemplate.levelResource))
             {
                 level = LoadLevelFromFile(genTemplate);
-                GenerateElements(level, false);
+                GenerateElements(level);
             }
             else
             {
                 level = GenerateRandomLevel(genTemplate);
                 GenerateEnemySpawns(level);
                 GenerateTrapSpawns(level);
-                GenerateElements(level, true);
+                GenerateElements(level);
 
             }
             level.Print();
@@ -107,23 +99,28 @@ namespace HackedDesign.Level
         protected Level LoadLevelFromFile(LevelGenTemplate genTemplate)
         {
             Level level = new Level(genTemplate);
-            Logger.Log(name, "Loading level from file: Levels/" + genTemplate.levelResource + @".json");
-            var jsonTextFile = Resources.Load<TextAsset>(@"Levels/" + genTemplate.levelResource);
+            Logger.Log(this, "Loading level from file: Levels/" + genTemplate.levelResource + ".json");
+            var jsonTextFile = Resources.Load<TextAsset>("Levels/" + genTemplate.levelResource);
             if (jsonTextFile == null)
             {
-                Logger.LogError(name, "File not loaded");
+                Logger.LogError(this, "File not loaded");
                 return null;
             }
 
             JsonUtility.FromJsonOverwrite(jsonTextFile.text, level);
 
             return level;
-
         }
 
-        protected Level GenerateRandomLevel(LevelGenTemplate genTemplate)
+        protected Level GenerateRandomLevel(LevelGenTemplate template)
         {
-            var level = new Level(genTemplate);
+            if (template is null)
+            {
+                Logger.LogError(this, "Template not set");
+                return null;
+            }
+
+            var level = new Level(template);
             var position = GenerateStartingLocation(level);
 
             if (level.length > 1)
@@ -134,25 +131,19 @@ namespace HackedDesign.Level
             GenerateAuxRooms(level);
 
             return level;
-
         }
 
-        LevelGenTemplate GetLevelGenTemplate(string template)
-        {
-            var genTemplate = levelGenTemplates.FirstOrDefault(t => t.name == template);
+        private LevelGenTemplate GetLevelGenTemplate(string template) => levelGenTemplates.FirstOrDefault(t => t.name == template);
 
-            return genTemplate;
-        }
-
-        Vector2Int GenerateStartingLocation(Level level)
+        private Vector2Int GenerateStartingLocation(Level level)
         {
-            Logger.Log(name, "Generating Starting Location");
+            Logger.Log(this, "Generating Starting Location");
 
             // Starting at the bottom and going up means we should never create a chain that fails completely and rolls all the way back to the entry
             // This is important!				
             // It also means the player starts at the bottom and plays upwards, which is ideal
             var position = new Vector2Int((level.template.levelWidth - 1) / 2, (level.template.levelHeight - 1));
-            level.map[position.y].rooms[position.x] = GenerateEntryRoom(level);
+            level.map[position.y].rooms[position.x] = RoomFromString(string.IsNullOrEmpty(level.template.startingRoomString) ? DEFAULT_ROOM_START : level.template.startingRoomString, true, true, true);
             level.playerSpawn = new Spawn()
             {
                 type = Spawn.ENTITY_TYPE_PLAYER,
@@ -162,20 +153,19 @@ namespace HackedDesign.Level
             return position;
         }
 
-        bool GenerateMainChain(Vector2Int newLocation, Level level, int lengthRemaining)
+        private bool GenerateMainChain(Vector2Int newLocation, Level level, int lengthRemaining)
         {
             if (lengthRemaining == 0)
             {
                 return true;
             }
 
-            Logger.Log(name, "Generating main chain");
+            Logger.Log(this, "Generating main chain");
 
             // The end room is considered special
             if (lengthRemaining == 1)
             {
-                Logger.Log(name, "End of main chain");
-
+                Logger.Log(this, "End of main chain");
                 level.map[newLocation.y].rooms[newLocation.x] = GenerateRoom(newLocation, new List<string>() { ProxyRoom.Wall }, true, level); // Place a new tile here
                 level.map[newLocation.y].rooms[newLocation.x].isEnd = true;
                 return true;
@@ -183,8 +173,7 @@ namespace HackedDesign.Level
 
             level.map[newLocation.y].rooms[newLocation.x] = GenerateRoom(newLocation, new List<string>() { ProxyRoom.Open, ProxyRoom.Door }, true, level); // Place a new tile here 
 
-            List<Vector2Int> directions = PossibleBuildDirections(newLocation, level);
-
+            var directions = PossibleBuildDirections(newLocation, level);
             directions.Randomize();
 
             bool result = false;
@@ -192,9 +181,7 @@ namespace HackedDesign.Level
             // Iterate over potential directions from here
             for (int i = 0; i < directions.Count; i++)
             {
-
                 result = GenerateMainChain(directions[i], level, lengthRemaining - 1);
-
                 if (result) // If the chain is okay, don't need to try any new directions. We could probably return true here
                 {
                     break;
@@ -205,13 +192,13 @@ namespace HackedDesign.Level
             // Fixme: we probably have to change a side because of this
             if (!result)
             {
-                Logger.Log(name, "Abandoning chain, rolling back one step");
+                Logger.Log(this, "Abandoning chain, rolling back one step");
             }
 
             return result;
         }
 
-        List<Vector2Int> PossibleBuildDirections(Vector2Int pos, Level level)
+        private List<Vector2Int> PossibleBuildDirections(Vector2Int pos, Level level)
         {
             ProxyRoom room = level.map[pos.y].rooms[pos.x];
 
@@ -256,27 +243,20 @@ namespace HackedDesign.Level
             return results;
         }
 
-        ProxyRoom GenerateEntryRoom(Level level)
-        {
-
-            string start = string.IsNullOrEmpty(level.template.startingRoomString) ? DEFAULT_ROOM_START : level.template.startingRoomString;
-
-            ProxyRoom res = RoomFromString(start);
-            res.isEntry = true;
-            res.isMainChain = true;
-            res.isNearEntry = true;
-
-            return res;
-        }
-
-        private ProxyRoom RoomFromString(string str)
+        private ProxyRoom RoomFromString(string str, bool isEntry, bool isMainChain, bool isNearEntry)
         {
             if (string.IsNullOrWhiteSpace(str))
             {
                 return null;
             }
 
-            ProxyRoom response = new ProxyRoom();
+            ProxyRoom response = new ProxyRoom()
+            {
+                isEntry = isEntry,
+                isNearEntry = isNearEntry,
+                isMainChain = isMainChain
+            };
+
             string[] splitString = str.Split('_');
 
             if (splitString.Length < 1)
@@ -286,7 +266,6 @@ namespace HackedDesign.Level
 
             if (splitString.Length > 0)
             {
-
                 response.left = splitString[0].Substring(0, 1);
                 response.top = splitString[0].Substring(1, 1);
                 response.bottom = splitString[0].Substring(2, 1);
@@ -302,9 +281,9 @@ namespace HackedDesign.Level
             return response;
         }
 
-        void GenerateAuxRooms(Level level)
+        private void GenerateAuxRooms(Level level)
         {
-            Logger.Log(name, "Generating Aux Rooms");
+            Logger.Log(this, "Generating Aux Rooms");
             bool newRooms = true;
 
             // iterate through every position, checking for neighbours and creating rooms accordingly. 
@@ -335,7 +314,7 @@ namespace HackedDesign.Level
             }
         }
 
-        ProxyRoom GenerateRoom(Vector2Int location, List<string> freeChoiceSides, bool isMainChain, Level level)
+        private ProxyRoom GenerateRoom(Vector2Int location, List<string> freeChoiceSides, bool isMainChain, Level level)
         {
             // Get Top Side
             List<string> tops = PossibleTopSides(location, freeChoiceSides, level);
@@ -362,7 +341,7 @@ namespace HackedDesign.Level
 
         }
 
-        bool IsNearEntry(Vector2Int location, Level level)
+        private bool IsNearEntry(Vector2Int location, Level level)
         {
             Vector2Int[] surround = new Vector2Int[9];
             surround[0] = location + new Vector2Int(-1, -1);
@@ -388,7 +367,7 @@ namespace HackedDesign.Level
             return false;
         }
 
-        List<string> PossibleTopSides(Vector2Int pos, List<string> freeChoice, Level level)
+        private List<string> PossibleTopSides(Vector2Int pos, List<string> freeChoice, Level level)
         {
             List<string> sides = new List<string>();
 
@@ -403,7 +382,7 @@ namespace HackedDesign.Level
             ProxyRoom room = level.map[pos.y - 1].rooms[pos.x];
 
             // If there's nothing then we're free to do anything
-            if (room == null)
+            if (room is null)
             {
                 return freeChoice;
             }
@@ -413,7 +392,7 @@ namespace HackedDesign.Level
             return sides;
         }
 
-        List<string> PossibleBottomSides(Vector2Int pos, List<string> freeChoice, Level level)
+        private List<string> PossibleBottomSides(Vector2Int pos, List<string> freeChoice, Level level)
         {
             List<string> sides = new List<string>();
 
@@ -428,7 +407,7 @@ namespace HackedDesign.Level
             ProxyRoom room = level.map[pos.y + 1].rooms[pos.x];
 
             // If there's nothing then we're free to do anything
-            if (room == null)
+            if (room is null)
             {
                 return freeChoice;
             }
@@ -438,7 +417,7 @@ namespace HackedDesign.Level
             return sides;
         }
 
-        List<string> PossibleLeftSides(Vector2Int pos, List<string> freeChoice, Level level)
+        private List<string> PossibleLeftSides(Vector2Int pos, List<string> freeChoice, Level level)
         {
             List<string> sides = new List<string>();
 
@@ -453,7 +432,7 @@ namespace HackedDesign.Level
             ProxyRoom room = level.map[pos.y].rooms[pos.x - 1];
 
             // If there's nothing then we're free to do anything
-            if (room == null)
+            if (room is null)
             {
                 return freeChoice;
             }
@@ -463,7 +442,7 @@ namespace HackedDesign.Level
             return sides;
         }
 
-        List<string> PossibleRightSides(Vector2Int position, List<string> freeChoice, Level level)
+        private List<string> PossibleRightSides(Vector2Int position, List<string> freeChoice, Level level)
         {
             List<String> sides = new List<string>();
 
@@ -478,7 +457,7 @@ namespace HackedDesign.Level
             ProxyRoom room = level.map[position.y].rooms[position.x + 1];
 
             // If there's nothing then we're free to do anything
-            if (room == null)
+            if (room is null)
             {
                 return freeChoice;
             }
@@ -491,7 +470,7 @@ namespace HackedDesign.Level
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool PositionHasRoom(Vector2Int pos, Level level) => ((pos.x >= level.template.levelWidth || pos.y >= level.template.levelHeight || pos.x < 0 || pos.y < 0) || (level.map[pos.y].rooms[pos.x] != null));
 
-        private void GenerateElements(Level level, bool genProps)
+        private void GenerateElements(Level level)
         {
             for (int y = 0; y < level.map.Count(); y++)
             {
@@ -499,23 +478,22 @@ namespace HackedDesign.Level
                 {
                     if (level.map[y].rooms[x] != null)
                     {
-                        GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeWall, level.template);
+                        GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeWall, 1, level.template);
 
-                        if (genProps && level.template.generateProps)
+                        if (level.template.generateRandomProps)
                         {
                             if (level.map[y].rooms[x].isEntry)
                             {
-
-                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeEntry, level.template);
+                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeEntry, 1, level.template);
                             }
                             else if (level.map[y].rooms[x].isEnd)
                             {
-                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeEnd, level.template);
+                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeEnd, 1, level.template);
                             }
                             else
                             {
-                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeRandom, level.template);
-                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeLineOfSight, level.template);
+                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeRandom, randomChance, level.template);
+                                GenerateRoomElements(level.map[y].rooms[x], ProxyRoom.ObjTypeLineOfSight, lineOfSightChance, level.template);
                             }
                         }
                     }
@@ -523,90 +501,37 @@ namespace HackedDesign.Level
             }
         }
 
-        private void GenerateRoomElements(ProxyRoom proxyRoom, string type, LevelGenTemplate template)
+        private void GenerateRoomElements(ProxyRoom proxyRoom, string type, float chance, LevelGenTemplate template)
         {
-            List<GameObject> goBLList;
-            List<GameObject> goBRList;
-            List<GameObject> goTLList;
-            List<GameObject> goTRList;
+            AddRoomElement(ref proxyRoom.topLeft, TOPLEFT, proxyRoom.left, proxyRoom.top, type, chance, template);
+            AddRoomElement(ref proxyRoom.topRight, TOPRIGHT, proxyRoom.right, proxyRoom.top, type, chance, template);
+            AddRoomElement(ref proxyRoom.bottomLeft, BOTTOMLEFT, proxyRoom.left, proxyRoom.bottom, type, chance, template);
+            AddRoomElement(ref proxyRoom.bottomRight, BOTTOMRIGHT, proxyRoom.right, proxyRoom.bottom, type, chance, template);
+        }
 
-            // TL
-            goTLList = FindRoomElements(TOPLEFT, proxyRoom.left, proxyRoom.top, type, template).ToList();
-            if (goTLList != null && goTLList.Count > 0)
+        private void AddRoomElement(ref List<Corner> cornerElements, string corner, string wall1, string wall2, string type, float chance, LevelGenTemplate template)
+        {
+            if (UnityEngine.Random.Range(0.0f, 1.0f) <= chance)
             {
-                goTLList.Randomize();
+                var goList = FindRoomElements(corner, wall1, wall2, type, template).ToList();
 
+                if (goList != null && goList.Count > 0)
+                {
+                    goList.Randomize();
 
-                proxyRoom.topLeft.Add(
-                    new Corner()
-                    {
-                        type = type,
-                        name = goTLList[0].name,
-                        isTrap = false
-                    });
-            }
-
-            // TR
-            goTRList = FindRoomElements(TOPRIGHT, proxyRoom.right, proxyRoom.top, type, template).ToList();
-
-            if (goTRList != null && goTRList.Count > 0)
-            {
-
-                goTRList.Randomize();
-
-                proxyRoom.topRight.Add(
-                    new Corner()
-                    {
-                        type = type,
-                        name = goTRList[0].name,
-                        isTrap = false
-                    });
-            }
-
-            // BL
-            goBLList = FindRoomElements(BOTTOMLEFT, proxyRoom.left, proxyRoom.bottom, type, template).ToList();
-            if (goBLList != null && goBLList.Count > 0)
-            {
-                goBLList.Randomize();
-
-                proxyRoom.bottomLeft.Add(
-                    new Corner()
-                    {
-                        type = type,
-                        name = goBLList[0].name,
-                        isTrap = false
-                    });
-            }
-
-            // BR
-            goBRList = FindRoomElements(BOTTOMRIGHT, proxyRoom.right, proxyRoom.bottom, type, template).ToList();
-
-            if (goBRList != null && goBRList.Count > 0)
-            {
-                goBRList.Randomize();
-
-                proxyRoom.bottomRight.Add(
-                    new Corner()
-                    {
-                        type = type,
-                        name = goBRList[0].name,
-                        isTrap = false
-                    });
+                    cornerElements.Add(
+                        new Corner()
+                        {
+                            type = type,
+                            name = goList[0].name,
+                            isTrap = false
+                        });
+                }
             }
         }
 
-        /// <summary>
-        /// Return a list of prefabs that fit the level gen's room corner requirements
-        /// </summary>
-        /// <param name="corner"></param>
-        /// <param name="wall1"></param>
-        /// <param name="wall2"></param>
-        /// <param name="type"></param>
-        /// <param name="levelGenTemplate"></param>
-        /// <returns></returns>
         private IEnumerable<GameObject> FindRoomElements(string corner, string wall1, string wall2, string type, LevelGenTemplate levelGenTemplate)
         {
-
             IEnumerable<GameObject> results = null;
 
             switch (type)
@@ -637,27 +562,18 @@ namespace HackedDesign.Level
                 case ProxyRoom.ObjTypeLineOfSight:
                     results = levelGenTemplate.lineOfSightProps.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));
                     break;
-
             }
 
             return results;
         }
 
-        /// <summary>
-        /// Take a prefab name, split it into its components and match it against the level generator's requirements
-        /// </summary>
-        /// <param name="prefabName"></param>
-        /// <param name="corner"></param>
-        /// <param name="wall1"></param>
-        /// <param name="wall2"></param>
-        /// <returns></returns>
         private bool MatchPrefabName(string prefabName, string corner, string wall1, string wall2)
         {
             string[] nameSplit = prefabName.ToLower().Split('_');
 
             if (nameSplit.Length != 4)
             {
-                Logger.LogError(name, "invalid prefab name - " + prefabName);
+                Logger.LogError(this, "Invalid prefab name - ", prefabName);
                 return false;
             }
 
@@ -706,7 +622,7 @@ namespace HackedDesign.Level
 
             if (enemyList.Count == 0)
             {
-                Logger.Log(name, "No enemies in template");
+                Logger.Log(this, "No enemies in template");
                 return;
             }
 

@@ -13,7 +13,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.WORLDMAP)
+            if (GameManager.Instance.state.state == GameStateEnum.WORLDMAP)
             {
                 Show();
             }

@@ -24,7 +24,6 @@ namespace HackedDesign
         private int directionYAnimId;
         private int isMovingAnimId;
 
-
         public bool IsDashing { get; private set; } = false;
 
         public float DashPercentageComplete
@@ -52,7 +51,7 @@ namespace HackedDesign
 
         public void InteractEvent(InputAction.CallbackContext context)
         {
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
+            if (GameManager.Instance.state.state == GameStateEnum.PLAYING)
             {
                 if (context.performed)
                 {
@@ -66,7 +65,7 @@ namespace HackedDesign
 
         public void DashEvent(InputAction.CallbackContext context)
         {
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING && context.performed && (Time.time - dashTimer) > dashCooldown)
+            if (GameManager.Instance.state.state == GameStateEnum.PLAYING && context.performed && (Time.time - dashTimer) > dashCooldown)
             {
                 IsDashing = true;
                 dashTimer = Time.time;
@@ -75,7 +74,7 @@ namespace HackedDesign
 
         public void BugEvent(InputAction.CallbackContext context)
         {
-            if (CoreGame.Instance.state.state != GameState.GameStateEnum.PLAYING || !context.performed)
+            if (GameManager.Instance.state.state != GameStateEnum.PLAYING || !context.performed)
             {
                 return;
             }
@@ -88,7 +87,7 @@ namespace HackedDesign
 
         public void HackEvent(InputAction.CallbackContext context)
         {
-            if (CoreGame.Instance.state.state != GameState.GameStateEnum.PLAYING || !context.performed)
+            if (GameManager.Instance.state.state != GameStateEnum.PLAYING || !context.performed)
             {
                 return;
             }
@@ -101,7 +100,7 @@ namespace HackedDesign
 
         public void OverloadEvent(InputAction.CallbackContext context)
         {
-            if (CoreGame.Instance.state.state != GameState.GameStateEnum.PLAYING || !context.performed)
+            if (GameManager.Instance.state.state != GameStateEnum.PLAYING || !context.performed)
             {
                 return;
             }
@@ -116,7 +115,7 @@ namespace HackedDesign
         {
             if (context.performed)
             {
-                CoreGame.Instance.ToggleStart();
+                GameManager.Instance.ToggleStart();
             }
         }
 
@@ -126,7 +125,7 @@ namespace HackedDesign
             {
                 return;
             }
-            CoreGame.Instance.ToggleSelect();
+            GameManager.Instance.ToggleSelect();
         }
 
         public void RegisterTrigger(BaseTrigger trigger)
@@ -181,7 +180,7 @@ namespace HackedDesign
                 movementVector = Vector2.zero;
             }
 
-            transform.Translate(movementVector * (baseMovementSpeed + (CoreGame.Instance.state.player.movementAugments / 10.0f)) * Time.deltaTime);
+            transform.Translate(movementVector * (baseMovementSpeed + (GameManager.Instance.state.player.movementAugments / 10.0f)) * Time.deltaTime);
         }
     }
 }

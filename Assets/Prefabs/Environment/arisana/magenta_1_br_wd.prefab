@@ -402,7 +402,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217893442825104}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
   m_Name: 
@@ -414,15 +414,15 @@ MonoBehaviour:
   m_SelfShadows: 1
   m_ApplyToSortingLayers: 6b08fb8107137e3eafba2450e128ad1025b6858d00000000231218f2097bf7c3
   m_ShapePath:
-  - {x: 3.5, y: 1, z: 0}
-  - {x: 6, y: 1, z: 0}
+  - {x: 3.5, y: 0, z: 0}
+  - {x: 6, y: 0, z: 0}
   - {x: 6, y: 4, z: 0}
   - {x: 5.5, y: 4, z: 0}
-  - {x: 5.5, y: 1.5, z: 0}
-  - {x: 3.5, y: 1.5, z: 0}
-  m_ShapePathHash: -547911779
+  - {x: 5.5, y: 1, z: 0}
+  - {x: 3.5, y: 1, z: 0}
+  m_ShapePathHash: 559384477
   m_Mesh: {fileID: 0}
-  m_InstanceId: 94876
+  m_InstanceId: 146590
 --- !u!1 &1434185782518288
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,7 +779,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1048449799
-  m_SortingLayer: -4
+  m_SortingLayer: -2
   m_SortingOrder: 10
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

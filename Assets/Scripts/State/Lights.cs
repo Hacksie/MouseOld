@@ -1,6 +1,6 @@
 
 
-namespace HackedDesign.GameState
+namespace HackedDesign
 {
     public enum GlobalLightTypes {
         Default,

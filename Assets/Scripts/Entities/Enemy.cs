@@ -116,7 +116,7 @@ namespace HackedDesign.Entities
         private void UpdatePassive()
         {
             // The player triggered our detection, but there anything in the way?
-            if (colliders.Contains(CoreGame.Instance.GetPlayer()))
+            if (colliders.Contains(GameManager.Instance.GetPlayer()))
             {
                 var hit = CanSeePlayer();
                 if (hit.collider != null && hit.collider.CompareTag(TagManager.PLAYER))
@@ -151,7 +151,7 @@ namespace HackedDesign.Entities
 
         private void UpdateAlerted()
         {
-            if (colliders.Contains(CoreGame.Instance.GetPlayer()))
+            if (colliders.Contains(GameManager.Instance.GetPlayer()))
             {
                 var hit = CanSeePlayer();
                 if (hit.collider != null && hit.collider.CompareTag(TagManager.PLAYER))
@@ -161,7 +161,7 @@ namespace HackedDesign.Entities
                 }
             }
 
-            if (playerSeen && !colliders.Contains(CoreGame.Instance.GetPlayer()))
+            if (playerSeen && !colliders.Contains(GameManager.Instance.GetPlayer()))
             {
                 state = EnemyState.PASSIVE;
                 playerSeen = false;

@@ -7,17 +7,17 @@ namespace HackedDesign.UI
         [SerializeField] private bool debugCursor = false;
         public override void Repaint()
         {
-            switch (CoreGame.Instance.state.state)
+            switch (GameManager.Instance.state.state)
             {
-                case GameState.GameStateEnum.MAINMENU:
-                case GameState.GameStateEnum.DIALOGUE:
-                case GameState.GameStateEnum.NARRATION:
-                case GameState.GameStateEnum.SELECTMENU:
-                case GameState.GameStateEnum.STARTMENU:
-                case GameState.GameStateEnum.WORLDMAP:
-                case GameState.GameStateEnum.GAMEOVER:
-                case GameState.GameStateEnum.MISSIONCOMPLETE:
-                case GameState.GameStateEnum.CAPTURED:
+                case GameStateEnum.MAINMENU:
+                case GameStateEnum.DIALOGUE:
+                case GameStateEnum.NARRATION:
+                case GameStateEnum.SELECTMENU:
+                case GameStateEnum.STARTMENU:
+                case GameStateEnum.WORLDMAP:
+                case GameStateEnum.GAMEOVER:
+                case GameStateEnum.MISSIONCOMPLETE:
+                case GameStateEnum.CAPTURED:
                     if (!Cursor.visible)
                         Cursor.visible = true;
                     break;

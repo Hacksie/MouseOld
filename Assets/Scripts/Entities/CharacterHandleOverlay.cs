@@ -17,7 +17,7 @@ namespace HackedDesign.Entities
 
         private void Update()
         {
-            if(CoreGame.Instance.IsInGame())
+            if(GameManager.Instance.IsInGame())
                 SetHandleText();
         }
 

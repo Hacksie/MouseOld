@@ -10,7 +10,7 @@ namespace HackedDesign.Story
             switch (actionName)
             {
                 case "Bootstrap":
-                    CoreGame.Instance.SetTitlecard();
+                    GameManager.Instance.SetTitlecard();
                     break;
                 case "Bootstrap1":
                     Debug.Log("PreludeActions: invoke Prelude1");
@@ -22,7 +22,7 @@ namespace HackedDesign.Story
                     Dialogue.NarrationManager.instance.ShowNarration("Bootstrap1");
                     break;
                 case "Prelude":
-                    CoreGame.Instance.SetTitlecard();
+                    GameManager.Instance.SetTitlecard();
                     return true;
                 case "Prelude1":
                     Debug.Log("PreludeActions: invoke Prelude1");
@@ -33,13 +33,13 @@ namespace HackedDesign.Story
                     InfoRepository.Instance.AddToKnownEntities("Saika");
 
                     ActionManager.instance.AddActionMessage("Task added to current tasks - Bootstrap");
-                    if (!CoreGame.Instance.state.taskList.Exists(t => t.id == "bootstrap"))
+                    if (!GameManager.Instance.state.taskList.Exists(t => t.id == "bootstrap"))
                     {
                         var task = TaskDefinitionRepository.Instance.GetTaskInstance("bootstrap");
-                        CoreGame.Instance.state.taskList.Add(task);
-                        CoreGame.Instance.state.selectedTask = task;
+                        GameManager.Instance.state.taskList.Add(task);
+                        GameManager.Instance.state.selectedTask = task;
                     }
-                    CoreGame.Instance.state.currentLevel.completed = true;
+                    GameManager.Instance.state.currentLevel.completed = true;
 
                     Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
                     return true;
@@ -83,7 +83,7 @@ namespace HackedDesign.Story
                 case "PreludeCat":
                 case "PreludeCat1":
                     Debug.Log("PreludeActions: prelude Cat");
-                    CoreGame.Instance.state.story.prelude_cat_talk = true;
+                    GameManager.Instance.state.story.prelude_cat_talk = true;
                     Dialogue.NarrationManager.instance.ShowNarration("PreludeCat1");
                     return true;
                 case "PreludeCat2":
@@ -124,9 +124,9 @@ namespace HackedDesign.Story
         public void PreludeLaptop()
         {
             Debug.Log("PreludeActions: prelude laptop");
-            CoreGame.Instance.state.story.prelude_laptop = true;
+            GameManager.Instance.state.story.prelude_laptop = true;
             SelectMenuManager.instance.MenuState = SelectMenuManager.SelectMenuState.TASKS;
-            CoreGame.Instance.state.state = GameState.GameStateEnum.SELECTMENU;
+            GameManager.Instance.state.state = GameStateEnum.SELECTMENU;
 
             
         }
@@ -134,9 +134,9 @@ namespace HackedDesign.Story
 
         public void PreludeExit()
         {
-            if (CoreGame.Instance.state.currentLevel.completed)
+            if (GameManager.Instance.state.currentLevel.completed)
             {
-                CoreGame.Instance.SetWorldMap();
+                GameManager.Instance.SetWorldMap();
                 //CoreGame.Instance.LoadNewLevel("Bootstrap");
             }
             else

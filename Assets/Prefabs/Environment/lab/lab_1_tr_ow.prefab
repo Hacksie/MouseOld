@@ -98,13 +98,13 @@ MonoBehaviour:
   m_SelfShadows: 1
   m_ApplyToSortingLayers: 6b08fb8107137e3eafba2450e128ad1025b6858d00000000231218f2097bf7c3
   m_ShapePath:
-  - {x: 3, y: 6.5, z: 0}
-  - {x: 6, y: 6.5, z: 0}
+  - {x: 3, y: 5.5, z: 0}
+  - {x: 6, y: 5.5, z: 0}
   - {x: 6, y: 7, z: 0}
   - {x: 3, y: 7, z: 0}
-  m_ShapePathHash: 1410725141
+  m_ShapePathHash: -2028604139
   m_Mesh: {fileID: 0}
-  m_InstanceId: 291230
+  m_InstanceId: 226776
 --- !u!114 &2740026855773088307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,7 +450,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1344584367
-  m_SortingLayer: -3
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

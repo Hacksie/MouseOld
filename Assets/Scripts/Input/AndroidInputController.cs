@@ -2,150 +2,185 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HackedDesign {
-	namespace Input {
+namespace HackedDesign.Input
+{
 
-		public class AndroidInputController : IInputController {
+    public class AndroidInputController : IInputController
+    {
 
-			MobileInputUIPresenter mobileInput;
+        UI.MobileInputUIPresenter mobileInput;
 
-			bool startButtonDown;
-			bool selectButtonDown;
-			bool interactButtonDown;
-			bool overloadButtonDown;
-			bool hackButtonDown;
-			bool keycardButtonDown;
-			bool bugButtonDown;
+        bool startButtonDown;
+        bool selectButtonDown;
+        bool interactButtonDown;
+        bool overloadButtonDown;
+        bool hackButtonDown;
+        bool keycardButtonDown;
+        bool bugButtonDown;
 
-			public AndroidInputController (MobileInputUIPresenter mobileInputUI) {
-				this.mobileInput = mobileInputUI;
-			}
+        public AndroidInputController(UI.MobileInputUIPresenter mobileInputUI)
+        {
+            this.mobileInput = mobileInputUI;
+        }
 
-			public bool ShowMobileInput () {
-				return true;
-			}
+        public bool ShowMobileInput()
+        {
+            return true;
+        }
 
-			private Vector2 GetMobileAxis () {
-				Vector2 mobileAxis = Vector2.zero;
-				mobileAxis = mobileInput.GetAxis();
-				/*/
-				if (mobileInput.mobileLeft) {
-					mobileAxis.x -= 1;
-				}
+        private Vector2 GetMobileAxis()
+        {
+            Vector2 mobileAxis = Vector2.zero;
+            mobileAxis = mobileInput.GetAxis();
+            /*/
+            if (mobileInput.mobileLeft) {
+                mobileAxis.x -= 1;
+            }
 
-				if (mobileInput.mobileRight) {
-					mobileAxis.x += 1;
-				}
+            if (mobileInput.mobileRight) {
+                mobileAxis.x += 1;
+            }
 
-				if (mobileInput.mobileUp) {
-					mobileAxis.y += 1;
-				}
+            if (mobileInput.mobileUp) {
+                mobileAxis.y += 1;
+            }
 
-				if (mobileInput.mobileDown) {
-					mobileAxis.y -= 1;
-				}*/
+            if (mobileInput.mobileDown) {
+                mobileAxis.y -= 1;
+            }*/
 
-				return mobileAxis;
-			}
+            return mobileAxis;
+        }
 
-			public Vector2 GetMovementAxis () {
-				Vector2 nativeAxis = GetNativeAxis ();
-				Vector2 mobileAxis = GetMobileAxis ();
-				return ClampInputAxis (nativeAxis, mobileAxis);
-			}
+        public Vector2 GetMovementAxis()
+        {
+            Vector2 nativeAxis = GetNativeAxis();
+            Vector2 mobileAxis = GetMobileAxis();
+            return ClampInputAxis(nativeAxis, mobileAxis);
+        }
 
-			public Vector2 GetNativeAxis () {
-				return new Vector2 (UnityEngine.Input.GetAxis ("Horizontal"), UnityEngine.Input.GetAxis ("Vertical"));
-			}
+        public Vector2 GetNativeAxis()
+        {
+            return new Vector2(UnityEngine.Input.GetAxis("Horizontal"), UnityEngine.Input.GetAxis("Vertical"));
+        }
 
-			private Vector2 ClampInputAxis (Vector2 native, Vector2 mobile) {
-				var clamped = native + mobile;
+        private Vector2 ClampInputAxis(Vector2 native, Vector2 mobile)
+        {
+            var clamped = native + mobile;
 
-				clamped.x = clamped.x < -1 ? -1 : clamped.x;
-				clamped.x = clamped.x > 1 ? 1 : clamped.x;
-				clamped.y = clamped.y < -1 ? -1 : clamped.y;
-				clamped.y = clamped.y > 1 ? 1 : clamped.y;
+            clamped.x = clamped.x < -1 ? -1 : clamped.x;
+            clamped.x = clamped.x > 1 ? 1 : clamped.x;
+            clamped.y = clamped.y < -1 ? -1 : clamped.y;
+            clamped.y = clamped.y > 1 ? 1 : clamped.y;
 
-				return clamped;
-			}
+            return clamped;
+        }
 
-			public void ResetInput () {
-				UnityEngine.Input.ResetInputAxes ();
-			}
+        public void ResetInput()
+        {
+            UnityEngine.Input.ResetInputAxes();
+        }
 
-			public bool StartButtonUp () {
+        public bool StartButtonUp()
+        {
 
-				if (mobileInput.mobileStart) {
-					startButtonDown = true;
-				} else if (startButtonDown) {
-					startButtonDown = false;
-					return true;
+            if (mobileInput.mobileStart)
+            {
+                startButtonDown = true;
+            }
+            else if (startButtonDown)
+            {
+                startButtonDown = false;
+                return true;
 
-				}
+            }
 
-				return UnityEngine.Input.GetButtonUp ("Start");
-			}
+            return UnityEngine.Input.GetButtonUp("Start");
+        }
 
-			public bool SelectButtonUp () {
+        public bool SelectButtonUp()
+        {
 
-				if (mobileInput.mobileSelect) {
-					selectButtonDown = true;
-				} else if (selectButtonDown) {
-					selectButtonDown = false;
-					return true;
-				}
-				return UnityEngine.Input.GetButtonUp ("Select");
-			}
+            if (mobileInput.mobileSelect)
+            {
+                selectButtonDown = true;
+            }
+            else if (selectButtonDown)
+            {
+                selectButtonDown = false;
+                return true;
+            }
+            return UnityEngine.Input.GetButtonUp("Select");
+        }
 
-			public bool InteractButtonUp () {
-				if(mobileInput.mobileInteract) {
-					interactButtonDown = true;
-				} else if(interactButtonDown) {
-					interactButtonDown = false;
-					return true;
-				}
-				return UnityEngine.Input.GetButtonUp ("Interact");
-			}
+        public bool InteractButtonUp()
+        {
+            if (mobileInput.mobileInteract)
+            {
+                interactButtonDown = true;
+            }
+            else if (interactButtonDown)
+            {
+                interactButtonDown = false;
+                return true;
+            }
+            return UnityEngine.Input.GetButtonUp("Interact");
+        }
 
-			public bool OverloadButtonUp () {
-				if(mobileInput.mobileOverload) {
-					overloadButtonDown = true;
-				} else if(overloadButtonDown) {
-					overloadButtonDown = false;
-					return true;
-				}
-				return UnityEngine.Input.GetButtonUp ("Overload");
-			}	
+        public bool OverloadButtonUp()
+        {
+            if (mobileInput.mobileOverload)
+            {
+                overloadButtonDown = true;
+            }
+            else if (overloadButtonDown)
+            {
+                overloadButtonDown = false;
+                return true;
+            }
+            return UnityEngine.Input.GetButtonUp("Overload");
+        }
 
-			public bool HackButtonUp() {
-				if(mobileInput.mobileHack) {
-					hackButtonDown = true;
-				} else if(hackButtonDown) {
-					hackButtonDown = false;
-					return true;
-				}
-				return UnityEngine.Input.GetButtonUp("Hack");
-			}
+        public bool HackButtonUp()
+        {
+            if (mobileInput.mobileHack)
+            {
+                hackButtonDown = true;
+            }
+            else if (hackButtonDown)
+            {
+                hackButtonDown = false;
+                return true;
+            }
+            return UnityEngine.Input.GetButtonUp("Hack");
+        }
 
-			public bool KeycardButtonUp() {
-				if(mobileInput.mobileKeycard) {
-					keycardButtonDown = true;
-				} else if(keycardButtonDown) {
-					keycardButtonDown = false;
-					return true;
-				}
-				return UnityEngine.Input.GetButtonUp("Keycard");
-			}				
+        public bool KeycardButtonUp()
+        {
+            if (mobileInput.mobileKeycard)
+            {
+                keycardButtonDown = true;
+            }
+            else if (keycardButtonDown)
+            {
+                keycardButtonDown = false;
+                return true;
+            }
+            return UnityEngine.Input.GetButtonUp("Keycard");
+        }
 
-			public bool BugButtonUp() {
-				if(mobileInput.mobileBug) {
-					bugButtonDown = true;
-				} else if(bugButtonDown) {
-					bugButtonDown = false;
-					return true;
-				}
-				return UnityEngine.Input.GetButtonUp("Bug");
-			}
-		}
-	}
+        public bool BugButtonUp()
+        {
+            if (mobileInput.mobileBug)
+            {
+                bugButtonDown = true;
+            }
+            else if (bugButtonDown)
+            {
+                bugButtonDown = false;
+                return true;
+            }
+            return UnityEngine.Input.GetButtonUp("Bug");
+        }
+    }
 }

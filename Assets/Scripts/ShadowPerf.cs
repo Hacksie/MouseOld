@@ -17,7 +17,7 @@ namespace HackedDesign
         {
             shadow = GetComponent<ShadowCaster2D>();
             position = transform.position + new Vector3(3, 3);
-            player = CoreGame.Instance.GetPlayer().transform;
+            player = GameManager.Instance.GetPlayer().transform;
         }
 
         // Update is called once per frame

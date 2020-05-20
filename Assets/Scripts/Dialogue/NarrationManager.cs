@@ -41,7 +41,7 @@ namespace HackedDesign
 				if (narration != null) {
 					Logger.Log(name, "Show narration " + narration.id);
 					currentNarration = narration;
-					CoreGame.Instance.SetNarration ();
+					GameManager.Instance.SetNarration ();
 				} else {
 					Logger.LogError (name, "No narration to show");
 				}
@@ -57,7 +57,7 @@ namespace HackedDesign
 				string nextAction = currentNarration.action;
 
 				currentNarration = null;
-				CoreGame.Instance.SetPlaying ();
+				GameManager.Instance.SetPlaying ();
 
 				Story.ActionManager.instance.Invoke (nextAction);
 			}

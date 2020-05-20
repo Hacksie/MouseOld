@@ -33,7 +33,7 @@ namespace HackedDesign
 
             public virtual void Initialize()
             {
-                this.player = CoreGame.Instance.GetPlayer().transform;
+                this.player = GameManager.Instance.GetPlayer().transform;
             }
 
             public virtual void FaceDirection(Vector2 direction)

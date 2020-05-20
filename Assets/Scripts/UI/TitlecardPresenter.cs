@@ -22,10 +22,10 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.TITLECARD)
+            if (GameManager.Instance.state.state == GameStateEnum.TITLECARD)
             {
                 Show();
-                titleText.text = titleStrings[CoreGame.Instance.state.story.act];
+                titleText.text = titleStrings[GameManager.Instance.state.story.act];
                 EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
             }
             else
@@ -36,7 +36,7 @@ namespace HackedDesign.UI
 
         public void ClickEvent()
         {
-            actionManager.Invoke(nextActions[CoreGame.Instance.state.story.act]);
+            actionManager.Invoke(nextActions[GameManager.Instance.state.story.act]);
         }
     }
 }

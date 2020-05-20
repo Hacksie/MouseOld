@@ -24,7 +24,7 @@ namespace HackedDesign.UI
                 return;
             }
 
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.PLAYING)
+            if (GameManager.Instance.state.state == GameStateEnum.PLAYING)
             {
                 Show();
 

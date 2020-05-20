@@ -25,10 +25,10 @@ namespace HackedDesign.Story
 
         public void PreludeExit()
         {
-            if (CoreGame.Instance.state.taskList.Exists(t => t.title == "Milk Run"))
+            if (GameManager.Instance.state.taskList.Exists(t => t.title == "Milk Run"))
             {
                 Debug.Log("PreludeActions: can exit");
-                CoreGame.Instance.LoadNewLevel("Arisana Bar");
+                GameManager.Instance.LoadNewLevel("Arisana Bar");
             }
             else
             {

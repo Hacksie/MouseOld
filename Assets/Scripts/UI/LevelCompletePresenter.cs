@@ -7,7 +7,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.LEVELCOMPLETE)
+            if (GameManager.Instance.state.state == GameStateEnum.LEVELCOMPLETE)
             {
                 Show();
             }
@@ -24,7 +24,7 @@ namespace HackedDesign.UI
 
         public void CancelEvent()
         {
-            CoreGame.Instance.SetPlaying();
+            GameManager.Instance.SetPlaying();
         }
 
         public void OkEvent()

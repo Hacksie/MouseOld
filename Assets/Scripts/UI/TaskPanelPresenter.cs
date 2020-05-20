@@ -24,7 +24,7 @@ namespace HackedDesign.UI
 
             public override void Repaint()
             {
-                if (CoreGame.Instance.state.state == GameState.GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.TASKS)
+                if (GameManager.Instance.state.state == GameStateEnum.SELECTMENU && selectMenuManager.MenuState == SelectMenuManager.SelectMenuState.TASKS)
                 {
                     Show();
                     if (dirty)
@@ -48,32 +48,32 @@ namespace HackedDesign.UI
                     Destroy(taskButtonParent.transform.GetChild(i).gameObject);
                 }
 
-                for (int i = 0; i < CoreGame.Instance.state.taskList.Count; i++)
+                for (int i = 0; i < GameManager.Instance.state.taskList.Count; i++)
                 {
 
                     var go = Instantiate(taskButtonPrefab, Vector3.zero, Quaternion.identity, taskButtonParent.transform);
                     var goTaskItem = go.GetComponent<TaskListItem>();
-                    goTaskItem.task = CoreGame.Instance.state.taskList[i];
+                    goTaskItem.task = GameManager.Instance.state.taskList[i];
                     goTaskItem.Repaint();
                 }
 
-                RepaintTaskDescription(CoreGame.Instance.state.selectedTask);
+                RepaintTaskDescription(GameManager.Instance.state.selectedTask);
             }
 
             public void RepaintTaskDescription(Task selectedTask)
             {
-                if (CoreGame.Instance.state.selectedTask == null)
+                if (GameManager.Instance.state.selectedTask == null)
                 {
                     taskDescription.text = "";
                 }
                 else
                 {
-                    taskDescription.text = CoreGame.Instance.state.selectedTask.description;
+                    taskDescription.text = GameManager.Instance.state.selectedTask.description;
                     taskDescription.text += "\n";
-                    if (CoreGame.Instance.state.selectedTask.objectives != null)
+                    if (GameManager.Instance.state.selectedTask.objectives != null)
                     {
-                        Logger.Log(this, "Objectives count - " + CoreGame.Instance.state.selectedTask.objectives.Count);
-                        foreach (TaskObjective objective in CoreGame.Instance.state.selectedTask.objectives)
+                        Logger.Log(this, "Objectives count - " + GameManager.Instance.state.selectedTask.objectives.Count);
+                        foreach (TaskObjective objective in GameManager.Instance.state.selectedTask.objectives)
                         {
                             taskDescription.text += "\n[" + (objective.completed ? "*" : " ") + "] " + objective.objective + (objective.optional ? "(*)" : "");
                             taskDescription.text += "\n     <color='#999999'>" + objective.description + "</color>";

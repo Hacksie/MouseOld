@@ -24,7 +24,7 @@ namespace HackedDesign.Entities
 
         private void Update()
         {
-            if (!CoreGame.Instance.IsPlaying())
+            if (!GameManager.Instance.IsPlaying())
                 return;
 
             var tempdirection = NormaliseDirectionVector(DirectionToPlayer());
@@ -45,7 +45,7 @@ namespace HackedDesign.Entities
 
         private Vector3 DirectionToPlayer()
         {
-            return (CoreGame.Instance.GetPlayer().transform.position - transform.position);
+            return (GameManager.Instance.GetPlayer().transform.position - transform.position);
         }
     }
 }

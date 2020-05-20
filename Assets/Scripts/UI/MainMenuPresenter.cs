@@ -45,7 +45,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.MAINMENU)
+            if (GameManager.Instance.state.state == GameStateEnum.MAINMENU)
             {
                 Show();
                 EventSystem.current.SetSelectedGameObject(defaultButton);
@@ -95,7 +95,7 @@ namespace HackedDesign.UI
             ShowCreditsPanel(false);
             ShowOptionsPanel(false);
             ShowRandomPanel(false);
-            CoreGame.Instance.LoadNewGame();
+            GameManager.Instance.LoadNewGame();
             //StartCoroutine (LoadNewGameScenes ( "IntroRoom", "IntroRoom"));
         }
 
@@ -118,7 +118,7 @@ namespace HackedDesign.UI
             ShowOptionsPanel(false);
             ShowRandomPanel(false);
             Logger.Log(this, templateDropdown.options[templateDropdown.value].text);
-            CoreGame.Instance.LoadRandomGame(templateDropdown.options[templateDropdown.value].text, (int)lengthSlider.value, (int)heightSlider.value, (int)widthSlider.value, difficultyDropdown.value, (int)enemiesSlider.value, (int)camerasSlider.value);
+            GameManager.Instance.LoadRandomGame(templateDropdown.options[templateDropdown.value].text, (int)lengthSlider.value, (int)heightSlider.value, (int)widthSlider.value, difficultyDropdown.value, (int)enemiesSlider.value, (int)camerasSlider.value);
         }
 
         public void OptionsEvent()

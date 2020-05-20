@@ -23,7 +23,7 @@ namespace HackedDesign
 			public int trapCount = 0;
 
 			public bool generateDoors = true;
-			public bool generateProps = true;
+			public bool generateRandomProps = true;
 
 			public string startingRoomString = "wnww_entry";
 			public string startingAction;

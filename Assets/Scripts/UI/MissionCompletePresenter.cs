@@ -14,12 +14,12 @@ namespace HackedDesign.UI
 
          public override void Repaint()
         {
-            if (CoreGame.Instance.state.state == GameState.GameStateEnum.MISSIONCOMPLETE)
+            if (GameManager.Instance.state.state == GameStateEnum.MISSIONCOMPLETE)
             {
                 Show();
-                missionTime.text = (Time.time - CoreGame.Instance.state.currentLevel.startTime).ToString("0s");
-                infoCollected.text = CoreGame.Instance.state.currentLevel.infoCollected + "/" + CoreGame.Instance.state.currentLevel.maxInfo;
-                missionCredits.text = "$" + (CoreGame.Instance.state.currentLevel.completeCredits + CoreGame.Instance.state.currentLevel.creditsCollected);
+                missionTime.text = (Time.time - GameManager.Instance.state.currentLevel.startTime).ToString("0s");
+                infoCollected.text = GameManager.Instance.state.currentLevel.infoCollected + "/" + GameManager.Instance.state.currentLevel.maxInfo;
+                missionCredits.text = "$" + (GameManager.Instance.state.currentLevel.completeCredits + GameManager.Instance.state.currentLevel.creditsCollected);
             }
             else
             {

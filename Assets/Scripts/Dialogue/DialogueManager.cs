@@ -33,7 +33,7 @@ namespace HackedDesign.Dialogue
             if (dialogue != null)
             {
                 CurrentDialogue = dialogue;
-                CoreGame.Instance.SetDialogue();
+                GameManager.Instance.SetDialogue();
             }
             else
             {

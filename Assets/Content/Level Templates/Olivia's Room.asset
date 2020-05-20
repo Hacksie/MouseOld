@@ -23,7 +23,7 @@ MonoBehaviour:
   enemyCount: 0
   trapCount: 0
   generateDoors: 1
-  generateProps: 1
+  generateRandomProps: 0
   startingRoomString: weww
   startingAction: Prelude
   exitAction: PreludeExit
@@ -79,4 +79,5 @@ MonoBehaviour:
   randomProps: []
   trapProps: []
   fixedProps: []
+  lineOfSightProps: []
   enemies: []

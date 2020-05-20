@@ -27654,7 +27654,7 @@ GameObject:
   - component: {fileID: 1367923949}
   - component: {fileID: 1367923950}
   m_Layer: 0
-  m_Name: Core
+  m_Name: Game
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27710,9 +27710,6 @@ MonoBehaviour:
   enemiesParent: {fileID: 1049669659}
   polyNav2D: {fileID: 267615345}
   newGameLevel: Olivia's Room
-  roomAlertPrefab: {fileID: 4360447215907603391, guid: d6a1d5292a234684885e500d7b3d349d,
-    type: 3}
-  roomAlert: {fileID: 0}
   globalLight: {fileID: 1640145119}
   lightsDefault: {r: 0.24, g: 0.17052631, b: 0.12, a: 1}
   lightsWarn: {r: 0.3, g: 0.15, b: 0.15, a: 1}
@@ -50440,6 +50437,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: highsmallcrates_4_tr_aa
+      objectReference: {fileID: 0}
+    - target: {fileID: 7192196487633855810, guid: 58b94ecff3c3b1e40aacdef0132b6d8f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7973084380370169826, guid: 58b94ecff3c3b1e40aacdef0132b6d8f,
         type: 3}
