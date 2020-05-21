@@ -48,13 +48,13 @@ namespace HackedDesign
                 }
             }
 
-            public BaseEntity GetPooledNPC(string name)
+            public IEntity GetPooledNPC(string name)
             {
                 for(int i=0;i<npcPoolParent.transform.childCount;i++)
                 {
                     if(npcPoolParent.transform.GetChild(i).name == name)
                     {
-                        return npcPoolParent.transform.GetChild(i).gameObject.GetComponent<BaseEntity>();
+                        return npcPoolParent.transform.GetChild(i).gameObject.GetComponent<IEntity>();
                     }
                 }
                 return null;

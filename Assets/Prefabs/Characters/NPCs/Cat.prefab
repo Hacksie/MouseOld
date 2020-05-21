@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4523880731136029641}
   - component: {fileID: 4523880731083409617}
   - component: {fileID: 3021137816465174578}
-  - component: {fileID: 3133352561426004893}
+  - component: {fileID: 4252777225559206587}
   m_Layer: 9
   m_Name: Cat
   m_TagString: NPC
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95456605444658094}
---- !u!114 &3133352561426004893
+--- !u!114 &4252777225559206587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,13 +179,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1422101999507088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 443e696ce3aac0f4b930877dc976274d, type: 3}
+  m_Script: {fileID: 11500000, guid: e45e089d1306da946baa09e2444ed10e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMask:
+  entity: {fileID: 11400000, guid: 16bffee7e93a5bd42a1ad4a70a448a58, type: 2}
+  playerLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  direction: {x: 0, y: 0}
+    m_Bits: 256
+  visibilityDistance: 3.2
+  randomStartingDirection: 1
+  pooled: 0
+  direction: {x: 0, y: -1}
+  isMoving: 0
+  hasSeenPlayer: 0
+  playerSeenEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  playerLeaveEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  alertEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6295968191483358888
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enabled: 1
+  triggerEnabled: 1
   autoInteraction: 0
   allowInteraction: 1
   allowBug: 0

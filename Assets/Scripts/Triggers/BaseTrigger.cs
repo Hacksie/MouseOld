@@ -11,7 +11,7 @@ namespace HackedDesign
     {
         protected new Collider2D collider;
         protected ShadowCaster2D shadow;
-        public new bool enabled = true;
+        public bool triggerEnabled = true;
 
         [Header("Settings")]
         public bool autoInteraction = false;
@@ -55,7 +55,7 @@ namespace HackedDesign
 
             colliders.Clear();
 
-            if (enabled)
+            if (triggerEnabled)
             {
                 Activate();
             }
@@ -200,7 +200,7 @@ namespace HackedDesign
 
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
-            if (!enabled)
+            if (!triggerEnabled)
             {
                 return;
             }
@@ -225,7 +225,7 @@ namespace HackedDesign
         //FIXME: Move input code outside of physics update
         protected virtual void OnTriggerStay2D(Collider2D other)
         {
-            if (!enabled)
+            if (!triggerEnabled)
             {
                 return;
             }
@@ -233,7 +233,7 @@ namespace HackedDesign
 
         protected virtual void OnTriggerExit2D(Collider2D other)
         {
-            if (!enabled)
+            if (!triggerEnabled)
             {
                 return;
             }

@@ -65,10 +65,12 @@ namespace HackedDesign
         [Header("State")]
         [SerializeField] private GameState gameState;
         public GameState GameState { get { return gameState; } private set { gameState = value; } }
+        public PolyNav.PolyNav2D PolyNav { get { return polyNav2D; } private set { polyNav2D = value; } }
 
         public static GameManager Instance { get; private set; }
 
-        public GameStateEnum state;                
+
+        public GameStateEnum state;
 
         private GameManager()
         {
@@ -117,8 +119,9 @@ namespace HackedDesign
                         case PlayStateEnum.Worldmap:
                         case PlayStateEnum.Narration:
                         case PlayStateEnum.Playing:
-                            UpdateDoorAnimations();
+                            AnimateDoors();
                             playerController.Animate();
+                            AnimateEntity();
                             break;
                     }
                     break;
@@ -182,7 +185,7 @@ namespace HackedDesign
             levelRenderer.Render(GameState.CurrentLevel);
             levelRenderer.PopulateLevelDoors(GameState.CurrentLevel, GameState.doorList);
             levelRenderer.PopulateNPCSpawns(GameState.CurrentLevel, GameState.entityList);
-            levelRenderer.PopulateEnemySpawns(GameState.CurrentLevel, GameState.enemyList);
+            levelRenderer.PopulateEnemySpawns(GameState.CurrentLevel, GameState.entityList);
             minimapPanel.Initialize(GameState.CurrentLevel);
 
             player.transform.position = GameState.CurrentLevel.ConvertLevelPosToWorld(GameState.CurrentLevel.playerSpawn.levelLocation) + GameState.CurrentLevel.playerSpawn.worldOffset;
@@ -482,7 +485,7 @@ namespace HackedDesign
             }
         }
 
-        private void UpdateDoorAnimations()
+        private void AnimateDoors()
         {
             foreach (var door in GameState.doorList)
             {
@@ -493,8 +496,7 @@ namespace HackedDesign
         private void PlayingUpdate()
         {
             playerController.UpdateTransform();
-            //PlayingNPCUpdate();
-            PlayingEnemyUpdate();
+            PlayingEntityUpdate();
             PlayingTriggerUpdate();
             GameState.CurrentLevel.timer.Update();
         }
@@ -507,20 +509,20 @@ namespace HackedDesign
             }
         }
 
-        private void PlayingEnemyUpdate()
+        private void PlayingEntityUpdate()
         {
-            foreach (var enemy in GameState.enemyList)
+            foreach (var entity in GameState.entityList)
             {
-                enemy.UpdateBehaviour();
+                entity.UpdateBehaviour();
             }
         }
 
-        //void PlayingNPCUpdate()
-        //{
-        //    foreach (Entities.BaseEntity npc in state.entityList)
-        //    {
-        //        npc.UpdateBehaviour();
-        //    }
-        //}
+        private void AnimateEntity()
+        {
+            foreach (var entity in GameState.entityList)
+            {
+                entity.Animate();
+            }            
+        }
     }
 }

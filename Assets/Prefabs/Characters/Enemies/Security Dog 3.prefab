@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3597568965361574841}
   - component: {fileID: 3597568965361574846}
   - component: {fileID: 3597568965361574847}
-  - component: {fileID: 5273137502943263181}
   - component: {fileID: 3597568965361574844}
+  - component: {fileID: 769371059521219822}
   m_Layer: 9
   m_Name: Security Dog 3
   m_TagString: NPC
@@ -155,43 +155,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5273137502943263181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3597568965361574786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03895c1a48bba6345b10c1a3faa5029e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detection: {fileID: 5930446144158610820}
-  enemy: {fileID: 11400000, guid: acdb27d379c12a64e91be3fcba08c41a, type: 2}
-  patrolSpeed: 0.75
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  poiLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  poiDistance: 10
-  visibilityDistance: 2
-  randomStartingDirection: 1
-  direction: {x: 0, y: -1}
-  stationary: 0
-  patrolTime: 10
-  playerSeenEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  playerLeaveEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  alertEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  state: 0
 --- !u!114 &3597568965361574844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +185,42 @@ MonoBehaviour:
   restrict: 1
   closerPointOnInvalid: 1
   debugPath: 1
+--- !u!114 &769371059521219822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3597568965361574786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853163e5d2fdba6419fdab89b7605201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detection: {fileID: 5930446144158610820}
+  entity: {fileID: 11400000, guid: 1644a06135f87754eb2c04befb217351, type: 2}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  visibilityDistance: 3.2
+  randomStartingDirection: 1
+  direction: {x: 0, y: -1}
+  hasSeenPlayer: 0
+  playerSeenEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  playerLeaveEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  alertEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  patrolSpeed: 0.75
+  patrolTime: 10
+  poiLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  poiDistance: 10
 --- !u!1001 &7304745310716748710
 PrefabInstance:
   m_ObjectHideFlags: 0

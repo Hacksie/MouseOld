@@ -29,8 +29,8 @@ namespace HackedDesign
         public GlobalLightTypes currentLight;
 
         public List<BaseTrigger> triggerList = new List<BaseTrigger>();
-        public List<Entities.Enemy> enemyList = new List<Entities.Enemy>();
-        public List<Entities.BaseEntity> entityList = new List<Entities.BaseEntity>();
+        //public List<IEntity> enemyList = new List<IEntity>();
+        public List<IEntity> entityList = new List<IEntity>();
         public List<Door> doorList = new List<Door>();
 
 

@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enabled: 1
+  triggerEnabled: 1
   autoInteraction: 0
   allowInteraction: 1
   allowBug: 0
@@ -435,7 +435,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: ac72b6869b8b6824eba5b930a742e250, type: 2}
   - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 9488749674183814b8dbef128a44a7ed, type: 2}
+    m_Data: {fileID: 11400000, guid: 2e8f4f9689a255b4280a9aa1db8a611d, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 8a2fda8ccdb8b7845a194f3603839373, type: 2}
   - m_RefCount: 1
@@ -468,7 +468,7 @@ Tilemap:
     m_Data: {fileID: -1583958581575608633, guid: e877a43150e239442becb12886131392,
       type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: 4277377530648039197, guid: 899a32333af7bf2449af626cf200b66b,
+    m_Data: {fileID: -4981592871886954005, guid: c23831a4b2f397642a0bd7df491b5d3f,
       type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 5137905806600961440, guid: e877a43150e239442becb12886131392,

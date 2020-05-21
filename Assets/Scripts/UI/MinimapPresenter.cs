@@ -18,20 +18,21 @@ namespace HackedDesign.UI
         public Color hide;
         public Color show;
 
-        private List<WallSpriteDetails> wallSpritesDetails = new List<WallSpriteDetails>();
+        private Dictionary<string, Sprite> wallSpriteDictionary = new Dictionary<string, Sprite>();
+
+        private Transform playerTransform;
+
+        private Vector2Int lastMapPosition = Vector2Int.zero;
 
 
         public void Initialize(Level.Level level)
         {
+            this.playerTransform = GameManager.Instance.GetPlayer().transform;
             this.level = level;
             PopulateWalls();
             PopulateWallNames();
         }
 
-        private void PopulateWallNames()
-        {
-            wallSprites.ForEach(e => wallSpritesDetails.Add(new WallSpriteDetails { name = e.name, corner = e.name.Substring(0, 2), wall1 = e.name.Substring(3, 1), wall2 = e.name.Substring(4, 1) }));
-        }
 
         private void PopulateWalls()
         {
@@ -45,6 +46,11 @@ namespace HackedDesign.UI
                 walls.Add(rooms[i].transform.GetChild(5).GetComponent<Image>());
             }
         }
+
+        private void PopulateWallNames() => wallSprites.ForEach(e =>
+                                          {
+                                              wallSpriteDictionary.Add(e.name.Substring(0, 2) + e.name.Substring(3, 1) + e.name.Substring(4, 1), e);
+                                          });        
 
         public override void Repaint()
         {
@@ -61,43 +67,48 @@ namespace HackedDesign.UI
 
         private void RepaintMap()
         {
-            var pos2d = level.ConvertWorldToLevelPos(GameManager.Instance.GetPlayer().transform.position);
-            RepaintRoom(0, 0, pos2d.x - 1, pos2d.y - 1);
-            RepaintRoom(1, 0, pos2d.x, pos2d.y - 1);
-            RepaintRoom(2, 0, pos2d.x + 1, pos2d.y - 1);
-            RepaintRoom(0, 1, pos2d.x - 1, pos2d.y);
-            RepaintRoom(1, 1, pos2d.x, pos2d.y);
-            RepaintRoom(2, 1, pos2d.x + 1, pos2d.y);
-            RepaintRoom(0, 2, pos2d.x - 1, pos2d.y + 1);
-            RepaintRoom(1, 2, pos2d.x, pos2d.y + 1);
-            RepaintRoom(2, 2, pos2d.x + 1, pos2d.y + 1);
+            var mapPosition = level.ConvertWorldToLevelPos(playerTransform.position);
+            // Only repaint if we change map cell
+            if (mapPosition != lastMapPosition)
+            {
+                lastMapPosition = mapPosition;
+                RepaintRoom(0, 0, mapPosition.x - 1, mapPosition.y - 1);
+                RepaintRoom(1, 0, mapPosition.x, mapPosition.y - 1);
+                RepaintRoom(2, 0, mapPosition.x + 1, mapPosition.y - 1);
+                RepaintRoom(0, 1, mapPosition.x - 1, mapPosition.y);
+                RepaintRoom(1, 1, mapPosition.x, mapPosition.y);
+                RepaintRoom(2, 1, mapPosition.x + 1, mapPosition.y);
+                RepaintRoom(0, 2, mapPosition.x - 1, mapPosition.y + 1);
+                RepaintRoom(1, 2, mapPosition.x, mapPosition.y + 1);
+                RepaintRoom(2, 2, mapPosition.x + 1, mapPosition.y + 1);
+            }
         }
 
-        private void RepaintRoom(int i, int j, int x, int y)
+        private void RepaintRoom(int minimapX, int minimapY, int mapX, int mapY)
         {
-            if (y < 0 || y >= GameManager.Instance.GameState.CurrentLevel.map.Count() || GameManager.Instance.GameState.CurrentLevel.map[y] == null)
+            if (mapY < 0 || mapY >= GameManager.Instance.GameState.CurrentLevel.map.Count() || GameManager.Instance.GameState.CurrentLevel.map[mapY] == null)
             {
-                walls[6 * (j * 3 + i)].gameObject.SetActive(false);
-                walls[6 * (j * 3 + i) + 1].gameObject.SetActive(false);
-                walls[6 * (j * 3 + i) + 2].gameObject.SetActive(false);
-                walls[6 * (j * 3 + i) + 3].gameObject.SetActive(false);
-                walls[6 * (j * 3 + i) + 4].gameObject.SetActive(false);
-                walls[6 * (j * 3 + i) + 5].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX)].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX) + 1].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX) + 2].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX) + 3].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX) + 4].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX) + 5].gameObject.SetActive(false);
                 return;
             }
 
             // When the map gets serialized, the 'empty' rooms become non null, because fuck me, right?
-            if (x < 0 || x >= GameManager.Instance.GameState.CurrentLevel.map[y].rooms.Count() || GameManager.Instance.GameState.CurrentLevel.map[y].rooms[x] == null || string.IsNullOrWhiteSpace(GameManager.Instance.GameState.CurrentLevel.map[y].rooms[x].left))
+            if (mapX < 0 || mapX >= GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms.Count() || GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms[mapX] == null || string.IsNullOrWhiteSpace(GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms[mapX].left))
             {
-                walls[6 * (j * 3 + i)].gameObject.SetActive(false);
-                walls[6 * (j * 3 + i) + 1].gameObject.SetActive(false);
-                walls[6 * (j * 3 + i) + 2].gameObject.SetActive(false);
-                walls[6 * (j * 3 + i) + 3].gameObject.SetActive(false);
-                walls[6 * (j * 3 + i) + 4].gameObject.SetActive(false);
-                walls[6 * (j * 3 + i) + 5].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX)].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX) + 1].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX) + 2].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX) + 3].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX) + 4].gameObject.SetActive(false);
+                walls[6 * (minimapY * 3 + minimapX) + 5].gameObject.SetActive(false);
                 return;
             }
-            ProxyRoom room = GameManager.Instance.GameState.CurrentLevel.map[y].rooms[x];
+            ProxyRoom room = GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms[mapX];
 
             Sprite blSprite = FindChunkObject("bl", room.left, room.bottom);
             Sprite brSprite = FindChunkObject("br", room.right, room.bottom);
@@ -106,46 +117,31 @@ namespace HackedDesign.UI
 
             //FIXME: Test for null
 
-            walls[6 * (j * 3 + i)].sprite = tlSprite;
-            walls[6 * (j * 3 + i)].gameObject.SetActive(true);
-            walls[6 * (j * 3 + i) + 1].sprite = trSprite;
-            walls[6 * (j * 3 + i) + 1].gameObject.SetActive(true);
-            walls[6 * (j * 3 + i) + 2].sprite = blSprite;
-            walls[6 * (j * 3 + i) + 2].gameObject.SetActive(true);
-            walls[6 * (j * 3 + i) + 3].sprite = brSprite;
-            walls[6 * (j * 3 + i) + 3].gameObject.SetActive(true);
-            walls[6 * (j * 3 + i) + 4].gameObject.SetActive(GameManager.Instance.GameState.CurrentLevel.map[y].rooms[x].isEntry);
-            walls[6 * (j * 3 + i) + 5].gameObject.SetActive(GameManager.Instance.GameState.CurrentLevel.map[y].rooms[x].isEnd);
+            walls[6 * (minimapY * 3 + minimapX)].sprite = tlSprite;
+            walls[6 * (minimapY * 3 + minimapX)].gameObject.SetActive(true);
+            walls[6 * (minimapY * 3 + minimapX) + 1].sprite = trSprite;
+            walls[6 * (minimapY * 3 + minimapX) + 1].gameObject.SetActive(true);
+            walls[6 * (minimapY * 3 + minimapX) + 2].sprite = blSprite;
+            walls[6 * (minimapY * 3 + minimapX) + 2].gameObject.SetActive(true);
+            walls[6 * (minimapY * 3 + minimapX) + 3].sprite = brSprite;
+            walls[6 * (minimapY * 3 + minimapX) + 3].gameObject.SetActive(true);
+            walls[6 * (minimapY * 3 + minimapX) + 4].gameObject.SetActive(GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms[mapX].isEntry);
+            walls[6 * (minimapY * 3 + minimapX) + 5].gameObject.SetActive(GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms[mapX].isEnd);
 
         }
         private Sprite FindChunkObject(string corner, string wall1, string wall2)
-        {
-            for (int i = 0; i < wallSprites.Count; i++)
-            {
-                if (wallSprites[i] != null && MatchSpriteName(wallSpritesDetails[i], corner, wall1, wall2))
-                {
-                    return wallSprites[i];
-                }
-            }
-            return null;
-        }
-
-        private bool MatchSpriteName(WallSpriteDetails spriteDetails, string corner, string wall1, string wall2)
         {
             // Hack to deal with entry & exits
             wall1 = wall1 == "e" ? "d" : wall1 == "n" ? "d" : wall1;
             wall2 = wall2 == "e" ? "d" : wall2 == "n" ? "d" : wall2;
 
-            return (spriteDetails.corner == corner && (wall1 == spriteDetails.wall1 && wall2 == spriteDetails.wall2));
-        }
+            string combined = corner + wall1 + wall2;
 
-        struct WallSpriteDetails
-        {
-            public string name;
-            public string corner;
-            public string wall1;
-            public string wall2;
+            if (wallSpriteDictionary.ContainsKey(combined))
+            {
+                return wallSpriteDictionary[combined];
+            }
+            return null;
         }
     }
-
 }

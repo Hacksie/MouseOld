@@ -13,9 +13,8 @@ GameObject:
   - component: {fileID: 6284836796916093470}
   - component: {fileID: 6284836796916093465}
   - component: {fileID: 6284836796916093464}
-  - component: {fileID: 3456770770785355882}
   - component: {fileID: 6284836796916093467}
-  - component: {fileID: 7501887980109888589}
+  - component: {fileID: 1173962287189976634}
   m_Layer: 9
   m_Name: Female Tech 1
   m_TagString: NPC
@@ -156,43 +155,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3456770770785355882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6284836796916093477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03895c1a48bba6345b10c1a3faa5029e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detection: {fileID: 7638170182612699765}
-  enemy: {fileID: 11400000, guid: 1e4087547fd404c408648dc3e8f4c897, type: 2}
-  patrolSpeed: 0.5
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  poiLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  poiDistance: 10
-  visibilityDistance: 2
-  randomStartingDirection: 1
-  direction: {x: 0, y: -1}
-  stationary: 0
-  patrolTime: 10
-  playerSeenEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  playerLeaveEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  alertEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  state: 0
 --- !u!114 &6284836796916093467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,19 +185,42 @@ MonoBehaviour:
   restrict: 1
   closerPointOnInvalid: 1
   debugPath: 1
---- !u!114 &7501887980109888589
+--- !u!114 &1173962287189976634
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6284836796916093477}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 221a7d1d2e8087848940fa66c039dff7, type: 3}
+  m_Script: {fileID: 11500000, guid: 853163e5d2fdba6419fdab89b7605201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 6284836796916093470}
+  detection: {fileID: 7638170182612699765}
+  entity: {fileID: 11400000, guid: 1e4087547fd404c408648dc3e8f4c897, type: 2}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  visibilityDistance: 3.2
+  randomStartingDirection: 1
+  direction: {x: 0, y: -1}
+  hasSeenPlayer: 0
+  playerSeenEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  playerLeaveEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  alertEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  patrolSpeed: 0.75
+  patrolTime: 10
+  poiLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  poiDistance: 10
 --- !u!1001 &6706630875423710295
 PrefabInstance:
   m_ObjectHideFlags: 0

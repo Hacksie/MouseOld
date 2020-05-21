@@ -233,7 +233,7 @@ public class @MouseControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0012c36c-05b8-40f4-b1c5-315aff44b2b2"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -270,6 +270,17 @@ public class @MouseControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d892ab30-aca8-4709-9041-cc279bee41ef"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

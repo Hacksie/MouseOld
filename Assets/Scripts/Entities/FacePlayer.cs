@@ -8,10 +8,12 @@ namespace HackedDesign.Entities
         [Header("Game Objects")]
         [SerializeField]
         private Animator animator = null; //The parent animator.
+        private Transform player;
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
+            player = GameManager.Instance.GetPlayer().transform;
         }
 
         protected void Start()
@@ -45,7 +47,7 @@ namespace HackedDesign.Entities
 
         private Vector3 DirectionToPlayer()
         {
-            return (GameManager.Instance.GetPlayer().transform.position - transform.position);
+            return (player.position - transform.position);
         }
     }
 }

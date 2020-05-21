@@ -29,9 +29,6 @@ namespace HackedDesign.Level
         public int completeCredits = 500;
         public int creditsCollected = 0;
 
-
-
-
         public Level(LevelGenTemplate template)
         {
             this.template = template;
