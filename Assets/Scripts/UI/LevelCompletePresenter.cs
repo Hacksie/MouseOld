@@ -29,7 +29,7 @@ namespace HackedDesign.UI
 
         public void OkEvent()
         {
-            levelCompleteManager.NextLevel();
+            levelCompleteManager.Next();
         }
 
     }

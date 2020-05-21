@@ -16980,9 +16980,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3486869}
-        m_TargetAssemblyTypeName: HackedDesign.LevelCompleteManager, Assembly-CSharp
-        m_MethodName: ResumeEvent
+      - m_Target: {fileID: 902572115}
+        m_TargetAssemblyTypeName: HackedDesign.UI.LevelCompletePresenter, Assembly-CSharp
+        m_MethodName: CancelEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27498,8 +27498,6 @@ MonoBehaviour:
     alertTrap: {fileID: 0}
     currentLight: 0
     triggerList: []
-    enemyList: []
-    entityList: []
     doorList: []
   state: 0
 --- !u!82 &1367923950

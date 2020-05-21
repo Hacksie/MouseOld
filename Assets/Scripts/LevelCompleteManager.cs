@@ -13,7 +13,7 @@ namespace HackedDesign {
 			this.actionManager = actionManager;
 		}
 
-		public void NextLevel()
+		public void Next()
 		{
 			actionManager.Invoke(GameManager.Instance.GameState.CurrentLevel.template.exitAction);
 		}

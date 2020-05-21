@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HackedDesign
 {
 	[System.Serializable]
-    public class PlayerState
+    public class PlayerData
     {
         public int movementAugments = 0;
         public int charisma = 0;

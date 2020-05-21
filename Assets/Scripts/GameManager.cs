@@ -63,8 +63,8 @@ namespace HackedDesign
 
 
         [Header("State")]
-        [SerializeField] private GameState gameState;
-        public GameState GameState { get { return gameState; } private set { gameState = value; } }
+        [SerializeField] private GameData gameState;
+        public GameData GameState { get { return gameState; } private set { gameState = value; } }
         public PolyNav.PolyNav2D PolyNav { get { return polyNav2D; } private set { polyNav2D = value; } }
 
         public static GameManager Instance { get; private set; }
@@ -132,7 +132,7 @@ namespace HackedDesign
         {
             Logger.Log(this, "Loading new game");
             state = GameStateEnum.InGame;
-            GameState = new GameState(false);
+            GameState = new GameData(false);
             entityManager.Initialize();
             actionManager.Initialize(entityManager);
             GameState.CurrentLevel = levelGenerator.GenerateLevel(newGameLevel, 0, 0, 0);
@@ -143,7 +143,7 @@ namespace HackedDesign
         {
             Logger.Log(this, "Loading random game");
             state = GameStateEnum.InGame;
-            GameState = new GameState(true);
+            GameState = new GameData(true);
             GameState.CurrentLevel = levelGenerator.GenerateLevel(template, length, height, width, difficulty, enemies, traps);
             entityManager.Initialize();
             actionManager.Initialize(entityManager);
@@ -154,7 +154,7 @@ namespace HackedDesign
         {
             Logger.Log(this, "Loading new level");
             state = GameStateEnum.InGame;
-            GameState = new GameState(false);
+            GameState = new GameData(false);
             GameState.entityList.Clear();
             GameState.CurrentLevel = levelGenerator.GenerateLevel(template);
             entityManager.Initialize();

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HackedDesign
 {
     [System.Serializable]
-    public class GameState
+    public class GameData
     {
         [Header("Save Properties")]
         [SerializeField] private int gameVersion = 0;
@@ -13,7 +13,7 @@ namespace HackedDesign
 
         [Header("Game State")]
         [SerializeField] private PlayStateEnum playState = PlayStateEnum.Titlecard;
-        [SerializeField] private PlayerState playerState = null;
+        [SerializeField] private PlayerData playerState = null;
         [SerializeField] private StoryState story = new StoryState();
         [SerializeField] private Level.Level currentLevel = null;
         [SerializeField] private bool isRandom = false;
@@ -37,28 +37,28 @@ namespace HackedDesign
         public int GameVersion { get { return gameVersion; } set { gameVersion = value; } }
         public int GameSlot { get { return gameSlot; } set { gameSlot = value; } }
         public PlayStateEnum PlayState { get { return playState; } set { playState = value; } }
-        public PlayerState Player { get { return playerState; } set { playerState = value; } }
+        public PlayerData Player { get { return playerState; } set { playerState = value; } }
         public StoryState Story { get { return story; } set { story = value; } }
         public Level.Level CurrentLevel { get { return currentLevel; } set { currentLevel = value; } }
 
         public List<Task> TaskList { get => taskList; private set => taskList = value; }
 
-        public GameState() : this(false)
+        public GameData() : this(false)
         {
 
         }
 
 
-        public GameState(bool isRandom) : this(isRandom, PlayStateEnum.Loading)
+        public GameData(bool isRandom) : this(isRandom, PlayStateEnum.Loading)
         {
 
         }
 
-        public GameState(bool isRandom, PlayStateEnum startingState)
+        public GameData(bool isRandom, PlayStateEnum startingState)
         {
             this.IsRandom = isRandom;
             this.PlayState = startingState;
-            this.Player = new PlayerState();
+            this.Player = new PlayerData();
         }
 
         public bool IsPlaying()
