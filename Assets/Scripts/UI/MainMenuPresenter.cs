@@ -45,15 +45,16 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
+            /*
             if (GameManager.Instance.state == GameStateEnum.MainMenu)
             {
                 Show();
-                //EventSystem.current.SetSelectedGameObject(defaultButton);
+                EventSystem.current.SetSelectedGameObject(defaultButton);
             }
             else
             {
                 Hide();
-            }
+            }*/
         }
 
         public void ShowOptionsPanel(bool show)

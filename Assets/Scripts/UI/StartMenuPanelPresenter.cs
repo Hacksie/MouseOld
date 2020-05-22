@@ -8,14 +8,14 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.StartMenu)
-            {
-                Show();
-            }
-            else
-            {
-                Hide();
-            }
+            // if (GameManager.Instance.GameState.PlayState == PlayStateEnum.StartMenu)
+            // {
+            //     Show();
+            // }
+            // else
+            // {
+            //     Hide();
+            // }
         }
 
         public void Initialize(StartMenuManager startMenuManager)

@@ -22,15 +22,17 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
+            UpdateLines();
+            /*
             if (GameManager.Instance.GameState.IsPlaying())
             {
                 Show();
-                UpdateLines();
+                
             }
             else
             {
                 Hide();
-            }
+            }*/
         }
 
         private void UpdateLines()

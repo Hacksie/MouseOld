@@ -513,7 +513,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5148872865417163084}
   - component: {fileID: 9079021518133785529}
-  - component: {fileID: 7381337847874457460}
   m_Layer: 0
   m_Name: highsmallcrates_1_tl_aa
   m_TagString: Untagged
@@ -562,20 +561,7 @@ MonoBehaviour:
   - {x: 2, y: 4.7, z: 0}
   m_ShapePathHash: -1037183267
   m_Mesh: {fileID: 0}
-  m_InstanceId: 345884
---- !u!114 &7381337847874457460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5340633704375122924}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f4246eb21b3eca4a89762bb1515dca0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disableDistance: 8
+  m_InstanceId: 97922
 --- !u!1 &5470057258111957443
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,24 +676,6 @@ Tilemap:
   m_GameObject: {fileID: 6631191854770104220}
   m_Enabled: 1
   m_Tiles:
-  - first: {x: 4, y: 7, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 70
-      m_TileSpriteIndex: 70
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 8
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
-  - first: {x: 4, y: 8, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 69
-      m_TileSpriteIndex: 69
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 8
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
   - first: {x: 4, y: 9, z: 0}
     second:
       serializedVersion: 2
@@ -857,10 +825,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 65759811f7bf4cd45913819a1d4b09c1, type: 2}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 7df013a13ce4d1b44ab272357502c4a2, type: 2}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 5f7bf25b5b39f0b489d27fdd5e6a7580, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -1001,14 +969,12 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 8201863957573750504, guid: 3c276fd9fa81e7647bab05e173a2702c,
       type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 5464125849184667098, guid: 3c276fd9fa81e7647bab05e173a2702c,
-      type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 1198978987257732069, guid: 3c276fd9fa81e7647bab05e173a2702c,
-      type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
-  - m_RefCount: 3
+  - m_RefCount: 1
     m_Data:
       e00: 1
       e01: 0
@@ -1043,7 +1009,7 @@ Tilemap:
     m_Data: {r: 1.5e-44, g: 1.5e-44, b: 1.5e-44, a: 1.5e-44}
   - m_RefCount: 0
     m_Data: {r: 3e-45, g: 3e-45, b: 3e-45, a: 3e-45}
-  - m_RefCount: 3
+  - m_RefCount: 1
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1

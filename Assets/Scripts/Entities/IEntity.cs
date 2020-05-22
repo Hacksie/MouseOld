@@ -4,7 +4,7 @@ namespace HackedDesign
 {
     public interface IEntity 
     {
-        void Initialize(bool pooled);
+        void Initialize(bool pooled, Transform player);
         void UpdateBehaviour();
         void Animate();
         void SetPosition(Vector2 position);

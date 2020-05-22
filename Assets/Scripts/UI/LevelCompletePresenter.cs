@@ -7,6 +7,8 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
+            //Logger.Log(this,"level complete repaint");
+            /*
             if (GameManager.Instance.GameState.PlayState == PlayStateEnum.LevelComplete)
             {
                 Show();
@@ -14,7 +16,7 @@ namespace HackedDesign.UI
             else
             {
                 Hide();
-            }
+            }*/
         }
 
         public void Initialize(LevelCompleteManager levelCompleteManager)

@@ -18,7 +18,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.SelectMenu && selectMenuManager.MenuState == SelectMenuState.Stash)
+            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.SelectMenu && selectMenuManager.MenuState == SelectMenuSubState.Stash)
             {
                 Show();
                 RepaintStash();

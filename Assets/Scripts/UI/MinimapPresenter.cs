@@ -25,9 +25,9 @@ namespace HackedDesign.UI
         private Vector2Int lastMapPosition = Vector2Int.zero;
 
 
-        public void Initialize(Level.Level level)
+        public void Initialize(Level.Level level, Transform playerTransform)
         {
-            this.playerTransform = GameManager.Instance.GetPlayer().transform;
+            this.playerTransform = playerTransform;
             this.level = level;
             PopulateWalls();
             PopulateWallNames();
@@ -54,15 +54,17 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Playing)
-            {
-                Show();
-                RepaintMap();
-            }
-            else
-            {
-                Hide();
-            }
+            RepaintMap();
+
+            // if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Playing)
+            // {
+            //     Show();
+            //     RepaintMap();
+            // }
+            // else
+            // {
+            //     Hide();
+            // }
         }
 
         private void RepaintMap()

@@ -981,7 +981,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8312179700460282203}
   - component: {fileID: 5319201982702838702}
-  - component: {fileID: 1167170691704677134}
   m_Layer: 0
   m_Name: highsmallcrates_3_bl_aa
   m_TagString: Untagged
@@ -1031,19 +1030,6 @@ MonoBehaviour:
   m_ShapePathHash: -315088059
   m_Mesh: {fileID: 0}
   m_InstanceId: 347052
---- !u!114 &1167170691704677134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9093627450238331899}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f4246eb21b3eca4a89762bb1515dca0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disableDistance: 8
 --- !u!1 &9207398240410724820
 GameObject:
   m_ObjectHideFlags: 0

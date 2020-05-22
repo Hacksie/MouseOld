@@ -19,15 +19,15 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.GameState.IsPlaying())
-            {
-                Show();
-                RepaintCounts();
-            }
-            else
-            {
-                Hide();
-            }
+            // if (GameManager.Instance.GameState.IsPlaying())
+            // {
+            //     Show();
+            //     RepaintCounts();
+            // }
+            // else
+            // {
+            //     Hide();
+            // }
         }
 
         private void RepaintCounts()

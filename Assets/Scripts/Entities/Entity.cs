@@ -46,11 +46,11 @@ namespace HackedDesign
         }
 
 
-        public virtual void Initialize(bool pooled)
+        public virtual void Initialize(bool pooled, Transform playerTransform)
         {
             Logger.Log(this, "Initializing Enemy");
             this.pooled = pooled;
-            this.playerTransform = GameManager.Instance.GetPlayer().transform;
+            this.playerTransform = playerTransform;
 
             direction = Vector2.down;
 
@@ -101,7 +101,7 @@ namespace HackedDesign
         protected virtual void UpdatePassive()
         {
             // The player triggered our detection, but there anything in the way?
-            if (colliders.Contains(GameManager.Instance.GetPlayer()))
+            if (colliders.Contains(playerTransform.gameObject))
             {
                 var hit = CanSeePlayer();
                 if (hit.collider != null && hit.collider.CompareTag(TagManager.PLAYER))

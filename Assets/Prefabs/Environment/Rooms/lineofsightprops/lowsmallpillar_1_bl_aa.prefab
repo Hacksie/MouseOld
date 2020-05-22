@@ -83,7 +83,6 @@ GameObject:
   m_Component:
   - component: {fileID: 890367881501915958}
   - component: {fileID: 3949773139998489027}
-  - component: {fileID: 3260755541612610830}
   m_Layer: 0
   m_Name: lowsmallpillar_1_bl_aa
   m_TagString: Untagged
@@ -133,19 +132,6 @@ MonoBehaviour:
   m_ShapePathHash: -1976032443
   m_Mesh: {fileID: 0}
   m_InstanceId: 373736
---- !u!114 &3260755541612610830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 86410924847608214}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f4246eb21b3eca4a89762bb1515dca0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disableDistance: 8
 --- !u!1 &5915205464988673069
 GameObject:
   m_ObjectHideFlags: 0

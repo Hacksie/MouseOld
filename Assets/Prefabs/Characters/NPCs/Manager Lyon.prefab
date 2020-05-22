@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2184948785887342203}
   - component: {fileID: 2068982983741601275}
   - component: {fileID: 2238578036878349477}
-  - component: {fileID: 2293728210305100299}
   - component: {fileID: 2180573850372193249}
   - component: {fileID: 2180573849905414393}
   - component: {fileID: 2180573849905414398}
@@ -107,37 +106,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2293728210305100299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2181646088560387753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95f28d8d6fa1e3c4b8172b541b8847cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  polyNavAgent: {fileID: 2180573849905414398}
-  alert: {fileID: 0}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 257
-  enemy: 
-  state: 1
-  patrolWait: 7
-  patrolSpeed: 0.75
-  huntSpeed: 1
-  hostile: 1
-  direction: {x: 0, y: 0}
-  patrolLastCheck: 0
-  currentDirection: {x: 0, y: 0}
-  currentDirections: []
-  huntingLastSeen: 0
-  seekTime: 5
-  fightDistance: 1.5
-  lastKnownLocation: {x: 0, y: 0, z: 0}
 --- !u!61 &2180573850372193249
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -698,9 +698,8 @@ GameObject:
   - component: {fileID: 8758833580839513534}
   - component: {fileID: 2569892113848426661}
   - component: {fileID: 5384739207949092243}
-  - component: {fileID: 9057988959401990823}
   m_Layer: 0
-  m_Name: lab_1_bl_wd
+  m_Name: wall_1_bl_wd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -795,16 +794,3 @@ MonoBehaviour:
   m_ShapePathHash: -88635491
   m_Mesh: {fileID: 0}
   m_InstanceId: 206914
---- !u!114 &9057988959401990823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614294342454436}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f4246eb21b3eca4a89762bb1515dca0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disableDistance: 8

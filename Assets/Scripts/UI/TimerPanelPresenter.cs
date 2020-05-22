@@ -24,35 +24,37 @@ namespace HackedDesign.UI
                 return;
             }
 
-            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Playing)
+            if (timer.running)
             {
-                Show();
 
-                if (timer.running)
+                float time = timer.maxTime - (Time.time - timer.startTime);
+
+                if (time < timer.alertTime)
                 {
-
-                    float time = timer.maxTime - (Time.time - timer.startTime);
-
-                    if (time < timer.alertTime)
-                    {
-                        timerText.color = alertColor;
-                    }
-                    else if (time < timer.warningTime)
-                    {
-                        timerText.color = warningColor;
-                    }
-                    else
-                    {
-                        timerText.color = defaultColor;
-                    }
-
-                    timerText.text = time.ToString("000");
+                    timerText.color = alertColor;
                 }
+                else if (time < timer.warningTime)
+                {
+                    timerText.color = warningColor;
+                }
+                else
+                {
+                    timerText.color = defaultColor;
+                }
+
+                timerText.text = time.ToString("000");
             }
-            else
-            {
-                Hide();
-            }
+
+            // if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Playing)
+            // {
+            //     Show();
+
+
+            // }
+            // else
+            // {
+            //     Hide();
+            // }
         }
     }
 }

@@ -353,7 +353,7 @@ namespace HackedDesign
                         continue;
                     }
 
-                    npc.Initialize(true);
+                    npc.Initialize(true, GameManager.Instance.PlayerController.transform);
                     npc.SetPosition(level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset);
                     npc.Activate();
 
@@ -397,7 +397,7 @@ namespace HackedDesign
                         continue;
                     }
 
-                    enemy.Initialize(false);
+                    enemy.Initialize(false, GameManager.Instance.PlayerController.transform);
                     Story.InfoRepository.Instance.GenerateRandomEnemy((Story.Enemy)enemy.GetEntityDefinition());
                     enemyList.Add(enemy);
                 }

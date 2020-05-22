@@ -22,16 +22,19 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Titlecard)
-            {
-                Show();
-                titleText.text = titleStrings[GameManager.Instance.GameState.Story.act];
-                EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
-            }
-            else
-            {
-                Hide();
-            }
+            titleText.text = titleStrings[GameManager.Instance.GameState.Story.act];
+            EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
+
+            // if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Titlecard)
+            // {
+            //     Show();
+            //     titleText.text = titleStrings[GameManager.Instance.GameState.Story.act];
+            //     EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
+            // }
+            // else
+            // {
+            //     Hide();
+            // }
         }
 
         public void ClickEvent()

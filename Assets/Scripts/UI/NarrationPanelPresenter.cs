@@ -32,19 +32,24 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Narration)
+            if (currentNarration != narrationManager.GetCurrentNarration())
             {
-                Show();
+                RepaintNarration();
+            }
 
-                if (currentNarration != narrationManager.GetCurrentNarration())
-                {
-                    RepaintNarration();
-                }
-            }
-            else if (this.gameObject.activeInHierarchy)
-            {
-                Hide();
-            }
+            // if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Narration)
+            // {
+            //     Show();
+
+            //     if (currentNarration != narrationManager.GetCurrentNarration())
+            //     {
+            //         RepaintNarration();
+            //     }
+            // }
+            // else if (this.gameObject.activeInHierarchy)
+            // {
+            //     Hide();
+            // }
 
         }
 

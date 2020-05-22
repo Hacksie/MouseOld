@@ -35,40 +35,74 @@ namespace HackedDesign
         [SerializeField] private Color lightsAlert = Color.black;
         [SerializeField] private Color lightsBar = Color.black;
 
-        [Header("UI")]
-        [SerializeField] private UI.MobileInputUIPresenter mobileInputUI = null;
-        [SerializeField] private UI.CursorPresenter cursorPresenter = null;
-        [SerializeField] private UI.MainMenuPresenter mainMenu = null;
+        [Header("Managers")]
         [SerializeField] private Story.ActionManager actionManager = null;
-        [SerializeField] private UI.ActionConsolePresenter actionConsolePanel = null;
         [SerializeField] private StartMenuManager startMenuManager = null;
-        [SerializeField] private UI.StartMenuPanelPresenter startMenuPanel = null;
         [SerializeField] private SelectMenuManager selectMenuManager = null;
-        [SerializeField] private UI.SelectMenuPanelPresenter selectMenuPanel = null;
-        [SerializeField] private UI.ActionPanelPresenter actionPanel = null;
-        [SerializeField] private UI.InfoPanelPresenter infoPanel = null;
-        [SerializeField] private UI.StashPanelPresenter stashPanel = null;
-        [SerializeField] private UI.PsychPanelPresenter psychPanel = null;
-        [SerializeField] private UI.TaskPanelPresenter taskPanel = null;
         [SerializeField] private Dialogue.NarrationManager narrationManager = null;
-        [SerializeField] private UI.NarrationPanelPresenter narrationPanel = null;
         [SerializeField] private MissionCompleteManager missionCompleteManager = null;
         [SerializeField] private LevelCompleteManager levelCompleteManager = null;
-        [SerializeField] private UI.LevelCompletePresenter levelCompletePresenter = null;
-        [SerializeField] private UI.MissionCompletePresenter missionCompletePanel = null;
-        [SerializeField] private UI.MinimapPresenter minimapPanel = null;
-        [SerializeField] private UI.TitlecardPresenter titlecardPanel = null;
-        [SerializeField] private UI.TimerPanelPresenter timerPanel = null;
-        [SerializeField] private UI.WorldMapPresenter worldMapPanel = null;
 
+        [Header("UI")]
+        [SerializeField] private UI.MobileInputUIPresenter mobileInputUI = null;
+        [SerializeField] public UI.MainMenuPresenter mainMenuPresenter = null;
+        [SerializeField] public UI.ActionConsolePresenter actionConsolePanel = null;
+        [SerializeField] public UI.StartMenuPanelPresenter startMenuPanel = null;
+        [SerializeField] public UI.SelectMenuPanelPresenter selectMenuPanel = null;
+        [SerializeField] public UI.ActionPanelPresenter actionPanel = null;
+        [SerializeField] public UI.InfoPanelPresenter infoPanel = null;
+        [SerializeField] public UI.StashPanelPresenter stashPanel = null;
+        [SerializeField] public UI.PsychPanelPresenter psychPanel = null;
+        [SerializeField] public UI.TaskPanelPresenter taskPanel = null;
+        [SerializeField] public UI.NarrationPanelPresenter narrationPanel = null;
+        [SerializeField] public UI.LevelCompletePresenter levelCompletePresenter = null;
+        [SerializeField] public UI.MissionCompletePresenter missionCompletePanel = null;
+        [SerializeField] public UI.MinimapPresenter minimapPanel = null;
+        [SerializeField] public UI.TitlecardPresenter titlecardPanel = null;
+        [SerializeField] public UI.TimerPanelPresenter timerPanel = null;
+        [SerializeField] public UI.WorldMapPresenter worldMapPanel = null;
 
         [Header("State")]
         [SerializeField] private GameData gameState;
+
         public GameData GameState { get { return gameState; } private set { gameState = value; } }
         public PolyNav.PolyNav2D PolyNav { get { return polyNav2D; } private set { polyNav2D = value; } }
 
         public static GameManager Instance { get; private set; }
 
+        private IState currentState;
+
+        public IState CurrentState
+        {
+            get
+            {
+                return currentState;
+            }
+            private set
+            {
+                if (currentState != null)
+                {
+                    currentState.End();
+                }
+                currentState = value;
+                if (currentState != null)
+                {
+                    currentState.Start();
+                }
+            }
+        }
+
+        public PlayerController PlayerController
+        {
+            get
+            {
+                return playerController;
+            }
+            private set
+            {
+                playerController = value;
+            }
+        }
 
         public GameStateEnum state;
 
@@ -77,60 +111,27 @@ namespace HackedDesign
             Instance = this;
         }
 
-
         private void Awake()
         {
             CheckBindings();
             Initialization();
+            CurrentState = new MainMenuState(mainMenuPresenter);
         }
 
         private void Update()
         {
-            switch (state)
-            {
-                case GameStateEnum.MainMenu:
-                    break;
-                case GameStateEnum.InGame:
-                    UpdateInGame();
-                    break;
-            }
+            CurrentState.Update();
         }
 
         private void LateUpdate()
         {
-            switch (state)
-            {
-                case GameStateEnum.MainMenu:
-                    mainMenu.Repaint();
-                    break;
-                case GameStateEnum.InGame:
-                    mainMenu.Repaint();
-                    RepaintInGameUI();
-                    actionManager.UpdateBehaviour();
-                    switch (GameState.PlayState)
-                    {
-                        case PlayStateEnum.Captured:
-                        case PlayStateEnum.Dialogue:
-                        case PlayStateEnum.GameOver:
-                        case PlayStateEnum.MissionComplete:
-                        case PlayStateEnum.LevelComplete:
-                        case PlayStateEnum.SelectMenu:
-                        case PlayStateEnum.StartMenu:
-                        case PlayStateEnum.Worldmap:
-                        case PlayStateEnum.Narration:
-                        case PlayStateEnum.Playing:
-                            AnimateDoors();
-                            playerController.Animate();
-                            AnimateEntity();
-                            break;
-                    }
-                    break;
-            }
+            CurrentState.LateUpdate();
         }
 
         public void LoadNewGame()
         {
             Logger.Log(this, "Loading new game");
+            CurrentState = new LoadingState();
             state = GameStateEnum.InGame;
             GameState = new GameData(false);
             entityManager.Initialize();
@@ -165,50 +166,18 @@ namespace HackedDesign
         public void EndGame()
         {
             Logger.Log(this, "End Game");
+            CurrentState = new MainMenuState(mainMenuPresenter);
             state = GameStateEnum.MainMenu;
-            RepaintInGameUI();
             levelRenderer.DestroyLevel();
             GameState.entityList.Clear();
             ShowPlayer(false);
             Time.timeScale = 0;
         }
 
-        /// <summary>
-        /// Run this each time the scene is changed
-        /// </summary>
-        public void SceneInitialize()
-        {
-            Logger.Log(this, "Scene initialization");
-            ShowPlayer(true);
-            SetLight(GlobalLightTypes.Default);
-
-            levelRenderer.Render(GameState.CurrentLevel);
-            levelRenderer.PopulateLevelDoors(GameState.CurrentLevel, GameState.doorList);
-            levelRenderer.PopulateNPCSpawns(GameState.CurrentLevel, GameState.entityList);
-            levelRenderer.PopulateEnemySpawns(GameState.CurrentLevel, GameState.entityList);
-            minimapPanel.Initialize(GameState.CurrentLevel);
-
-            player.transform.position = GameState.CurrentLevel.ConvertLevelPosToWorld(GameState.CurrentLevel.playerSpawn.levelLocation) + GameState.CurrentLevel.playerSpawn.worldOffset;
-
-
-
-            SceneTriggersInitialize();
-            timerPanel.Initialize(GameState.CurrentLevel.timer);
-
-            SetPlaying();
-
-            if (!string.IsNullOrWhiteSpace(GameState.CurrentLevel.template.startingAction))
-            {
-                Story.ActionManager.instance.Invoke(GameState.CurrentLevel.template.startingAction);
-            }
-
-            RepaintInGameUI();
-        }
-
-        public GameObject GetPlayer()
-        {
-            return player;
-        }
+        // public GameObject GetPlayer()
+        // {
+        //     return player;
+        // }
 
         public void GameOver()
         {
@@ -216,54 +185,53 @@ namespace HackedDesign
             GameState.PlayState = PlayStateEnum.GameOver;
         }
 
+        public void SetStartMenu()
+        {
+            CurrentState = new StartMenuState();
+            GameState.PlayState = PlayStateEnum.StartMenu;
+        }
+
+        public void SetSelectMenu()
+        {
+            CurrentState = new SelectMenuState();
+            GameState.PlayState = PlayStateEnum.SelectMenu;
+        }
+
         public void SetTitlecard()
         {
-            Logger.Log(this, "State set to TITLECARD");
-            Time.timeScale = 0;
+            CurrentState = new TitlecardState(this.titlecardPanel);
             GameState.PlayState = PlayStateEnum.Titlecard;
         }
 
         public void SetPlaying()
         {
-            Logger.Log(this, "State set to PLAYING");
-            Time.timeScale = 1;
+            CurrentState = new PlayingState(this.playerController, this.actionManager);
             GameState.SetPlaying();
-        }
-
-        public void SetDialogue()
-        {
-            Logger.Log(this, "State set to DIALOGUE");
-            Time.timeScale = 0;
-            GameState.PlayState = PlayStateEnum.Dialogue;
         }
 
         public void SetNarration()
         {
-            Logger.Log(this, "State set to NARRATION");
-            Time.timeScale = 0;
+            CurrentState = new NarrationState(this.narrationPanel);
             GameState.PlayState = PlayStateEnum.Narration;
-            RepaintInGameUI();
         }
 
         public void SetMissionComplete()
         {
             Logger.Log(this, "State set to MISSION COMPLETE");
-            Time.timeScale = 0;
+            CurrentState = new MissionCompleteState();
             GameState.PlayState = PlayStateEnum.MissionComplete;
-            RepaintInGameUI();
         }
 
         public void SetLevelComplete()
         {
-            Logger.Log(this, "State set to LEVEL COMPLETE");
-            Time.timeScale = 0;
+            CurrentState = new LevelCompleteState();
             GameState.PlayState = PlayStateEnum.LevelComplete;
-            RepaintInGameUI();
         }
 
         public void SetWorldMap()
         {
             Logger.Log(this, "State set to WORLDMAP");
+            CurrentState = new WorldMapState(this.worldMapPanel);
             Time.timeScale = 0;
             GameState.PlayState = PlayStateEnum.Worldmap;
         }
@@ -272,11 +240,11 @@ namespace HackedDesign
         {
             if (GameState.PlayState == PlayStateEnum.Playing)
             {
-                GameState.PlayState = PlayStateEnum.StartMenu;
+                SetStartMenu();
             }
             else if (GameState.PlayState == PlayStateEnum.StartMenu)
             {
-                GameState.PlayState = PlayStateEnum.Playing;
+                SetPlaying();
             }
         }
 
@@ -284,11 +252,11 @@ namespace HackedDesign
         {
             if (GameState.PlayState == PlayStateEnum.Playing)
             {
-                GameState.PlayState = PlayStateEnum.SelectMenu;
+                SetSelectMenu();
             }
             else if (GameState.PlayState == PlayStateEnum.SelectMenu)
             {
-                GameState.PlayState = PlayStateEnum.Playing;
+                SetPlaying();
             }
         }
 
@@ -302,36 +270,9 @@ namespace HackedDesign
             Logger.Log(this, "Saved ", path);
         }
 
-        public void UpdateLights()
-        {
-            /*
-            switch (state.currentLight)
-            {
-                case GlobalLightTypes.Warn:
-                    globalLight.color = lightsWarn;
-                    break;
-                case GlobalLightTypes.Alert:
-                    globalLight.color = lightsAlert;
-                    break;
-                case GlobalLightTypes.Bar:
-                    globalLight.color = lightsBar;
-                    break;
-                case GlobalLightTypes.Default:
-                default:
-                    globalLight.color = lightsDefault;
-                    break;
-            }*/
-        }
-
         public void SetLight(GlobalLightTypes light)
         {
             GameState.currentLight = light;
-        }
-
-
-        public bool IsInGame()
-        {
-            return state == GameStateEnum.InGame;
         }
 
         private void CheckBindings()
@@ -340,27 +281,15 @@ namespace HackedDesign
             {
                 Logger.Log(this, "entityManager not set");
             }
-            if (cursorPresenter == null)
-            {
-                Logger.Log(this, "cursorPresenter not set");
-            }
         }
 
-        /// <summary>
-        /// Run only once
-        /// </summary>
         private void Initialization()
         {
-            state = GameStateEnum.MainMenu;
-
             Logger.Log(this, "Initialization");
-
-            // GraphicsSettings.transparencySortMode = TransparencySortMode.CustomAxis;
-            // GraphicsSettings.transparencySortAxis = new Vector3(0.0f, 1.0f, 0.0f);
+            state = GameStateEnum.MainMenu;
 
             playerController = player.GetComponent<PlayerController>();
 
-            //UI.SetActive(true);
             SetPlatformInput();
             narrationManager.Initialize();
             missionCompleteManager.Initialize(actionManager);
@@ -384,27 +313,6 @@ namespace HackedDesign
             ShowPlayer(false);
         }
 
-        private void UpdateInGame()
-        {
-            switch (GameState.PlayState)
-            {
-                case PlayStateEnum.Playing:
-                    PlayingUpdate();
-                    break;
-                case PlayStateEnum.StartMenu:
-                    break;
-                case PlayStateEnum.MissionComplete:
-                    break;
-                case PlayStateEnum.GameOver:
-                    EndGame();
-                    break;
-                default:
-                    break;
-            }
-
-            UpdateLights();
-        }
-
         private void HideAllInGameUI()
         {
             actionConsolePanel.Hide();
@@ -421,6 +329,34 @@ namespace HackedDesign
             minimapPanel.Hide();
             titlecardPanel.Hide();
             worldMapPanel.Hide();
+        }
+
+        /// <summary>
+        /// Run this each time the scene is changed
+        /// </summary>
+        private void SceneInitialize()
+        {
+            Logger.Log(this, "Scene initialization");
+            ShowPlayer(true);
+            SetLight(GlobalLightTypes.Default);
+
+            levelRenderer.Render(GameState.CurrentLevel);
+            levelRenderer.PopulateLevelDoors(GameState.CurrentLevel, GameState.doorList);
+            levelRenderer.PopulateNPCSpawns(GameState.CurrentLevel, GameState.entityList);
+            levelRenderer.PopulateEnemySpawns(GameState.CurrentLevel, GameState.entityList);
+            minimapPanel.Initialize(GameState.CurrentLevel, PlayerController.transform);
+
+            player.transform.position = GameState.CurrentLevel.ConvertLevelPosToWorld(GameState.CurrentLevel.playerSpawn.levelLocation) + GameState.CurrentLevel.playerSpawn.worldOffset;
+
+            SceneTriggersInitialize();
+            timerPanel.Initialize(GameState.CurrentLevel.timer);
+
+            SetPlaying();
+
+            if (!string.IsNullOrWhiteSpace(GameState.CurrentLevel.template.startingAction))
+            {
+                Story.ActionManager.instance.Invoke(GameState.CurrentLevel.template.startingAction);
+            }
         }
 
         private void SceneTriggersInitialize()
@@ -458,71 +394,12 @@ namespace HackedDesign
             }
         }
 
-        private void RepaintInGameUI()
-        {
-            actionConsolePanel.Repaint();
-            narrationPanel.Repaint();
-            selectMenuPanel.Repaint();
-            startMenuPanel.Repaint();
-            missionCompletePanel.Repaint();
-            levelCompletePresenter.Repaint();
-            stashPanel.Repaint();
-            psychPanel.Repaint();
-            actionPanel.Repaint();
-            timerPanel.Repaint();
-            mobileInputUI.Repaint();
-            minimapPanel.Repaint();
-            cursorPresenter.Repaint();
-            titlecardPanel.Repaint();
-            worldMapPanel.Repaint();
-        }
-
         private void ShowPlayer(bool flag)
         {
             if (player != null)
             {
                 player.SetActive(flag);
             }
-        }
-
-        private void AnimateDoors()
-        {
-            foreach (var door in GameState.doorList)
-            {
-                door.UpdateAnimation();
-            }
-        }
-
-        private void PlayingUpdate()
-        {
-            playerController.UpdateTransform();
-            PlayingEntityUpdate();
-            PlayingTriggerUpdate();
-            GameState.CurrentLevel.timer.Update();
-        }
-
-        private void PlayingTriggerUpdate()
-        {
-            foreach (var trigger in GameState.triggerList)
-            {
-                //trigger.UpdateTrigger(inputController);
-            }
-        }
-
-        private void PlayingEntityUpdate()
-        {
-            foreach (var entity in GameState.entityList)
-            {
-                entity.UpdateBehaviour();
-            }
-        }
-
-        private void AnimateEntity()
-        {
-            foreach (var entity in GameState.entityList)
-            {
-                entity.Animate();
-            }            
         }
     }
 }

@@ -104,7 +104,7 @@ namespace HackedDesign
         InGame
     }
 
-    public enum SelectMenuState
+    public enum SelectMenuSubState
     {
         Info,
         Tasks,

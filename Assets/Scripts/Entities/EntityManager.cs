@@ -16,7 +16,7 @@ namespace HackedDesign
             public List<GameObject> traps = null;
             [SerializeField] private List<GameObject> npcPrefabList = null;
 
-            public List<BaseEntity> npcPool = new List<BaseEntity>();
+            public List<IEntity> npcPool = new List<IEntity>();
 
             [SerializeField] private GameObject npcPoolParent = null;
 
@@ -42,7 +42,7 @@ namespace HackedDesign
                     var go = Instantiate(npc, Vector3.zero, Quaternion.identity, npcPoolParent.transform);
                     go.name = npc.name; // We don't want the (cloned) label
                     Logger.Log(name, "instantiating NPC ", npc.name, " ", go.name);
-                    BaseEntity entity = go.GetComponent<BaseEntity>();
+                    IEntity entity = go.GetComponent<IEntity>();
 
                     npcPool.Add(entity);
                 }

@@ -703,7 +703,6 @@ GameObject:
   - component: {fileID: 841445611049628488}
   - component: {fileID: 5637579660251282454}
   - component: {fileID: 4508393170132982289}
-  - component: {fileID: -5174287353443836323}
   m_Layer: 0
   m_Name: wall_1_tr_wd
   m_TagString: Untagged
@@ -800,16 +799,3 @@ MonoBehaviour:
   m_ShapePathHash: -2141747299
   m_Mesh: {fileID: 0}
   m_InstanceId: 112076
---- !u!114 &-5174287353443836323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658733296911224}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f4246eb21b3eca4a89762bb1515dca0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disableDistance: 8

@@ -27,11 +27,11 @@ namespace HackedDesign
             polyNavAgent = GetComponent<PolyNav.PolyNavAgent>();
         }
 
-        public override void Initialize(bool pooled)
+        public override void Initialize(bool pooled, Transform playerTransform)
         {
             Logger.Log(this, "Initializing Patrolling Enemy");
 
-            base.Initialize(pooled);
+            base.Initialize(pooled, playerTransform);
             isMoving = false;
 
             if (polyNavAgent != null && polyNavAgent.isActiveAndEnabled)

@@ -291,9 +291,8 @@ GameObject:
   - component: {fileID: 7281040215008091766}
   - component: {fileID: 8612838395874382390}
   - component: {fileID: 501479714301191229}
-  - component: {fileID: 7116721684390202822}
   m_Layer: 0
-  m_Name: lab_1_br_dd
+  m_Name: wall_1_br_dd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -388,19 +387,6 @@ MonoBehaviour:
   m_ShapePathHash: 89622429
   m_Mesh: {fileID: 0}
   m_InstanceId: 207348
---- !u!114 &7116721684390202822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1582213199776308}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f4246eb21b3eca4a89762bb1515dca0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disableDistance: 8
 --- !u!1 &1675504894558838
 GameObject:
   m_ObjectHideFlags: 0

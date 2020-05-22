@@ -13,7 +13,7 @@ namespace HackedDesign {
 			instance = this;
 		}
 
-		public SelectMenuState MenuState { get; set; } = SelectMenuState.Info;
+		public SelectMenuSubState MenuState { get; set; } = SelectMenuSubState.Info;
 
 
 	}
