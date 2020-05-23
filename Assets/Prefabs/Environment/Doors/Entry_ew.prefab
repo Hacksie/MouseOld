@@ -126,8 +126,8 @@ MonoBehaviour:
   autoInteraction: 0
   allowInteraction: 0
   allowBug: 0
-  allowHack: 0
-  allowOverload: 1
+  allowHack: 1
+  allowOverload: 0
   allowRepeatInteractions: 0
   allowNPCAutoInteraction: 0
   entryActionEvent:
@@ -314,7 +314,7 @@ MonoBehaviour:
   - {x: -0.5, y: 1, z: 0}
   m_ShapePathHash: 597030165
   m_Mesh: {fileID: 0}
-  m_InstanceId: 472154
+  m_InstanceId: 164158
 --- !u!1 &5655707733936147515
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,7 +409,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f00569cc1d15c420592674a587c658fb,
+      objectReference: {fileID: 21300000, guid: 63e326c60183e4f3ba0524a0ed8087ed,
         type: 3}
     - target: {fileID: 1205910083837189476, guid: 468b9302c01989d4780290de629c1591,
         type: 3}

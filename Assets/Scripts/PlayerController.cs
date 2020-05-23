@@ -16,6 +16,12 @@ namespace HackedDesign
         [SerializeField] private float dashCooldown = 5.0f;
         [SerializeField] private float dashTimeToComplete = 0.2f;
         [SerializeField] private float augmentFactor = 0.1f;
+        [SerializeField] private bool isHacking = false;
+        [SerializeField] private HackBar hackBar;
+        [SerializeField] private float hackSpeed = 3.0f;
+
+        private float hackTimer = 0;
+
 
         private Vector2 movementVector;
         private Animator anim;
@@ -44,7 +50,7 @@ namespace HackedDesign
             directionYAnimId = Animator.StringToHash("directionY");
             isMovingAnimId = Animator.StringToHash("isMoving");
         }
-        
+
 
         public void MovementEvent(InputAction.CallbackContext context)
         {
@@ -94,10 +100,9 @@ namespace HackedDesign
                 return;
             }
 
-            for (int i = 0; i < triggers.Count; i++)
-            {
-                triggers[i].Hack(gameObject);
-            }
+            isHacking = true;
+            hackTimer = Time.time;
+
         }
 
         public void OverloadEvent(InputAction.CallbackContext context)
@@ -125,10 +130,10 @@ namespace HackedDesign
         {
             if (context.performed)
             {
-                GameManager.Instance.ToggleSelect();    
+                GameManager.Instance.ToggleSelect();
                 return;
             }
-            
+
         }
 
         public void RegisterTrigger(BaseTrigger trigger)
@@ -166,8 +171,9 @@ namespace HackedDesign
             }
         }
 
-        public void UpdateTransform()
+        public void UpdateBehaviour()
         {
+            UpdateHacking();
             if (IsDashing)
             {
                 transform.Translate(movementVector * dashDistance * Time.deltaTime);
@@ -183,6 +189,32 @@ namespace HackedDesign
             }
 
             transform.Translate(movementVector * (baseMovementSpeed + (GameManager.Instance.GameState.Player.movementAugments * augmentFactor)) * Time.deltaTime);
+        }
+
+        public void UpdateHacking()
+        {
+            if (isHacking)
+            {
+                var hackValue = (Time.time - hackTimer) / hackSpeed;
+
+                if (hackValue < 1)
+                {
+                    hackBar.Show();
+                    hackBar.UpdateBar(hackValue);
+                }
+                else
+                {
+                    isHacking = false;
+                    for (int i = 0; i < triggers.Count; i++)
+                    {
+                        triggers[i].Hack(gameObject);
+                    }
+                }
+            }
+            else
+            {
+                hackBar.Hide();
+            }
         }
 
         public void Move(Vector2 position)

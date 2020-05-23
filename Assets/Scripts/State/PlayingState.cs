@@ -34,7 +34,7 @@ namespace HackedDesign
 
         public void Update()
         {
-            this.playerController.UpdateTransform();
+            this.playerController.UpdateBehaviour();
             GameManager.Instance.GameState.entityList.ForEach(entity => entity.UpdateBehaviour());
             GameManager.Instance.GameState.CurrentLevel.timer.Update();
         }
