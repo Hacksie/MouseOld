@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 namespace HackedDesign
 {
 
@@ -55,6 +56,8 @@ namespace HackedDesign
         public void MovementEvent(InputAction.CallbackContext context)
         {
             movementVector = context.ReadValue<Vector2>();
+
+            isHacking = false;
         }
 
         public void InteractEvent(InputAction.CallbackContext context)
@@ -69,6 +72,7 @@ namespace HackedDesign
                     }
                 }
             }
+            isHacking = false;
         }
 
         public void DashEvent(InputAction.CallbackContext context)
@@ -78,6 +82,7 @@ namespace HackedDesign
                 IsDashing = true;
                 dashTimer = Time.time;
             }
+            isHacking = false;
         }
 
         public void BugEvent(InputAction.CallbackContext context)
@@ -91,6 +96,7 @@ namespace HackedDesign
             {
                 triggers[i].Bug(gameObject);
             }
+            isHacking = false;
         }
 
         public void HackEvent(InputAction.CallbackContext context)
@@ -100,9 +106,17 @@ namespace HackedDesign
                 return;
             }
 
-            isHacking = true;
-            hackTimer = Time.time;
 
+
+            for (int i = 0; i < triggers.Count; i++)
+            {
+                if (triggers[i].allowHack)
+                {
+                    isHacking = true;
+                    hackTimer = Time.time;
+                }
+                //triggers[i].Hack(gameObject);
+            }
         }
 
         public void OverloadEvent(InputAction.CallbackContext context)
@@ -116,6 +130,7 @@ namespace HackedDesign
             {
                 triggers[i].Overload(gameObject);
             }
+            isHacking = false;
         }
 
         public void StartEvent(InputAction.CallbackContext context)
@@ -124,6 +139,7 @@ namespace HackedDesign
             {
                 GameManager.Instance.ToggleStart();
             }
+            isHacking = false;
         }
 
         public void SelectEvent(InputAction.CallbackContext context)
@@ -131,7 +147,7 @@ namespace HackedDesign
             if (context.performed)
             {
                 GameManager.Instance.ToggleSelect();
-                return;
+                isHacking = false;
             }
 
         }

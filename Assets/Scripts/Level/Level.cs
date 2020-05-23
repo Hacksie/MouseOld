@@ -25,6 +25,7 @@ namespace HackedDesign.Level
         public int maxInfo = 10;
         public int completeCredits = 500;
         public int creditsCollected = 0;
+        public bool entryTriggered = false;
 
         public Level(LevelGenTemplate template)
         {

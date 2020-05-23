@@ -12,12 +12,17 @@ namespace HackedDesign.Story
                 case "TriggerEntry":
                     Logger.Log("GlobalActions", "GlobalActions: invoke TriggerEntry");
                     // FIXME: Check if any other condition exists first!
-                    ActionManager.instance.AddActionMessage("Entry triggered");
-                    var timer = GameManager.Instance.GameState.CurrentLevel.template.levelLength * 10;
+                    if (!GameManager.Instance.GameState.CurrentLevel.entryTriggered)
+                    {
+                        GameManager.Instance.GameState.CurrentLevel.entryTriggered = true;
 
-                    ActionManager.instance.AddActionMessage($"{timer} seconds until security triggers!");
-                    GameManager.Instance.GameState.CurrentLevel.startTime = Time.time;
-                    GameManager.Instance.GameState.CurrentLevel.timer.Start(timer);
+                        ActionManager.instance.AddActionMessage("Entry triggered");
+                        var timer = GameManager.Instance.GameState.CurrentLevel.template.levelLength * 10;
+
+                        ActionManager.instance.AddActionMessage($"{timer} seconds until security triggers!");
+                        GameManager.Instance.GameState.CurrentLevel.startTime = Time.time;
+                        GameManager.Instance.GameState.CurrentLevel.timer.Start(timer);
+                    }
                     //CoreGame.Instance.state.currentLight = GlobalLightTypes.Warn;
                     return true;
                 case "BatteryFill":
@@ -46,7 +51,7 @@ namespace HackedDesign.Story
                     return true;
                 case "LevelExit":
                     Logger.Log("GlobalActions", "invoke LevelExit");
-                    if(GameManager.Instance.GameState.CurrentLevel.completed)
+                    if (GameManager.Instance.GameState.CurrentLevel.completed)
                     {
                         if (GameManager.Instance.GameState.CurrentLevel.template.hostile)
                         {

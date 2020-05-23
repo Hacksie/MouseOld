@@ -6,8 +6,8 @@ namespace HackedDesign
 {
     public class HackBar : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer frame;
-        [SerializeField] private SpriteRenderer bar;
+        [SerializeField] private SpriteRenderer frame = null;
+        [SerializeField] private SpriteRenderer bar = null;
 
         void Awake()
         {
