@@ -5,6 +5,13 @@ namespace HackedDesign.Story
 {
     public class BootstrapActions : ILevelActions
     {
+        private Dialogue.NarrationManager narrationManager;
+
+        public BootstrapActions(Dialogue.NarrationManager narrationManager)
+        {
+            this.narrationManager = narrationManager;
+        }
+
         public bool Invoke(string actionName)
         {
             switch (actionName)
@@ -19,7 +26,7 @@ namespace HackedDesign.Story
                     InfoRepository.Instance.AddToKnownEntities("ManagerLyon");
                     InfoRepository.Instance.AddToKnownEntities("Cat");
                     InfoRepository.Instance.AddToKnownEntities("Saika");
-                    Dialogue.NarrationManager.instance.ShowNarration("Bootstrap1");
+                    this.narrationManager.ShowNarration("Bootstrap1");
                     return true;
             }
             return false;

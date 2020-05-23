@@ -16,6 +16,7 @@ namespace HackedDesign
             public List<Character> characters = new List<Character>();
             public List<Corp> corps = new List<Corp>();
             public List<Enemy> enemies = new List<Enemy>();
+            public List<Trap> traps = new List<Trap>();
             public List<Location> locations = new List<Location>();
             public Dictionary<string, InfoEntity> entities = new Dictionary<string, InfoEntity>();
 
@@ -23,6 +24,7 @@ namespace HackedDesign
             public string corpsResource = @"Info/Corps/";
             public string charactersResource = @"Info/Characters/";
             public string enemiesResource = @"Info/Enemies/";
+            public string trapsResource = @"Info/Traps/";
             public string locationsResource = @"Info/Locations/";
 
             [Header("State")]
@@ -30,6 +32,8 @@ namespace HackedDesign
             public List<Character> knownCharacters = new List<Character>();
             public List<Corp> knownCorps = new List<Corp>();
             public List<Enemy> knownEnemies = new List<Enemy>();
+            public List<Trap> knownTraps = new List<Trap>();
+            public List<Trap> uniqueTraps = new List<Trap>();
             public List<Enemy> uniqueEnemies = new List<Enemy>();
             public List<Location> knownLocations = new List<Location>();
 
@@ -143,6 +147,16 @@ namespace HackedDesign
                 return null;
             }
 
+            public Trap GetTrap(string id)
+            {
+                if(entities.ContainsKey(id))
+                {
+                    return entities[id] as Trap;
+                }
+
+                return null;
+            }
+
             public Enemy GetUniqueEnemy(string uniqueId)
             {
                 foreach (var v in uniqueEnemies)
@@ -152,6 +166,16 @@ namespace HackedDesign
                 }
                 return null;
             }
+
+            public Trap GetUniqueTrap(string uniqueId)
+            {
+                foreach (var trap in uniqueTraps)
+                {
+                    if (trap.uniqueId == uniqueId)
+                        return trap;
+                }
+                return null;
+            }            
 
             public Corp GetCorp(string id)
             {
@@ -202,6 +226,34 @@ namespace HackedDesign
                 uniqueEnemies.Add(newEnemy);
                 return newEnemy;
             }
+
+            public Trap GenerateRandomTrap(Trap trap)
+            {
+                if (trap == null)
+                {
+                    Logger.LogError(name, "enemy can't be null");
+                    return null;
+                }
+
+                Logger.Log(name, "generating unique enemy " + trap.id);
+                int uniqueId = uniqueEnemies.Count;
+
+                var newTrap = ScriptableObject.CreateInstance<Trap>();
+
+                newTrap.id = trap.id;
+                newTrap.uniqueId = trap.id + uniqueId.ToString();
+                newTrap.name = trap.name;
+                newTrap.read = trap.read;
+                newTrap.parentInfoCategory = trap.parentInfoCategory;
+                newTrap.description = trap.description;
+                newTrap.handle = trap.handle;
+                newTrap.corp = trap.corp;
+                newTrap.serial = trap.serial;
+                newTrap.category = trap.category;
+
+                uniqueTraps.Add(newTrap);
+                return newTrap;
+            }            
 
             public bool AddToKnownEntities(string id)
             {

@@ -46,6 +46,7 @@ namespace HackedDesign
 			public List<GameObject> lineOfSightProps;
 
 
+			public List<string> traps;
 			public List<string> enemies;
         }
     }

@@ -20,6 +20,7 @@ namespace HackedDesign
 
         private float patrolTimer = 0;
         private PolyNav.PolyNavAgent polyNavAgent = null;
+        private bool tripped = false;
 
         protected override void Awake()
         {
@@ -45,10 +46,10 @@ namespace HackedDesign
         {
             switch (State)
             {
-                case EntityState.PASSIVE:
+                case EntityState.Passive:
                     UpdatePassive();
                     break;
-                case EntityState.ALERTED:
+                case EntityState.Alerted:
                     UpdateAlerted();
                     break;
                 default:
@@ -89,7 +90,14 @@ namespace HackedDesign
                 }
             }
 
-            base.UpdatePassive();
+            if (colliders.Contains(playerTransform.gameObject) && !tripped)
+            {
+                tripped = true;
+                //resetTimer = Time.time;
+                GameManager.Instance.IncreaseAlert();
+            }            
+
+            //base.UpdatePassive();
         }
 
         private void UpdateDetection()

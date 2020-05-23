@@ -17,26 +17,25 @@ namespace HackedDesign
             private const string BOTTOMRIGHT = "br";
 
             [Header("Prefabs")]
-            public GameObject doorewPrefab;
-            public GameObject doornsPrefab;
-            public GameObject exitewPrefab;
-            public GameObject exitnsPrefab;
-            public GameObject entryewPrefab;
-            public GameObject entrynsPrefab;
-            public GameObject roomCenterPrefab;
-            public GameObject pointOfInterestPrefab;
+            [SerializeField] private GameObject doorewPrefab;
+            [SerializeField] private GameObject doornsPrefab;
+            [SerializeField] private GameObject exitewPrefab;
+            [SerializeField] private GameObject exitnsPrefab;
+            [SerializeField] private GameObject entryewPrefab;
+            [SerializeField] private GameObject entrynsPrefab;
+            [SerializeField] private GameObject roomCenterPrefab;
+            [SerializeField] private GameObject roomCornerCenter;
+            [SerializeField] private GameObject pointOfInterestPrefab;
 
-            [Header("Configured Game Objects")]
+            private PlayerController playerController;
             private GameObject levelParent;
             private GameObject enemiesParent;
             private PolyNav.PolyNav2D polyNav2D;
-
-            [Header("Runtime Game Objects")]
             private Entities.EntityManager entityManager;
 
-
-            public void Initialize(Entities.EntityManager entityManager, GameObject levelParent, GameObject enemiesParent, PolyNav.PolyNav2D polyNav2D)
+            public void Initialize(PlayerController playerController, Entities.EntityManager entityManager, GameObject levelParent, GameObject enemiesParent, PolyNav.PolyNav2D polyNav2D)
             {
+                this.playerController = playerController;
                 this.levelParent = levelParent;
                 this.enemiesParent = enemiesParent;
                 this.polyNav2D = polyNav2D;
@@ -54,13 +53,6 @@ namespace HackedDesign
                 {
                     polyNav2D.GenerateMap();
                 }
-
-                //navMeshSurface = new NavMeshSurface();
-                //navMeshSurface.
-
-                //navMeshSurface.transform.localScale = new Vector2(level.template.levelWidth * level.template.spanHorizontal, level.template.levelHeight * level.template.spanVertical);
-
-                //navMeshSurface.BuildNavMesh();
             }
 
             public void UpdateLevelBoundingBox(Level level)
@@ -162,8 +154,6 @@ namespace HackedDesign
                                 Logger.LogError(name, "null game object returned from FindRoomEntity");
                             }
                             Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
-
-
                         }
 
                         //TR
@@ -177,7 +167,7 @@ namespace HackedDesign
                             Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
                         }
 
-                        Instantiate(roomCenterPrefab, roomPosition + new Vector3(level.template.spanHorizontal / 2, level.template.spanVertical / 2, 0), Quaternion.identity, levelParent.transform);
+                        //Instantiate(roomCenterPrefab, roomPosition + new Vector3(level.template.spanHorizontal / 2, level.template.spanVertical / 2, 0), Quaternion.identity, levelParent.transform);
 
                         if (!(room.isEntry || room.isEnd))
                         {
@@ -235,13 +225,12 @@ namespace HackedDesign
 
             public void PopulateLevelDoors(Level level, List<Door> doorList)
             {
-                //List<Triggers.Door> results = new List<Triggers.Door>();
-
                 if (!level.template.generateDoors)
                 {
                     Logger.Log(name, "Skipping doors");
                     return;
                 }
+
                 //FIXME: swap i & j to be consistent!
                 for (int i = 0; i < level.map.Count(); i++)
                 {
@@ -353,7 +342,7 @@ namespace HackedDesign
                         continue;
                     }
 
-                    npc.Initialize(true, GameManager.Instance.PlayerController.transform);
+                    npc.Initialize(true, this.playerController.transform);
                     npc.SetPosition(level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset);
                     npc.Activate();
 
@@ -397,9 +386,50 @@ namespace HackedDesign
                         continue;
                     }
 
-                    enemy.Initialize(false, GameManager.Instance.PlayerController.transform);
-                    Story.InfoRepository.Instance.GenerateRandomEnemy((Story.Enemy)enemy.GetEntityDefinition());
+                    enemy.Initialize(false, this.playerController.transform);
+                    enemy.SetEntityDefinition(Story.InfoRepository.Instance.GenerateRandomEnemy((Story.Enemy)enemy.GetEntityDefinition()));
                     enemyList.Add(enemy);
+                }
+            }
+
+            public void PopulateTrapSpawns(Level level, List<IEntity> trapList)
+            {
+                Logger.Log(name, "Populating trap spawns");
+
+                if (entityManager.traps.Count <= 0)
+                {
+                    Logger.Log(name, "No traps to spawn");
+                    return;
+                }
+
+                if (level.trapSpawnLocationList == null)
+                {
+                    return;
+                }
+
+                for (int i = 0; i < level.trapSpawnLocationList.Count; i++)
+                {
+                    Logger.Log(this, "Attempting to spawn " + level.trapSpawnLocationList[i].name);
+
+                    GameObject trapPrefab = entityManager.traps.FirstOrDefault(g => g != null && g.name == level.trapSpawnLocationList[i].name);
+
+                    if (trapPrefab is null)
+                    {
+                        continue;
+                    }
+
+                    var go = Instantiate(trapPrefab, level.ConvertLevelPosToWorld(level.trapSpawnLocationList[i].levelLocation) + level.trapSpawnLocationList[i].worldOffset, Quaternion.identity, enemiesParent.transform);
+                    IEntity trap = go.GetComponent<IEntity>();
+
+                    if (trap is null)
+                    {
+                        Logger.LogError(this, "Null Enemy object");
+                        continue;
+                    }
+
+                    trap.Initialize(false, this.playerController.transform);
+                    trap.SetEntityDefinition(Story.InfoRepository.Instance.GenerateRandomTrap((Story.Trap)trap.GetEntityDefinition()));
+                    trapList.Add(trap);
                 }
             }
         }

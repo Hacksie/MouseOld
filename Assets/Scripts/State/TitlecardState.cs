@@ -6,10 +6,7 @@ namespace HackedDesign
     {
         private UI.TitlecardPresenter titlecardPresenter;
 
-        public TitlecardState(UI.TitlecardPresenter titlecardPresenter)
-        {
-            this.titlecardPresenter = titlecardPresenter;
-        }
+        public TitlecardState(UI.TitlecardPresenter titlecardPresenter) => this.titlecardPresenter = titlecardPresenter;
 
         public void Start()
         {
@@ -26,13 +23,11 @@ namespace HackedDesign
 
         public void LateUpdate()
         {
-            
-            //GameManager.Instance.mainMenu.Repaint();
+         
         }
 
-        public void End()
-        {
-            GameManager.Instance.titlecardPanel.Hide();
-        }
+        public void End() => this.titlecardPresenter.Hide();
+
+        public bool PlayerActionAllowed => false;
     }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace HackedDesign.Level
 {
-
     [System.Serializable]
     public class ProxyRoom
     {
@@ -19,7 +18,6 @@ namespace HackedDesign.Level
         public string bottom = "";
         public string right = "";
 
-        // We'd use an enum, but I'm too lazy to write a serializer
         public const string Wall = "w";
         public const string Open = "o";
         public const string Door = "d";
@@ -30,6 +28,12 @@ namespace HackedDesign.Level
         public const string OpenOrWall = "y";
         public const string DoorOrWall = "z";
 
+        public const string OpenOptions = ProxyRoom.Open + ProxyRoom.Any + ProxyRoom.OpenOrDoor + ProxyRoom.OpenOrWall;
+        public const string DoorOptions = ProxyRoom.Door + ProxyRoom.Any + ProxyRoom.OpenOrDoor + ProxyRoom.DoorOrWall;
+        public const string WallOptions = ProxyRoom.Wall + ProxyRoom.Any + ProxyRoom.OpenOrWall + ProxyRoom.DoorOrWall;
+        public const string ExitOptions = ProxyRoom.Exit + DoorOptions;
+        public const string EntryOptions = ProxyRoom.Entry + DoorOptions;        
+
         public const string ObjTypeWall = "wall";
         public const string ObjTypeEntry = "entry";
         public const string ObjTypeEnd = "end";
@@ -38,22 +42,15 @@ namespace HackedDesign.Level
         public const string ObjTypeFixed = "fixed";
         public const string ObjTypeLineOfSight = "los";
 
-
-
         public List<Corner> bottomLeft = new List<Corner>();
         public List<Corner> bottomRight = new List<Corner>();
         public List<Corner> topLeft = new List<Corner>();
         public List<Corner> topRight = new List<Corner>();
 
-        // Set at runtime    
-        //public bool visited = false;     
-
         // FIXME: Create individual as strings
-        public override string ToString()
-        {
-            string s = "" + left + top + bottom + right;
-            return s;
-        }
+        public override string ToString() => "" + left + top + bottom + right;
+
+             
     }
 
 

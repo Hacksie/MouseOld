@@ -4,11 +4,18 @@ namespace HackedDesign
 {
     public class SelectMenuState : IState
     {
+        private UI.SelectMenuPanelPresenter selectMenuPanelPresenter;
+
+        public SelectMenuState(UI.SelectMenuPanelPresenter selectMenuPanelPresenter)
+        {
+            this.selectMenuPanelPresenter = selectMenuPanelPresenter;
+        }
+
         public void Start()
         {
             Time.timeScale = 0;
             Cursor.visible = true;
-            GameManager.Instance.selectMenuPanel.Show();
+            this.selectMenuPanelPresenter.Show();
         }
 
         public void Update()
@@ -19,12 +26,10 @@ namespace HackedDesign
         public void LateUpdate()
         {
             
-            //GameManager.Instance.mainMenu.Repaint();
         }
 
-        public void End()
-        {
-            GameManager.Instance.selectMenuPanel.Hide();
-        }
+        public void End() => this.selectMenuPanelPresenter.Hide();
+
+        public bool PlayerActionAllowed => false;
     }
 }

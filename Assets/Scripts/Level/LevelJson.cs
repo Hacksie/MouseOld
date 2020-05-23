@@ -1,25 +1,24 @@
 using System.Collections.Generic;
 
 
-namespace HackedDesign
+namespace HackedDesign.Level
 {
-    namespace Level
+    [System.Serializable]
+    public struct LevelJson
     {
-        [System.Serializable]
-        public struct LevelJson
-        {
-            public string floor;
-            public LevelRow[] map;
-        }
+        public string floor;
+        public LevelRow[] map;
+    }
 
-        [System.Serializable]
-        public struct LevelRow {         
-            public List<ProxyRoom> row;
-        }
+    [System.Serializable]
+    public struct LevelRow
+    {
+        public List<ProxyRoom> row;
+    }
 
-        [System.Serializable]
-        public struct LevelRoom {
-            public string walls;
-        }
+    [System.Serializable]
+    public struct LevelRoom
+    {
+        public string walls;
     }
 }

@@ -505,6 +505,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3829442941804847293}
   - component: {fileID: 1130328123104830024}
+  - component: {fileID: 7808631520780722479}
+  - component: {fileID: 9025501160735152794}
   m_Layer: 0
   m_Name: highsmallcrates_4_bl_aa
   m_TagString: Untagged
@@ -524,7 +526,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8140090930347062115}
-  - {fileID: 5365662043406570524}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -557,61 +558,14 @@ MonoBehaviour:
   - {x: 1.5, y: 3.7, z: 0}
   m_ShapePathHash: -1357153595
   m_Mesh: {fileID: 0}
-  m_InstanceId: 348068
---- !u!1 &4159389401719154738
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5365662043406570524}
-  - component: {fileID: 5876438454653930625}
-  - component: {fileID: 5474917491614334737}
-  m_Layer: 0
-  m_Name: Colliders
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &5365662043406570524
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4159389401719154738}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3829442941804847293}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5876438454653930625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4159389401719154738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shapeType: 0
-  extraOffset: -0.25
-  invertPolygon: 1
---- !u!60 &5474917491614334737
+  m_InstanceId: 97328
+--- !u!60 &7808631520780722479
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4159389401719154738}
+  m_GameObject: {fileID: 4056947807493302813}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -638,6 +592,21 @@ PolygonCollider2D:
       - {x: 2, y: 2.2}
       - {x: 2.5, y: 2.2}
       - {x: 2.5, y: 3}
+--- !u!114 &9025501160735152794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4056947807493302813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4f7f33d8fc7c0419b2308165807ce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeType: 0
+  extraOffset: -0.25
+  invertPolygon: 1
 --- !u!1 &4724824578656048011
 GameObject:
   m_ObjectHideFlags: 0

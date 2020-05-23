@@ -20,8 +20,8 @@ MonoBehaviour:
   levelHeight: 10
   spanHorizontal: 6
   spanVertical: 6
-  enemyCount: 5
-  trapCount: 0
+  enemyCount: 3
+  trapCount: 3
   generateDoors: 1
   generateRandomProps: 1
   startingRoomString: wnew_entry
@@ -112,9 +112,6 @@ MonoBehaviour:
   - {fileID: 8148244244184211426, guid: 28fadfe4045a04e49a01528187d02353, type: 3}
   - {fileID: 2297313207777178214, guid: 83213de42ca1f774388d0f849bc1759a, type: 3}
   - {fileID: 235702832877015648, guid: 919d5412b9e5b9b43b72ce6167cd2adc, type: 3}
-  - {fileID: 7214734485046054791, guid: e7804b7e61d8e2f44820b6bc75abc63b, type: 3}
-  - {fileID: 5139169760644369869, guid: 59888089558f39146b1dcb262cd9adb4, type: 3}
-  - {fileID: 2115085602328702604, guid: 4cc9917b5e35afd48b6a101d73f62c2f, type: 3}
   - {fileID: 2943505836508270376, guid: 5a3636c52f7091b43871878f94cfafd5, type: 3}
   - {fileID: 499725082354056486, guid: d45a266bf0a595040b661030d0c5077b, type: 3}
   - {fileID: 7167018008554408549, guid: 5b220c43e692bcf4ba8c18871956d6f9, type: 3}
@@ -228,9 +225,11 @@ MonoBehaviour:
   - {fileID: 6183433549408019846, guid: c4b703baeba44654d9eccdb0116a0e55, type: 3}
   - {fileID: 7102738387380745359, guid: 18fc8dd951cb1af468c72a76b073b671, type: 3}
   - {fileID: 6703400081402270671, guid: 5d842f37eb29bf040b7c7ba48cca0bbd, type: 3}
+  traps:
+  - Security Camera
+  - Laser Pylon
   enemies:
   - Male Tech 1
   - Male Tech 2
   - Female Tech 1
   - Female Tech 2
-  - Security Camera

@@ -6,77 +6,65 @@ namespace HackedDesign
     {
         private PlayerController playerController;
         private Story.ActionManager actionManager;
+        private UI.ActionConsolePresenter actionConsolePresenter;
+        private UI.ActionPanelPresenter actionPanelPresenter;
+        private UI.TimerPanelPresenter timerPanelPresenter;
+        private UI.MinimapPresenter minimapPresenter;
 
-        public PlayingState(PlayerController playerController, Story.ActionManager actionManager)
+        public PlayingState(PlayerController playerController, Story.ActionManager actionManager, UI.ActionConsolePresenter actionConsolePresenter, UI.ActionPanelPresenter actionPanelPresenter, UI.TimerPanelPresenter timerPanelPresenter, UI.MinimapPresenter minimapPresenter)
         {
             this.playerController = playerController;
             this.actionManager = actionManager;
+            this.actionConsolePresenter = actionConsolePresenter;
+            this.actionPanelPresenter = actionPanelPresenter;
+            this.timerPanelPresenter = timerPanelPresenter;
+            this.minimapPresenter = minimapPresenter;
         }
 
         public void Start()
         {
+            Logger.Log("PlayingState", "Start");
             Time.timeScale = 1;
             Cursor.visible = true;
-            GameManager.Instance.actionConsolePanel.Show();
-            GameManager.Instance.actionPanel.Show();
-            GameManager.Instance.timerPanel.Show();
-            GameManager.Instance.minimapPanel.Show();
-            Logger.Log("PlayingState", "Start");
+            this.actionConsolePresenter.Show();
+            this.actionPanelPresenter.Show();
+            this.timerPanelPresenter.Show();
+            this.minimapPresenter.Show();
         }
 
         public void Update()
         {
             this.playerController.UpdateTransform();
-
-            foreach (var entity in GameManager.Instance.GameState.entityList)
-            {
-                entity.UpdateBehaviour();
-            }
-
-            //PlayingEntityUpdate();
-            //PlayingTriggerUpdate();
+            GameManager.Instance.GameState.entityList.ForEach(entity => entity.UpdateBehaviour());
             GameManager.Instance.GameState.CurrentLevel.timer.Update();
         }
 
         public void LateUpdate()
         {
             this.actionManager.UpdateBehaviour();
-
-
             this.playerController.Animate();
             AnimateDoors();
             AnimateEntity();
 
-
-            GameManager.Instance.actionConsolePanel.Repaint();
-            GameManager.Instance.actionPanel.Repaint();
-            GameManager.Instance.timerPanel.Repaint();
-            GameManager.Instance.minimapPanel.Repaint();
+            this.actionConsolePresenter.Repaint();
+            this.actionPanelPresenter.Repaint();
+            this.timerPanelPresenter.Repaint();
+            this.minimapPresenter.Repaint();
         }
 
         public void End()
         {
-            GameManager.Instance.actionConsolePanel.Hide();
-            GameManager.Instance.actionPanel.Hide();
-            GameManager.Instance.timerPanel.Hide();
-            GameManager.Instance.minimapPanel.Hide();
+            this.actionConsolePresenter.Hide();
+            this.actionPanelPresenter.Hide();
+            this.timerPanelPresenter.Hide();
+            this.minimapPresenter.Hide();
             Logger.Log("PlayingState", "End");
         }
 
-        private void AnimateDoors()
-        {
-            foreach (var door in GameManager.Instance.GameState.doorList)
-            {
-                door.UpdateAnimation();
-            }
-        }
+        private void AnimateDoors() => GameManager.Instance.GameState.doorList.ForEach(door => door.UpdateAnimation());
 
-        private void AnimateEntity()
-        {
-            foreach (var entity in GameManager.Instance.GameState.entityList)
-            {
-                entity.Animate();
-            }
-        }
+        private void AnimateEntity() => GameManager.Instance.GameState.entityList.ForEach(entity => entity.Animate());
+
+        public bool PlayerActionAllowed => true;
     }
 }

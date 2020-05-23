@@ -106,6 +106,7 @@ MonoBehaviour:
   dashDistance: 2.5
   dashCooldown: 5
   dashTimeToComplete: 0.2
+  augmentFactor: 0.1
 --- !u!50 &50778832188729100
 Rigidbody2D:
   serializedVersion: 4
@@ -414,7 +415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6993998117738666091
 Transform:
   m_ObjectHideFlags: 0

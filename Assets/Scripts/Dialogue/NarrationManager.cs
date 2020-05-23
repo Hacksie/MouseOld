@@ -6,65 +6,62 @@ using UnityEngine;
 
 namespace HackedDesign
 {
-	namespace Dialogue
-	{
-		public partial class NarrationManager : MonoBehaviour {
-			public static NarrationManager instance;
+    namespace Dialogue
+    {
+        public partial class NarrationManager : MonoBehaviour
+        {
+            [SerializeField] private List<Narration> narrationList = new List<Narration>();
+            [SerializeField] private string narrationResource = @"Narration/";
 
-			public Narration currentNarration;
-			public List<Narration> narrationList = new List<Narration> ();
-			public string narrationResource = @"Narration/";
+            public static NarrationManager Instance { get; private set;}
+            public Narration CurrentNarration { get; private set;}			
 
+            NarrationManager() => Instance = this;
 
-			NarrationManager () {
-				instance = this;
-			}
+            public void Initialize() => LoadNarration();
 
-			public void Initialize () {
-				LoadNarration();
-			}
+            private void LoadNarration()
+            {
+                foreach (var file in Resources.LoadAll<TextAsset>(narrationResource))
+                {
+                    var narrations = JsonUtility.FromJson<NarrationHolder>(file.text);
+                    narrationList.AddRange(narrations.narrations);
+                    Logger.Log(this, "Narrations added from: ", file.name);
+                }
+            }
 
-			private void LoadNarration()
-			{
-                var jsonTextFiles = Resources.LoadAll<TextAsset>(narrationResource);
-				
+            public void ShowNarration(Narration narration)
+            {
+                if (narration != null)
+                {
+                    Logger.Log(this, "Show narration ", narration.id);
+                    CurrentNarration = narration;
+                    GameManager.Instance.SetNarration();
+                }
+                else
+                {
+                    Logger.LogError(this, "No narration to show");
+                }
+            }
 
-				foreach(var file in jsonTextFiles)
-				{
-					var narrations = JsonUtility.FromJson<NarrationHolder>(file.text);
-					narrationList.AddRange(narrations.narrations);
-					Logger.Log(name, "Narration added " + file.name);
-				}				
-			}
+            public void ShowNarration(string id) => ShowNarration(narrationList.FirstOrDefault(e => e != null && e.id == id));
 
-			public void ShowNarration (Narration narration) {
-				if (narration != null) {
-					Logger.Log(name, "Show narration " + narration.id);
-					currentNarration = narration;
-					GameManager.Instance.SetNarration ();
-				} else {
-					Logger.LogError (name, "No narration to show");
-				}
-			}
+            public void NarrationButtonEvent()
+            {
+                Logger.Log(this, "Narration button event");
 
-			public void ShowNarration (string id) {
-				ShowNarration (narrationList.FirstOrDefault (e => e != null && e.id == id));
-			}
+                string nextAction = CurrentNarration.action;
 
-			public void NarrationButtonEvent () {
-				Logger.Log (name, "Narration button event");
+                CurrentNarration = null;
+                GameManager.Instance.SetPlaying();
 
-				string nextAction = currentNarration.action;
+                Story.ActionManager.instance.Invoke(nextAction);
+            }
 
-				currentNarration = null;
-				GameManager.Instance.SetPlaying ();
-
-				Story.ActionManager.instance.Invoke (nextAction);
-			}
-
-			public Narration GetCurrentNarration () {
-				return currentNarration;
-			}
-		}
-	}
+            public Narration GetCurrentNarration()
+            {
+                return CurrentNarration;
+            }
+        }
+    }
 }

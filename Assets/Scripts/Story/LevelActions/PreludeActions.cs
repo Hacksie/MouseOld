@@ -19,7 +19,7 @@ namespace HackedDesign.Story
                     InfoRepository.Instance.AddToKnownEntities("ManagerLyon");
                     InfoRepository.Instance.AddToKnownEntities("Cat");
                     InfoRepository.Instance.AddToKnownEntities("Saika");
-                    Dialogue.NarrationManager.instance.ShowNarration("Bootstrap1");
+                    Dialogue.NarrationManager.Instance.ShowNarration("Bootstrap1");
                     break;
                 case "Prelude":
                     GameManager.Instance.SetTitlecard();
@@ -41,65 +41,65 @@ namespace HackedDesign.Story
                     }
                     GameManager.Instance.GameState.CurrentLevel.completed = true;
 
-                    Dialogue.NarrationManager.instance.ShowNarration("Prelude1");
+                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude1");
                     return true;
                 case "Prelude2":
                     Debug.Log("PreludeActions: invoke Prelude2");
-                    Dialogue.NarrationManager.instance.ShowNarration("Prelude2");
+                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude2");
                     return true;
                 case "Prelude3":
                     Debug.Log("PreludeActions: invoke Prelude3");
-                    Dialogue.NarrationManager.instance.ShowNarration("Prelude3");
+                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude3");
                     return true;
                 case "Prelude4":
                     Debug.Log("PreludeActions: invoke Prelude4");
-                    Dialogue.NarrationManager.instance.ShowNarration("Prelude4");
+                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude4");
                     return true;
                 case "Prelude5":
                     Debug.Log("PreludeActions: invoke Prelude5");
-                    Dialogue.NarrationManager.instance.ShowNarration("Prelude5");
+                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude5");
                     return true;
                 case "Prelude6":
                     Debug.Log("PreludeActions: invoke Prelude6");
-                    Dialogue.NarrationManager.instance.ShowNarration("Prelude6");
+                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude6");
                     return true;
                 case "Prelude7":
                     Debug.Log("PreludeActions: invoke Prelude7");
-                    Dialogue.NarrationManager.instance.ShowNarration("Prelude7");
+                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude7");
                     return true;
                 case "Prelude8":
                     Debug.Log("PreludeActions: invoke Prelude8");
-                    Dialogue.NarrationManager.instance.ShowNarration("Prelude8");
+                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude8");
                     return true;
                 case "PreludeLaptop":
                     PreludeLaptop();
                     return true;
                 case "PreludeGun":
-                    Dialogue.NarrationManager.instance.ShowNarration("PreludeGun");
+                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeGun");
                     return true;
                 case "PreludeClothes":
-                    Dialogue.NarrationManager.instance.ShowNarration("PreludeClothes");
+                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeClothes");
                     return true;
                 case "PreludeCat":
                 case "PreludeCat1":
                     Debug.Log("PreludeActions: prelude Cat");
                     GameManager.Instance.GameState.Story.prelude_cat_talk = true;
-                    Dialogue.NarrationManager.instance.ShowNarration("PreludeCat1");
+                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeCat1");
                     return true;
                 case "PreludeCat2":
-                    Dialogue.NarrationManager.instance.ShowNarration("PreludeCat2");
+                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeCat2");
                     return true;
                 case "PreludeCat3":
-                    Dialogue.NarrationManager.instance.ShowNarration("PreludeCat3");
+                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeCat3");
                     return true;
                 case "PreludeCat4":
-                    Dialogue.NarrationManager.instance.ShowNarration("PreludeCat4");
+                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeCat4");
                     return true;
                 case "PreludeCat5":
-                    Dialogue.NarrationManager.instance.ShowNarration("PreludeCat5");
+                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeCat5");
                     return true;
                 case "PreludeFridge":
-                    Dialogue.NarrationManager.instance.ShowNarration("PreludeFridge");
+                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeFridge");
                     return true;
                 case "PreludeExit":
                     PreludeExit();
@@ -126,9 +126,7 @@ namespace HackedDesign.Story
             Debug.Log("PreludeActions: prelude laptop");
             GameManager.Instance.GameState.Story.prelude_laptop = true;
             SelectMenuManager.instance.MenuState = SelectMenuSubState.Tasks;
-            GameManager.Instance.GameState.PlayState = PlayStateEnum.SelectMenu;
-
-            
+            GameManager.Instance.SetSelectMenu();
         }
 
 

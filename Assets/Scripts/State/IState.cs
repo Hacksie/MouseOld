@@ -6,5 +6,6 @@ namespace HackedDesign
         void Update();
         void LateUpdate(); 
         void End();
+        bool PlayerActionAllowed { get; }
     }   
 }

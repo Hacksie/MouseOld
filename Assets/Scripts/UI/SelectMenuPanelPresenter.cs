@@ -34,36 +34,27 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.SelectMenu)
+
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+
+            switch (selectMenuManager.MenuState)
             {
-                Show();
-                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-
-                switch (selectMenuManager.MenuState)
-                {
-                    case SelectMenuSubState.Info:
-                        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(InfoButton.gameObject);
-                        break;
-                    case SelectMenuSubState.Tasks:
-                        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(TasksButton.gameObject);
-                        break;
-                    case SelectMenuSubState.Stash:
-                        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(StashButton.gameObject);
-                        break;
-                    case SelectMenuSubState.Psych:
-                        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(PsychButton.gameObject);
-                        break;
-                    case SelectMenuSubState.Map:
-                        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(MapButton.gameObject);
-                        break;
-                }
-
+                case SelectMenuSubState.Info:
+                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(InfoButton.gameObject);
+                    break;
+                case SelectMenuSubState.Tasks:
+                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(TasksButton.gameObject);
+                    break;
+                case SelectMenuSubState.Stash:
+                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(StashButton.gameObject);
+                    break;
+                case SelectMenuSubState.Psych:
+                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(PsychButton.gameObject);
+                    break;
+                case SelectMenuSubState.Map:
+                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(MapButton.gameObject);
+                    break;
             }
-            else
-            {
-                Hide();
-            }
-
             infoPanel.Repaint();
             taskPanel.Repaint();
             stashPanel.Repaint();
@@ -73,7 +64,7 @@ namespace HackedDesign.UI
         private void Show(bool flag)
         {
             gameObject.SetActive(flag);
-              
+
         }
 
         public void ResumeClickEvent()

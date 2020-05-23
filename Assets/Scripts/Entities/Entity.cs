@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using HackedDesign.Story;
 
 namespace HackedDesign
 {
@@ -26,7 +27,7 @@ namespace HackedDesign
         public UnityEvent playerLeaveEvent;
         public UnityEvent alertEvent;
 
-        public EntityState State { get; protected set; } = EntityState.PASSIVE;
+        public EntityState State { get; protected set; } = EntityState.Passive;
 
         private Animator animator = null; //The parent animator.
         protected readonly List<GameObject> colliders = new List<GameObject>();
@@ -58,6 +59,18 @@ namespace HackedDesign
             {
                 direction = Quaternion.Euler(0, 0, Random.Range(0, Mathf.PI)) * Vector2.up;
             }
+
+            InitializeDetections();
+        }
+
+        protected void InitializeDetections()
+        {
+            Logger.Log(this, "InitializeDetections");
+            var detections = GetComponentsInChildren<TripDetection>();
+            foreach (var detection in detections)
+            {
+                detection.Initialize(this);
+            }
         }
 
         public virtual void UpdateBehaviour()
@@ -81,6 +94,12 @@ namespace HackedDesign
         public virtual Story.InfoEntity GetEntityDefinition()
         {
             return this.entity;
+        }
+
+
+        public virtual void SetEntityDefinition(InfoEntity entity)
+        {
+            this.entity = entity;
         }
 
         public virtual void SetPosition(Vector2 position)
@@ -108,7 +127,7 @@ namespace HackedDesign
                 {
                     playerSeen = true;
                     playerSeenEvent.Invoke();
-                    State = EntityState.ALERTED;
+                    State = EntityState.Alerted;
                     return;
                 }
             }
@@ -154,19 +173,35 @@ namespace HackedDesign
             return Physics2D.Raycast(transform.position, (playerTransform.position - transform.position), visibilityDistance, playerLayerMask);
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        public void AddCollider(GameObject collider)
         {
-            if (other.CompareTag(TagManager.PLAYER) && !colliders.Contains(other.gameObject))
+            if (!colliders.Contains(collider.gameObject))
             {
-                colliders.Add(other.gameObject);
+                colliders.Add(collider.gameObject);
             }
         }
 
-        private void OnTriggerExit2D(Collider2D other)
+        public void RemoveCollider(GameObject collider)
         {
-            if (other.CompareTag(TagManager.PLAYER) && colliders.Contains(other.gameObject))
+            if (colliders.Contains(collider.gameObject))
             {
-                colliders.Remove(other.gameObject);
+                colliders.Remove(collider.gameObject);
+            }
+        }
+
+        protected void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag(TagManager.PLAYER))
+            {
+                AddCollider(other.gameObject);
+            }
+        }
+
+        protected void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag(TagManager.PLAYER))
+            {
+                RemoveCollider(other.gameObject);
             }
         }
 
@@ -180,18 +215,32 @@ namespace HackedDesign
             animator.SetFloat(directionXAnimId, direction.x);
             animator.SetFloat(directionYAnimId, direction.y);
             animator.SetBool(isMovingAnimId, isMoving);
+        }
+
+        private void OnDrawGizmos()
+        {
+            switch (State)
+            {
+                case EntityState.Passive:
+                    Gizmos.DrawIcon(transform.position + Vector3.up, "refresh-hs.png", true);
+                    break;
+                case EntityState.Alerted:
+                    Gizmos.DrawIcon(transform.position + Vector3.up, "skull-hs.png", true);
+                    break;
+            }
 
         }
 
+
         public enum EntityState
         {
-            PASSIVE,
-            ALERTED,
-            SEEKING,
-            RESPONDING,
-            HUNTING,
-            FIGHTING,
-            STUNNED
+            Passive,
+            Alerted,
+            Seeking,
+            Responding,
+            Hunting,
+            Fighting,
+            Stunned
         }
     }
 }

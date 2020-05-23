@@ -6,10 +6,7 @@ namespace HackedDesign
     {
         private UI.WorldMapPresenter worldPanel;
 
-        public WorldMapState(UI.WorldMapPresenter worldPanel)
-        {
-            this.worldPanel = worldPanel;
-        }
+        public WorldMapState(UI.WorldMapPresenter worldPanel) => this.worldPanel = worldPanel;
 
         public void Start()
         {
@@ -25,12 +22,11 @@ namespace HackedDesign
 
         public void LateUpdate()
         {
-            this.worldPanel.Repaint();
+            
         }
 
-        public void End()
-        {
-            this.worldPanel.Hide();
-        }
+        public void End() => this.worldPanel.Hide();
+
+        public bool PlayerActionAllowed => false;
     }
 }

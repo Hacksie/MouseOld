@@ -8,16 +8,9 @@ namespace HackedDesign {
 	{
 		Story.ActionManager actionManager = null;
 
-		public void Initialize(Story.ActionManager actionManager)
-		{
-			this.actionManager = actionManager;
-		}
+        public void Initialize(Story.ActionManager actionManager) => this.actionManager = actionManager;
 
-		public void ResumeEvent () {
-			//FIXME: This would return to hub room
-			actionManager.Invoke(GameManager.Instance.GameState.CurrentLevel.template.exitAction);
-			//CoreGame.Instance.EndGame ();
-		}        
+        public void ResumeEvent() => actionManager.Invoke(GameManager.Instance.GameState.CurrentLevel.template.exitAction);
     }
 }
 

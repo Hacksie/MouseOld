@@ -22,7 +22,7 @@ namespace HackedDesign.UI
 
             public override void Repaint()
             {
-                if (GameManager.Instance.GameState.PlayState == PlayStateEnum.SelectMenu && selectMenuManager.MenuState == SelectMenuSubState.Tasks)
+                if (selectMenuManager.MenuState == SelectMenuSubState.Tasks)
                 {
                     Show();
                     if (dirty)

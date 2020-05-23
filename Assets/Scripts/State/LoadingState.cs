@@ -21,5 +21,7 @@ namespace HackedDesign
         {
 
         }
+
+        public bool PlayerActionAllowed => false;
     }
 }

@@ -48,6 +48,21 @@ namespace HackedDesign
                 }
             }
 
+            public bool EnemyIsValid(string name)
+            {
+                return enemies.Exists(e=> e.name == name);
+            }
+
+            public bool TrapIsValid(string name)
+            {
+                return traps.Exists(e=> e.name == name);
+            }
+
+            public bool NPCIsValid(string name)
+            {
+                return npcPrefabList.Exists(e=> e.name == name);
+            }
+
             public IEntity GetPooledNPC(string name)
             {
                 for(int i=0;i<npcPoolParent.transform.childCount;i++)

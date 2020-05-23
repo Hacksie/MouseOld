@@ -4,12 +4,16 @@ namespace HackedDesign
 {
     public class MissionCompleteState : IState
     {
+        private UI.MissionCompletePresenter missionCompletePresenter;
+
+        public MissionCompleteState(UI.MissionCompletePresenter missionCompletePresenter) => this.missionCompletePresenter = missionCompletePresenter;
+
         public void Start()
         {
             Time.timeScale = 0;
             Cursor.visible = true;
-            GameManager.Instance.missionCompletePanel.Show();
-            GameManager.Instance.missionCompletePanel.Repaint();
+            this.missionCompletePresenter.Show();
+            this.missionCompletePresenter.Repaint();
         }
 
         public void Update()
@@ -22,9 +26,8 @@ namespace HackedDesign
             
         }
 
-        public void End()
-        {
-            GameManager.Instance.missionCompletePanel.Hide();
-        }
+        public void End() => this.missionCompletePresenter.Hide();
+
+        public bool PlayerActionAllowed => false;
     }
 }

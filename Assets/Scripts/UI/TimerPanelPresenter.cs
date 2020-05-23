@@ -7,6 +7,7 @@ namespace HackedDesign.UI
     {
         private Timer timer;
         [SerializeField] private Text timerText = null;
+        [SerializeField] private Text alertLevelText = null;
         [SerializeField] private Color defaultColor = Color.white;
         [SerializeField] private Color warningColor = Color.white;
         [SerializeField] private Color alertColor = Color.white;
@@ -22,6 +23,11 @@ namespace HackedDesign.UI
             {
                 Hide();
                 return;
+            }
+
+            if (alertLevelText != null)
+            {
+                alertLevelText.text = GameManager.Instance.GameState.CurrentLevel.alertLevel.ToString();
             }
 
             if (timer.running)

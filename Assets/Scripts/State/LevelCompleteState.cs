@@ -4,11 +4,15 @@ namespace HackedDesign
 {
     public class LevelCompleteState : IState
     {
+        private UI.LevelCompletePresenter levelCompletePresenter;
+
+        public LevelCompleteState(UI.LevelCompletePresenter levelCompletePresenter) => this.levelCompletePresenter = levelCompletePresenter;
+
         public void Start()
         {
             Time.timeScale = 0;
             Cursor.visible = true;
-            GameManager.Instance.levelCompletePresenter.Show();
+            this.levelCompletePresenter.Show();
             
         }
 
@@ -19,12 +23,11 @@ namespace HackedDesign
 
         public void LateUpdate()
         {
-            //GameManager.Instance.levelCompletePresenter.Repaint();
+            
         }
 
-        public void End()
-        {
-            GameManager.Instance.levelCompletePresenter.Hide();
-        }
+        public void End() => this.levelCompletePresenter.Hide();
+
+        public bool PlayerActionAllowed => false;
     }
 }

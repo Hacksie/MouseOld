@@ -4,27 +4,30 @@ namespace HackedDesign
 {
     public class StartMenuState : IState
     {
+        private UI.StartMenuPanelPresenter startMenuPanelPresenter;
+
+        public StartMenuState(UI.StartMenuPanelPresenter startMenuPanelPresenter) => this.startMenuPanelPresenter = startMenuPanelPresenter;
+
         public void Start()
         {
             Time.timeScale = 0;
             Cursor.visible = true;
-            GameManager.Instance.startMenuPanel.Show();
+            this.startMenuPanelPresenter.Show();
         }
 
         public void Update()
         {
-            
+
         }
 
         public void LateUpdate()
         {
-            
+
             //GameManager.Instance.mainMenu.Repaint();
         }
 
-        public void End()
-        {
-            GameManager.Instance.startMenuPanel.Hide();
-        }
+        public void End() => this.startMenuPanelPresenter.Hide();
+
+        public bool PlayerActionAllowed => false;
     }
 }

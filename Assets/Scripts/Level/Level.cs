@@ -6,9 +6,6 @@ using UnityEngine;
 
 namespace HackedDesign.Level
 {
-
-
-
     [System.Serializable]
     public class Level
     {

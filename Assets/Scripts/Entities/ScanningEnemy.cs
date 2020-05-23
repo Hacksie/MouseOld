@@ -27,10 +27,10 @@ namespace HackedDesign
         {
             switch (State)
             {
-                case EntityState.PASSIVE:
+                case EntityState.Passive:
                     UpdatePassive();
                     break;
-                case EntityState.ALERTED:
+                case EntityState.Alerted:
                     UpdateAlerted();
                     break;
                 default:

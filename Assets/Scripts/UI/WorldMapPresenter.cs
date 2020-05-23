@@ -13,14 +13,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Worldmap)
-            {
-                Show();
-            }
-            else
-            {
-                Hide();
-            }
+
         }
     }
 }

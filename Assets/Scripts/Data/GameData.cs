@@ -12,7 +12,6 @@ namespace HackedDesign
         [SerializeField] private int gameSlot = 0;
 
         [Header("Game State")]
-        [SerializeField] private PlayStateEnum playState = PlayStateEnum.Titlecard;
         [SerializeField] private PlayerData playerState = null;
         [SerializeField] private StoryState story = new StoryState();
         [SerializeField] private Level.Level currentLevel = null;
@@ -24,19 +23,17 @@ namespace HackedDesign
 
         public Story.Task selectedTask = null;
 
-        public GameObject alertTrap = null; // move this to state
+        public GameObject alertTrap = null;
 
         public GlobalLightTypes currentLight;
 
         public List<BaseTrigger> triggerList = new List<BaseTrigger>();
-        //public List<IEntity> enemyList = new List<IEntity>();
+        
         public List<IEntity> entityList = new List<IEntity>();
         public List<Door> doorList = new List<Door>();
 
-
         public int GameVersion { get { return gameVersion; } set { gameVersion = value; } }
         public int GameSlot { get { return gameSlot; } set { gameSlot = value; } }
-        public PlayStateEnum PlayState { get { return playState; } set { playState = value; } }
         public PlayerData Player { get { return playerState; } set { playerState = value; } }
         public StoryState Story { get { return story; } set { story = value; } }
         public Level.Level CurrentLevel { get { return currentLevel; } set { currentLevel = value; } }
@@ -45,32 +42,13 @@ namespace HackedDesign
 
         public GameData() : this(false)
         {
-
         }
 
-
-        public GameData(bool isRandom) : this(isRandom, PlayStateEnum.Loading)
-        {
-
-        }
-
-        public GameData(bool isRandom, PlayStateEnum startingState)
+        public GameData(bool isRandom)
         {
             this.IsRandom = isRandom;
-            this.PlayState = startingState;
             this.Player = new PlayerData();
         }
-
-        public bool IsPlaying()
-        {
-            return PlayState == PlayStateEnum.Playing;
-        }
-
-        public void SetPlaying()
-        {
-            PlayState = PlayStateEnum.Playing;
-        }
-
     }
 
     public class StoryState
@@ -78,30 +56,6 @@ namespace HackedDesign
         public int act = 0;
         public bool prelude_cat_talk = false;
         public bool prelude_laptop = false;
-    }
-
-    public enum PlayStateEnum
-    {
-        Titlecard,
-        Cutscene,
-        Playing,
-        Hacking,
-        Loading,
-        Narration,
-        Dialogue,
-        Worldmap,
-        StartMenu,
-        SelectMenu,
-        GameOver,
-        Captured,
-        MissionComplete,
-        LevelComplete
-    }
-
-    public enum GameStateEnum
-    {
-        MainMenu,
-        InGame
     }
 
     public enum SelectMenuSubState

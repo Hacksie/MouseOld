@@ -32,5 +32,7 @@ namespace HackedDesign
         {
             this.narrationPanel.Hide();
         }
+
+        public bool PlayerActionAllowed => false;
     }
 }
