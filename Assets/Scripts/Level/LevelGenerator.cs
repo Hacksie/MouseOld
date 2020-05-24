@@ -15,7 +15,7 @@ namespace HackedDesign.Level
         protected const string BottomRight = "br";
 
         protected float randomChance = 0.75f;
-        protected float lineOfSightChance = 0.4f;
+        protected float lineOfSightChance = 0.3f;
 
         public static ILevelGenerator GetGenerator(LevelGenTemplate template)
         {
@@ -134,9 +134,6 @@ namespace HackedDesign.Level
                     break;
                 case ProxyRoom.ObjTypeEnd:
                     results = levelGenTemplate.endProps.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));
-                    break;
-                case ProxyRoom.ObjTypeTrap:
-                    results = levelGenTemplate.trapProps.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));
                     break;
                 case ProxyRoom.ObjTypeRandom:
                     results = levelGenTemplate.randomProps.Where(g => g != null && MatchPrefabName(g.name, corner, wall1, wall2));

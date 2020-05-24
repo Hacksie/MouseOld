@@ -8,7 +8,7 @@ namespace HackedDesign
 
         public WorldMapState(UI.WorldMapPresenter worldPanel) => this.worldPanel = worldPanel;
 
-        public void Start()
+        public void Begin()
         {
             Time.timeScale = 0;
             Cursor.visible = true;
@@ -27,6 +27,34 @@ namespace HackedDesign
 
         public void End() => this.worldPanel.Hide();
 
-        public bool PlayerActionAllowed => false;
+        public void Interact()
+        {
+            
+        }
+
+        public void Hack()
+        {
+            
+        }
+
+        public void Dash()
+        {
+            
+        }
+
+        public void Overload()
+        {
+            
+        }
+
+        public void Start()
+        {
+            
+        }
+
+        public void Select()
+        {
+            
+        }
     }
 }

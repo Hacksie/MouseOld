@@ -18,11 +18,10 @@ namespace HackedDesign
         [SerializeField] private float dashTimeToComplete = 0.2f;
         [SerializeField] private float augmentFactor = 0.1f;
         [SerializeField] private bool isHacking = false;
-        [SerializeField] private HackBar hackBar;
+        [SerializeField] private HackBar hackBar = null;
         [SerializeField] private float hackSpeed = 3.0f;
 
         private float hackTimer = 0;
-
 
         private Vector2 movementVector;
         private Animator anim;
@@ -60,24 +59,30 @@ namespace HackedDesign
             isHacking = false;
         }
 
-        public void InteractEvent(InputAction.CallbackContext context)
+        public void Interact()
         {
-            if (GameManager.Instance.CurrentState.PlayerActionAllowed)
+            for (int i = 0; i < triggers.Count; i++)
             {
-                if (context.performed)
-                {
-                    foreach (var trigger in triggers)
-                    {
-                        trigger.Invoke(gameObject);
-                    }
-                }
+                triggers[i].Invoke(gameObject);
             }
             isHacking = false;
         }
 
-        public void DashEvent(InputAction.CallbackContext context)
+        public void Hack()
         {
-            if (GameManager.Instance.CurrentState.PlayerActionAllowed && context.performed && (Time.time - dashTimer) > dashCooldown)
+            for (int i = 0; i < triggers.Count; i++)
+            {
+                if (triggers[i].allowHack && !triggers[i].hacked)
+                {
+                    isHacking = true;
+                    hackTimer = Time.time;
+                }
+            }
+        }
+
+        public void Dash()
+        {
+            if((Time.time - dashTimer) > dashCooldown)
             {
                 IsDashing = true;
                 dashTimer = Time.time;
@@ -85,59 +90,66 @@ namespace HackedDesign
             isHacking = false;
         }
 
-        public void BugEvent(InputAction.CallbackContext context)
+        public void Overload()
         {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed || !context.performed)
-            {
-                return;
-            }
-
             for (int i = 0; i < triggers.Count; i++)
             {
-                triggers[i].Bug(gameObject);
+                triggers[i].Overload(gameObject);
             }
-            isHacking = false;
+            isHacking = false;            
         }
+
+        public void InteractEvent(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                GameManager.Instance.CurrentState.Interact();
+            }
+        }
+
+        public void DashEvent(InputAction.CallbackContext context)
+        {
+            if(context.performed)
+            {
+                GameManager.Instance.CurrentState.Dash();
+            }
+        }
+
+        // public void BugEvent(InputAction.CallbackContext context)
+        // {
+        //     if (!GameManager.Instance.CurrentState.PlayerActionAllowed || !context.performed)
+        //     {
+        //         return;
+        //     }
+
+        //     for (int i = 0; i < triggers.Count; i++)
+        //     {
+        //         triggers[i].Bug(gameObject);
+        //     }
+        //     isHacking = false;
+        // }
 
         public void HackEvent(InputAction.CallbackContext context)
         {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed || !context.performed)
+            if(context.performed)
             {
-                return;
-            }
-
-
-
-            for (int i = 0; i < triggers.Count; i++)
-            {
-                if (triggers[i].allowHack)
-                {
-                    isHacking = true;
-                    hackTimer = Time.time;
-                }
-                //triggers[i].Hack(gameObject);
+                GameManager.Instance.CurrentState.Hack();
             }
         }
 
         public void OverloadEvent(InputAction.CallbackContext context)
         {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed || !context.performed)
+            if (context.performed)
             {
-                return;
+                GameManager.Instance.CurrentState.Overload();
             }
-
-            for (int i = 0; i < triggers.Count; i++)
-            {
-                triggers[i].Overload(gameObject);
-            }
-            isHacking = false;
         }
 
         public void StartEvent(InputAction.CallbackContext context)
         {
             if (context.performed)
             {
-                GameManager.Instance.ToggleStart();
+                GameManager.Instance.CurrentState.Start();
             }
             isHacking = false;
         }
@@ -146,7 +158,7 @@ namespace HackedDesign
         {
             if (context.performed)
             {
-                GameManager.Instance.ToggleSelect();
+                GameManager.Instance.CurrentState.Select();
                 isHacking = false;
             }
 

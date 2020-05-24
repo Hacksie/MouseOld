@@ -11,7 +11,7 @@ namespace HackedDesign
             this.selectMenuPanelPresenter = selectMenuPanelPresenter;
         }
 
-        public void Start()
+        public void Begin()
         {
             Time.timeScale = 0;
             Cursor.visible = true;
@@ -30,6 +30,34 @@ namespace HackedDesign
 
         public void End() => this.selectMenuPanelPresenter.Hide();
 
-        public bool PlayerActionAllowed => false;
+        public void Interact()
+        {
+            
+        }
+
+        public void Hack()
+        {
+            
+        }
+
+        public void Dash()
+        {
+            
+        }
+
+        public void Overload()
+        {
+            
+        }
+
+        public void Start()
+        {
+            GameManager.Instance.SetStartMenu();
+        }
+
+        public void Select()
+        {
+            GameManager.Instance.SetPlaying();
+        }
     }
 }

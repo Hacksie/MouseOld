@@ -6,16 +6,21 @@ namespace HackedDesign
 {
     public class AudioManager : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        [SerializeField] private AudioSource sfx;
+        [SerializeField] private AudioSource music;
+        [SerializeField] private AudioClip select;
+        [SerializeField] private AudioClip accept;
 
+        public void PlayAccept()
+        {
+            sfx.clip = accept;
+            sfx.Play();
         }
 
-        // Update is called once per frame
-        void Update()
+        public void PlaySelect()
         {
-
-        }
+            sfx.clip = select;
+            sfx.Play();
+        }        
     }
 }

@@ -12,7 +12,7 @@ namespace HackedDesign
             this.mainMenu = mainMenu;
         }
 
-        public void Start()
+        public void Begin()
         {
             this.mainMenu.Show();
             Cursor.visible = true;
@@ -33,6 +33,34 @@ namespace HackedDesign
             this.mainMenu.Hide();
         }
 
-        public bool PlayerActionAllowed => false;
+        public void Interact()
+        {
+            
+        }
+
+        public void Hack()
+        {
+            
+        }
+
+        public void Dash()
+        {
+            
+        }
+
+        public void Overload()
+        {
+            
+        }
+
+        public void Start()
+        {
+            
+        }
+
+        public void Select()
+        {
+            
+        }
     }
 }

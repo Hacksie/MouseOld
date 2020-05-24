@@ -195,7 +195,7 @@ namespace HackedDesign
                         }
 
                         break;
-
+                        
                     case ProxyRoom.ObjTypeEnd:
                         result = levelGenTemplate.endProps.FirstOrDefault(g => g != null && g.name == name);
                         if (result == null)
@@ -204,9 +204,6 @@ namespace HackedDesign
                         }
 
                         break;
-
-                    case ProxyRoom.ObjTypeTrap:
-                        return levelGenTemplate.trapProps.FirstOrDefault(g => g != null && g.name == name);
 
                     case ProxyRoom.ObjTypeRandom:
                         return levelGenTemplate.randomProps.FirstOrDefault(g => g != null && g.name == name);

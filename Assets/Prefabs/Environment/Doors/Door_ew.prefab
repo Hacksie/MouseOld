@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enabled: 1
+  triggerEnabled: 1
   autoInteraction: 0
   allowInteraction: 1
   allowBug: 0
@@ -334,7 +334,7 @@ MonoBehaviour:
   - {x: -0.5, y: 1, z: 0}
   m_ShapePathHash: 597030165
   m_Mesh: {fileID: 0}
-  m_InstanceId: 151214
+  m_InstanceId: 93714
 --- !u!1001 &5162221139226345383
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -352,11 +352,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InteractionSprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 2611924316147767364, guid: 468b9302c01989d4780290de629c1591,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8709175628171115038, guid: 468b9302c01989d4780290de629c1591,
         type: 3}

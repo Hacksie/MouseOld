@@ -4,7 +4,7 @@ namespace HackedDesign
 {
     public class GameOverState : IState
     {
-        public void Start()
+        public void Begin()
         {
         }
 
@@ -22,6 +22,34 @@ namespace HackedDesign
 
         }
 
-        public bool PlayerActionAllowed => false;
+        public void Interact()
+        {
+            
+        }
+
+        public void Hack()
+        {
+            
+        }
+
+        public void Dash()
+        {
+            
+        }
+
+        public void Overload()
+        {
+            
+        }
+
+        public void Start()
+        {
+            
+        }
+
+        public void Select()
+        {
+            
+        }        
     }
 }

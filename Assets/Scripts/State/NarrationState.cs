@@ -11,7 +11,7 @@ namespace HackedDesign
             this.narrationPanel = narrationPanel;
         }
 
-        public void Start()
+        public void Begin()
         {
             Time.timeScale = 0;
             Cursor.visible = true;
@@ -33,6 +33,34 @@ namespace HackedDesign
             this.narrationPanel.Hide();
         }
 
-        public bool PlayerActionAllowed => false;
+        public void Interact()
+        {
+            
+        }
+
+        public void Hack()
+        {
+            
+        }
+
+        public void Dash()
+        {
+            
+        }
+
+        public void Overload()
+        {
+            
+        }
+
+        public void Start()
+        {
+            
+        }
+
+        public void Select()
+        {
+            
+        }
     }
 }

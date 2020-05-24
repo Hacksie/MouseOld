@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enabled: 1
+  triggerEnabled: 1
   autoInteraction: 0
   allowInteraction: 1
   allowBug: 0
@@ -174,10 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af835f2ea87ed844d922ea8b7457e598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 95529358425913334}
-  trigger: {fileID: 1209982039175048738}
-  count: 0
-  open: 0
   animate: 1
 --- !u!61 &61927359348290232
 BoxCollider2D:
@@ -256,7 +252,7 @@ MonoBehaviour:
   - {x: -0.125, y: 0.5, z: 0}
   m_ShapePathHash: -342493931
   m_Mesh: {fileID: 0}
-  m_InstanceId: 346886
+  m_InstanceId: 93768
 --- !u!1 &1235507174324560
 GameObject:
   m_ObjectHideFlags: 0

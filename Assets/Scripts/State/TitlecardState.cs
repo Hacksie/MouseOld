@@ -8,7 +8,7 @@ namespace HackedDesign
 
         public TitlecardState(UI.TitlecardPresenter titlecardPresenter) => this.titlecardPresenter = titlecardPresenter;
 
-        public void Start()
+        public void Begin()
         {
             Time.timeScale = 0;
             Cursor.visible = true;
@@ -28,6 +28,34 @@ namespace HackedDesign
 
         public void End() => this.titlecardPresenter.Hide();
 
-        public bool PlayerActionAllowed => false;
+        public void Interact()
+        {
+            
+        }
+
+        public void Hack()
+        {
+            
+        }
+
+        public void Dash()
+        {
+            
+        }
+
+        public void Overload()
+        {
+            
+        }
+
+        public void Start()
+        {
+            
+        }
+
+        public void Select()
+        {
+            
+        }
     }
 }

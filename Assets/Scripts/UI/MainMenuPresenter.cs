@@ -28,7 +28,7 @@ namespace HackedDesign.UI
         public UnityEngine.UI.Slider widthSlider;
         public UnityEngine.UI.Dropdown difficultyDropdown;
         public UnityEngine.UI.Slider enemiesSlider;
-        public UnityEngine.UI.Slider camerasSlider;
+        public UnityEngine.UI.Slider trapsSlider;
         public GameObject defaultButton;
 
         public LevelGenTemplate[] templates;
@@ -119,7 +119,7 @@ namespace HackedDesign.UI
             ShowOptionsPanel(false);
             ShowRandomPanel(false);
             Logger.Log(this, templateDropdown.options[templateDropdown.value].text);
-            GameManager.Instance.LoadRandomGame(templateDropdown.options[templateDropdown.value].text, (int)lengthSlider.value, (int)heightSlider.value, (int)widthSlider.value, difficultyDropdown.value, (int)enemiesSlider.value, (int)camerasSlider.value);
+            GameManager.Instance.LoadRandomGame(templateDropdown.options[templateDropdown.value].text, (int)lengthSlider.value, (int)heightSlider.value, (int)widthSlider.value, difficultyDropdown.value, (int)enemiesSlider.value, (int)trapsSlider.value);
         }
 
         public void OptionsEvent()

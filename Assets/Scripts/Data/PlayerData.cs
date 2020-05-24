@@ -22,29 +22,17 @@ namespace HackedDesign
         public int bugs = 1;
         public int baselevelTimer = 90;
 
-        public bool CanOverload()
-        {
-            return battery - overload >= 0;
-        }
+        public bool CanOverload => battery - overload >= 0;
 
-        public bool CanKeycard()
-        {
-            return keycards > 0;
-        }
+        public bool CanKeycard => keycards > 0;
 
-        public bool CanHack()
-        {
-            return battery - hack >= 0;
-        }
+        public bool CanHack => battery - hack >= 0;
 
-        public bool CanBug()
-        {
-            return bugs > 0;
-        }
+        public bool CanBug => bugs > 0;
 
         public bool ConsumeOverload()
         {
-            if(CanOverload())
+            if(CanOverload)
             {
                 battery -=overload;
                 return true;
@@ -54,7 +42,7 @@ namespace HackedDesign
 
         public bool ConsumeKeycard()
         {
-            if(CanKeycard())
+            if(CanKeycard)
             {
                 keycards--;
                 return true;
@@ -64,7 +52,7 @@ namespace HackedDesign
 
         public bool ConsumeHack()
         {
-            if(CanHack())
+            if(CanHack)
             {
                 battery -=hack;
                 return true;
@@ -73,7 +61,7 @@ namespace HackedDesign
         }
         public bool ConsumeBug()
         {
-            if(CanBug())
+            if(CanBug)
             {
                 --bugs;
                 return true;

@@ -41,7 +41,6 @@ namespace HackedDesign
 			public List<GameObject> endProps;
 			public List<GameObject> startProps;
 			public List<GameObject> randomProps;
-			public List<GameObject> trapProps;
 			public List<GameObject> fixedProps;
 			public List<GameObject> lineOfSightProps;
 

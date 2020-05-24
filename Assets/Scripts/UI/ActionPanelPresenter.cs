@@ -19,6 +19,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
+            RepaintBatteryBar();
             // if (GameManager.Instance.GameState.IsPlaying())
             // {
             //     Show();
@@ -30,11 +31,16 @@ namespace HackedDesign.UI
             // }
         }
 
+        private void RepaintBatteryBar()
+        {
+            batterySprite.rectTransform.sizeDelta = new Vector2(batterySpriteMaxSize.x * GameManager.Instance.GameState.Player.battery / GameManager.Instance.GameState.Player.maxBattery, batterySpriteMaxSize.y);
+        }
+
         private void RepaintCounts()
         {
             dashCooldown.fillAmount = 1 - playerController.DashPercentageComplete;
             //bugsCountText.text = CoreGame.Instance.state.player.bugs.ToString();
-            batterySprite.rectTransform.sizeDelta = new Vector2(batterySpriteMaxSize.x * GameManager.Instance.GameState.Player.battery / GameManager.Instance.GameState.Player.maxBattery, batterySpriteMaxSize.y);
+            
         }
     }
 }

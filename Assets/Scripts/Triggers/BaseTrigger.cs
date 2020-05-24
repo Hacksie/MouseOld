@@ -123,8 +123,9 @@ namespace HackedDesign
 
         public virtual void Overload(GameObject source)
         {
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanOverload() && allowOverload)
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanOverload&& allowOverload)
             {
+                Logger.Log(this, "Overload");
                 overloaded = true;
 
                 overloadActionEvent.Invoke();
@@ -134,7 +135,7 @@ namespace HackedDesign
 
         public virtual void Hack(GameObject source)
         {
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanHack() && allowHack)
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanHack&& allowHack)
             {
                 if (GameManager.Instance.GameState.Player.ConsumeHack())
                 {
@@ -174,17 +175,17 @@ namespace HackedDesign
                 Invoke(source);
                 return true;
             }
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanOverload() && inputController.OverloadButtonUp() && allowOverload)
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanOverload&& inputController.OverloadButtonUp() && allowOverload)
             {
                 Overload(source);
                 return true;
             }
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanBug() && inputController.BugButtonUp() && allowBug)
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanBug&& inputController.BugButtonUp() && allowBug)
             {
                 Bug(source);
                 return true;
             }
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanHack() && inputController.HackButtonUp() && allowHack)
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanHack&& inputController.HackButtonUp() && allowHack)
             {
                 Hack(source);
                 return true;

@@ -21,7 +21,7 @@ namespace HackedDesign
             this.minimapPresenter = minimapPresenter;
         }
 
-        public void Start()
+        public void Begin()
         {
             Logger.Log("PlayingState", "Start");
             Time.timeScale = 1;
@@ -44,7 +44,7 @@ namespace HackedDesign
             this.actionManager.UpdateBehaviour();
             this.playerController.Animate();
             AnimateDoors();
-            AnimateEntity();
+            AnimateEntities();
 
             this.actionConsolePresenter.Repaint();
             this.actionPanelPresenter.Repaint();
@@ -58,13 +58,40 @@ namespace HackedDesign
             this.actionPanelPresenter.Hide();
             this.timerPanelPresenter.Hide();
             this.minimapPresenter.Hide();
-            Logger.Log("PlayingState", "End");
         }
 
         private void AnimateDoors() => GameManager.Instance.GameState.doorList.ForEach(door => door.UpdateAnimation());
 
-        private void AnimateEntity() => GameManager.Instance.GameState.entityList.ForEach(entity => entity.Animate());
+        private void AnimateEntities() => GameManager.Instance.GameState.entityList.ForEach(entity => entity.Animate());
 
-        public bool PlayerActionAllowed => true;
+        public void Interact()
+        {
+            this.playerController.Interact();
+        }
+
+        public void Hack()
+        {
+            this.playerController.Hack();
+        }
+
+        public void Dash()
+        {
+            this.playerController.Dash();
+        }
+
+        public void Overload()
+        {
+            this.playerController.Overload();
+        }
+
+        public void Start()
+        {
+            GameManager.Instance.SetStartMenu();
+        }
+
+        public void Select()
+        {
+            GameManager.Instance.SetSelectMenu();
+        }
     }
 }

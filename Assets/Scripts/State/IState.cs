@@ -2,10 +2,17 @@ namespace HackedDesign
 {
     public interface IState
     {
-        void Start();
+        void Begin();
         void Update();
         void LateUpdate(); 
         void End();
-        bool PlayerActionAllowed { get; }
+        void Interact();
+        void Hack();
+        void Dash();
+        void Overload();
+        void Start();
+        void Select();
+
+        //bool PlayerActionAllowed { get; }
     }   
 }

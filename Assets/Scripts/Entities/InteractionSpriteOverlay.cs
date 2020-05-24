@@ -5,39 +5,34 @@ namespace HackedDesign.Entities
     class InteractionSpriteOverlay : MonoBehaviour
     {
         [Header("Game Objects")]
-        [SerializeField]
-        private SpriteRenderer sprite = null;
-        [SerializeField]
-        public float timeout = 2.0f;
-
-        private float startTime;
+        [SerializeField] private SpriteRenderer[] sprite = null;
+        [SerializeField] private int index = 0;
 
         private void Start()
         {
-            Show(false);
+            foreach(SpriteRenderer s in sprite)
+            {
+                s.gameObject.SetActive(false);
+
+            }
         }
 
         public void Show(bool flag)
         {
-            if(sprite == null) return;
+            if(sprite == null || sprite.Length <= 0) return;
             
-            if (sprite.gameObject.activeInHierarchy != flag)
+            if (sprite[index].gameObject.activeInHierarchy != flag)
             {
-                sprite.gameObject.SetActive(flag);
-            }
-
-            if(flag)
-            {
-                startTime = Time.time;
+                sprite[index].gameObject.SetActive(flag);
             }
         }
 
-        void Update()
+        public void SetSprite(int index)
         {
-            //if(sprite.gameObject.activeInHierarchy && (Time.time - startTime) > timeout)
-            //{
-            //    sprite.gameObject.SetActive(false);
-            //}
+            Logger.Log(this, "Set sprite", index.ToString());
+            Show(false);
+            this.index = index;
+            Show(true);
         }
     }
 }

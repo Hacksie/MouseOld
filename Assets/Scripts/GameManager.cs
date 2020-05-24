@@ -83,7 +83,7 @@ namespace HackedDesign
                 currentState = value;
                 if (currentState != null)
                 {
-                    currentState.Start();
+                    currentState.Begin();
                 }
             }
         }
@@ -166,30 +166,6 @@ namespace HackedDesign
         public void SetLevelComplete() => CurrentState = new LevelCompleteState(this.levelCompletePresenter);
         public void SetWorldMap() => CurrentState = new WorldMapState(this.worldMapPanel);
 
-        public void ToggleStart()
-        {
-            if (CurrentState is StartMenuState)
-            {
-                CurrentState = new PlayingState(this.playerController, this.actionManager, this.actionConsolePanel, this.actionPanel, this.timerPanel, this.minimapPanel);
-            }
-            else if (CurrentState is PlayingState)
-            {
-                CurrentState = new StartMenuState(this.startMenuPanel);
-            }
-        }
-
-        public void ToggleSelect()
-        {
-            if (CurrentState is SelectMenuState)
-            {
-                CurrentState = new PlayingState(this.playerController, this.actionManager, this.actionConsolePanel, this.actionPanel, this.timerPanel, this.minimapPanel);
-            }
-            else if (CurrentState is PlayingState)
-            {
-                CurrentState = new SelectMenuState(this.selectMenuPanel);
-            }
-        }
-
         public void SaveGame()
         {
             Logger.Log(this, "Saving state");
@@ -268,9 +244,8 @@ namespace HackedDesign
             minimapPanel.Initialize(GameState.CurrentLevel, playerController.transform);
             SceneTriggersInitialize();
             timerPanel.Initialize(GameState.CurrentLevel.timer);
-            SetPlaying();
-
             playerController.Show();
+            SetPlaying();
             this.actionManager.Invoke(GameState.CurrentLevel.template.startingAction);
         }
 
