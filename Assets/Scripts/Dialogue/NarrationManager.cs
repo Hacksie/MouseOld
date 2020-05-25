@@ -55,7 +55,7 @@ namespace HackedDesign
                 CurrentNarration = null;
                 GameManager.Instance.SetPlaying();
 
-                Story.ActionManager.instance.Invoke(nextAction);
+                Story.ActionManager.Instance.Invoke(nextAction);
             }
 
             public Narration GetCurrentNarration()

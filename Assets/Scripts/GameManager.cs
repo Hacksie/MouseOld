@@ -36,6 +36,7 @@ namespace HackedDesign
         [SerializeField] private Dialogue.NarrationManager narrationManager = null;
         [SerializeField] private MissionCompleteManager missionCompleteManager = null;
         [SerializeField] private LevelCompleteManager levelCompleteManager = null;
+        [SerializeField] private WorldMapManager worldMapManager = null;
 
         [Header("UI")]
         [SerializeField] private UI.MobileInputUIPresenter mobileInputUI = null;
@@ -187,6 +188,7 @@ namespace HackedDesign
             this.narrationManager = this.narrationManager ?? FindObjectOfType<Dialogue.NarrationManager>();
             this.missionCompleteManager = this.missionCompleteManager ?? FindObjectOfType<MissionCompleteManager>();
             this.levelCompleteManager = this.levelCompleteManager ?? FindObjectOfType<LevelCompleteManager>();
+            this.worldMapManager = this.worldMapManager ?? FindObjectOfType<WorldMapManager>();
         }
 
         private void Initialization()
@@ -195,6 +197,8 @@ namespace HackedDesign
             narrationManager.Initialize();
             missionCompleteManager.Initialize(actionManager);
             levelCompleteManager.Initialize(actionManager);
+            worldMapManager.Initialize();
+
             mobileInputUI.Initialize();
             actionConsolePanel.Initialize(actionManager);
             infoPanel.Initialize(selectMenuManager);
@@ -206,10 +210,10 @@ namespace HackedDesign
             narrationPanel.Initialize(narrationManager);
             actionPanel.Initialize(playerController);
             titlecardPanel.Initialize(actionManager);
-            levelRenderer.Initialize(playerController, entityManager, levelParent, enemiesParent, polyNav2D);
             missionCompletePanel.Initialize(missionCompleteManager);
             levelCompletePresenter.Initialize(levelCompleteManager);
-            worldMapPanel.Initialize();
+            worldMapPanel.Initialize(worldMapManager);
+            levelRenderer.Initialize(playerController, entityManager, levelParent, enemiesParent, polyNav2D);
             HideAllInGameUI();
             playerController.Hide();
         }

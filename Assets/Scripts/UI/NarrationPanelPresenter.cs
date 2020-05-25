@@ -87,7 +87,7 @@ namespace HackedDesign.UI
                     break;
             }
 
-            corpText.text = "<color=\"" + corp.color + "\">" + corp.name + "</color>";
+            corpText.text = corp != null ? "<color=\"" + corp.color + "\">" + corp.name + "</color>" : "Free agent";
             text.text = currentNarration.text;
 
             //EventSystem.current.SetSelectedGameObject(null);

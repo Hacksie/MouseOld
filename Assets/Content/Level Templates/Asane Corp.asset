@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
-  m_Name: Arisana Corp
+  m_Name: Asane Corp
   m_EditorClassIdentifier: 
   corp: Arisana
   location: ArisanaHQ
@@ -18,9 +18,12 @@ MonoBehaviour:
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
-  enemies: 2
-  traps: 0
+  spanHorizontal: 4
+  spanVertical: 4
+  enemyCount: 0
+  trapCount: 0
   generateDoors: 1
+  generateRandomProps: 1
   startingRoomString: wdww
   startingAction: 
   exitAction: 
@@ -28,6 +31,7 @@ MonoBehaviour:
   generateNavMesh: 1
   hostile: 1
   floors: []
+  mainChainFloor: []
   levelElements:
   - {fileID: 1873802445332644, guid: 1836e21abf55f0b4399a60ea4c8e8523, type: 3}
   - {fileID: 1996918847672242, guid: 4f588a18087ef534387d0244e321a69a, type: 3}
@@ -157,11 +161,7 @@ MonoBehaviour:
   - {fileID: 6291705435094467668, guid: a828ebe873279f64f90949cbafe9659f, type: 3}
   - {fileID: 7760533753382988192, guid: 43ca31b7fbdbec3428d8b05cede1b78a, type: 3}
   - {fileID: 3291905503047140999, guid: d04ba4e96a5283a49a5fe2cb594c3fd4, type: 3}
-  trapProps:
-  - {fileID: 6797104490100697780, guid: ecf5fbd55c4786c43afaada007f25fd4, type: 3}
-  - {fileID: 8387367927353284284, guid: 0133037e36f623a48a2ff29e12716aa6, type: 3}
-  - {fileID: 6150267684878857572, guid: 2ffcfcbb737fe244eac99e723d74062f, type: 3}
   fixedProps: []
-  easyEnemies: []
-  mediumEnemies: []
-  hardEnemies: []
+  lineOfSightProps: []
+  traps: []
+  enemies: []

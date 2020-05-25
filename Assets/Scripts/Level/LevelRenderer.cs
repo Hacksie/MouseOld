@@ -17,15 +17,13 @@ namespace HackedDesign
             private const string BOTTOMRIGHT = "br";
 
             [Header("Prefabs")]
-            [SerializeField] private GameObject doorewPrefab;
-            [SerializeField] private GameObject doornsPrefab;
-            [SerializeField] private GameObject exitewPrefab;
-            [SerializeField] private GameObject exitnsPrefab;
-            [SerializeField] private GameObject entryewPrefab;
-            [SerializeField] private GameObject entrynsPrefab;
-            [SerializeField] private GameObject roomCenterPrefab;
-            [SerializeField] private GameObject roomCornerCenter;
-            [SerializeField] private GameObject pointOfInterestPrefab;
+            [SerializeField] private GameObject doorewPrefab = null;
+            [SerializeField] private GameObject doornsPrefab = null;
+            [SerializeField] private GameObject exitewPrefab = null;
+            [SerializeField] private GameObject exitnsPrefab = null;
+            [SerializeField] private GameObject entryewPrefab = null;
+            [SerializeField] private GameObject entrynsPrefab = null;
+            [SerializeField] private GameObject pointOfInterestPrefab = null;
 
             private PlayerController playerController;
             private GameObject levelParent;

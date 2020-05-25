@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
-namespace HackedDesign
+namespace HackedDesign.Story
 {
-	namespace Story
-	{
-		[System.Serializable]
-		public class Location : InfoEntity
-		{
-			public string title;
-			public string corp;
-		}
-	}
+    [CreateAssetMenu(fileName = "Location", menuName = "Mouse/Content/Location")]
+    [System.Serializable]
+    public class Location : InfoEntity
+    {
+        public string title;
+        public string corp;
+    }
 }

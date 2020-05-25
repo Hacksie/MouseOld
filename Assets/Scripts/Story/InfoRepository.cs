@@ -18,24 +18,13 @@ namespace HackedDesign
             public List<Enemy> enemies = new List<Enemy>();
             public List<Trap> traps = new List<Trap>();
             public List<Location> locations = new List<Location>();
+            public List<Floor> floors = new List<Floor>();
             public Dictionary<string, InfoEntity> entities = new Dictionary<string, InfoEntity>();
-
-            public string categoryResource = @"Info/Categories/";
-            public string corpsResource = @"Info/Corps/";
-            public string charactersResource = @"Info/Characters/";
-            public string enemiesResource = @"Info/Enemies/";
-            public string trapsResource = @"Info/Traps/";
-            public string locationsResource = @"Info/Locations/";
 
             [Header("State")]
             public Dictionary<string, InfoEntity> knownEntities = new Dictionary<string, InfoEntity>();
-            public List<Character> knownCharacters = new List<Character>();
-            public List<Corp> knownCorps = new List<Corp>();
-            public List<Enemy> knownEnemies = new List<Enemy>();
-            public List<Trap> knownTraps = new List<Trap>();
             public List<Trap> uniqueTraps = new List<Trap>();
             public List<Enemy> uniqueEnemies = new List<Enemy>();
-            public List<Location> knownLocations = new List<Location>();
 
             public string SelectedInfoCategory { get; set; }
             public string SelectedInfoEntity { get; set; }
@@ -47,25 +36,10 @@ namespace HackedDesign
 
             private void Start()
             {
-
-                //LoadCategories();
                 LoadCorps();
                 LoadCharacters();
-                //LoadEnemies();
-                //LoadLocations();
-
-            }
-
-            public void LoadCategories()
-            {
-                var jsonTextFiles = Resources.LoadAll<TextAsset>(categoryResource);
-
-                foreach (var file in jsonTextFiles)
-                {
-                    var cat = JsonUtility.FromJson<InfoCategory>(file.text);
-                    Debug.Log(this.name + " category added: " + cat.id);
-                    categories.Add(cat);
-                }
+                LoadLocations();
+                LoadFloors();
             }
 
             public void LoadCorps()
@@ -84,31 +58,20 @@ namespace HackedDesign
                 }
             }
 
-            public void LoadEnemies()
+            public void LoadLocations()
             {
-                var jsonTextFiles = Resources.LoadAll<TextAsset>(enemiesResource);
-
-                foreach (var file in jsonTextFiles)
+                foreach (var l in locations)
                 {
-                    var character = JsonUtility.FromJson<Enemy>(file.text);
-                    enemies.Add(character);
-                    entities.Add(character.id, character);
-                    Logger.Log(this, "Enemy added: ", character.id);
+                    entities.Add(l.id, l);
                 }
             }
 
-            public void LoadLocations()
+            public void LoadFloors()
             {
-                var jsonTextFiles = Resources.LoadAll<TextAsset>(locationsResource);
-
-                foreach (var file in jsonTextFiles)
+                foreach (var f in floors)
                 {
-                    var location = JsonUtility.FromJson<Location>(file.text);
-                    locations.Add(location);
-                    entities.Add(location.id, location);
-                    Logger.Log(this, "Location added: ", location.id);
+                    entities.Add(f.id, f);
                 }
-
             }
 
             public List<InfoCategory> GetCategories()
@@ -120,7 +83,7 @@ namespace HackedDesign
             {
                 if (entities.ContainsKey(id))
                 {
-                    return entities[id] as Character;
+                    return entities[id];
                 }
 
                 return null;
@@ -149,7 +112,7 @@ namespace HackedDesign
 
             public Trap GetTrap(string id)
             {
-                if(entities.ContainsKey(id))
+                if (entities.ContainsKey(id))
                 {
                     return entities[id] as Trap;
                 }
@@ -175,7 +138,7 @@ namespace HackedDesign
                         return trap;
                 }
                 return null;
-            }            
+            }
 
             public Corp GetCorp(string id)
             {
@@ -185,6 +148,45 @@ namespace HackedDesign
                 }
 
                 return null;
+            }
+
+            public Location GetLocation(string id)
+            {
+                if (entities.ContainsKey(id))
+                {
+                    return entities[id] as Location;
+                }
+
+                return null;
+            }
+
+            public Floor GetFloor(string id)
+            {
+                if (entities.ContainsKey(id))
+                {
+                    return entities[id] as Floor;
+                }
+                return null;
+            }
+
+            public List<Location> GetKnownLocations()
+            {
+                var infocategory = categories.FirstOrDefault(e => e.id == "Locations");
+
+                if (infocategory == null)
+                {
+                    return null;
+                }
+
+                return knownEntities.Where(kv => kv.Value.category == "Locations").Select(kv => kv.Value as Location).ToList();
+            }
+
+            public List<Floor> GetKnownFloorsForLocation(string locationId)
+            {
+                return knownEntities.Where(kv => kv.Value.category == "Floors")
+                                    .Where(f => (f.Value as Floor).locationId == locationId)
+                                    .Select(kv => (kv.Value as Floor))
+                                    .ToList();
             }
 
             public List<InfoEntity> GetKnownEntities(string category)
@@ -253,7 +255,7 @@ namespace HackedDesign
 
                 uniqueTraps.Add(newTrap);
                 return newTrap;
-            }            
+            }
 
             public bool AddToKnownEntities(string id)
             {
@@ -264,7 +266,7 @@ namespace HackedDesign
                         var entity = entities[id];
                         Logger.Log(this, "Adding entity ", entity.id, " to known entities");
                         knownEntities.Add(id, entity);
-                        ActionManager.instance.AddActionMessage("'" + entity.id + "' added to " + entity.category);
+                        ActionManager.Instance.AddActionMessage("'" + entity.id + "' added to " + entity.category);
                     }
                     else
                     {

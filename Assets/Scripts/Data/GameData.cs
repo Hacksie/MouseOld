@@ -38,6 +38,9 @@ namespace HackedDesign
         public StoryState Story { get { return story; } set { story = value; } }
         public Level.Level CurrentLevel { get { return currentLevel; } set { currentLevel = value; } }
 
+        public string currentLocation;
+        public string currentFloor;
+
         public List<Task> TaskList { get => taskList; private set => taskList = value; }
 
         public GameData() : this(false)

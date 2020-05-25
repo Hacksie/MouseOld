@@ -25,6 +25,8 @@ namespace HackedDesign.Story
 
         public void PreludeExit()
         {
+            GameManager.Instance.SetWorldMap();
+            /*
             if (GameManager.Instance.GameState.TaskList.Exists(t => t.title == "Milk Run"))
             {
                 Debug.Log("PreludeActions: can exit");
@@ -33,7 +35,7 @@ namespace HackedDesign.Story
             else
             {
                 Debug.Log("PreludeActions: can't exit, haven't received mission");
-            }
+            }*/
         }
     }
 }

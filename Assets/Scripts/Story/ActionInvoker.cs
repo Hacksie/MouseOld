@@ -22,7 +22,7 @@ namespace HackedDesign.Story
         public void Invoke()
         {
             Logger.Log(name,"Invoke");
-            ActionManager.instance.Invoke(action);
+            ActionManager.Instance.Invoke(action);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace HackedDesign {
 			running = true;
 			warning = end = false;
 			this.maxTime = timeout;
-			Story.ActionManager.instance.Invoke("TimerStart");
+			Story.ActionManager.Instance.Invoke("TimerStart");
 
 		}
 
@@ -39,13 +39,13 @@ namespace HackedDesign {
 			{
 				end = true;
 				running = false;
-				Story.ActionManager.instance.Invoke("TimerExpired");
+				Story.ActionManager.Instance.Invoke("TimerExpired");
 			}			
 
 			if(running && !warning && Time.time - startTime >= (maxTime-warningTime))
 			{
 				warning = true;
-				Story.ActionManager.instance.Invoke("TimerAlert");
+				Story.ActionManager.Instance.Invoke("TimerAlert");
 			}
 
 

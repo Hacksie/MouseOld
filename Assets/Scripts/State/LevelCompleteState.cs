@@ -13,6 +13,7 @@ namespace HackedDesign
             Time.timeScale = 0;
             Cursor.visible = true;
             this.levelCompletePresenter.Show();
+            this.levelCompletePresenter.Repaint();
             
         }
 

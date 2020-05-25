@@ -6,10 +6,10 @@ namespace HackedDesign
 {
     public class AudioManager : MonoBehaviour
     {
-        [SerializeField] private AudioSource sfx;
-        [SerializeField] private AudioSource music;
-        [SerializeField] private AudioClip select;
-        [SerializeField] private AudioClip accept;
+        [SerializeField] private AudioSource sfx = null;
+        [SerializeField] private AudioSource music = null;
+        [SerializeField] private AudioClip select = null;
+        [SerializeField] private AudioClip accept = null;
 
         public void PlayAccept()
         {
@@ -21,6 +21,6 @@ namespace HackedDesign
         {
             sfx.clip = select;
             sfx.Play();
-        }        
+        }
     }
 }

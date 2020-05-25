@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee79415003cce2c41a06844e86c91a16, type: 3}
-  m_Name: Arisana Bar
+  m_Name: Asane Bar
   m_EditorClassIdentifier: 
   corp: Arisana Bar
   location: ArisanaContractorBarracks
@@ -18,9 +18,12 @@ MonoBehaviour:
   levelLength: 10
   levelWidth: 10
   levelHeight: 10
-  enemies: 0
-  traps: 0
+  spanHorizontal: 4
+  spanVertical: 4
+  enemyCount: 0
+  trapCount: 0
   generateDoors: 1
+  generateRandomProps: 1
   startingRoomString: weww
   startingAction: 
   exitAction: 
@@ -29,6 +32,7 @@ MonoBehaviour:
   hostile: 1
   floors:
   - {fileID: 2321086600638492910, guid: c409cac4fd99a674ba575458284fb178, type: 3}
+  mainChainFloor: []
   levelElements:
   - {fileID: 1873802445332644, guid: 3fde91dc002bc9b4cb223ad5b6b29717, type: 3}
   - {fileID: 1996918847672242, guid: 957df4b955035344699b59306a0f85f8, type: 3}
@@ -70,7 +74,6 @@ MonoBehaviour:
   - {fileID: 5792379278400333503, guid: fed6d37af7f8d9446b610bbd8bfad85b, type: 3}
   startProps: []
   randomProps: []
-  trapProps: []
   fixedProps:
   - {fileID: 3711464213400231449, guid: c59812193b89b7e43b7b33b88157e577, type: 3}
   - {fileID: 5792379278400333503, guid: fed6d37af7f8d9446b610bbd8bfad85b, type: 3}
@@ -83,9 +86,6 @@ MonoBehaviour:
   - {fileID: 2131459913453208032, guid: 16cdfb4af1a67794b86d1fc96bcfb235, type: 3}
   - {fileID: 6522739090216265623, guid: 8c8d8a7e4f8737b47808686f4a2af0f6, type: 3}
   - {fileID: 1048930699343776421, guid: 139fba100eb2b4c48a2378cdae4a9cee, type: 3}
-  easyEnemies:
-  - EasyGuard
-  mediumEnemies:
-  - Drone
-  hardEnemies:
-  - Drone
+  lineOfSightProps: []
+  traps: []
+  enemies: []

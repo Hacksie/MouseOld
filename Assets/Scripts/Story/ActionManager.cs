@@ -8,24 +8,19 @@ namespace HackedDesign.Story
 
     public class ActionManager : MonoBehaviour
     {
-        public static ActionManager instance;
+        [SerializeField] private float timeOut = 10.0f;
 
-        private Dictionary<string, ILevelActions> actions = new Dictionary<string, ILevelActions>();
-
-        [SerializeField]
-        private float timeOut = 10.0f;
+        public static ActionManager Instance { get; private set;}
 
         public List<ActionMessage> console = new List<ActionMessage>();
 
-        ActionManager() => instance = this;
+        public ILevelActions CurrentStoryActions { get; private set;}
+
+        ActionManager() => Instance = this;
 
         public void Initialize(Dialogue.NarrationManager narrationManager)
         {
-            actions.Clear();
-            actions.Add("Global", new GlobalActions());
-            actions.Add("Bootstrap", new BootstrapActions(narrationManager));
-            actions.Add("Olivia's Room", new PreludeActions());
-            actions.Add("Arisana Bar", new PreludeBarActions());
+            CurrentStoryActions = new PreludeActions();
         }
 
         public void AddActionMessage(string message) => console.Add(new ActionMessage()
@@ -51,25 +46,11 @@ namespace HackedDesign.Story
 
             GameManager.Instance.SaveGame();
 
-            if (GameManager.Instance.GameState.CurrentLevel == null)
-            {
-                Logger.LogError(this, "Cannot invoke an action if no level is loaded");
-            }
-
-            bool handled = false;
-
-            if (actions.ContainsKey(GameManager.Instance.GameState.CurrentLevel.template.name))
-            {
-                handled = actions[GameManager.Instance.GameState.CurrentLevel.template.name].Invoke(actionName);
-            }
-            if (!handled)
-            {
-                handled = actions["Global"].Invoke(actionName);
-            }
+            var handled = CurrentStoryActions.Invoke(actionName);
 
             if (!handled)
             {
-                Logger.LogError(this, "Cannot invoke action: ", actionName, " in current level: ", GameManager.Instance.GameState.CurrentLevel.template.name);
+                Logger.LogWarning(this, "Cannot invoke action: ", actionName, " in current state");
             }
         }
     }

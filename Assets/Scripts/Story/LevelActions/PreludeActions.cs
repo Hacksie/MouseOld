@@ -3,36 +3,31 @@ using HackedDesign.Entities;
 
 namespace HackedDesign.Story
 {
-    public class PreludeActions : ILevelActions
+    public class PreludeActions : GlobalActions
     {
-        public bool Invoke(string actionName)
+        public override bool Invoke(string actionName)
         {
             switch (actionName)
             {
                 case "Bootstrap":
-                    GameManager.Instance.SetTitlecard();
-                    break;
-                case "Bootstrap1":
-                    Debug.Log("PreludeActions: invoke Prelude1");
-                    InfoRepository.Instance.AddToKnownEntities("Mouse");
-                    InfoRepository.Instance.AddToKnownEntities("Arisana");
-                    InfoRepository.Instance.AddToKnownEntities("ManagerLyon");
-                    InfoRepository.Instance.AddToKnownEntities("Cat");
-                    InfoRepository.Instance.AddToKnownEntities("Saika");
-                    Dialogue.NarrationManager.Instance.ShowNarration("Bootstrap1");
-                    break;
                 case "Prelude":
                     GameManager.Instance.SetTitlecard();
                     return true;
+                    break;
+                case "Bootstrap1":
                 case "Prelude1":
                     Debug.Log("PreludeActions: invoke Prelude1");
                     InfoRepository.Instance.AddToKnownEntities("Mouse");
-                    InfoRepository.Instance.AddToKnownEntities("Arisana");
+                    InfoRepository.Instance.AddToKnownEntities("Aisana");
                     InfoRepository.Instance.AddToKnownEntities("ManagerLyon");
                     InfoRepository.Instance.AddToKnownEntities("Cat");
                     InfoRepository.Instance.AddToKnownEntities("Saika");
-
-                    ActionManager.instance.AddActionMessage("Task added to current tasks - Bootstrap");
+                    InfoRepository.Instance.AddToKnownEntities("AisanaContractTower2");
+                    InfoRepository.Instance.AddToKnownEntities("AisanaContractTower1");
+                    InfoRepository.Instance.AddToKnownEntities("SaikaCorpHQ");
+                    InfoRepository.Instance.AddToKnownEntities("OliviasApartment");
+                    InfoRepository.Instance.AddToKnownEntities("AisanaContractBar");
+                    ActionManager.Instance.AddActionMessage("Task added to current tasks - Bootstrap");
                     if (!GameManager.Instance.GameState.TaskList.Exists(t => t.id == "bootstrap"))
                     {
                         var task = TaskDefinitionRepository.Instance.GetTaskInstance("bootstrap");
@@ -108,7 +103,8 @@ namespace HackedDesign.Story
                     Debug.Log("Snowowl");
                     return true;
             }
-            return false;
+
+            return base.Invoke(actionName);
         }
 
         public void PreludeCat3()
