@@ -31,27 +31,11 @@ namespace HackedDesign.UI
         }
 
         public override void Repaint()
-        {
-            
+        {          
             if (currentNarration != narrationManager.GetCurrentNarration())
             {
                 RepaintNarration();
             }
-
-            // if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Narration)
-            // {
-            //     Show();
-
-            //     if (currentNarration != narrationManager.GetCurrentNarration())
-            //     {
-            //         RepaintNarration();
-            //     }
-            // }
-            // else if (this.gameObject.activeInHierarchy)
-            // {
-            //     Hide();
-            // }
-
         }
 
         private void RepaintNarration()
@@ -83,6 +67,9 @@ namespace HackedDesign.UI
                 case "angry":
                     avatarSprite.sprite = speaker.avatarAngry;
                     break;
+                case "smirking":
+                    avatarSprite.sprite = speaker.avatarSmirking;
+                    break;
                 default:
                     avatarSprite.sprite = speaker.avatar;
                     break;
@@ -91,11 +78,6 @@ namespace HackedDesign.UI
             corpText.text = corp != null ? "<color=\"" + corp.color + "\">" + corp.name + "</color>" : "Free agent";
             text.text = currentNarration.text;
             EventSystem.current.SetSelectedGameObject(actionButton.gameObject);
-
-            //EventSystem.current.SetSelectedGameObject(null);
-            //EventSystem.current.SetSelectedGameObject(null);
-            //StartCoroutine(SetSelect());
-            
         }
     }
 }

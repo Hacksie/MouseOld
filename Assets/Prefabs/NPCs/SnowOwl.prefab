@@ -172,7 +172,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   visibilityDistance: 3.2
-  randomStartingDirection: 1
+  randomStartingDirection: 0
+  facePlayer: 1
   pooled: 0
   direction: {x: 0, y: -1}
   isMoving: 0

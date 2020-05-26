@@ -20,48 +20,33 @@ namespace HackedDesign
 
             [SerializeField] private GameObject npcPoolParent = null;
 
-            EntityManager()
-            {
-                Instance = this;
-            }
+            public EntityManager() => Instance = this;
 
             public void Initialize()
             {
                 if (npcPoolParent == null)
                 {
                     Logger.LogError(name, "npcParent is null");
+                    return;
                 }
 
-                foreach (var npc in npcPrefabList)
+                foreach (var npc in npcPrefabList.Where(n => n != null))
                 {
-                    if (npc == null)
-                    {
-                        continue;
-                    }
-
                     var go = Instantiate(npc, Vector3.zero, Quaternion.identity, npcPoolParent.transform);
                     go.name = npc.name; // We don't want the (cloned) label
                     Logger.Log(name, "instantiating NPC ", npc.name, " ", go.name);
                     IEntity entity = go.GetComponent<IEntity>();
+                    entity.Deactivate();
 
                     npcPool.Add(entity);
                 }
             }
 
-            public bool EnemyIsValid(string name)
-            {
-                return enemies.Exists(e=> e.name == name);
-            }
+            public bool EnemyIsValid(string name) => enemies.Exists(e => e.name == name);
 
-            public bool TrapIsValid(string name)
-            {
-                return traps.Exists(e=> e.name == name);
-            }
+            public bool TrapIsValid(string name) => traps.Exists(e => e.name == name);
 
-            public bool NPCIsValid(string name)
-            {
-                return npcPrefabList.Exists(e=> e.name == name);
-            }
+            public bool NPCIsValid(string name) => npcPrefabList.Exists(e => e.name == name);
 
             public IEntity GetPooledNPC(string name)
             {

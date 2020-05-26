@@ -15,6 +15,7 @@ namespace HackedDesign
         [SerializeField] private LayerMask playerLayerMask = 0;
         [SerializeField] private float visibilityDistance = 3.2f;
         [SerializeField] private bool randomStartingDirection = true;
+        [SerializeField] private bool facePlayer = false;
 
         [Header("State")]
         [SerializeField] protected bool pooled = false;
@@ -60,6 +61,8 @@ namespace HackedDesign
                 direction = Quaternion.Euler(0, 0, Random.Range(0, Mathf.PI)) * Vector2.up;
             }
 
+
+
             InitializeDetections();
         }
 
@@ -75,6 +78,10 @@ namespace HackedDesign
 
         public virtual void UpdateBehaviour()
         {
+            if(facePlayer)
+            {
+                direction = (playerTransform.position - this.transform.position).normalized;
+            }
             // switch (State)
             // {
             //     case EntityState.PASSIVE:
@@ -228,9 +235,7 @@ namespace HackedDesign
                     Gizmos.DrawIcon(transform.position + Vector3.up, "skull-hs.png", true);
                     break;
             }
-
         }
-
 
         public enum EntityState
         {
