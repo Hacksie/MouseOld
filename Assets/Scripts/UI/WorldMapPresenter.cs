@@ -98,7 +98,16 @@ namespace HackedDesign.UI
                 var item = Instantiate(floorListItemPrefab, floorListParent);
                 var text = item.GetComponentInChildren<UnityEngine.UI.Text>();
                 text.text = floor.name;
+                var floorItem = item.GetComponent<FloorListItem>();
+                floorItem.Initialize(this.worldMapManager);
+                floorItem.floor = floor;
             }
+        }
+
+        public void NextLevel()
+        {
+            worldMapManager.NextLevel();   
+
         }
     }
 }

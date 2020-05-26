@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5361616050255730867}
   - component: {fileID: 5361616050255730866}
   - component: {fileID: 5361616050255730865}
+  - component: {fileID: 4912671877096199873}
   m_Layer: 9
   m_Name: SnowOwl
   m_TagString: NPC
@@ -154,6 +155,37 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4912671877096199873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5361616050255730870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e45e089d1306da946baa09e2444ed10e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 11400000, guid: 655ec6e04065db54e8d5cf6bad859bc7, type: 2}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  visibilityDistance: 3.2
+  randomStartingDirection: 1
+  pooled: 0
+  direction: {x: 0, y: -1}
+  isMoving: 0
+  hasSeenPlayer: 0
+  playerSeenEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  playerLeaveEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  alertEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5361616051178851438
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enabled: 1
+  triggerEnabled: 1
   autoInteraction: 0
   allowInteraction: 0
   allowBug: 0
@@ -493,6 +525,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

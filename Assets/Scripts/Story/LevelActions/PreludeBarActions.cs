@@ -3,9 +3,23 @@ using HackedDesign.Entities;
 
 namespace HackedDesign.Story
 {
-    public class PreludeBarActions : ILevelActions
+    public class PreludeBarActions : GlobalActions
     {
-        public bool Invoke(string actionName)
+        public override void Begin() 
+        {
+            var levelTemplate = GameManager.Instance.GetLevelGenTemplate("Aisana Bar");
+            GameManager.Instance.GameState.CurrentLevel = Level.LevelGenerator.Generate(levelTemplate, 0, 0, 0);
+            GameManager.Instance.GameState.CurrentLevel.Print();
+            GameManager.Instance.SceneInitialize();     
+            GameManager.Instance.SetPlaying();
+        }
+
+        public override void Next()
+        {
+
+        }
+    
+        public override bool Invoke(string actionName)
         {
             switch (actionName)
             {
@@ -13,10 +27,10 @@ namespace HackedDesign.Story
                     PreludeExit();
                     return true;
                 case "PreludeBarJoe":
-                    InfoRepository.Instance.AddToKnownEntities("BouncerJoe");
+                    //InfoRepository.Instance.AddToKnownEntities("BouncerJoe");
                     return true;              
                 case "PreludeBarKat":
-                    InfoRepository.Instance.AddToKnownEntities("Kat");
+                    InfoRepository.Instance.AddToKnownEntities("SnowOwl");
                     return true;
             }
             return false;
@@ -26,16 +40,7 @@ namespace HackedDesign.Story
         public void PreludeExit()
         {
             GameManager.Instance.SetWorldMap();
-            /*
-            if (GameManager.Instance.GameState.TaskList.Exists(t => t.title == "Milk Run"))
-            {
-                Debug.Log("PreludeActions: can exit");
-                GameManager.Instance.LoadNewLevel("Arisana Bar");
-            }
-            else
-            {
-                Debug.Log("PreludeActions: can't exit, haven't received mission");
-            }*/
+
         }
     }
 }

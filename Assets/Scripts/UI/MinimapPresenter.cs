@@ -29,6 +29,7 @@ namespace HackedDesign.UI
         {
             this.playerTransform = playerTransform;
             this.level = level;
+            wallSpriteDictionary.Clear();
             PopulateWalls();
             PopulateWallNames();
         }

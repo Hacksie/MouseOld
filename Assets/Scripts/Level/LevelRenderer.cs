@@ -127,6 +127,7 @@ namespace HackedDesign
                             if (go == null)
                             {
                                 Logger.LogError(name, "null game object returned from FindRoomEntity");
+                                continue;
                             }
                             Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
                         }
@@ -138,6 +139,7 @@ namespace HackedDesign
                             if (go == null)
                             {
                                 Logger.LogError(name, "null game object returned from FindRoomEntity");
+                                continue;
                             }
                             Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
                         }
@@ -150,6 +152,7 @@ namespace HackedDesign
                             if (go == null)
                             {
                                 Logger.LogError(name, "null game object returned from FindRoomEntity");
+                                continue;
                             }
                             Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
                         }
@@ -161,6 +164,7 @@ namespace HackedDesign
                             if (go == null)
                             {
                                 Logger.LogError(name, "null game object returned from FindRoomEntity");
+                                continue;
                             }
                             Instantiate(go, roomPosition, Quaternion.identity, levelParent.transform);
                         }

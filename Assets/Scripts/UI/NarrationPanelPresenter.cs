@@ -32,6 +32,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
+            
             if (currentNarration != narrationManager.GetCurrentNarration())
             {
                 RepaintNarration();
@@ -89,10 +90,12 @@ namespace HackedDesign.UI
 
             corpText.text = corp != null ? "<color=\"" + corp.color + "\">" + corp.name + "</color>" : "Free agent";
             text.text = currentNarration.text;
+            EventSystem.current.SetSelectedGameObject(actionButton.gameObject);
 
             //EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(actionButton.gameObject);
+            //EventSystem.current.SetSelectedGameObject(null);
+            //StartCoroutine(SetSelect());
+            
         }
     }
-
 }

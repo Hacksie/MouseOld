@@ -5,34 +5,26 @@ namespace HackedDesign.Entities
     class InteractionSpriteOverlay : MonoBehaviour
     {
         [Header("Game Objects")]
-        [SerializeField] private SpriteRenderer[] sprite = null;
-        [SerializeField] private int index = 0;
+        [SerializeField] private Color normalColor = Color.white;
+        [SerializeField] private Color highlightColor = Color.white;
+    
+        [SerializeField] private SpriteRenderer sprite = null;
 
         private void Start()
         {
-            foreach(SpriteRenderer s in sprite)
-            {
-                s.gameObject.SetActive(false);
-
-            }
+            sprite.color = normalColor;
         }
 
         public void Show(bool flag)
         {
-            if(sprite == null || sprite.Length <= 0) return;
+            sprite.color = flag ? highlightColor : normalColor;
             
-            if (sprite[index].gameObject.activeInHierarchy != flag)
-            {
-                sprite[index].gameObject.SetActive(flag);
-            }
-        }
+            // if (sprite == null) return;
 
-        public void SetSprite(int index)
-        {
-            Logger.Log(this, "Set sprite", index.ToString());
-            Show(false);
-            this.index = index;
-            Show(true);
+            // if (sprite.gameObject.activeInHierarchy != flag)
+            // {
+            //     sprite.gameObject.SetActive(flag);
+            // }
         }
     }
 }

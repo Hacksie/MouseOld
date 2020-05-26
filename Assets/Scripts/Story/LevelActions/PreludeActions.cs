@@ -5,15 +5,27 @@ namespace HackedDesign.Story
 {
     public class PreludeActions : GlobalActions
     {
+        public override void Begin()
+        {
+            
+
+            var levelTemplate = GameManager.Instance.GetLevelGenTemplate("Olivia's Room");
+            GameManager.Instance.GameState.CurrentLevel = Level.LevelGenerator.Generate(levelTemplate, 0, 0, 0);
+            GameManager.Instance.GameState.CurrentLevel.Print();
+
+            GameManager.Instance.SceneInitialize();            
+            GameManager.Instance.SetTitlecard(); //FIXME: Make this async / loaderbar
+        }
+
+        public override void Next()
+        {
+            ActionManager.Instance.CurrentStoryActions = new PreludeBarActions();
+        }
+
         public override bool Invoke(string actionName)
         {
             switch (actionName)
             {
-                case "Bootstrap":
-                case "Prelude":
-                    GameManager.Instance.SetTitlecard();
-                    return true;
-                    break;
                 case "Bootstrap1":
                 case "Prelude1":
                     Debug.Log("PreludeActions: invoke Prelude1");
@@ -24,7 +36,7 @@ namespace HackedDesign.Story
                     InfoRepository.Instance.AddToKnownEntities("Saika");
                     InfoRepository.Instance.AddToKnownEntities("AisanaContractTower2");
                     InfoRepository.Instance.AddToKnownEntities("AisanaContractTower1");
-                    InfoRepository.Instance.AddToKnownEntities("SaikaCorpHQ");
+                    //InfoRepository.Instance.AddToKnownEntities("SaikaCorpHQ");
                     InfoRepository.Instance.AddToKnownEntities("OliviasApartment");
                     InfoRepository.Instance.AddToKnownEntities("AisanaContractBar");
                     ActionManager.Instance.AddActionMessage("Task added to current tasks - Bootstrap");

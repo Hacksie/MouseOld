@@ -3,7 +3,7 @@ using HackedDesign.Entities;
 
 namespace HackedDesign.Story
 {
-    public class GlobalActions : ILevelActions
+    public abstract class GlobalActions : ILevelActions
     {
         public virtual bool Invoke(string actionName)
         {
@@ -87,5 +87,9 @@ namespace HackedDesign.Story
             }
             return false;
         }
+
+        public abstract void Begin();
+        public abstract void Next();
+
     }
 }

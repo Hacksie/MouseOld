@@ -103,7 +103,7 @@ namespace HackedDesign
         private void Update() => CurrentState.Update();
         private void LateUpdate() => CurrentState.LateUpdate();
 
-        private Level.LevelGenTemplate GetLevelGenTemplate(string template) => levelGenTemplates.FirstOrDefault(t => t.name == template);
+        public Level.LevelGenTemplate GetLevelGenTemplate(string template) => levelGenTemplates.FirstOrDefault(t => t.name == template);
 
         public void LoadNewGame()
         {
@@ -111,12 +111,11 @@ namespace HackedDesign
             CurrentState = new LoadingState();
             GameState = new GameData(false);
             entityManager.Initialize();
-            actionManager.Initialize(this.narrationManager);
+            actionManager.Initialize();
+            actionManager.CurrentStoryActions = new Story.PreludeActions();
 
-            var levelTemplate = GetLevelGenTemplate(newGameLevel);
-            GameState.CurrentLevel = Level.LevelGenerator.Generate(levelTemplate, 0,0,0);
-            GameState.CurrentLevel.Print();
-            SceneInitialize();
+
+
         }
 
         public void LoadRandomGame(string templateName, int length, int height, int width, int difficulty, int enemies, int traps)
@@ -128,7 +127,7 @@ namespace HackedDesign
             GameState.CurrentLevel = Level.LevelGenerator.Generate(levelTemplate, length, height, width, difficulty, enemies, traps);
             GameState.CurrentLevel.Print();
             entityManager.Initialize();
-            actionManager.Initialize(this.narrationManager);
+            actionManager.Initialize();
             SceneInitialize();
         }
 
@@ -142,7 +141,7 @@ namespace HackedDesign
             GameState.CurrentLevel = Level.LevelGenerator.Generate(levelTemplate);
             GameState.CurrentLevel.Print();
             entityManager.Initialize();
-            actionManager.Initialize(this.narrationManager);
+            actionManager.Initialize();
             SceneInitialize();
         }
 
@@ -239,7 +238,7 @@ namespace HackedDesign
         /// <summary>
         /// Run this each time the scene is changed
         /// </summary>
-        private void SceneInitialize()
+        public void SceneInitialize()
         {
             Logger.Log(this, "Scene initialization");
             SetLight(GlobalLightTypes.Default);
@@ -249,8 +248,8 @@ namespace HackedDesign
             SceneTriggersInitialize();
             timerPanel.Initialize(GameState.CurrentLevel.timer);
             playerController.Show();
-            SetPlaying();
-            this.actionManager.Invoke(GameState.CurrentLevel.template.startingAction);
+            //SetPlaying();
+            //this.actionManager.Invoke(GameState.CurrentLevel.template.startingAction);
         }
 
         private void RenderLevel()

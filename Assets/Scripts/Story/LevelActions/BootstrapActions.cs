@@ -3,8 +3,7 @@ using HackedDesign.Entities;
 
 namespace HackedDesign.Story
 {
-    public class BootstrapActions : ILevelActions
-    {
+    public class BootstrapActions {
         private Dialogue.NarrationManager narrationManager;
 
         public BootstrapActions(Dialogue.NarrationManager narrationManager)

@@ -8,19 +8,35 @@ namespace HackedDesign.Story
 
     public class ActionManager : MonoBehaviour
     {
+        [Header("Level")]
+        [SerializeField] private Level.LevelGenTemplate[] levelGenTemplates = null;
+
         [SerializeField] private float timeOut = 10.0f;
 
-        public static ActionManager Instance { get; private set;}
+        public static ActionManager Instance { get; private set; }
 
         public List<ActionMessage> console = new List<ActionMessage>();
 
-        public ILevelActions CurrentStoryActions { get; private set;}
+        private ILevelActions currentStoryActions;
+
+        public ILevelActions CurrentStoryActions
+        {
+            get
+            {
+                return currentStoryActions;
+            }
+            set
+            {
+                currentStoryActions = value;
+                currentStoryActions.Begin();
+            }
+        }
 
         ActionManager() => Instance = this;
 
-        public void Initialize(Dialogue.NarrationManager narrationManager)
+        public void Initialize()
         {
-            CurrentStoryActions = new PreludeActions();
+            //CurrentStoryActions = new PreludeActions();
         }
 
         public void AddActionMessage(string message) => console.Add(new ActionMessage()
