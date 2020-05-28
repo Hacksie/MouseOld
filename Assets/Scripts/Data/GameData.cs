@@ -19,7 +19,7 @@ namespace HackedDesign
 
         public bool IsRandom { get { return isRandom; } private set { isRandom = value; } }
 
-        private List<Story.Task> taskList = new List<Story.Task>();
+        private Dictionary<string, Story.Task> taskList = new Dictionary<string, Story.Task>();
 
         public Story.Task selectedTask = null;
 
@@ -41,7 +41,7 @@ namespace HackedDesign
         public string currentLocation;
         public string currentFloor;
 
-        public List<Task> TaskList { get => taskList; private set => taskList = value; }
+        public Dictionary<string, Task> TaskList { get => taskList; private set => taskList = value; }
 
         public GameData() : this(false)
         {

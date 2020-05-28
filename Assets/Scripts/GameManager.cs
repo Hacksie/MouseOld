@@ -230,6 +230,8 @@ namespace HackedDesign
             minimapPanel.Hide();
             titlecardPanel.Hide();
             worldMapPanel.Hide();
+            taskPanel.Hide();
+            infoPanel.Hide();
         }
 
         /// <summary>

@@ -32,8 +32,10 @@ namespace HackedDesign.Story
                 case "PreludeBarJoe":
                     //InfoRepository.Instance.AddToKnownEntities("BouncerJoe");
                     return true;
-                case "PreludeBarKat":
-                    InfoRepository.Instance.AddToKnownEntities("SnowOwl");
+                case "MeetSnowOwl":
+                    Logger.Log("PreludeBarScene", "Meet Snow Owl");
+                    TaskRepository.Instance.CompleteTaskObjective("bootstrap", "Meet Snow Owl");
+                    //InfoRepository.Instance.AddToKnownEntities("SnowOwl");
                     return true;
             }
             return false;

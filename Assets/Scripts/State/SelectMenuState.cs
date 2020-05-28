@@ -52,11 +52,13 @@ namespace HackedDesign
 
         public void Start()
         {
+            // Hide panels
             GameManager.Instance.SetStartMenu();
         }
 
         public void Select()
         {
+            // Hide panels
             GameManager.Instance.SetPlaying();
         }
     }

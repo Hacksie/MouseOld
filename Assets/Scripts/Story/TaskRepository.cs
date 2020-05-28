@@ -7,34 +7,34 @@ namespace HackedDesign
 {
     namespace Story
     {
-        public class TaskDefinitionRepository : MonoBehaviour
+        public class TaskRepository : MonoBehaviour
         {
             public List<Task> taskList = new List<Task>();
 
-            public static TaskDefinitionRepository Instance { get; private set; }
+            public static TaskRepository Instance { get; private set; }
 
             public string tasksResource = @"Tasks/";
 
-            public TaskDefinitionRepository()
+            public TaskRepository()
             {
                 Instance = this;
             }
 
             public void Start()
             {
-                LoadTasks();
+                LoadTaskDefinitions();
             }
 
-            public void LoadTasks()
+            public void LoadTaskDefinitions()
             {
                 var jsonTextFiles = Resources.LoadAll<TextAsset>(tasksResource);
 
                 foreach (var file in jsonTextFiles)
                 {
-                    
+
                     var tasksHolder = JsonUtility.FromJson<TasksHolder>(file.text);
                     Logger.Log(name, tasksHolder.tasks.Count.ToString(), " Tasks added");
-                    taskList.AddRange(tasksHolder.tasks);                  
+                    taskList.AddRange(tasksHolder.tasks);
                 }
             }
 
@@ -43,7 +43,7 @@ namespace HackedDesign
                 return taskList.FirstOrDefault(t => t.id == id);
             }
 
-            public Task GetTaskInstance(string id)
+            public Task GetTaskInstanceFromDefinition(string id)
             {
                 var t = GetTaskDefinition(id);
 
@@ -82,10 +82,36 @@ namespace HackedDesign
             }
 
 
-            public List<Task> GetTasks()
+            public List<Task> GetTaskDefinitions()
             {
                 return taskList;
             }
+
+            public void AddTask(string id)
+            {
+                if (!GameManager.Instance.GameState.TaskList.ContainsKey(id))
+                {
+                    var task = GetTaskInstanceFromDefinition(id);
+                    GameManager.Instance.GameState.TaskList.Add(id, task);
+                }
+
+            }
+
+            public void SelectCurrentTask(string id)
+            {
+                GameManager.Instance.GameState.selectedTask = GameManager.Instance.GameState.TaskList.FirstOrDefault(t => t.Value.id == id).Value;
+            }
+
+            public void CompleteTaskObjective(string id, string objectiveid)
+            {
+                Logger.Log(this, "Complete task", id, objectiveid);
+                var task = GameManager.Instance.GameState.TaskList[id];
+
+                var objective = task.objectives.FirstOrDefault(o => o.objective == objectiveid);
+                objective.completed = true;
+            }
+
+
         }
     }
 }

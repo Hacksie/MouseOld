@@ -40,12 +40,8 @@ namespace HackedDesign.Story
                     InfoRepository.Instance.AddToKnownEntities("OliviasApartment");
                     InfoRepository.Instance.AddToKnownEntities("AisanaContractBar");
                     ActionManager.Instance.AddActionMessage("Task added to current tasks - Bootstrap");
-                    if (!GameManager.Instance.GameState.TaskList.Exists(t => t.id == "bootstrap"))
-                    {
-                        var task = TaskDefinitionRepository.Instance.GetTaskInstance("bootstrap");
-                        GameManager.Instance.GameState.TaskList.Add(task);
-                        GameManager.Instance.GameState.selectedTask = task;
-                    }
+                    TaskRepository.Instance.AddTask("bootstrap");
+                    TaskRepository.Instance.SelectCurrentTask("bootstrap");
                     GameManager.Instance.GameState.CurrentLevel.completed = true;
 
                     Dialogue.NarrationManager.Instance.ShowNarration("Prelude1");

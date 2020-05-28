@@ -12,7 +12,7 @@ namespace HackedDesign.UI
         [SerializeField] private UnityEngine.UI.Text taskTitleText;
         [SerializeField] private UnityEngine.UI.Text taskRewardText;
         [SerializeField] private UnityEngine.UI.Text taskDescription;
-        [SerializeField] private UnityEngine.UI.Image RequesterAvatar;
+        [SerializeField] private UnityEngine.UI.Image requesterAvatar;
         public GameObject taskButtonParent;
         public GameObject taskButtonPrefab;
 
@@ -57,7 +57,7 @@ namespace HackedDesign.UI
 
                 var go = Instantiate(taskButtonPrefab, Vector3.zero, Quaternion.identity, taskButtonParent.transform);
                 var goTaskItem = go.GetComponent<TaskListItem>();
-                goTaskItem.task = task;
+                goTaskItem.task = task.Value;
                 goTaskItem.Repaint();
             }
             RepaintTaskDescription(GameManager.Instance.GameState.selectedTask);
@@ -75,15 +75,25 @@ namespace HackedDesign.UI
             }
             else
             {
-                taskDescription.text = GameManager.Instance.GameState.selectedTask.description;
-                taskDescription.text += "\n";
-                if (GameManager.Instance.GameState.selectedTask.objectives != null)
+                var requester = Story.InfoRepository.Instance.GetCharacter(selectedTask.giver);
+                if(requester != null)
                 {
-                    Logger.Log(this, "Objectives count - " + GameManager.Instance.GameState.selectedTask.objectives.Count);
-                    foreach (TaskObjective objective in GameManager.Instance.GameState.selectedTask.objectives)
+                    requesterAvatar.sprite = requester.avatar;
+                    taskRequesterText.text = requester.handle;
+                    taskCorpText.text = requester.corp;
+                }
+
+                taskRewardText.text = selectedTask.reward;
+                taskTitleText.text = selectedTask.title;
+                taskDescription.text = selectedTask.description;
+                taskDescription.text += "\n";
+                if (selectedTask.objectives != null)
+                {
+                    Logger.Log(this, "Objectives count - " + selectedTask.objectives.Count);
+                    foreach (TaskObjective objective in selectedTask.objectives)
                     {
                         taskDescription.text += "\n[" + (objective.completed ? "*" : " ") + "] " + objective.objective + (objective.optional ? "(*)" : "");
-                        taskDescription.text += "\n     <color='#999999'>" + objective.description + "</color>";
+                        taskDescription.text += "\n<color='#999999'>" + objective.description + "</color>";
                     }
                 }
             }

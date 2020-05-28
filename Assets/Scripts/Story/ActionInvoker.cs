@@ -11,7 +11,7 @@ namespace HackedDesign.Story
     {
         public string action = "";
 
-        public void Start()
+        private void Start()
         {
             if (string.IsNullOrEmpty(action))
             {

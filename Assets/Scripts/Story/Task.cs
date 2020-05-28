@@ -11,6 +11,8 @@ namespace HackedDesign {
 			
 
 			public string giver;
+			public string reward; 
+			public string rewardType;
 
 			public bool started;
 			public bool completed;

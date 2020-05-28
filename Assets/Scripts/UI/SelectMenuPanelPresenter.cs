@@ -69,6 +69,10 @@ namespace HackedDesign.UI
 
         public void ResumeClickEvent()
         {
+            infoPanel.Hide();
+            taskPanel.Hide();
+            stashPanel.Hide();
+            psychPanel.Hide();
             GameManager.Instance.SetPlaying();
         }
 
@@ -82,6 +86,7 @@ namespace HackedDesign.UI
         public void TaskClickEvent()
         {
             Debug.Log("Select Menu Task Clicked");
+            taskPanel.Show();
             selectMenuManager.MenuState = SelectMenuSubState.Tasks;
             Show(true);
         }
