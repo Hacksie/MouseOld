@@ -214,7 +214,7 @@ namespace HackedDesign
 
         public void Animate()
         {
-            if (animator == null)
+            if (animator == null || !animator.enabled) 
             {
                 return;
             }

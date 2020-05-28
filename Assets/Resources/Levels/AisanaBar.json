@@ -4,72 +4,132 @@
         "name": "mouse",
         "levelLocation": {
             "x": 0,
-            "y": 1
+            "y": 0
         },
         "worldOffset": {
             "x": 0,
-            "y": 1
+            "y": -2
         }
     },
     "npcSpawnLocationList": [
         {
             "type": "npc",
-            "name": "BouncerJoe",
+            "name": "Big Joe",
             "levelLocation": {
                 "x": 0,
                 "y": 0
             },
             "worldOffset": {
-                "x": 1,
-                "y": 1
+                "x": 0.75,
+                "y": -0.5
             }
         },
         {
             "type": "npc",
-            "name": "Arisana Bartender 1",
+            "name": "Aisana Barkeep 1",
             "levelLocation": {
                 "x": 0,
-                "y": 1
+                "y": 0
             },
             "worldOffset": {
-                "x": 0.75,
-                "y": 1.75
+                "x": 2.0,
+                "y": 1.95
             }
         },
         {
             "type": "npc",
-            "name": "Arisana Bartender 2",
+            "name": "Aisana Barkeep 2",
             "levelLocation": {
                 "x": 1,
-                "y": 1
+                "y": 0
             },
             "worldOffset": {
                 "x": -1,
-                "y": 1.75
+                "y": 1.95
             }
         },
         {
             "type": "npc",
-            "name": "Arisana Scientist 1",
-            "levelLocation": {
-                "x": 0,
-                "y": 1
-            },
-            "worldOffset": {
-                "x": -0.25,
-                "y": 2.5
-            }
-        },
-        {
-            "type": "npc",
-            "name": "SnowOwl",
+            "name": "Aisana Bar Patron 1",
             "levelLocation": {
                 "x": 1,
-                "y": 1
+                "y": 0
             },
             "worldOffset": {
                 "x": 1.5,
-                "y": 2
+                "y": -1.0
+            }
+        },
+        {
+            "type": "npc",
+            "name": "Aisana Bar Patron 2",
+            "levelLocation": {
+                "x": 0,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": 2.0,
+                "y": -0.75
+            }
+        },        
+        {
+            "type": "npc",
+            "name": "Aisana Bar Patron 3",
+            "levelLocation": {
+                "x": 0,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": 0.0,
+                "y": 1.5
+            }
+        },   
+        {
+            "type": "npc",
+            "name": "Aisana Bar Patron 4",
+            "levelLocation": {
+                "x": 0,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": 3,
+                "y": -1.0
+            }
+        },   
+        {
+            "type": "npc",
+            "name": "Aisana Bar Patron 5",
+            "levelLocation": {
+                "x": 1,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": -0.5,
+                "y": 1.0
+            }
+        },                              
+        {
+            "type": "npc",
+            "name": "Aisana Bar Patron 6",
+            "levelLocation": {
+                "x": 1,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": -0.90,
+                "y": 1.05
+            }
+        },        
+        {
+            "type": "npc",
+            "name": "Snow Owl",
+            "levelLocation": {
+                "x": 1,
+                "y": 0
+            },
+            "worldOffset": {
+                "x": 1.75,
+                "y": 1.25
             }
         }
     ],
@@ -78,47 +138,43 @@
             "rooms": [
                 {
                     "left": "w",
-                    "top": "d",
-                    "bottom": "o",
+                    "top": "w",
+                    "bottom": "e",
                     "right": "o",
                     "isEntry": true,
                     "isEnd": true,
-                    "topLeft": [
+                    "topRight": [
                         {
                             "type": "fixed",
-                            "name": "bar_1_tl_aa"
+                            "name": "barleft_1_tr_aa"
                         }
-                    ]
+                    ],
+                    "bottomLeft": [
+                        {
+                            "type": "fixed",
+                            "name": "barentry_1_bl_aa"
+                        }
+                    ],
+                    "bottomRight": [
+                        {
+                            "type": "fixed",
+                            "name": "barentry_1_br_aa"
+                        }
+                    ]                       
                 },
                 {
                     "left": "o",
-                    "top": "d",
-                    "bottom": "o",
+                    "top": "w",
+                    "bottom": "w",
                     "right": "w",
-                    "topLeft": [
+                    "topRight": [
                         {
                             "type": "fixed",
-                            "name": "bar_2_tl_aa"
+                            "name": "barright_1_tl_aa"
                         }
-                    ]                          
+                    ]                                    
                 }
           
-            ]
-        },
-        {
-            "rooms": [
-                {
-                    "left": "w",
-                    "top": "o",
-                    "bottom": "e",
-                    "right": "o"
-                },
-                {
-                    "left": "o",
-                    "top": "o",
-                    "bottom": "w",
-                    "right": "w"
-                }
             ]
         }
     ]

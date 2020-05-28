@@ -94,7 +94,7 @@ namespace HackedDesign.UI
 
                     if (InfoRepository.Instance.SelectedInfoCategory == categories[i].id)
                     {
-                        EventSystem.current.SetSelectedGameObject(cbt.gameObject);
+                        //EventSystem.current.SetSelectedGameObject(cbt.gameObject);
                     }
                 }
                 else
@@ -155,7 +155,7 @@ namespace HackedDesign.UI
 
                     if (InfoRepository.Instance.SelectedInfoEntity == entities[i].id)
                     {
-                        EventSystem.current.SetSelectedGameObject(cbt.gameObject);
+                        //EventSystem.current.SetSelectedGameObject(cbt.gameObject);
                     }
                 }
                 else

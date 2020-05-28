@@ -17,7 +17,7 @@ namespace HackedDesign {
         public void NextLevel()
         {
             // This should just set a new story state, and that stage should load the level accordingly;
-            Story.ActionManager.Instance.CurrentStoryActions.Next();
+            Story.ActionManager.Instance.CurrentScene.Next();
         }
     }
 }

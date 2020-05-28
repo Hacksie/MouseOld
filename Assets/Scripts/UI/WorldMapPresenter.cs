@@ -8,6 +8,7 @@ namespace HackedDesign.UI
 {
     public class WorldMapPresenter : AbstractPresenter
     {
+        [SerializeField] private Text locationTitle = null;
         [SerializeField] private Text locationDescription = null;
         [SerializeField] List<Button> locationButtons = null;
         [SerializeField] private Transform floorListParent = null;
@@ -69,10 +70,12 @@ namespace HackedDesign.UI
             {
                 var entity = Story.InfoRepository.Instance.GetLocation(locationId);
                 locationDescription.text = entity?.description;
+                locationTitle.text =entity?.name;
             }
             else
             {
-                locationDescription.text = "Unknown location";
+                locationTitle.text = "Unknown location";
+                locationDescription.text = "";
             }
 
             RepaintFloors();

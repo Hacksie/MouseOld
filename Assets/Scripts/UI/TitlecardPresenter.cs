@@ -24,22 +24,12 @@ namespace HackedDesign.UI
         {
             titleText.text = titleStrings[GameManager.Instance.GameState.Story.act];
             EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
-
-            // if (GameManager.Instance.GameState.PlayState == PlayStateEnum.Titlecard)
-            // {
-            //     Show();
-            //     titleText.text = titleStrings[GameManager.Instance.GameState.Story.act];
-            //     EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
-            // }
-            // else
-            // {
-            //     Hide();
-            // }
         }
 
         public void ClickEvent()
         {
-            actionManager.Invoke(nextActions[GameManager.Instance.GameState.Story.act]);
+            actionManager.CurrentScene.Begin();
+            //actionManager.Invoke(nextActions[GameManager.Instance.GameState.Story.act]);
         }
     }
 }

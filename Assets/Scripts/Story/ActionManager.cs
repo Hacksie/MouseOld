@@ -17,18 +17,18 @@ namespace HackedDesign.Story
 
         public List<ActionMessage> console = new List<ActionMessage>();
 
-        private ILevelActions currentStoryActions;
+        private IScene currentScene;
 
-        public ILevelActions CurrentStoryActions
+        public IScene CurrentScene
         {
             get
             {
-                return currentStoryActions;
+                return currentScene;
             }
             set
             {
-                currentStoryActions = value;
-                currentStoryActions.Begin();
+                currentScene = value;
+                //currentStoryActions.Begin();
             }
         }
 
@@ -36,7 +36,7 @@ namespace HackedDesign.Story
 
         public void Initialize()
         {
-            //CurrentStoryActions = new PreludeActions();
+            
         }
 
         public void AddActionMessage(string message) => console.Add(new ActionMessage()
@@ -60,13 +60,13 @@ namespace HackedDesign.Story
                 return;
             }
 
-            GameManager.Instance.SaveGame();
+            
 
-            var handled = CurrentStoryActions.Invoke(actionName);
+            var handled = CurrentScene.Invoke(actionName);
 
             if (!handled)
             {
-                Logger.LogWarning(this, "Cannot invoke action: ", actionName, " in current state");
+                Logger.LogWarning(this, "Cannot invoke action: ", actionName, " in current scene");
             }
         }
     }

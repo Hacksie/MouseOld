@@ -25,7 +25,7 @@ namespace HackedDesign
 
         public void LateUpdate()
         {
-            
+            this.selectMenuPanelPresenter.Repaint();
         }
 
         public void End() => this.selectMenuPanelPresenter.Hide();

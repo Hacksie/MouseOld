@@ -108,27 +108,23 @@ namespace HackedDesign
         public void LoadNewGame()
         {
             Logger.Log(this, "Loading new game");
-            CurrentState = new LoadingState();
+            //SetLoading();
             GameState = new GameData(false);
             entityManager.Initialize();
             actionManager.Initialize();
-            actionManager.CurrentStoryActions = new Story.PreludeActions();
-
-
-
+            actionManager.CurrentScene = new Story.PreludeScene(newGameLevel, 0, 0, 0, 0, 0, 0);
         }
 
         public void LoadRandomGame(string templateName, int length, int height, int width, int difficulty, int enemies, int traps)
         {
             Logger.Log(this, "Loading random game");
+            //SetLoading();
             GameState = new GameData(true);
-
-            var levelTemplate = GetLevelGenTemplate(templateName);
-            GameState.CurrentLevel = Level.LevelGenerator.Generate(levelTemplate, length, height, width, difficulty, enemies, traps);
-            GameState.CurrentLevel.Print();
             entityManager.Initialize();
             actionManager.Initialize();
-            SceneInitialize();
+
+            actionManager.CurrentScene = new Story.RandomScene(templateName, length, height, width, difficulty, enemies, traps);
+            //SceneInitialize();
         }
 
         public void LoadNewLevel(string templateName)
@@ -159,7 +155,8 @@ namespace HackedDesign
         public void GameOver() => CurrentState = new GameOverState();
         public void SetStartMenu() => CurrentState = new StartMenuState(this.startMenuPanel);
         public void SetSelectMenu() => CurrentState = new SelectMenuState(this.selectMenuPanel);
-        public void SetTitlecard() => CurrentState = new TitlecardState(this.titlecardPanel);
+        public void SetLoading() => CurrentState = new LoadingState(this.titlecardPanel);
+        //public void SetTitlecard() => CurrentState = new TitlecardState(this.titlecardPanel);
         public void SetPlaying() => CurrentState = new PlayingState(this.playerController, this.actionManager, this.actionConsolePanel, this.actionPanel, this.timerPanel, this.minimapPanel);
         public void SetNarration() => CurrentState = new NarrationState(this.narrationPanel);
         public void SetMissionComplete() => CurrentState = new MissionCompleteState(this.missionCompletePanel);
@@ -248,6 +245,7 @@ namespace HackedDesign
             SceneTriggersInitialize();
             timerPanel.Initialize(GameState.CurrentLevel.timer);
             playerController.Show();
+            GameManager.Instance.SaveGame();
             //SetPlaying();
             //this.actionManager.Invoke(GameState.CurrentLevel.template.startingAction);
         }

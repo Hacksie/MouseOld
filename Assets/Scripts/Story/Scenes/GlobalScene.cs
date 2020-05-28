@@ -1,0 +1,121 @@
+using UnityEngine;
+using HackedDesign.Entities;
+
+namespace HackedDesign.Story
+{
+    public abstract class GlobalScene : IScene
+    {
+        protected string templateName;
+        protected int length;
+        protected int height;
+        protected int width;
+        protected int difficulty;
+        protected int enemies;
+        protected int traps;
+
+        protected GlobalScene(string templateName, int length, int height, int width, int difficulty, int enemies, int traps)
+        {
+            this.templateName = templateName;
+            this.length = length;
+            this.height = height;
+            this.width = width;
+            this.difficulty = difficulty;
+            this.enemies = enemies;
+            this.traps = traps;
+        }
+
+        protected void LoadLevel()
+        {
+            GameManager.Instance.SetLoading();
+            var levelTemplate = GameManager.Instance.GetLevelGenTemplate(this.templateName);
+            GameManager.Instance.GameState.CurrentLevel = Level.LevelGenerator.Generate(levelTemplate, this.length, this.height, this.width, this.difficulty, this.enemies, this.traps);
+        }
+
+        public virtual bool Invoke(string actionName)
+        {
+            switch (actionName)
+            {
+                case "TriggerEntry":
+                    Logger.Log("GlobalActions", "GlobalActions: invoke TriggerEntry");
+                    // FIXME: Check if any other condition exists first!
+                    if (!GameManager.Instance.GameState.CurrentLevel.entryTriggered)
+                    {
+                        GameManager.Instance.GameState.CurrentLevel.entryTriggered = true;
+
+                        ActionManager.Instance.AddActionMessage("Entry triggered");
+                        var timer = GameManager.Instance.GameState.CurrentLevel.template.levelLength * 10;
+
+                        ActionManager.Instance.AddActionMessage($"{timer} seconds until security triggers!");
+                        GameManager.Instance.GameState.CurrentLevel.startTime = Time.time;
+                        GameManager.Instance.GameState.CurrentLevel.timer.Start(timer);
+                    }
+                    //CoreGame.Instance.state.currentLight = GlobalLightTypes.Warn;
+                    return true;
+                case "BatteryFill":
+                    Logger.Log("GlobalActions", "GlobalActions: invoke BatteryFill");
+                    ActionManager.Instance.AddActionMessage("battery filled");
+                    GameManager.Instance.GameState.Player.battery = GameManager.Instance.GameState.Player.maxBattery;
+                    return true;
+                case "TimerStart":
+                    Logger.Log("GlobalActions", "GlobalActions: invoke TimerStart");
+                    return true;
+                case "TimerAlert":
+                    Logger.Log("GlobalActions", "invoke TimerAlert");
+                    return true;
+                case "TimerExpired":
+                    Logger.Log("GlobalActions", "invoke TimerEnd");
+                    GameManager.Instance.GameState.currentLight = GlobalLightTypes.Alert;
+                    return true;
+                case "EndComputer":
+                    Logger.Log("GlobalActions", "invoke EndComputer");
+                    ActionManager.Instance.AddActionMessage("alert shutdown");
+                    GameManager.Instance.GameState.CurrentLevel.timer.Start(GameManager.Instance.GameState.Player.baselevelTimer);
+                    GameManager.Instance.GameState.currentLight = GlobalLightTypes.Default;
+                    GameManager.Instance.GameState.CurrentLevel.completed = true;
+                    return true;
+                case "Captured":
+                    return true;
+                case "LevelExit":
+                    Logger.Log("GlobalActions", "invoke LevelExit");
+                    if (GameManager.Instance.GameState.CurrentLevel.completed)
+                    {
+                        if (GameManager.Instance.GameState.CurrentLevel.template.hostile)
+                        {
+                            ActionManager.Instance.AddActionMessage("mission completed");
+                            GameManager.Instance.GameState.CurrentLevel.timer.Stop();
+                            Logger.Log("GlobalActions", "Level Over");
+                            GameManager.Instance.SetMissionComplete();
+                        }
+                        else
+                        {
+                            ActionManager.Instance.AddActionMessage("level completed");
+                            GameManager.Instance.GameState.CurrentLevel.timer.Stop();
+                            Logger.Log("GlobalActions", "Level Over");
+                            GameManager.Instance.SetLevelComplete();
+                        }
+                    }
+                    else
+                    {
+                        //CoreGame.Instance.denied.Play();
+                    }
+                    return true;
+                case "Act1":
+                    ActionManager.Instance.Invoke("Prelude1");
+                    return true;
+                case "Act2":
+                    return true;
+                case "Act3":
+                    return true;
+                case "Act4":
+                    return true;
+                case "Act5":
+                    return true;
+            }
+            return false;
+        }
+
+        public abstract void Begin();
+        public abstract void Next();
+
+    }
+}

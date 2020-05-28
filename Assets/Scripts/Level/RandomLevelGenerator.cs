@@ -58,6 +58,8 @@ namespace HackedDesign.Level
 
             GenerateAuxRooms(level);
 
+            level.Print();
+
             return level;
         }
 

@@ -4,8 +4,16 @@ namespace HackedDesign
 {
     public class LoadingState : IState
     {
+        private UI.TitlecardPresenter titlecardPresenter;
+
+        public LoadingState(UI.TitlecardPresenter titlecardPresenter) => this.titlecardPresenter = titlecardPresenter;
+
         public void Begin()
         {
+            Time.timeScale = 0;
+            Cursor.visible = true;
+            this.titlecardPresenter.Show();
+            this.titlecardPresenter.Repaint();
         }
 
         public void Update()
@@ -15,12 +23,10 @@ namespace HackedDesign
 
         public void LateUpdate()
         {
+         
         }
 
-        public void End()
-        {
-
-        }
+        public void End() => this.titlecardPresenter.Hide();
 
         public void Interact()
         {

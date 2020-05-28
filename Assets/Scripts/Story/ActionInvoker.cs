@@ -21,7 +21,7 @@ namespace HackedDesign.Story
 
         public void Invoke()
         {
-            Logger.Log(name,"Invoke");
+            Logger.Log(name, "Invoke ", action);
             ActionManager.Instance.Invoke(action);
         }
     }

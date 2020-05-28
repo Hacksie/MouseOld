@@ -46,6 +46,8 @@ namespace HackedDesign.Level
 
             JsonUtility.FromJsonOverwrite(jsonTextFile.text, level);
 
+            level.Print();
+
             return level;
         }
     }

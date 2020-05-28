@@ -12,14 +12,19 @@ namespace HackedDesign.Entities
         [SerializeField]
         UnityEngine.UI.Text text = null;
 
-        [SerializeField]
-        string character = "";
+        [SerializeField] Character character;
+
+        private void Awake()
+        {
+            SetHandleText();
+        }
 
         private void Update()
         {
+            
             /*
             if(GameManager.Instance.IsInGame())
-                SetHandleText();
+                
                 */
         }
 
@@ -30,7 +35,7 @@ namespace HackedDesign.Entities
                 return;
             }
             
-            var character = InfoRepository.Instance.GetCharacter(this.character);
+            //var character = InfoRepository.Instance.GetCharacter(this.character);
             text.text = character.handle;
         }
     }
