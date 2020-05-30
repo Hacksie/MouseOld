@@ -19,7 +19,7 @@ namespace HackedDesign.Story
 
         public override void Next()
         {
-            ActionManager.Instance.CurrentScene = new PreludeBarScene("Aisana Bar", length, height, width, difficulty, enemies, traps);
+            SceneManager.Instance.CurrentScene = new PreludeBarScene("Aisana Bar", length, height, width, difficulty, enemies, traps);
         }
 
         public override bool Invoke(string actionName)
@@ -34,15 +34,15 @@ namespace HackedDesign.Story
                     InfoRepository.Instance.AddToKnownEntities("ManagerLyon");
                     InfoRepository.Instance.AddToKnownEntities("Cat");
                     InfoRepository.Instance.AddToKnownEntities("Saika");
-                    InfoRepository.Instance.AddToKnownEntities("AisanaContractTower2");
-                    InfoRepository.Instance.AddToKnownEntities("AisanaContractTower1");
+                    InfoRepository.Instance.AddToKnownEntities("AisanaContractorTower2");
+                    InfoRepository.Instance.AddToKnownEntities("AisanaContractorTower1");
                     //InfoRepository.Instance.AddToKnownEntities("SaikaCorpHQ");
-                    InfoRepository.Instance.AddToKnownEntities("OliviasApartment");
-                    InfoRepository.Instance.AddToKnownEntities("AisanaContractBar");
-                    ActionManager.Instance.AddActionMessage("Task added to current tasks - Bootstrap");
+                    //InfoRepository.Instance.AddToKnownEntities("OliviasApartment");
+                    //InfoRepository.Instance.AddToKnownEntities("AisanaContractBar");
+                    SceneManager.Instance.AddActionMessage("Task added to current tasks - Bootstrap");
                     TaskRepository.Instance.AddTask("bootstrap");
                     TaskRepository.Instance.SelectCurrentTask("bootstrap");
-                    GameManager.Instance.GameState.CurrentLevel.completed = true;
+                    GameManager.Instance.Data.CurrentLevel.completed = true;
 
                     Dialogue.NarrationManager.Instance.ShowNarration("Prelude1");
                     return true;
@@ -62,18 +62,6 @@ namespace HackedDesign.Story
                     Debug.Log("PreludeActions: invoke Prelude5");
                     Dialogue.NarrationManager.Instance.ShowNarration("Prelude5");
                     return true;
-                case "Prelude6":
-                    Debug.Log("PreludeActions: invoke Prelude6");
-                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude6");
-                    return true;
-                case "Prelude7":
-                    Debug.Log("PreludeActions: invoke Prelude7");
-                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude7");
-                    return true;
-                case "Prelude8":
-                    Debug.Log("PreludeActions: invoke Prelude8");
-                    Dialogue.NarrationManager.Instance.ShowNarration("Prelude8");
-                    return true;
                 case "PreludeLaptop":
                     PreludeLaptop();
                     return true;
@@ -86,20 +74,8 @@ namespace HackedDesign.Story
                 case "PreludeCat":
                 case "PreludeCat1":
                     Debug.Log("PreludeActions: prelude Cat");
-                    GameManager.Instance.GameState.Story.prelude_cat_talk = true;
+                    GameManager.Instance.Data.Story.storyEvents.Add("PreludeCat");
                     Dialogue.NarrationManager.Instance.ShowNarration("PreludeCat1");
-                    return true;
-                case "PreludeCat2":
-                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeCat2");
-                    return true;
-                case "PreludeCat3":
-                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeCat3");
-                    return true;
-                case "PreludeCat4":
-                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeCat4");
-                    return true;
-                case "PreludeCat5":
-                    Dialogue.NarrationManager.Instance.ShowNarration("PreludeCat5");
                     return true;
                 case "PreludeFridge":
                     Dialogue.NarrationManager.Instance.ShowNarration("PreludeFridge");
@@ -115,47 +91,29 @@ namespace HackedDesign.Story
             return base.Invoke(actionName);
         }
 
-        public void PreludeCat3()
-        {
-
-        }
-        public void PreludeCat4()
-        {
-
-        }
-
-
-        public void PreludeLaptop()
+        private void PreludeLaptop()
         {
             Debug.Log("PreludeActions: prelude laptop");
-            GameManager.Instance.GameState.Story.prelude_laptop = true;
-            SelectMenuManager.instance.MenuState = SelectMenuSubState.Tasks;
-            GameManager.Instance.SetSelectMenu();
+            GameManager.Instance.Data.Story.storyEvents.Add("PreludeLaptop");
+            GameManager.Instance.SetSelectMenu(SelectMenuSubState.Tasks);
         }
 
 
-        public void PreludeExit()
+        private void PreludeExit()
         {
-            if (GameManager.Instance.GameState.CurrentLevel.completed)
+            if (Complete())
             {
-                GameManager.Instance.SetWorldMap();
-                //CoreGame.Instance.LoadNewLevel("Bootstrap");
+                GameManager.Instance.SetWorldMap(); 
             }
             else
             {
-                Debug.Log("PreludeActions: can't exit, haven't received mission");
+                Logger.Log("PreludeScene", "PreludeActions: can't exit, haven't received mission");
             }
-            /*
-            if (CoreGame.Instance.state.taskList.Exists(t => t.title == "Milk Run"))
-            {
-                Debug.Log("PreludeActions: can exit");
-                
+        }
 
-            }
-            else
-            {
-                Debug.Log("PreludeActions: can't exit, haven't received mission");
-            }*/
+        public override bool Complete()
+        {
+            return GameManager.Instance.Data.CurrentLevel.completed && TaskRepository.Instance.HasTask("bootstrap") && GameManager.Instance.Data.Story.storyEvents.Contains("PreludeLaptop");
         }
     }
 }

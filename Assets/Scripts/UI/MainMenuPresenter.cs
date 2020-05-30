@@ -11,6 +11,7 @@ namespace HackedDesign.UI
     public class MainMenuPresenter : AbstractPresenter
     {
 
+        public GameObject playPanel;
         public GameObject optionsPanel;
         public GameObject creditsPanel;
         public GameObject randomPanel;
@@ -38,6 +39,7 @@ namespace HackedDesign.UI
             ShowOptionsPanel(false);
             ShowCreditsPanel(false);
             ShowRandomPanel(false);
+            ShowPlayPanel(false);
             PopulateResolutions();
             PopulateAudioSliders();
             PopulateCorpTemplates();
@@ -55,6 +57,14 @@ namespace HackedDesign.UI
             {
                 Hide();
             }*/
+        }
+
+        public void ShowPlayPanel(bool show)
+        {
+            if (playPanel != null)
+            {
+                playPanel.SetActive(show);
+            }
         }
 
         public void ShowOptionsPanel(bool show)
@@ -90,13 +100,24 @@ namespace HackedDesign.UI
 
         }
 
-        public void NewGameEvent()
+        public void StartNewGameEvent()
         {
-            Logger.Log(this, "New Game Event");
+            Logger.Log(this, "Start New Game Event");
             ShowCreditsPanel(false);
             ShowOptionsPanel(false);
             ShowRandomPanel(false);
+            ShowPlayPanel(false);
             GameManager.Instance.LoadNewGame();
+        }
+
+        public void PlayGameEvent()
+        {
+            Logger.Log(this, "Play Game Event");
+            ShowCreditsPanel(false);
+            ShowOptionsPanel(false);
+            ShowRandomPanel(false);
+            ShowPlayPanel(true);
+            //GameManager.Instance.LoadNewGame();
             //StartCoroutine (LoadNewGameScenes ( "IntroRoom", "IntroRoom"));
         }
 
@@ -109,6 +130,7 @@ namespace HackedDesign.UI
             ShowCreditsPanel(false);
             ShowOptionsPanel(false);
             ShowRandomPanel(true);
+            ShowPlayPanel(false);
         }
 
         public void StartRandomGameEvent()
@@ -118,6 +140,7 @@ namespace HackedDesign.UI
             ShowCreditsPanel(false);
             ShowOptionsPanel(false);
             ShowRandomPanel(false);
+            ShowPlayPanel(false);
             Logger.Log(this, templateDropdown.options[templateDropdown.value].text);
             GameManager.Instance.LoadRandomGame(templateDropdown.options[templateDropdown.value].text, (int)lengthSlider.value, (int)heightSlider.value, (int)widthSlider.value, difficultyDropdown.value, (int)enemiesSlider.value, (int)trapsSlider.value);
         }
@@ -128,6 +151,7 @@ namespace HackedDesign.UI
             ShowCreditsPanel(false);
             ShowOptionsPanel(true);
             ShowRandomPanel(false);
+            ShowPlayPanel(false);
         }
 
         public void CreditsEvent()
@@ -136,6 +160,7 @@ namespace HackedDesign.UI
             ShowCreditsPanel(true);
             ShowOptionsPanel(false);
             ShowRandomPanel(false);
+            ShowPlayPanel(false);
         }
 
         public void QuitEvent()

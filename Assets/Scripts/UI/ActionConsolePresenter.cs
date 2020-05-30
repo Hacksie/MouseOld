@@ -12,10 +12,10 @@ namespace HackedDesign.UI
         public RectTransform panel;
         public Text[] line;
 
-        Story.ActionManager actionManager;
+        Story.SceneManager actionManager;
 
 
-        public void Initialize(Story.ActionManager actionManager)
+        public void Initialize(Story.SceneManager actionManager)
         {
             this.actionManager = actionManager;
         }

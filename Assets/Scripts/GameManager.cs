@@ -19,7 +19,6 @@ namespace HackedDesign
         [SerializeField] private GameObject levelParent = null;
         [SerializeField] private GameObject enemiesParent = null;
         [SerializeField] private PolyNav.PolyNav2D polyNav2D = null;
-        [SerializeField] private string newGameLevel = "Olivia's Room";
 
         [Header("Lights")]
         [SerializeField] private Light2D globalLight = null;
@@ -30,7 +29,7 @@ namespace HackedDesign
 
         [Header("Managers")]
         [SerializeField] private Entities.EntityManager entityManager = null;
-        [SerializeField] private Story.ActionManager actionManager = null;
+        [SerializeField] private Story.SceneManager sceneManager = null;
         [SerializeField] private StartMenuManager startMenuManager = null;
         [SerializeField] private SelectMenuManager selectMenuManager = null;
         [SerializeField] private Dialogue.NarrationManager narrationManager = null;
@@ -58,13 +57,13 @@ namespace HackedDesign
         [SerializeField] private UI.WorldMapPresenter worldMapPanel = null;
 
         [Header("State")]
-        [SerializeField] private GameData gameState;
+        [SerializeField] private GameData gameData;
 
 
         #region Properties
         private IState currentState;
 
-        public GameData GameState { get { return gameState; } private set { gameState = value; } }
+        public GameData Data { get { return gameData; } private set { gameData = value; } }
         public PolyNav.PolyNav2D PolyNav { get { return polyNav2D; } private set { polyNav2D = value; } }
 
         public static GameManager Instance { get; private set; }
@@ -103,61 +102,62 @@ namespace HackedDesign
         private void Update() => CurrentState.Update();
         private void LateUpdate() => CurrentState.LateUpdate();
 
-        public Level.LevelGenTemplate GetLevelGenTemplate(string template) => levelGenTemplates.FirstOrDefault(t => t.name == template);
+        
 
         public void LoadNewGame()
         {
             Logger.Log(this, "Loading new game");
             //SetLoading();
-            GameState = new GameData(false);
+            Data = new GameData(false);
             entityManager.Initialize();
-            actionManager.Initialize();
-            actionManager.CurrentScene = new Story.PreludeScene(newGameLevel, 0, 0, 0, 0, 0, 0);
+            sceneManager.Initialize();
+            sceneManager.CurrentScene = new Story.PreludeScene(Story.SceneManager.Instance.NewGameLevelDefault, 0, 0, 0, 0, 0, 0);
         }
 
         public void LoadRandomGame(string templateName, int length, int height, int width, int difficulty, int enemies, int traps)
         {
             Logger.Log(this, "Loading random game");
             //SetLoading();
-            GameState = new GameData(true);
+            Data = new GameData(true);
             entityManager.Initialize();
-            actionManager.Initialize();
+            sceneManager.Initialize();
 
-            actionManager.CurrentScene = new Story.RandomScene(templateName, length, height, width, difficulty, enemies, traps);
+            sceneManager.CurrentScene = new Story.RandomScene(templateName, length, height, width, difficulty, enemies, traps);
             //SceneInitialize();
         }
 
-        public void LoadNewLevel(string templateName)
-        {
-            Logger.Log(this, "Loading new level");
-            GameState = new GameData(false);
-            GameState.entityList.Clear();
+        // public void LoadNewLevel(string templateName)
+        // {
+        //     Logger.Log(this, "Loading new level");
+        //     Data = new GameData(false);
+        //     Data.entityList.Clear();
 
-            var levelTemplate = GetLevelGenTemplate(templateName);
-            GameState.CurrentLevel = Level.LevelGenerator.Generate(levelTemplate);
-            GameState.CurrentLevel.Print();
-            entityManager.Initialize();
-            actionManager.Initialize();
-            SceneInitialize();
-        }
+        //     var levelTemplate = GetLevelGenTemplate(templateName);
+        //     Data.CurrentLevel = Level.LevelGenerator.Generate(levelTemplate);
+        //     Data.CurrentLevel.Print();
+        //     entityManager.Initialize();
+        //     actionManager.Initialize();
+        //     SceneInitialize();
+        // }
 
         public void EndGame()
         {
             Logger.Log(this, "End Game");
             CurrentState = new MainMenuState(mainMenuPresenter);
             levelRenderer.DestroyLevel();
-            GameState.entityList.Clear();
+            Data.entityList.Clear();
             playerController.Hide();
         }
 
-        public void IncreaseAlert() => GameState.CurrentLevel.alertLevel++;
+        public void IncreaseAlert() => Data.CurrentLevel.alertLevel++;
 
         public void GameOver() => CurrentState = new GameOverState();
         public void SetStartMenu() => CurrentState = new StartMenuState(this.startMenuPanel);
-        public void SetSelectMenu() => CurrentState = new SelectMenuState(this.selectMenuPanel);
+        public void SetSelectMenu() => CurrentState = new SelectMenuState(this.selectMenuPanel, this.selectMenuManager);
+        public void SetSelectMenu(SelectMenuSubState subState) => CurrentState = new SelectMenuState(this.selectMenuPanel, this.selectMenuManager, subState);
         public void SetLoading() => CurrentState = new LoadingState(this.titlecardPanel);
         //public void SetTitlecard() => CurrentState = new TitlecardState(this.titlecardPanel);
-        public void SetPlaying() => CurrentState = new PlayingState(this.playerController, this.actionManager, this.actionConsolePanel, this.actionPanel, this.timerPanel, this.minimapPanel);
+        public void SetPlaying() => CurrentState = new PlayingState(this.playerController, this.sceneManager, this.actionConsolePanel, this.actionPanel, this.timerPanel, this.minimapPanel);
         public void SetNarration() => CurrentState = new NarrationState(this.narrationPanel);
         public void SetMissionComplete() => CurrentState = new MissionCompleteState(this.missionCompletePanel);
         public void SetLevelComplete() => CurrentState = new LevelCompleteState(this.levelCompletePresenter);
@@ -166,19 +166,19 @@ namespace HackedDesign
         public void SaveGame()
         {
             Logger.Log(this, "Saving state");
-            string json = JsonUtility.ToJson(GameState);
-            string path = Path.Combine(Application.persistentDataPath, $"SaveFile{GameState.GameSlot}.json");
+            string json = JsonUtility.ToJson(Data);
+            string path = Path.Combine(Application.persistentDataPath, $"SaveFile{Data.GameSlot}.json");
             File.WriteAllText(path, json);
             Logger.Log(this, "Saved ", path);
         }
 
-        public void SetLight(GlobalLightTypes light) => GameState.currentLight = light;
+        public void SetLight(GlobalLightTypes light) => Data.currentLight = light;
 
         private void CheckBindings()
         {
             this.playerController = this.playerController ?? FindObjectOfType<PlayerController>();
             this.entityManager = this.entityManager ?? FindObjectOfType<Entities.EntityManager>();
-            this.actionManager = this.actionManager ?? FindObjectOfType<Story.ActionManager>();
+            this.sceneManager = this.sceneManager ?? FindObjectOfType<Story.SceneManager>();
             this.startMenuManager = this.startMenuManager ?? FindObjectOfType<StartMenuManager>();
             this.selectMenuManager = this.selectMenuManager ?? FindObjectOfType<SelectMenuManager>();
             this.narrationManager = this.narrationManager ?? FindObjectOfType<Dialogue.NarrationManager>();
@@ -191,25 +191,25 @@ namespace HackedDesign
         {
             Logger.Log(this, "Initialization");
             narrationManager.Initialize();
-            missionCompleteManager.Initialize(actionManager);
-            levelCompleteManager.Initialize(actionManager);
+            missionCompleteManager.Initialize(this.sceneManager);
+            levelCompleteManager.Initialize(this.sceneManager);
             worldMapManager.Initialize();
 
             mobileInputUI.Initialize();
-            actionConsolePanel.Initialize(actionManager);
-            infoPanel.Initialize(selectMenuManager);
-            stashPanel.Initialize(selectMenuManager);
-            psychPanel.Initialize(selectMenuManager);
-            taskPanel.Initialize(selectMenuManager);
-            startMenuPanel.Initialize(startMenuManager);
-            selectMenuPanel.Initialize(selectMenuManager, infoPanel, taskPanel, stashPanel, psychPanel);
-            narrationPanel.Initialize(narrationManager);
-            actionPanel.Initialize(playerController);
-            titlecardPanel.Initialize(actionManager);
-            missionCompletePanel.Initialize(missionCompleteManager);
-            levelCompletePresenter.Initialize(levelCompleteManager);
-            worldMapPanel.Initialize(worldMapManager);
-            levelRenderer.Initialize(playerController, entityManager, levelParent, enemiesParent, polyNav2D);
+            actionConsolePanel.Initialize(this.sceneManager);
+            infoPanel.Initialize(this.selectMenuManager);
+            stashPanel.Initialize(this.selectMenuManager);
+            psychPanel.Initialize(this.selectMenuManager);
+            taskPanel.Initialize(this.selectMenuManager);
+            startMenuPanel.Initialize(this.startMenuManager);
+            selectMenuPanel.Initialize(this.selectMenuManager, infoPanel, taskPanel, stashPanel, psychPanel);
+            narrationPanel.Initialize(this.narrationManager);
+            actionPanel.Initialize(this.playerController);
+            titlecardPanel.Initialize(this.sceneManager);
+            missionCompletePanel.Initialize(this.missionCompleteManager);
+            levelCompletePresenter.Initialize(this.levelCompleteManager);
+            worldMapPanel.Initialize(this.worldMapManager, this.sceneManager);
+            levelRenderer.Initialize(this.playerController, this.entityManager, this.levelParent, this.enemiesParent, this.polyNav2D);
             HideAllInGameUI();
             playerController.Hide();
         }
@@ -242,10 +242,10 @@ namespace HackedDesign
             Logger.Log(this, "Scene initialization");
             SetLight(GlobalLightTypes.Default);
             RenderLevel();
-            playerController.Move(GameState.CurrentLevel.ConvertLevelPosToWorld(GameState.CurrentLevel.playerSpawn.levelLocation) + GameState.CurrentLevel.playerSpawn.worldOffset);
-            minimapPanel.Initialize(GameState.CurrentLevel, playerController.transform);
+            playerController.Move(Data.CurrentLevel.ConvertLevelPosToWorld(Data.CurrentLevel.playerSpawn.levelLocation) + Data.CurrentLevel.playerSpawn.worldOffset);
+            minimapPanel.Initialize(Data.CurrentLevel, playerController.transform);
             SceneTriggersInitialize();
-            timerPanel.Initialize(GameState.CurrentLevel.timer);
+            timerPanel.Initialize(Data.CurrentLevel.timer);
             playerController.Show();
             GameManager.Instance.SaveGame();
             //SetPlaying();
@@ -254,16 +254,16 @@ namespace HackedDesign
 
         private void RenderLevel()
         {
-            this.levelRenderer.Render(GameState.CurrentLevel);
-            this.levelRenderer.PopulateLevelDoors(GameState.CurrentLevel, GameState.doorList);
-            this.levelRenderer.PopulateNPCSpawns(GameState.CurrentLevel, GameState.entityList);
-            this.levelRenderer.PopulateEnemySpawns(GameState.CurrentLevel, GameState.entityList);
-            this.levelRenderer.PopulateTrapSpawns(GameState.CurrentLevel, GameState.entityList);
+            this.levelRenderer.Render(Data.CurrentLevel);
+            this.levelRenderer.PopulateLevelDoors(Data.CurrentLevel, Data.doorList);
+            this.levelRenderer.PopulateNPCSpawns(Data.CurrentLevel, Data.entityList);
+            this.levelRenderer.PopulateEnemySpawns(Data.CurrentLevel, Data.entityList);
+            this.levelRenderer.PopulateTrapSpawns(Data.CurrentLevel, Data.entityList);
         }
 
         private void SceneTriggersInitialize()
         {
-            GameState.triggerList.Clear();
+            Data.triggerList.Clear();
             Logger.Log(this, "Initializing triggers");
 
             foreach (var triggerObject in GameObject.FindGameObjectsWithTag(TagManager.TRIGGER))
@@ -276,7 +276,7 @@ namespace HackedDesign
                 BaseTrigger trigger = triggerObject.GetComponent<BaseTrigger>();
                 if (trigger != null)
                 {
-                    GameState.triggerList.Add(trigger);
+                    Data.triggerList.Add(trigger);
                     trigger.Initialize();
                 }
             }

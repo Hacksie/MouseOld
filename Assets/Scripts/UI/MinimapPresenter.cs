@@ -89,7 +89,7 @@ namespace HackedDesign.UI
 
         private void RepaintRoom(int minimapX, int minimapY, int mapX, int mapY)
         {
-            if (mapY < 0 || mapY >= GameManager.Instance.GameState.CurrentLevel.map.Count() || GameManager.Instance.GameState.CurrentLevel.map[mapY] == null)
+            if (mapY < 0 || mapY >= GameManager.Instance.Data.CurrentLevel.map.Count() || GameManager.Instance.Data.CurrentLevel.map[mapY] == null)
             {
                 walls[6 * (minimapY * 3 + minimapX)].gameObject.SetActive(false);
                 walls[6 * (minimapY * 3 + minimapX) + 1].gameObject.SetActive(false);
@@ -101,7 +101,7 @@ namespace HackedDesign.UI
             }
 
             // When the map gets serialized, the 'empty' rooms become non null, because fuck me, right?
-            if (mapX < 0 || mapX >= GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms.Count() || GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms[mapX] == null || string.IsNullOrWhiteSpace(GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms[mapX].left))
+            if (mapX < 0 || mapX >= GameManager.Instance.Data.CurrentLevel.map[mapY].rooms.Count() || GameManager.Instance.Data.CurrentLevel.map[mapY].rooms[mapX] == null || string.IsNullOrWhiteSpace(GameManager.Instance.Data.CurrentLevel.map[mapY].rooms[mapX].left))
             {
                 walls[6 * (minimapY * 3 + minimapX)].gameObject.SetActive(false);
                 walls[6 * (minimapY * 3 + minimapX) + 1].gameObject.SetActive(false);
@@ -111,7 +111,7 @@ namespace HackedDesign.UI
                 walls[6 * (minimapY * 3 + minimapX) + 5].gameObject.SetActive(false);
                 return;
             }
-            ProxyRoom room = GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms[mapX];
+            ProxyRoom room = GameManager.Instance.Data.CurrentLevel.map[mapY].rooms[mapX];
 
             Sprite blSprite = FindChunkObject("bl", room.left, room.bottom);
             Sprite brSprite = FindChunkObject("br", room.right, room.bottom);
@@ -128,8 +128,8 @@ namespace HackedDesign.UI
             walls[6 * (minimapY * 3 + minimapX) + 2].gameObject.SetActive(true);
             walls[6 * (minimapY * 3 + minimapX) + 3].sprite = brSprite;
             walls[6 * (minimapY * 3 + minimapX) + 3].gameObject.SetActive(true);
-            walls[6 * (minimapY * 3 + minimapX) + 4].gameObject.SetActive(GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms[mapX].isEntry);
-            walls[6 * (minimapY * 3 + minimapX) + 5].gameObject.SetActive(GameManager.Instance.GameState.CurrentLevel.map[mapY].rooms[mapX].isEnd);
+            walls[6 * (minimapY * 3 + minimapX) + 4].gameObject.SetActive(GameManager.Instance.Data.CurrentLevel.map[mapY].rooms[mapX].isEntry);
+            walls[6 * (minimapY * 3 + minimapX) + 5].gameObject.SetActive(GameManager.Instance.Data.CurrentLevel.map[mapY].rooms[mapX].isEnd);
 
         }
         private Sprite FindChunkObject(string corner, string wall1, string wall2)

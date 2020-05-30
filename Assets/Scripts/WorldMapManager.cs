@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//FIXME: Combine this with SceneManager
 namespace HackedDesign {
 	public class WorldMapManager : MonoBehaviour 
 	{
-        [SerializeField] private string defaultLocation = "AisanaContractTower2";
+        [SerializeField] private string defaultLocation = "AisanaContractorTower2";
         public string selectedLocation;
         public string selectedFloor;
 
@@ -17,7 +18,7 @@ namespace HackedDesign {
         public void NextLevel()
         {
             // This should just set a new story state, and that stage should load the level accordingly;
-            Story.ActionManager.Instance.CurrentScene.Next();
+            Story.SceneManager.Instance.CurrentScene.Next();
         }
     }
 }

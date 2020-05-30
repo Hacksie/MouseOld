@@ -181,13 +181,13 @@ namespace HackedDesign
                 return knownEntities.Where(kv => kv.Value.category == "Locations").Select(kv => kv.Value as Location).ToList();
             }
 
-            public List<Floor> GetKnownFloorsForLocation(string locationId)
-            {
-                return knownEntities.Where(kv => kv.Value.category == "Floors")
-                                    .Where(f => (f.Value as Floor).locationId == locationId)
-                                    .Select(kv => (kv.Value as Floor))
-                                    .ToList();
-            }
+            // public List<Floor> GetKnownFloorsForLocation(string locationId)
+            // {
+            //     return knownEntities.Where(kv => kv.Value.category == "Floors")
+            //                         .Where(f => (f.Value as Floor).locationId == locationId)
+            //                         .Select(kv => (kv.Value as Floor))
+            //                         .ToList();
+            // }
 
             public List<InfoEntity> GetKnownEntities(string category)
             {
@@ -266,7 +266,7 @@ namespace HackedDesign
                         var entity = entities[id];
                         Logger.Log(this, "Adding entity ", entity.id, " to known entities");
                         knownEntities.Add(id, entity);
-                        ActionManager.Instance.AddActionMessage("'" + entity.id + "' added to " + entity.category);
+                        SceneManager.Instance.AddActionMessage("'" + entity.id + "' added to " + entity.category);
                     }
                     else
                     {

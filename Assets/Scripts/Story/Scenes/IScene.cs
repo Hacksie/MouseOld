@@ -7,5 +7,6 @@ namespace HackedDesign.Story
         void Begin();
         bool Invoke(string actionName);
         void Next();
+        bool Complete();
     }
 }

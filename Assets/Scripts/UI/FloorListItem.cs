@@ -7,7 +7,7 @@ namespace HackedDesign.UI
         [Header("Reference GameObjects")]
         [SerializeField] private UnityEngine.UI.Text label = null;
 
-        public Story.Floor floor;
+        public Level.LevelGenTemplate floor;
         private WorldMapManager worldMapManager;
 
         public void Initialize(WorldMapManager worldMapManager)
@@ -32,7 +32,7 @@ namespace HackedDesign.UI
         public void Click()
         {
             Logger.Log(this, "Floor List Item clicked");
-            worldMapManager.selectedFloor = this.floor.id;
+            worldMapManager.selectedFloor = this.floor.name;
         }
     }
 }

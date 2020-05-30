@@ -1,0 +1,51 @@
+
+{
+    "narrations": [
+        {
+            "id": "PreludeBarJoe1",
+            "speaker": "Mouse",
+            "text": "Hey Joe",
+            "action": "PreludeBarJoe2",
+            "button": "arrowright"
+        },
+        {
+            "id": "PreludeBarJoe2",
+            "speaker": "BigJoe",
+            "speakerEmotion": "smirking",
+            "text": "Evening Ms. Hart. Another late night? There's a young girl over in the corner there that was asking about you before.",
+            "action": "",
+            "button": "arrowright"
+        },
+        {
+            "id": "MeetSnowOwl1",
+            "speaker": "SnowOwl",
+            "text": "You must be Mouse. You ready for this?",
+            "action": "MeetSnowOwl2",
+            "button": "arrowright"
+        },
+        {
+            "id": "MeetSnowOwl2",
+            "speaker": "Mouse",
+            "speakerEmotion":"thinking",
+            "text": "<color='#B0B0B0'>Am I ready for this? Who was this girl? She barely looked old enough to step into the bar. Just what I wanted tonight, babysitting some kid.</color>",
+            "action": "MeetSnowOwl3",
+            "button": "arrowright"
+        },
+        {
+            "id": "MeetSnowOwl3",
+            "speaker": "Mouse",
+            "speakerEmotion": "tired",
+            "text": "<color='#B0B0B0'>I nodded.</color> Are you?",
+            "action": "MeetSnowOwl4",
+            "button": "arrowright"
+        },
+        {
+            "id": "MeetSnowOwl4",
+            "speaker": "SnowOwl",
+            "speakerEmotion": "smirking",
+            "text": "Of course. <color='#B0B0B0'>She can barely keep the smug look off her face</color>",
+            "action": "",
+            "button": "arrowright"
+        }        
+    ]
+}

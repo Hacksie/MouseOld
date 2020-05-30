@@ -5,13 +5,13 @@ namespace HackedDesign
     public class PlayingState : IState
     {
         private PlayerController playerController;
-        private Story.ActionManager actionManager;
+        private Story.SceneManager actionManager;
         private UI.ActionConsolePresenter actionConsolePresenter;
         private UI.ActionPanelPresenter actionPanelPresenter;
         private UI.TimerPanelPresenter timerPanelPresenter;
         private UI.MinimapPresenter minimapPresenter;
 
-        public PlayingState(PlayerController playerController, Story.ActionManager actionManager, UI.ActionConsolePresenter actionConsolePresenter, UI.ActionPanelPresenter actionPanelPresenter, UI.TimerPanelPresenter timerPanelPresenter, UI.MinimapPresenter minimapPresenter)
+        public PlayingState(PlayerController playerController, Story.SceneManager actionManager, UI.ActionConsolePresenter actionConsolePresenter, UI.ActionPanelPresenter actionPanelPresenter, UI.TimerPanelPresenter timerPanelPresenter, UI.MinimapPresenter minimapPresenter)
         {
             this.playerController = playerController;
             this.actionManager = actionManager;
@@ -35,8 +35,8 @@ namespace HackedDesign
         public void Update()
         {
             this.playerController.UpdateBehaviour();
-            GameManager.Instance.GameState.entityList.ForEach(entity => entity.UpdateBehaviour());
-            GameManager.Instance.GameState.CurrentLevel.timer.Update();
+            GameManager.Instance.Data.entityList.ForEach(entity => entity.UpdateBehaviour());
+            GameManager.Instance.Data.CurrentLevel.timer.Update();
         }
 
         public void LateUpdate()
@@ -60,9 +60,9 @@ namespace HackedDesign
             this.minimapPresenter.Hide();
         }
 
-        private void AnimateDoors() => GameManager.Instance.GameState.doorList.ForEach(door => door.UpdateAnimation());
+        private void AnimateDoors() => GameManager.Instance.Data.doorList.ForEach(door => door.UpdateAnimation());
 
-        private void AnimateEntities() => GameManager.Instance.GameState.entityList.ForEach(entity => entity.Animate());
+        private void AnimateEntities() => GameManager.Instance.Data.entityList.ForEach(entity => entity.Animate());
 
         public void Interact()
         {

@@ -12,7 +12,7 @@ namespace HackedDesign.Entities
         [SerializeField]
         UnityEngine.UI.Text text = null;
 
-        [SerializeField] Character character;
+        [SerializeField] Character character = null;
 
         private void Awake()
         {

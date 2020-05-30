@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 namespace HackedDesign {
 	public class MissionCompleteManager : MonoBehaviour 
 	{
-		Story.ActionManager actionManager = null;
+		Story.SceneManager actionManager = null;
 
-        public void Initialize(Story.ActionManager actionManager) => this.actionManager = actionManager;
+        public void Initialize(Story.SceneManager actionManager) => this.actionManager = actionManager;
 
-        public void ResumeEvent() => actionManager.Invoke(GameManager.Instance.GameState.CurrentLevel.template.exitAction);
+        public void ResumeEvent() => actionManager.Invoke(GameManager.Instance.Data.CurrentLevel.template.exitAction);
     }
 }
 

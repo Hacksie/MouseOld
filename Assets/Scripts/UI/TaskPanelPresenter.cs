@@ -7,17 +7,15 @@ namespace HackedDesign.UI
 {
     public class TaskPanelPresenter : AbstractPresenter
     {
-        [SerializeField] private UnityEngine.UI.Text taskRequesterText;
-        [SerializeField] private UnityEngine.UI.Text taskCorpText;
-        [SerializeField] private UnityEngine.UI.Text taskTitleText;
-        [SerializeField] private UnityEngine.UI.Text taskRewardText;
-        [SerializeField] private UnityEngine.UI.Text taskDescription;
-        [SerializeField] private UnityEngine.UI.Image requesterAvatar;
-        public GameObject taskButtonParent;
-        public GameObject taskButtonPrefab;
+        [SerializeField] private UnityEngine.UI.Text taskRequesterText = null;
+        [SerializeField] private UnityEngine.UI.Text taskCorpText = null;
+        [SerializeField] private UnityEngine.UI.Text taskTitleText = null;
+        [SerializeField] private UnityEngine.UI.Text taskRewardText = null;
+        [SerializeField] private UnityEngine.UI.Text taskDescription = null;
+        [SerializeField] private UnityEngine.UI.Image requesterAvatar = null;
+        [SerializeField] private GameObject taskButtonParent = null;
+        [SerializeField] private GameObject taskButtonPrefab = null;
 
-
-        private bool dirty = true;
 
         SelectMenuManager selectMenuManager;
 
@@ -28,21 +26,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (selectMenuManager.MenuState == SelectMenuSubState.Tasks)
-            {
-                Show();
-                if (dirty)
-                {
-                    dirty = false;
-                    RepaintTasks();
-                }
-            }
-            else
-            {
-                dirty = true;
-                Hide();
-
-            }
+            RepaintTasks();
         }
 
         private void RepaintTasks()
@@ -52,20 +36,19 @@ namespace HackedDesign.UI
                 Destroy(taskButtonParent.transform.GetChild(i).gameObject);
             }
 
-            foreach (var task in GameManager.Instance.GameState.TaskList)
+            foreach (var task in GameManager.Instance.Data.TaskList)
             {
-
                 var go = Instantiate(taskButtonPrefab, Vector3.zero, Quaternion.identity, taskButtonParent.transform);
                 var goTaskItem = go.GetComponent<TaskListItem>();
                 goTaskItem.task = task.Value;
                 goTaskItem.Repaint();
             }
-            RepaintTaskDescription(GameManager.Instance.GameState.selectedTask);
+            RepaintTaskDescription(GameManager.Instance.Data.selectedTask);
         }
 
         public void RepaintTaskDescription(Task selectedTask)
         {
-            if (GameManager.Instance.GameState.selectedTask == null)
+            if (GameManager.Instance.Data.selectedTask == null)
             {
                 taskRequesterText.text = "";
                 taskTitleText.text = "";
@@ -89,7 +72,6 @@ namespace HackedDesign.UI
                 taskDescription.text += "\n";
                 if (selectedTask.objectives != null)
                 {
-                    Logger.Log(this, "Objectives count - " + selectedTask.objectives.Count);
                     foreach (TaskObjective objective in selectedTask.objectives)
                     {
                         taskDescription.text += "\n[" + (objective.completed ? "*" : " ") + "] " + objective.objective + (objective.optional ? "(*)" : "");

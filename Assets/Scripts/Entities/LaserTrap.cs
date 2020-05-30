@@ -11,7 +11,6 @@ namespace HackedDesign
     public class LaserTrap : Entity
     {
         [Header("Settings")]
-        [SerializeField] private float rotateSpeed = 45.0f;
         [SerializeField] private float resetTime = 30.0f;
 
         private bool tripped = false;

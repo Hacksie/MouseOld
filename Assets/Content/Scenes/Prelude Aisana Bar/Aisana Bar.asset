@@ -26,7 +26,7 @@ MonoBehaviour:
   generateRandomProps: 1
   startingRoomString: weww
   startingAction: 
-  exitAction: 
+  exitAction: PreludeBarExit
   levelResource: AisanaBar
   generateNavMesh: 1
   hostile: 0
@@ -78,7 +78,6 @@ MonoBehaviour:
   - {fileID: 8295071056751487464, guid: 9a518f3ca4c956341b92c563c9e8054c, type: 3}
   - {fileID: 7395101601705910414, guid: 213273af7c8febe49b37001c361533ac, type: 3}
   - {fileID: 6415240769706231291, guid: e30a1b96ae8224d4793ce6cb34a6a849, type: 3}
-  - {fileID: 8628723065896210826, guid: 2a5b9163d6b1c254ea7c2bb15ade59b0, type: 3}
   lineOfSightProps: []
   traps: []
   enemies: []

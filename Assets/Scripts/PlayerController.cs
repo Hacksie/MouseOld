@@ -216,7 +216,7 @@ namespace HackedDesign
                 movementVector = Vector2.zero;
             }
 
-            transform.Translate(movementVector * (baseMovementSpeed + (GameManager.Instance.GameState.Player.movementAugments * augmentFactor)) * Time.deltaTime);
+            transform.Translate(movementVector * (baseMovementSpeed + (GameManager.Instance.Data.Player.movementAugments * augmentFactor)) * Time.deltaTime);
         }
 
         public void UpdateHacking()

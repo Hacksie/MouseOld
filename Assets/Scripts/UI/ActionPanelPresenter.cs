@@ -33,7 +33,7 @@ namespace HackedDesign.UI
 
         private void RepaintBatteryBar()
         {
-            batterySprite.rectTransform.sizeDelta = new Vector2(batterySpriteMaxSize.x * GameManager.Instance.GameState.Player.battery / GameManager.Instance.GameState.Player.maxBattery, batterySpriteMaxSize.y);
+            batterySprite.rectTransform.sizeDelta = new Vector2(batterySpriteMaxSize.x * GameManager.Instance.Data.Player.battery / GameManager.Instance.Data.Player.maxBattery, batterySpriteMaxSize.y);
         }
 
         private void RepaintCounts()

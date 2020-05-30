@@ -15,11 +15,13 @@ namespace HackedDesign.UI
         [SerializeField] private GameObject floorListItemPrefab = null;
 
         private WorldMapManager worldMapManager = null;
+        private Story.SceneManager sceneManager = null;
 
 
-        public void Initialize(WorldMapManager worldMapManager)
+        public void Initialize(WorldMapManager worldMapManager, Story.SceneManager sceneManager)
         {
             this.worldMapManager = worldMapManager;
+            this.sceneManager = sceneManager;
         }
 
         public override void Repaint()
@@ -30,7 +32,7 @@ namespace HackedDesign.UI
         public void RepaintLocations()
         {
             Logger.Log(this, "Repaint Locations");
-            var knownLocations = Story.InfoRepository.Instance.GetKnownLocations();
+            var knownLocations = Story.InfoRepository.Instance.GetKnownLocations(); // FIXME: Move this to scenemanager
 
             foreach (var button in locationButtons.Where(b => b != null))
             {
@@ -86,18 +88,15 @@ namespace HackedDesign.UI
         {
             Logger.Log(this, "Floors location ", worldMapManager.selectedLocation);
             
-            var floors = Story.InfoRepository.Instance.GetKnownFloorsForLocation(worldMapManager.selectedLocation);
+            var floors = this.sceneManager.GetFloorsForLocation(worldMapManager.selectedLocation);
 
             for (int i = 0; i < floorListParent.childCount; i++)
             {
                 Destroy(floorListParent.GetChild(i).gameObject);
             }
 
-            Logger.Log(this, "floor count ", floors.Count.ToString());
-
-            for (int i = 0; i < floors.Count; i++)
+            foreach (var floor in floors)
             {
-                Story.Floor floor = floors[i];
                 var item = Instantiate(floorListItemPrefab, floorListParent);
                 var text = item.GetComponentInChildren<UnityEngine.UI.Text>();
                 text.text = floor.name;

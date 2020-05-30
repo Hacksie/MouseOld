@@ -28,7 +28,7 @@ namespace HackedDesign
         public GlobalLightTypes currentLight;
 
         public List<BaseTrigger> triggerList = new List<BaseTrigger>();
-        
+
         public List<IEntity> entityList = new List<IEntity>();
         public List<Door> doorList = new List<Door>();
 
@@ -54,11 +54,16 @@ namespace HackedDesign
         }
     }
 
+    [System.Serializable]
     public class StoryState
     {
         public int act = 0;
-        public bool prelude_cat_talk = false;
-        public bool prelude_laptop = false;
+        public List<Location> knownLocations = new List<Location>();
+
+        // public bool prelude_cat_talk = false;
+        // public bool prelude_laptop = false;
+        // public bool prelude_bar_metSnowOwl = false;
+        public HashSet<string> storyEvents = new HashSet<string>();
     }
 
     public enum SelectMenuSubState

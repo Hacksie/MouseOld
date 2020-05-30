@@ -89,23 +89,37 @@ namespace HackedDesign
 
             public void AddTask(string id)
             {
-                if (!GameManager.Instance.GameState.TaskList.ContainsKey(id))
+                if (!GameManager.Instance.Data.TaskList.ContainsKey(id))
                 {
                     var task = GetTaskInstanceFromDefinition(id);
-                    GameManager.Instance.GameState.TaskList.Add(id, task);
+                    GameManager.Instance.Data.TaskList.Add(id, task);
                 }
 
             }
 
+            public bool HasTask(string id)
+            {
+                return GameManager.Instance.Data.TaskList.ContainsKey(id);
+            }
+
+            public Task GetTask(string id)
+            {
+                if (HasTask(id))
+                {
+                    return GameManager.Instance.Data.TaskList[id];
+                }   
+                return null;             
+            }
+
             public void SelectCurrentTask(string id)
             {
-                GameManager.Instance.GameState.selectedTask = GameManager.Instance.GameState.TaskList.FirstOrDefault(t => t.Value.id == id).Value;
+                GameManager.Instance.Data.selectedTask = GameManager.Instance.Data.TaskList.FirstOrDefault(t => t.Value.id == id).Value;
             }
 
             public void CompleteTaskObjective(string id, string objectiveid)
             {
                 Logger.Log(this, "Complete task", id, objectiveid);
-                var task = GameManager.Instance.GameState.TaskList[id];
+                var task = GameManager.Instance.Data.TaskList[id];
 
                 var objective = task.objectives.FirstOrDefault(o => o.objective == objectiveid);
                 objective.completed = true;

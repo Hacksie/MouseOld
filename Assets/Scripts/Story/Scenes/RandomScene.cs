@@ -21,5 +21,10 @@ namespace HackedDesign.Story
         {
 
         }
+
+        public override bool Complete()
+        {
+            return false;
+        }        
     }
 }

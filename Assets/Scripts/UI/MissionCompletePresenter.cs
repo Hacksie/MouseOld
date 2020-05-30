@@ -14,9 +14,9 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            missionTime.text = (Time.time - GameManager.Instance.GameState.CurrentLevel.startTime).ToString("0s");
-            infoCollected.text = GameManager.Instance.GameState.CurrentLevel.infoCollected + "/" + GameManager.Instance.GameState.CurrentLevel.maxInfo;
-            missionCredits.text = "$" + (GameManager.Instance.GameState.CurrentLevel.completeCredits + GameManager.Instance.GameState.CurrentLevel.creditsCollected);
+            missionTime.text = (Time.time - GameManager.Instance.Data.CurrentLevel.startTime).ToString("0s");
+            infoCollected.text = GameManager.Instance.Data.CurrentLevel.infoCollected + "/" + GameManager.Instance.Data.CurrentLevel.maxInfo;
+            missionCredits.text = "$" + (GameManager.Instance.Data.CurrentLevel.completeCredits + GameManager.Instance.Data.CurrentLevel.creditsCollected);
 
         }
 

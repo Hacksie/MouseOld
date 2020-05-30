@@ -13,16 +13,16 @@ namespace HackedDesign.UI
         public string[] titleStrings;
         public string[] nextActions;
 
-        private Story.ActionManager actionManager;
+        private Story.SceneManager actionManager;
 
-        public void Initialize(Story.ActionManager actionManager)
+        public void Initialize(Story.SceneManager actionManager)
         {
             this.actionManager = actionManager;
         }
 
         public override void Repaint()
         {
-            titleText.text = titleStrings[GameManager.Instance.GameState.Story.act];
+            titleText.text = titleStrings[GameManager.Instance.Data.Story.act];
             EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
         }
 

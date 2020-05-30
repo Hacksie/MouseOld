@@ -27,7 +27,7 @@ namespace HackedDesign.UI
 
             if (alertLevelText != null)
             {
-                alertLevelText.text = GameManager.Instance.GameState.CurrentLevel.alertLevel.ToString();
+                alertLevelText.text = GameManager.Instance.Data.CurrentLevel.alertLevel.ToString();
             }
 
             if (timer.running)

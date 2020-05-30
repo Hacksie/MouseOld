@@ -20,8 +20,6 @@ namespace HackedDesign.UI
         [SerializeField] private Button TasksButton = null;
         [SerializeField] private Button StashButton = null;
         [SerializeField] private Button PsychButton = null;
-        [SerializeField] private Button MapButton = null;
-
 
         public void Initialize(SelectMenuManager selectMenuManager, InfoPanelPresenter infoPanel, TaskPanelPresenter taskPanel, StashPanelPresenter stashPanel, PsychPanelPresenter psychPanel)
         {
@@ -35,44 +33,60 @@ namespace HackedDesign.UI
         public override void Repaint()
         {
 
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+            //HideAll();
+            //UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
 
             switch (selectMenuManager.MenuState)
             {
                 case SelectMenuSubState.Info:
-                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(InfoButton.gameObject);
+                    infoPanel.Repaint();
                     break;
                 case SelectMenuSubState.Tasks:
-                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(TasksButton.gameObject);
+                    taskPanel.Repaint();
                     break;
                 case SelectMenuSubState.Stash:
-                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(StashButton.gameObject);
+                    stashPanel.Repaint();
                     break;
                 case SelectMenuSubState.Psych:
-                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(PsychButton.gameObject);
-                    break;
-                case SelectMenuSubState.Map:
-                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(MapButton.gameObject);
+                    psychPanel.Repaint();
                     break;
             }
-            infoPanel.Repaint();
-            taskPanel.Repaint();
-            stashPanel.Repaint();
-            psychPanel.Repaint();
         }
 
-        private void Show(bool flag)
+        public override void Show()
         {
-            gameObject.SetActive(flag);
-
+            switch (selectMenuManager.MenuState)
+            {
+                case SelectMenuSubState.Info:
+                    infoPanel.Show();
+                    break;
+                case SelectMenuSubState.Tasks:
+                    taskPanel.Show();
+                    break;
+                case SelectMenuSubState.Stash:
+                    stashPanel.Show();
+                    break;
+                case SelectMenuSubState.Psych:
+                    psychPanel.Show();
+                    break;
+            }
+            if (!gameObject.activeInHierarchy)
+            {
+                gameObject.SetActive(true);
+            }
         }
 
-        public void ResumeClickEvent()
+        private void HideAll()
         {
             infoPanel.Hide();
             taskPanel.Hide();
             stashPanel.Hide();
             psychPanel.Hide();
+        }
+
+        public void ResumeClickEvent()
+        {
+            HideAll();
             GameManager.Instance.SetPlaying();
         }
 
@@ -80,38 +94,36 @@ namespace HackedDesign.UI
         {
             Debug.Log("Select Menu Info Clicked");
             selectMenuManager.MenuState = SelectMenuSubState.Info;
-            Show(true);
+            HideAll();
+            infoPanel.Show();
+            infoPanel.Repaint();
         }
 
         public void TaskClickEvent()
         {
             Debug.Log("Select Menu Task Clicked");
-            taskPanel.Show();
             selectMenuManager.MenuState = SelectMenuSubState.Tasks;
-            Show(true);
+            HideAll();
+            taskPanel.Show();
+            taskPanel.Repaint();
         }
 
         public void StashClickEvent()
         {
             Debug.Log("Select Menu Task Clicked");
             selectMenuManager.MenuState = SelectMenuSubState.Stash;
-            Show(true);
+            HideAll();
+            stashPanel.Show();
+            stashPanel.Repaint();
         }
 
         public void PsychClickEvent()
         {
             Debug.Log("Select Menu Task Clicked");
             selectMenuManager.MenuState = SelectMenuSubState.Psych;
-            Show(true);
+            HideAll();
+            psychPanel.Show();
+            psychPanel.Repaint();
         }
-
-        public void MapClickEvent()
-        {
-            Debug.Log("Select Menu Task Clicked");
-            selectMenuManager.MenuState = SelectMenuSubState.Map;
-            Show(true);
-        }
-
-
     }
 }

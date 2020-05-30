@@ -123,21 +123,21 @@ namespace HackedDesign
 
         public virtual void Overload(GameObject source)
         {
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanOverload&& allowOverload)
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanOverload&& allowOverload)
             {
                 Logger.Log(this, "Overload");
                 overloaded = true;
 
                 overloadActionEvent.Invoke();
-                GameManager.Instance.GameState.Player.ConsumeOverload();
+                GameManager.Instance.Data.Player.ConsumeOverload();
             }
         }
 
         public virtual void Hack(GameObject source)
         {
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanHack&& allowHack)
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanHack&& allowHack)
             {
-                if (GameManager.Instance.GameState.Player.ConsumeHack())
+                if (GameManager.Instance.Data.Player.ConsumeHack())
                 {
                     hackActionEvent.Invoke();
                     hacked = true;
@@ -154,7 +154,7 @@ namespace HackedDesign
             bugged = true;
             hacked = true;
             bugActionEvent.Invoke();
-            GameManager.Instance.GameState.Player.ConsumeBug();
+            GameManager.Instance.Data.Player.ConsumeBug();
         }
 
         public virtual void Leave(GameObject source)
@@ -175,17 +175,17 @@ namespace HackedDesign
                 Invoke(source);
                 return true;
             }
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanOverload&& inputController.OverloadButtonUp() && allowOverload)
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanOverload&& inputController.OverloadButtonUp() && allowOverload)
             {
                 Overload(source);
                 return true;
             }
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanBug&& inputController.BugButtonUp() && allowBug)
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanBug&& inputController.BugButtonUp() && allowBug)
             {
                 Bug(source);
                 return true;
             }
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.GameState.Player.CanHack&& inputController.HackButtonUp() && allowHack)
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanHack&& inputController.HackButtonUp() && allowHack)
             {
                 Hack(source);
                 return true;

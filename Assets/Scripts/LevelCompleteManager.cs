@@ -3,11 +3,11 @@ using UnityEngine;
 namespace HackedDesign {
 	public class LevelCompleteManager : MonoBehaviour 
 	{
-		Story.ActionManager actionManager = null;
+		Story.SceneManager actionManager = null;
 
-        public void Initialize(Story.ActionManager actionManager) => this.actionManager = actionManager;
+        public void Initialize(Story.SceneManager actionManager) => this.actionManager = actionManager;
 
-        public void Next() => actionManager.Invoke(GameManager.Instance.GameState.CurrentLevel.template.exitAction);
+        public void Next() => actionManager.Invoke(GameManager.Instance.Data.CurrentLevel.template.exitAction);
     }
 }
 
