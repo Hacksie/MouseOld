@@ -41,6 +41,8 @@ namespace HackedDesign
         public string currentLocation;
         public string currentFloor;
 
+
+
         public Dictionary<string, Task> TaskList { get => taskList; private set => taskList = value; }
 
         public GameData() : this(false)
@@ -58,7 +60,9 @@ namespace HackedDesign
     public class StoryState
     {
         public int act = 0;
-        public List<Location> knownLocations = new List<Location>();
+        private List<string> knownLocations = new List<string>();
+
+        public List<string> KnownLocations { get => knownLocations; private set => knownLocations = value; }
 
         // public bool prelude_cat_talk = false;
         // public bool prelude_laptop = false;

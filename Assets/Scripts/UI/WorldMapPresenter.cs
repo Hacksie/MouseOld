@@ -32,14 +32,15 @@ namespace HackedDesign.UI
         public void RepaintLocations()
         {
             Logger.Log(this, "Repaint Locations");
-            var knownLocations = Story.InfoRepository.Instance.GetKnownLocations(); // FIXME: Move this to scenemanager
+            
+            var knownLocations = sceneManager.GetKnownLocations(); // FIXME: Move this to scenemanager
 
             foreach (var button in locationButtons.Where(b => b != null))
             {
                 var desc = button.GetComponent<InfoEntityDescriptor>();
                 if (desc != null)
                 {
-                    button.interactable = knownLocations.Any(l => l.id == desc.id);
+                    button.interactable = knownLocations.Any(l => l == desc.id);
 
                     if (desc.id == worldMapManager.selectedLocation)
                     {

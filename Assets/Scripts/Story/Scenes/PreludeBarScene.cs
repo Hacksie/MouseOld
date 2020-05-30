@@ -46,7 +46,8 @@ namespace HackedDesign.Story
                     GameManager.Instance.Data.Story.storyEvents.Add("MeetSnowOwl");
                     Dialogue.NarrationManager.Instance.ShowNarration("MeetSnowOwl1");
                     TaskRepository.Instance.CompleteTaskObjective("bootstrap", "Meet Snow Owl");
-                    InfoRepository.Instance.AddToKnownEntities("SaikaCorpHQ");
+                    SceneManager.Instance.AddToKnownLocations("SaikaCorpHQ");
+                    //InfoRepository.Instance.AddToKnownEntities("SaikaCorpHQ");
                     return true;
                 case "MeetSnowOwl2":
                     Logger.Log("PreludeBarScene", "Meet Snow Owl 2");

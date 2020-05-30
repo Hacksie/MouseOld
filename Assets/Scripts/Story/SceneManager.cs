@@ -13,8 +13,6 @@ namespace HackedDesign.Story
         [SerializeField] private string newGameLevel = "Olivia's Apartment";
         [SerializeField] private float timeOut = 10.0f;
 
-        
-
         public static SceneManager Instance { get; private set; }
 
         public List<ActionMessage> console = new List<ActionMessage>();
@@ -63,7 +61,12 @@ namespace HackedDesign.Story
 
         public void AddToKnownLocations(string locationId)
         {
-            //GameManager.Instance.Data.Story.knownLocations.Add()
+            GameManager.Instance.Data.Story.KnownLocations.Add(locationId);
+        }
+
+        public List<string> GetKnownLocations()
+        {
+            return GameManager.Instance.Data.Story.KnownLocations;
         }
 
         public IEnumerable<Level.LevelGenTemplate> GetFloorsForLocation(string location)

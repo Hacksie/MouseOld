@@ -34,8 +34,10 @@ namespace HackedDesign.Story
                     InfoRepository.Instance.AddToKnownEntities("ManagerLyon");
                     InfoRepository.Instance.AddToKnownEntities("Cat");
                     InfoRepository.Instance.AddToKnownEntities("Saika");
-                    InfoRepository.Instance.AddToKnownEntities("AisanaContractorTower2");
-                    InfoRepository.Instance.AddToKnownEntities("AisanaContractorTower1");
+                    SceneManager.Instance.AddToKnownLocations("AisanaContractorTower2");
+                    SceneManager.Instance.AddToKnownLocations("AisanaContractorTower1");
+                    //InfoRepository.Instance.AddToKnownEntities("AisanaContractorTower2");
+                    //InfoRepository.Instance.AddToKnownEntities("AisanaContractorTower1");
                     //InfoRepository.Instance.AddToKnownEntities("SaikaCorpHQ");
                     //InfoRepository.Instance.AddToKnownEntities("OliviasApartment");
                     //InfoRepository.Instance.AddToKnownEntities("AisanaContractBar");
