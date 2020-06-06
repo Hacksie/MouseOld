@@ -339,7 +339,7 @@ namespace HackedDesign.Level
                     continue;
                 }
 
-                npc.Initialize(true, this.playerController.transform);
+                //npc.Initialize(true, this.playerController.transform);
                 npc.SetPosition(level.ConvertLevelPosToWorld(level.npcSpawnLocationList[i].levelLocation) + level.npcSpawnLocationList[i].worldOffset);
                 npc.Activate();
 
@@ -383,7 +383,7 @@ namespace HackedDesign.Level
                     continue;
                 }
 
-                enemy.Initialize(false, this.playerController.transform);
+                //enemy.Initialize(false, this.playerController.transform);
                 enemy.SetEntityDefinition(Story.InfoRepository.Instance.GenerateRandomEnemy((Story.Enemy)enemy.GetEntityDefinition()));
                 enemyList.Add(enemy);
             }
@@ -424,7 +424,7 @@ namespace HackedDesign.Level
                     continue;
                 }
 
-                trap.Initialize(false, this.playerController.transform);
+                //trap.Initialize(false, this.playerController.transform);
                 trap.SetEntityDefinition(Story.InfoRepository.Instance.GenerateRandomTrap((Story.Trap)trap.GetEntityDefinition()));
                 trapList.Add(trap);
             }

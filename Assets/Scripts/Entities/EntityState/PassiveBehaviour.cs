@@ -2,15 +2,16 @@ using UnityEngine;
 
 namespace HackedDesign
 {
-    [CreateAssetMenu(fileName = "Chat Behaviour", menuName = "Mouse/Entities/Chat Behaviour")]
-    public class ChatBehaviour : AbstractBehaviour
+    [CreateAssetMenu(fileName = "Passive Behaviour", menuName = "Mouse/Entities/Passive Behaviour")]
+    public class PassiveBehaviour : AbstractBehaviour
     {
         [SerializeField] private bool facePlayer = false;
 
         private Transform playerTransform;
 
-        public override void Begin()
+        public override void Begin(IEntity entity)
         {
+
             playerTransform = GameManager.Instance.Player.transform;
         }
 
@@ -22,11 +23,6 @@ namespace HackedDesign
             }
 
             base.UpdateBehaviour(entity);
-        }
-
-        protected override void UpdateInteractionSprite(InteractionSpriteOverlay spriteOverlay)
-        {
-            spriteOverlay.SetSprite(EntityState.Chat);
         }
     }
 }

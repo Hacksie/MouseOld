@@ -169,12 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionSprite: {fileID: 0}
   entity: {fileID: 11400000, guid: 16bffee7e93a5bd42a1ad4a70a448a58, type: 2}
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 257
-  visibilityDistance: 3.2
   randomStartingDirection: 0
-  facePlayer: 1
   behaviour: {fileID: 11400000, guid: 79ee91161ffcc294db2c336ad0cb19f8, type: 2}
   pooled: 0
   direction: {x: 0, y: -1}
@@ -189,6 +184,7 @@ MonoBehaviour:
   alertEvent:
     m_PersistentCalls:
       m_Calls: []
+  actionTimer: 0
 --- !u!1 &6295968191483358888
 GameObject:
   m_ObjectHideFlags: 0

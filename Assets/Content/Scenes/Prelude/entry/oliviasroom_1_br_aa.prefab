@@ -1323,7 +1323,7 @@ MonoBehaviour:
   - {x: 4.5, y: 3.5, z: 0}
   m_ShapePathHash: -697489779
   m_Mesh: {fileID: 0}
-  m_InstanceId: 136406
+  m_InstanceId: 123540
 --- !u!1 &7264322721219040601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,6 +1336,8 @@ GameObject:
   - component: {fileID: 8051848708671065230}
   - component: {fileID: 6935998099446804568}
   - component: {fileID: 6971394023484956616}
+  - component: {fileID: 3269270295658239564}
+  - component: {fileID: 327151650473980584}
   m_Layer: 0
   m_Name: Clothes
   m_TagString: Trigger
@@ -1478,6 +1480,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: PreludeClothes
+--- !u!95 &3269270295658239564
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7264322721219040601}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &327151650473980584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7264322721219040601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e45e089d1306da946baa09e2444ed10e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionSprite: {fileID: 0}
+  entity: {fileID: 0}
+  randomStartingDirection: 1
+  behaviour: {fileID: 11400000, guid: c1ed22b3c2146a044b28e852220bed6e, type: 2}
+  pooled: 0
+  direction: {x: 0, y: -1}
+  isMoving: 0
+  hasSeenPlayer: 0
+  playerSeenEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  playerLeaveEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  alertEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  actionTimer: 0
 --- !u!1 &8996393410773263940
 GameObject:
   m_ObjectHideFlags: 0

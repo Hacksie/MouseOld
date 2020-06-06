@@ -13,12 +13,12 @@ namespace HackedDesign
         [Header("Settings")]
         [SerializeField] private float rotateSpeed = 45.0f;
 
-        public override void Initialize(bool pooled, Transform playerTransform)
-        {
-            Logger.Log(this, "Initializing Scanning Enemy");
-            base.Initialize(pooled, playerTransform);
-            isMoving = false;
-        }
+        // public override void Initialize(bool pooled, Transform playerTransform)
+        // {
+        //     Logger.Log(this, "Initializing Scanning Enemy");
+        //     base.Initialize(pooled, playerTransform);
+        //     isMoving = false;
+        // }
 
         public override void UpdateBehaviour()
         {

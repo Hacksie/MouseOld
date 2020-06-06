@@ -9,7 +9,7 @@ namespace HackedDesign
 
         private Transform playerTransform;
 
-        public override void Begin()
+        public override void Begin(IEntity entity)
         {
             playerTransform = GameManager.Instance.Player.transform;
         }
@@ -22,11 +22,6 @@ namespace HackedDesign
             }
 
             base.UpdateBehaviour(entity);
-        }
-
-        protected override void UpdateInteractionSprite(InteractionSpriteOverlay spriteOverlay)
-        {
-            spriteOverlay.SetSprite(EntityState.Hunt);
         }
     }
 }

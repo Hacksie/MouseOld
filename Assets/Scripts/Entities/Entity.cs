@@ -56,10 +56,17 @@ namespace HackedDesign
             set
             {
                 behaviour = value;
-                value.Begin();
+                value.Begin(this);
             }
         }
 
+        public Transform Transform => this.transform;
+
+        public InteractionSpriteOverlay SpriteOverlay => this.interactionSprite;
+
+        public PolyNav.PolyNavAgent NavAgent => this.polyNavAgent;
+
+        public float LastActionTime { get => this.actionTimer; set => this.actionTimer = value; }        
 
         protected virtual void Awake()
         {
@@ -69,38 +76,29 @@ namespace HackedDesign
             directionXAnimId = Animator.StringToHash("directionX");
             directionYAnimId = Animator.StringToHash("directionY");
             isMovingAnimId = Animator.StringToHash("isMoving");
-            
-        }
+            InitializeDetections();
 
-        public Transform Transform => this.transform;
-
-        public InteractionSpriteOverlay SpriteOverlay => this.interactionSprite;
-
-        public PolyNav.PolyNavAgent NavAgent => this.polyNavAgent;
-
-        public float LastActionTime { get => this.actionTimer; set => this.actionTimer = value; }
-
-        public virtual void Initialize(bool pooled, Transform playerTransform)
-        {
-            Logger.Log(this, "Initializing Entity");
-            this.pooled = pooled;
-            this.playerTransform = playerTransform;
-
-            direction = Vector2.down;
+           direction = Vector2.down;
 
             if (randomStartingDirection)
             {
                 direction = Quaternion.Euler(0, 0, Random.Range(0, Mathf.PI)) * Vector2.up;
             }
-
-            if (polyNavAgent != null && polyNavAgent.isActiveAndEnabled)
-            {
-                polyNavAgent.map = GameManager.Instance.PolyNav;
-
-            }
-            InitializeDetections();
-            behaviour.Begin();
+            behaviour.Begin(this);
         }
+
+
+        // public virtual void Initialize(bool pooled, Transform playerTransform)
+        // {
+        //     Logger.Log(this, "Initializing Entity");
+        //     this.pooled = pooled;
+        //     this.playerTransform = playerTransform;
+
+ 
+
+           
+        //     behaviour.Begin(this);
+        // }
 
         protected void InitializeDetections()
         {
@@ -110,6 +108,11 @@ namespace HackedDesign
             {
                 detection.Initialize(this);
             }
+        }
+
+        public void Update()
+        {
+            UpdateBehaviour();
         }
 
         public virtual void UpdateBehaviour()

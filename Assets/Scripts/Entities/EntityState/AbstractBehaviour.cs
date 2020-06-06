@@ -4,9 +4,11 @@ namespace HackedDesign
 {
     public abstract class AbstractBehaviour : ScriptableObject, IBehaviour
     {
-        public virtual void Begin()
+        [SerializeField] protected Sprite overlaySprite = null;
+
+        public virtual void Begin(IEntity entity)
         {
-            
+
         }
 
         public virtual void UpdateBehaviour(IEntity entity)
@@ -16,7 +18,7 @@ namespace HackedDesign
 
         protected virtual void UpdateInteractionSprite(InteractionSpriteOverlay spriteOverlay)
         {
-            spriteOverlay.SetSprite(EntityState.Interact);
+            spriteOverlay.SetSprite(overlaySprite);
         }
     }
 }

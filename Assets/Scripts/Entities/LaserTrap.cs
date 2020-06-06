@@ -16,12 +16,12 @@ namespace HackedDesign
         private bool tripped = false;
         private float resetTimer = 0;
 
-        public override void Initialize(bool pooled, Transform playerTransform)
-        {
-            Logger.Log(this, "Initializing Laser Trap");
-            base.Initialize(pooled, playerTransform);
-            isMoving = false;
-        }
+        // public override void Initialize(bool pooled, Transform playerTransform)
+        // {
+        //     Logger.Log(this, "Initializing Laser Trap");
+        //     base.Initialize(pooled, playerTransform);
+        //     isMoving = false;
+        // }
 
         public override void UpdateBehaviour()
         {

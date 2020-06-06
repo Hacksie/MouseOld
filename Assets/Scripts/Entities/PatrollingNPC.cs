@@ -28,19 +28,19 @@ namespace HackedDesign
             polyNavAgent = GetComponent<PolyNav.PolyNavAgent>();
         }
 
-        public override void Initialize(bool pooled, Transform playerTransform)
-        {
-            Logger.Log(this, "Initializing Patrolling Enemy");
+        // public override void Initialize(bool pooled, Transform playerTransform)
+        // {
+        //     Logger.Log(this, "Initializing Patrolling Enemy");
 
-            base.Initialize(pooled, playerTransform);
-            isMoving = false;
+        //     base.Initialize(pooled, playerTransform);
+        //     isMoving = false;
 
-            if (polyNavAgent != null && polyNavAgent.isActiveAndEnabled)
-            {
-                polyNavAgent.map = GameManager.Instance.PolyNav;
-            }
-            polyNavAgent.maxSpeed = patrolSpeed;
-        }
+        //     if (polyNavAgent != null && polyNavAgent.isActiveAndEnabled)
+        //     {
+        //         polyNavAgent.map = GameManager.Instance.PolyNav;
+        //     }
+        //     polyNavAgent.maxSpeed = patrolSpeed;
+        // }
 
         public override void UpdateBehaviour()
         {

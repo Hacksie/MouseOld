@@ -34,14 +34,19 @@ namespace HackedDesign
             }
         }
 
-        public void SetSprite(int entityState)
-        {
-            SetSprite((EntityState)entityState);
-        }
+        // public void SetSprite(int entityState)
+        // {
+        //     SetSprite((EntityState)entityState);
+        // }
 
-        public void SetSprite(EntityState entityState)
+        // public void SetSprite(EntityState entityState)
+        // {
+        //     spriteRenderer.sprite = sprites.GetSprite(entityState);
+        // }
+
+        public void SetSprite(Sprite sprite)
         {
-            spriteRenderer.sprite = sprites.GetSprite(entityState);
+            spriteRenderer.sprite = sprite;
         }
 
         public void Show(bool flag)

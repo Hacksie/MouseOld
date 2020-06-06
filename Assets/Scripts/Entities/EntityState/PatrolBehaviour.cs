@@ -10,9 +10,16 @@ namespace HackedDesign
 
         private Transform playerTransform;
 
-        public override void Begin()
+        public override void Begin(IEntity entity)
         {
             playerTransform = GameManager.Instance.Player.transform;
+
+
+            if (entity.NavAgent != null && entity.NavAgent.isActiveAndEnabled)
+            {
+                entity.NavAgent.map = GameManager.Instance.PolyNav;
+            }
+
         }
 
 
@@ -53,12 +60,6 @@ namespace HackedDesign
        protected RaycastHit2D CanSeePlayer(IEntity entity)
         {
             return Physics2D.Raycast(entity.Transform.position, (playerTransform.position - entity.Transform.position), this.patrolConfig.visibilityDistance, this.patrolConfig.playerLayerMask);
-        }
-
-
-        protected override void UpdateInteractionSprite(InteractionSpriteOverlay spriteOverlay)
-        {
-            spriteOverlay?.SetSprite(EntityState.Patrol);
         }
 
         protected Collider2D[] GetPointsOfInterestNearby(Transform transform)

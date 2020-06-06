@@ -45,7 +45,7 @@ namespace HackedDesign
             this.actionManager.UpdateBehaviour();
             this.playerController.Animate();
             AnimateDoors();
-            AnimateEntities();
+            //AnimateEntities();
 
             this.actionConsolePresenter.Repaint();
             this.actionPanelPresenter.Repaint();
@@ -63,7 +63,7 @@ namespace HackedDesign
 
         private void AnimateDoors() => GameManager.Instance.Data.doorList.ForEach(door => door.UpdateAnimation());
 
-        private void AnimateEntities() => GameManager.Instance.Data.entityList.ForEach(entity => entity.Animate());
+        //private void AnimateEntities() => GameManager.Instance.Data.entityList.ForEach(entity => entity.Animate());
 
         public void Interact()
         {
