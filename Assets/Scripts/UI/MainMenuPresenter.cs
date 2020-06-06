@@ -10,7 +10,6 @@ namespace HackedDesign.UI
 {
     public class MainMenuPresenter : AbstractPresenter
     {
-
         public GameObject playPanel;
         public GameObject optionsPanel;
         public GameObject creditsPanel;
@@ -31,8 +30,9 @@ namespace HackedDesign.UI
         public UnityEngine.UI.Slider enemiesSlider;
         public UnityEngine.UI.Slider trapsSlider;
         public GameObject defaultButton;
+        public UnityEngine.UI.Button[] slotButtons;
 
-        public LevelGenTemplate[] templates;
+        public LevelGenTemplate[] randomLevelTemplates;
 
         public void Start()
         {
@@ -73,6 +73,8 @@ namespace HackedDesign.UI
             {
                 optionsPanel.SetActive(show);
             }
+
+            EventSystem.current.SetSelectedGameObject(slotButtons[GameManager.Instance.Data.GameSlot].gameObject);
         }
 
         public void ShowCreditsPanel(bool show)
@@ -91,14 +93,21 @@ namespace HackedDesign.UI
             }
         }
 
-        public void ContinueEvent()
+        public void SelectSlot0Event()
         {
-            Logger.Log(this, "Continue Event");
-            ShowCreditsPanel(false);
-            ShowOptionsPanel(false);
-            ShowRandomPanel(false);
-
+            GameManager.Instance.Data.GameSlot = 0;
         }
+
+        public void SelectSlot1Event()
+        {
+            GameManager.Instance.Data.GameSlot = 1;
+        }
+
+        public void SelectSlot2Event()
+        {
+            GameManager.Instance.Data.GameSlot = 2;
+        }
+
 
         public void StartNewGameEvent()
         {
@@ -131,6 +140,11 @@ namespace HackedDesign.UI
             ShowOptionsPanel(false);
             ShowRandomPanel(true);
             ShowPlayPanel(false);
+        }
+
+        public void DeleteSlotEvent()
+        {
+
         }
 
         public void StartRandomGameEvent()
@@ -172,7 +186,7 @@ namespace HackedDesign.UI
         private void PopulateCorpTemplates()
         {
             templateDropdown.ClearOptions();
-            templateDropdown.AddOptions(templates.ToList().ConvertAll(t => new UnityEngine.UI.Dropdown.OptionData(t.name.ToString())));
+            templateDropdown.AddOptions(randomLevelTemplates.ToList().ConvertAll(t => new UnityEngine.UI.Dropdown.OptionData(t.name.ToString())));
         }
 
         private void PopulateResolutions()

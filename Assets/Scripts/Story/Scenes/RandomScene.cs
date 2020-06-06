@@ -24,7 +24,19 @@ namespace HackedDesign.Story
 
         public override bool Complete()
         {
-            return false;
-        }        
+            return GameManager.Instance.Data.CurrentLevel.completed == true;
+        }   
+
+        public override bool Invoke(string actionName)
+        {
+            switch (actionName)             
+            {
+                case "EndComputer":
+                GameManager.Instance.Data.CurrentLevel.completed = true;
+                return true;
+            }
+
+            return base.Invoke(actionName);
+        }
     }
 }

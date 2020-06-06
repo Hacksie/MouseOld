@@ -26,6 +26,7 @@ namespace HackedDesign
             Logger.Log("PlayingState", "Start");
             Time.timeScale = 1;
             Cursor.visible = true;
+            GameManager.Instance.SetLight(GameManager.Instance.Data.CurrentLevel.template.startingLight);
             this.actionConsolePresenter.Show();
             this.actionPanelPresenter.Show();
             this.timerPanelPresenter.Show();

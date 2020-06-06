@@ -40,7 +40,7 @@ namespace HackedDesign
 
         private void Start()
         {
-            if (!CompareTag(TagManager.TRIGGER))
+            if (!CompareTag(Tags.TRIGGER))
             {
                 Logger.LogError(this ,"Trigger is not tagged");
             }
@@ -91,14 +91,14 @@ namespace HackedDesign
 
             for (int i = colliders.Count - 1; i >= 0; i--)
             {
-                if (colliders[i].CompareTag(TagManager.NPC) && allowNPCAutoInteraction)
+                if (colliders[i].CompareTag(Tags.NPC) && allowNPCAutoInteraction)
                 {
                     Logger.Log(name, "NPC hit door", " ", colliders[i].gameObject.name);
                     Invoke(colliders[i].gameObject);
                     colliders.RemoveAt(i);
                 }
 
-                if (colliders[i].CompareTag(TagManager.PLAYER))
+                if (colliders[i].CompareTag(Tags.PLAYER))
                 {
                     if (CheckPlayerActions(colliders[i].gameObject, inputController))
                     {
@@ -206,7 +206,7 @@ namespace HackedDesign
                 return;
             }
 
-            if (other.CompareTag(TagManager.PLAYER))
+            if (other.CompareTag(Tags.PLAYER))
             {
                 //FIXME: cache this
                 PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
@@ -214,7 +214,7 @@ namespace HackedDesign
                 Entry(other.gameObject);
             }
 
-            if(other.CompareTag(TagManager.NPC))
+            if(other.CompareTag(Tags.NPC))
             {
                 if(allowNPCAutoInteraction)
                 {
@@ -239,14 +239,14 @@ namespace HackedDesign
                 return;
             }
 
-            if (other.CompareTag(TagManager.PLAYER))
+            if (other.CompareTag(Tags.PLAYER))
             {
                 PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
                 playerController.UnregisterTrigger(this);
                 Leave(other.gameObject);
             }
 
-            if (other.CompareTag(TagManager.NPC))
+            if (other.CompareTag(Tags.NPC))
             {
                 Leave(other.gameObject);
             }

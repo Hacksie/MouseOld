@@ -35,6 +35,9 @@ namespace HackedDesign
 
 			public bool hostile = true;
 
+			public bool showTutorial = false;
+			public GlobalLightTypes startingLight = GlobalLightTypes.Default;
+
 			public List<GameObject> floors;
 			public List<GameObject> mainChainFloor;
 			public List<GameObject> levelElements;     
@@ -43,7 +46,6 @@ namespace HackedDesign
 			public List<GameObject> randomProps;
 			public List<GameObject> fixedProps;
 			public List<GameObject> lineOfSightProps;
-
 
 			public List<string> traps;
 			public List<string> enemies;

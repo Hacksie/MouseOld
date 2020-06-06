@@ -6,18 +6,22 @@ using HackedDesign.Story;
 namespace HackedDesign
 {
     [RequireComponent(typeof(Animator))]
-    public class Entity : MonoBehaviour, IEntity
+    public partial class Entity : MonoBehaviour, IEntity
     {
-
+        [Header("Referenced Game Objects")]
+        [SerializeField] protected InteractionSpriteOverlay interactionSprite;
+        protected PolyNav.PolyNavAgent? polyNavAgent = null;
 
         [Header("Settings")]
         [SerializeField] public Story.InfoEntity entity = null;
-        [SerializeField] private LayerMask playerLayerMask = 0;
-        [SerializeField] private float visibilityDistance = 3.2f;
+        
+        
         [SerializeField] private bool randomStartingDirection = true;
-        [SerializeField] private bool facePlayer = false;
+        
 
         [Header("State")]
+        [SerializeField] protected AbstractBehaviour behaviour;
+
         [SerializeField] protected bool pooled = false;
         [SerializeField] protected Vector2 direction = Vector2.down;
         [SerializeField] protected bool isMoving = false;
@@ -28,9 +32,11 @@ namespace HackedDesign
         public UnityEvent playerLeaveEvent;
         public UnityEvent alertEvent;
 
-        public EntityState State { get; protected set; } = EntityState.Passive;
+        public EntityState State { get; protected set; } = EntityState.Patrol;
+        public Vector2 Direction { get => direction; set => direction = value; }
 
-        private Animator animator = null; //The parent animator.
+        private Animator animator = null; 
+
         protected readonly List<GameObject> colliders = new List<GameObject>();
         protected Transform playerTransform;
         protected bool playerSeen;
@@ -39,18 +45,44 @@ namespace HackedDesign
         private int directionYAnimId;
         private int isMovingAnimId;
 
-        protected virtual void Awake()
+        public float actionTimer = 0;
+
+        public AbstractBehaviour Behaviour
         {
-            animator = GetComponent<Animator>();
-            directionXAnimId = Animator.StringToHash("directionX");
-            directionYAnimId = Animator.StringToHash("directionY");
-            isMovingAnimId = Animator.StringToHash("isMoving");
+            get
+            {
+                return behaviour;
+            }
+            set
+            {
+                behaviour = value;
+                value.Begin();
+            }
         }
 
 
+        protected virtual void Awake()
+        {
+            animator = GetComponent<Animator>();
+            interactionSprite = GetComponentInChildren<InteractionSpriteOverlay>();
+            polyNavAgent = GetComponent<PolyNav.PolyNavAgent>();
+            directionXAnimId = Animator.StringToHash("directionX");
+            directionYAnimId = Animator.StringToHash("directionY");
+            isMovingAnimId = Animator.StringToHash("isMoving");
+            
+        }
+
+        public Transform Transform => this.transform;
+
+        public InteractionSpriteOverlay SpriteOverlay => this.interactionSprite;
+
+        public PolyNav.PolyNavAgent NavAgent => this.polyNavAgent;
+
+        public float LastActionTime { get => this.actionTimer; set => this.actionTimer = value; }
+
         public virtual void Initialize(bool pooled, Transform playerTransform)
         {
-            Logger.Log(this, "Initializing Enemy");
+            Logger.Log(this, "Initializing Entity");
             this.pooled = pooled;
             this.playerTransform = playerTransform;
 
@@ -61,9 +93,13 @@ namespace HackedDesign
                 direction = Quaternion.Euler(0, 0, Random.Range(0, Mathf.PI)) * Vector2.up;
             }
 
+            if (polyNavAgent != null && polyNavAgent.isActiveAndEnabled)
+            {
+                polyNavAgent.map = GameManager.Instance.PolyNav;
 
-
+            }
             InitializeDetections();
+            behaviour.Begin();
         }
 
         protected void InitializeDetections()
@@ -78,24 +114,8 @@ namespace HackedDesign
 
         public virtual void UpdateBehaviour()
         {
-            if(facePlayer)
-            {
-                direction = (playerTransform.position - this.transform.position).normalized;
-            }
-            // switch (State)
-            // {
-            //     case EntityState.PASSIVE:
-            //         UpdatePassive();
-            //         break;
-            //     case EntityState.ALERTED:
-            //         UpdateAlerted();
-            //         break;
-            //     default:
-            //         break;
-            // }
 
-            //UpdateDetection();
-            //Animate();
+            behaviour.UpdateBehaviour(this);
         }
 
         public virtual Story.InfoEntity GetEntityDefinition()
@@ -114,6 +134,11 @@ namespace HackedDesign
             this.transform.position = position;
         }
 
+        public void InvokeSeenPlayer()
+        {
+            //this.playerSeen.invoke();
+        }
+
         public virtual void Activate()
         {
             this.gameObject.SetActive(true);
@@ -126,22 +151,44 @@ namespace HackedDesign
 
         protected virtual void UpdatePassive()
         {
-            // The player triggered our detection, but there anything in the way?
+
+        }
+
+        
+
+        protected virtual void UpdateAlerted()
+        {
+            // var hit = CanSeePlayer();
+            // if (hit.collider != null && hit.collider.CompareTag(Tags.PLAYER))
+            // {
+            // }
+            // else
+            // {
+            //     State = EntityState.Seek;
+            //     playerSeen = false;
+            //     playerLeaveEvent.Invoke();
+            // }
+
+            /*
             if (colliders.Contains(playerTransform.gameObject))
             {
                 var hit = CanSeePlayer();
-                if (hit.collider != null && hit.collider.CompareTag(TagManager.PLAYER))
+                if (hit.collider != null && hit.collider.CompareTag(Tags.PLAYER))
                 {
+                    Logger.Log(this, "hit");
                     playerSeen = true;
                     playerSeenEvent.Invoke();
                     State = EntityState.Alerted;
                     return;
                 }
-            }
-        }
+            }            
 
-        protected virtual void UpdateAlerted()
-        {
+            if (playerSeen && !colliders.Contains(playerTransform.gameObject))
+            {
+                State = EntityState.Seeking;
+                playerSeen = false;
+                playerLeaveEvent.Invoke();
+            }   */
 
             // if (colliders.Contains(GameManager.Instance.GetPlayer()))
             // {
@@ -173,32 +220,44 @@ namespace HackedDesign
             // }
         }
 
-
-
-        protected RaycastHit2D CanSeePlayer()
+        protected virtual void UpdateSeek()
         {
-            return Physics2D.Raycast(transform.position, (playerTransform.position - transform.position), visibilityDistance, playerLayerMask);
         }
+
+        protected virtual void UpdateHunt()
+        {
+
+        }
+
+        // protected RaycastHit2D CanSeePlayer()
+        // {
+        //     return Physics2D.Raycast(transform.position, (playerTransform.position - transform.position), visibilityDistance, playerLayerMask);
+        // }
 
         public void AddCollider(GameObject collider)
         {
-            if (!colliders.Contains(collider.gameObject))
+            if (!colliders.Contains(collider))
             {
-                colliders.Add(collider.gameObject);
+                colliders.Add(collider);
             }
         }
 
         public void RemoveCollider(GameObject collider)
         {
-            if (colliders.Contains(collider.gameObject))
+            if (colliders.Contains(collider))
             {
-                colliders.Remove(collider.gameObject);
+                colliders.Remove(collider);
             }
+        }
+
+        public List<GameObject> GetColliders()
+        {
+            return this.colliders;
         }
 
         protected void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag(TagManager.PLAYER))
+            if (other.CompareTag(Tags.PLAYER))
             {
                 AddCollider(other.gameObject);
             }
@@ -206,7 +265,7 @@ namespace HackedDesign
 
         protected void OnTriggerExit2D(Collider2D other)
         {
-            if (other.CompareTag(TagManager.PLAYER))
+            if (other.CompareTag(Tags.PLAYER))
             {
                 RemoveCollider(other.gameObject);
             }
@@ -214,7 +273,7 @@ namespace HackedDesign
 
         public void Animate()
         {
-            if (animator == null || !animator.enabled) 
+            if (animator == null || !animator.enabled)
             {
                 return;
             }
@@ -224,8 +283,13 @@ namespace HackedDesign
             animator.SetBool(isMovingAnimId, isMoving);
         }
 
-        private void OnDrawGizmos()
+        protected virtual void OnDrawGizmos()
         {
+
+            //Physics2D.Raycast(transform.position, (playerTransform.position - transform.position), visibilityDistance, playerLayerMask);
+
+            //Gizmos.DrawRay(transform.position, (playerTransform.position - transform.position));
+            /*
             switch (State)
             {
                 case EntityState.Passive:
@@ -234,18 +298,7 @@ namespace HackedDesign
                 case EntityState.Alerted:
                     Gizmos.DrawIcon(transform.position + Vector3.up, "skull-hs.png", true);
                     break;
-            }
-        }
-
-        public enum EntityState
-        {
-            Passive,
-            Alerted,
-            Seeking,
-            Responding,
-            Hunting,
-            Fighting,
-            Stunned
+            }*/
         }
     }
 }

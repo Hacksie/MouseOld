@@ -3,11 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 namespace HackedDesign
 {
-
     public class ScanningEnemy : Entity
     {
         [Header("Referenced Game Objects")]
@@ -27,10 +24,10 @@ namespace HackedDesign
         {
             switch (State)
             {
-                case EntityState.Passive:
+                case EntityState.Patrol:
                     UpdatePassive();
                     break;
-                case EntityState.Alerted:
+                case EntityState.Alert:
                     UpdateAlerted();
                     break;
                 default:

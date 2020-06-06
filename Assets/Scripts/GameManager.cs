@@ -13,8 +13,6 @@ namespace HackedDesign
         [SerializeField] private PlayerController playerController = null;
 
         [Header("Level")]
-        [SerializeField] private Level.LevelGenTemplate[] levelGenTemplates = null;
-
         [SerializeField] private Level.LevelRenderer levelRenderer = null;
         [SerializeField] private GameObject levelParent = null;
         [SerializeField] private GameObject enemiesParent = null;
@@ -25,16 +23,15 @@ namespace HackedDesign
         [SerializeField] private Color lightsDefault = Color.black;
         [SerializeField] private Color lightsWarn = Color.black;
         [SerializeField] private Color lightsAlert = Color.black;
-        [SerializeField] private Color lightsBar = Color.black;
 
         [Header("Managers")]
-        [SerializeField] private Entities.EntityManager entityManager = null;
+        [SerializeField] private EntityManager entityManager = null;
         [SerializeField] private Story.SceneManager sceneManager = null;
-        [SerializeField] private StartMenuManager startMenuManager = null;
-        [SerializeField] private SelectMenuManager selectMenuManager = null;
+        [SerializeField] private StartMenuManager startMenuManager = new StartMenuManager();
+        [SerializeField] private SelectMenuManager selectMenuManager = new SelectMenuManager();
         [SerializeField] private Dialogue.NarrationManager narrationManager = null;
-        [SerializeField] private MissionCompleteManager missionCompleteManager = null;
-        [SerializeField] private LevelCompleteManager levelCompleteManager = null;
+        [SerializeField] private MissionCompleteManager missionCompleteManager = new MissionCompleteManager();
+        [SerializeField] private LevelCompleteManager levelCompleteManager = new LevelCompleteManager();
         [SerializeField] private WorldMapManager worldMapManager = null;
 
         [Header("UI")]
@@ -65,6 +62,8 @@ namespace HackedDesign
 
         public GameData Data { get { return gameData; } private set { gameData = value; } }
         public PolyNav.PolyNav2D PolyNav { get { return polyNav2D; } private set { polyNav2D = value; } }
+
+        public PlayerController Player { get { return playerController;} private set { playerController = value; }}
 
         public static GameManager Instance { get; private set; }
 
@@ -102,7 +101,7 @@ namespace HackedDesign
         private void Update() => CurrentState.Update();
         private void LateUpdate() => CurrentState.LateUpdate();
 
-        
+
 
         public void LoadNewGame()
         {
@@ -172,18 +171,31 @@ namespace HackedDesign
             Logger.Log(this, "Saved ", path);
         }
 
-        public void SetLight(GlobalLightTypes light) => Data.currentLight = light;
+        public void SetLight(GlobalLightTypes light)
+        {
+            switch (light)
+            {
+                case GlobalLightTypes.Warn:
+                    globalLight.color = lightsWarn;
+                    break;
+                case GlobalLightTypes.Alert:
+                    globalLight.color = lightsAlert;
+                    break;
+
+                default:
+                case GlobalLightTypes.Default:
+                    globalLight.color = lightsDefault;
+                    break;
+            }
+        }
+        //Data.currentLight = light;
 
         private void CheckBindings()
         {
             this.playerController = this.playerController ?? FindObjectOfType<PlayerController>();
-            this.entityManager = this.entityManager ?? FindObjectOfType<Entities.EntityManager>();
+            this.entityManager = this.entityManager ?? FindObjectOfType<EntityManager>();
             this.sceneManager = this.sceneManager ?? FindObjectOfType<Story.SceneManager>();
-            this.startMenuManager = this.startMenuManager ?? FindObjectOfType<StartMenuManager>();
-            this.selectMenuManager = this.selectMenuManager ?? FindObjectOfType<SelectMenuManager>();
             this.narrationManager = this.narrationManager ?? FindObjectOfType<Dialogue.NarrationManager>();
-            this.missionCompleteManager = this.missionCompleteManager ?? FindObjectOfType<MissionCompleteManager>();
-            this.levelCompleteManager = this.levelCompleteManager ?? FindObjectOfType<LevelCompleteManager>();
             this.worldMapManager = this.worldMapManager ?? FindObjectOfType<WorldMapManager>();
         }
 
@@ -240,8 +252,9 @@ namespace HackedDesign
         public void SceneInitialize()
         {
             Logger.Log(this, "Scene initialization");
-            SetLight(GlobalLightTypes.Default);
+            //SetLight(GlobalLightTypes.Default);
             RenderLevel();
+            SetLight(Data.CurrentLevel.template.startingLight);
             playerController.Move(Data.CurrentLevel.ConvertLevelPosToWorld(Data.CurrentLevel.playerSpawn.levelLocation) + Data.CurrentLevel.playerSpawn.worldOffset);
             minimapPanel.Initialize(Data.CurrentLevel, playerController.transform);
             SceneTriggersInitialize();
@@ -266,7 +279,7 @@ namespace HackedDesign
             Data.triggerList.Clear();
             Logger.Log(this, "Initializing triggers");
 
-            foreach (var triggerObject in GameObject.FindGameObjectsWithTag(TagManager.TRIGGER))
+            foreach (var triggerObject in GameObject.FindGameObjectsWithTag(Tags.TRIGGER))
             {
                 if (!triggerObject.activeInHierarchy)
                 {

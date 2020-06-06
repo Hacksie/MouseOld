@@ -109,6 +109,7 @@ namespace HackedDesign.Story
             }
             else
             {
+                
                 Logger.Log("PreludeScene", "PreludeActions: can't exit, haven't received mission");
             }
         }

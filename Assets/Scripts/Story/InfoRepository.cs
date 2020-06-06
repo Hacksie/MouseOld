@@ -18,7 +18,7 @@ namespace HackedDesign
             public List<Enemy> enemies = new List<Enemy>();
             public List<Trap> traps = new List<Trap>();
             public List<Location> locations = new List<Location>();
-            public List<Floor> floors = new List<Floor>();
+            //public List<Floor> floors = new List<Floor>();
             public Dictionary<string, InfoEntity> entities = new Dictionary<string, InfoEntity>();
 
             [Header("State")]
@@ -39,7 +39,7 @@ namespace HackedDesign
                 LoadCorps();
                 LoadCharacters();
                 LoadLocations();
-                LoadFloors();
+                //LoadFloors();
             }
 
             public void LoadCorps()
@@ -66,13 +66,13 @@ namespace HackedDesign
                 }
             }
 
-            public void LoadFloors()
-            {
-                foreach (var f in floors)
-                {
-                    entities.Add(f.id, f);
-                }
-            }
+            // public void LoadFloors()
+            // {
+            //     foreach (var f in floors)
+            //     {
+            //         entities.Add(f.id, f);
+            //     }
+            // }
 
             public List<InfoCategory> GetCategories()
             {
@@ -180,14 +180,6 @@ namespace HackedDesign
 
                 return knownEntities.Where(kv => kv.Value.category == "Locations").Select(kv => kv.Value as Location).ToList();
             }
-
-            // public List<Floor> GetKnownFloorsForLocation(string locationId)
-            // {
-            //     return knownEntities.Where(kv => kv.Value.category == "Floors")
-            //                         .Where(f => (f.Value as Floor).locationId == locationId)
-            //                         .Select(kv => (kv.Value as Floor))
-            //                         .ToList();
-            // }
 
             public List<InfoEntity> GetKnownEntities(string category)
             {

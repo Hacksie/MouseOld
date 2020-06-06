@@ -422,10 +422,11 @@ namespace HackedDesign.Level
                 return;
             }
 
-            foreach (var candidate in candidates.Take(level.template.enemyCount))
+            List<Vector2Int> list = candidates.Take(level.template.enemyCount).ToList();
+            for (int i = list.Count - 1; i >= 0; i--)
             {
+                Vector2Int candidate = list[i];
                 var enemy = enemyList[UnityEngine.Random.Range(0, enemyList.Count)];
-
 
                 level.enemySpawnLocationList.Add(
                     new Spawn()
@@ -466,20 +467,21 @@ namespace HackedDesign.Level
 
             candidates.Randomize();
 
-            foreach (var candidate in candidates.Take(level.template.enemyCount))
+            List<Vector2Int> list = candidates.Take(level.template.trapCount).ToList();
+            for (int i = list.Count - 1; i >= 0; i--)
             {
+                Vector2Int candidate = list[i];
                 var trap = trapList[UnityEngine.Random.Range(0, trapList.Count)];
 
                 level.trapSpawnLocationList.Add(
                     new Spawn()
                     {
-                        type = Spawn.ENTITY_TYPE_ENEMY,
+                        type = Spawn.ENTITY_TYPE_TRAP,
                         name = trap,
                         levelLocation = candidate,
                         worldOffset = Vector2.zero
                     }
                 );
-
             }
         }
     }

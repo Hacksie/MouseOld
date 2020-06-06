@@ -22,7 +22,7 @@ namespace HackedDesign.UI
 
         private Transform playerTransform;
 
-        private Vector2Int lastMapPosition = Vector2Int.zero;
+        private Vector2Int lastMapPosition = Vector2Int.one;
 
 
         public void Initialize(Level.Level level, Transform playerTransform)

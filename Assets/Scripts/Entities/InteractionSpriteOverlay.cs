@@ -1,30 +1,52 @@
 ﻿using UnityEngine;
+using static HackedDesign.Entity;
 
-namespace HackedDesign.Entities
+namespace HackedDesign
 {
-    class InteractionSpriteOverlay : MonoBehaviour
+    public class InteractionSpriteOverlay : MonoBehaviour
     {
         [Header("Game Objects")]
+        
+        [SerializeField] private SpriteRenderer spriteRenderer = null;
+        
+        [Header("Configured Game Objects")]
+        [SerializeField] private EntitySprites sprites = null;
+        [Header("Settings")]
         [SerializeField] private Color normalColor = Color.white;
         [SerializeField] private Color highlightColor = Color.white;
-    
-        [SerializeField] private SpriteRenderer sprite = null;
 
-        private void Start()
+        private void Awake()
         {
-            sprite.color = normalColor;
+            SetSpriteRenderer();
+        }
+
+        private void OnEnable()
+        {
+            SetSpriteRenderer();
+        }
+
+        private void SetSpriteRenderer()
+        {
+            if (spriteRenderer == null)
+            {
+                spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+                spriteRenderer.color = normalColor;
+            }
+        }
+
+        public void SetSprite(int entityState)
+        {
+            SetSprite((EntityState)entityState);
+        }
+
+        public void SetSprite(EntityState entityState)
+        {
+            spriteRenderer.sprite = sprites.GetSprite(entityState);
         }
 
         public void Show(bool flag)
         {
-            sprite.color = flag ? highlightColor : normalColor;
-            
-            // if (sprite == null) return;
-
-            // if (sprite.gameObject.activeInHierarchy != flag)
-            // {
-            //     sprite.gameObject.SetActive(flag);
-            // }
+            spriteRenderer.color = flag ? highlightColor : normalColor;
         }
     }
 }

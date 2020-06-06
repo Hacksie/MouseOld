@@ -167,13 +167,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45e089d1306da946baa09e2444ed10e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionSprite: {fileID: 0}
   entity: {fileID: 11400000, guid: 16bffee7e93a5bd42a1ad4a70a448a58, type: 2}
   playerLayerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   visibilityDistance: 3.2
   randomStartingDirection: 0
   facePlayer: 1
+  behaviour: {fileID: 11400000, guid: 79ee91161ffcc294db2c336ad0cb19f8, type: 2}
   pooled: 0
   direction: {x: 0, y: -1}
   isMoving: 0
@@ -413,12 +415,27 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6d08968f7b04446b6a2001d54db661d3,
+      objectReference: {fileID: 0}
+    - target: {fileID: 67481399894725183, guid: 468b9302c01989d4780290de629c1591,
         type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1205910083837189476, guid: 468b9302c01989d4780290de629c1591,
         type: 3}
       propertyPath: m_Name
       value: InteractionSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611924316147767364, guid: 468b9302c01989d4780290de629c1591,
+        type: 3}
+      propertyPath: sprites
+      value: 
+      objectReference: {fileID: 11400000, guid: 659d709cb8e5ea24bb98b5c682f671f6,
+        type: 2}
+    - target: {fileID: 2611924316147767364, guid: 468b9302c01989d4780290de629c1591,
+        type: 3}
+      propertyPath: defaultState
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8709175628171115038, guid: 468b9302c01989d4780290de629c1591,
         type: 3}

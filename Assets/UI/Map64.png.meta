@@ -91,7 +91,7 @@ TextureImporter:
     second: tl_ww
   - first:
       213: 72376773701672127
-    second: Map64_29
+    second: goal_1
   - first:
       213: 8964714726939429622
     second: tr_dd
@@ -130,12 +130,15 @@ TextureImporter:
     second: loc_5
   - first:
       213: -8318407238857464397
-    second: Map64_42
+    second: goal_2
   - first:
       213: 1388532238627904555
     second: loc_6
+  - first:
+      213: 2189017591730179931
+    second: goal_3
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -187,10 +190,13 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1121,6 +1127,69 @@ TextureImporter:
       bones: []
       spriteID: b2c189ad6be054310800000000000000
       internalID: 1388532238627904555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goal_1
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 32
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbc1a7eca42210100800000000000000
+      internalID: 72376773701672127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goal_2
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 24
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b5ecd660b41f8c80800000000000000
+      internalID: -8318407238857464397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goal_3
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5f882ad6e3f06e10800000000000000
+      internalID: 2189017591730179931
       vertices: []
       indices: 
       edges: []

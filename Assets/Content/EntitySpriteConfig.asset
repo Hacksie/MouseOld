@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd9d06a7db3665409db280971bbdf06, type: 3}
+  m_Name: EntitySpriteConfig
+  m_EditorClassIdentifier: 
+  chatSprite: {fileID: 21300000, guid: d96c474102cc3484cb234f2aca242496, type: 3}
+  lookSprite: {fileID: 21300000, guid: 04a1a5e0ae31d4a9ca902c1640adeeb0, type: 3}
+  passiveSprite: {fileID: 21300000, guid: 44aec8d1b902e4e56b76b3da5a69f517, type: 3}
+  alertSprite: {fileID: 21300000, guid: 0203cbce8c2988749813a6370240b96f, type: 3}
+  huntSprite: {fileID: 21300000, guid: 0203cbce8c2988749813a6370240b96f, type: 3}
+  seekingSprite: {fileID: 21300000, guid: 2d529deaf8db546ef9ccb86a5fee54a3, type: 3}
+  doorSprite: {fileID: 21300000, guid: 63cec196c3ea34f79a5c8dbbab99f6f2, type: 3}
+  lockSprite: {fileID: 21300000, guid: 3e7cd81d51da2459696ad557ccdacd7b, type: 3}
+  unlockSprite: {fileID: 21300000, guid: 1977f856c22e14844bf23e39216a6e54, type: 3}
+  interactSprite: {fileID: 21300000, guid: 0d381fe3d33674391868b46f9ca58104, type: 3}
+  hackSprite: {fileID: 21300000, guid: 0b1e38cb5fda442bb934c22a87b91e2d, type: 3}
+  overloadSprite: {fileID: 21300000, guid: 701d19066ca9b40948fe1dc71a6c730b, type: 3}
+  hackOrOverloadSprite: {fileID: 21300000, guid: e044cf9324d16104785b969b51aea604,
+    type: 3}
+  taskSprite: {fileID: 21300000, guid: d7069f56dc9a945a59f2765e97676d5c, type: 3}
+  exitSprite: {fileID: 21300000, guid: 3d4b46c8f571249ba955afa68fffeca6, type: 3}

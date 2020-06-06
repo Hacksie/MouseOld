@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace HackedDesign {
-	public class SelectMenuManager : MonoBehaviour {
+	public class SelectMenuManager {
 
 		public static SelectMenuManager instance;
 

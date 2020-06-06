@@ -3,31 +3,39 @@ using HackedDesign.Entities;
 
 namespace HackedDesign.Story
 {
-    public class BootstrapScene {
-        private Dialogue.NarrationManager narrationManager;
+    public class BootstrapScene : GlobalScene {
+        
 
-        public BootstrapScene(Dialogue.NarrationManager narrationManager)
+        public BootstrapScene(string templateName, int length, int height, int width, int difficulty, int enemies, int traps) : base(templateName, length, height, width, difficulty, enemies, traps)
         {
-            this.narrationManager = narrationManager;
+            
         }
 
-        public bool Invoke(string actionName)
+        public override void Begin()
         {
-            switch (actionName)
+            GameManager.Instance.SetPlaying();
+        }
+
+        public override void Next()
+        {
+
+        }        
+
+        public override bool Complete()
+        {
+            return GameManager.Instance.Data.CurrentLevel.completed == true;
+        }   
+
+        public override bool Invoke(string actionName)
+        {
+            switch (actionName)             
             {
-                case "Bootstrap":
-                    Logger.Log("BootstrapActions", "Invoke Bootstrap");
-                    return true;
-                case "Bootstrap1":
-                    Logger.Log("BootstrapActions", "Invoke Bootstrap1");
-                    InfoRepository.Instance.AddToKnownEntities("Mouse");
-                    InfoRepository.Instance.AddToKnownEntities("Arisana");
-                    InfoRepository.Instance.AddToKnownEntities("ManagerLyon");
-                    InfoRepository.Instance.AddToKnownEntities("Cat");
-                    InfoRepository.Instance.AddToKnownEntities("Saika");
-                    this.narrationManager.ShowNarration("Bootstrap1");
-                    return true;
+                case "EndComputer":
+                GameManager.Instance.Data.CurrentLevel.completed = true;
+                return true;
+                
             }
+
             return false;
         }
     }

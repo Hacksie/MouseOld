@@ -1,7 +1,5 @@
-using UnityEngine;
-
 namespace HackedDesign {
-	public class LevelCompleteManager : MonoBehaviour 
+	public class LevelCompleteManager
 	{
 		Story.SceneManager actionManager = null;
 

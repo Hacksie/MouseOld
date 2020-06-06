@@ -82,7 +82,6 @@ namespace HackedDesign.UI
             }
 
             RepaintFloors();
-
         }
 
         private void RepaintFloors()

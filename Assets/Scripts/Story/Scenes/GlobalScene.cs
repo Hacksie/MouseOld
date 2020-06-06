@@ -40,16 +40,16 @@ namespace HackedDesign.Story
                     // FIXME: Check if any other condition exists first!
                     if (!GameManager.Instance.Data.CurrentLevel.entryTriggered)
                     {
-                        GameManager.Instance.Data.CurrentLevel.entryTriggered = true;
-
-                        SceneManager.Instance.AddActionMessage("Entry triggered");
                         var timer = GameManager.Instance.Data.CurrentLevel.template.levelLength * 10;
-
-                        SceneManager.Instance.AddActionMessage($"{timer} seconds until security triggers!");
+                        GameManager.Instance.Data.CurrentLevel.entryTriggered = true;
                         GameManager.Instance.Data.CurrentLevel.startTime = Time.time;
                         GameManager.Instance.Data.CurrentLevel.timer.Start(timer);
+                        SceneManager.Instance.AddActionMessage("Security systems hacked");
+                        SceneManager.Instance.AddActionMessage("Alert level increased");
+                        SceneManager.Instance.AddActionMessage($"{timer} seconds until security increases!");
+                        GameManager.Instance.SetLight(GlobalLightTypes.Warn);
                     }
-                    //CoreGame.Instance.state.currentLight = GlobalLightTypes.Warn;
+
                     return true;
                 case "BatteryFill":
                     Logger.Log("GlobalActions", "GlobalActions: invoke BatteryFill");
@@ -79,23 +79,24 @@ namespace HackedDesign.Story
                     Logger.Log("GlobalActions", "invoke LevelExit");
                     if (Complete())
                     {
+                        Logger.Log("GlobalActions", "Level Over");
+                        AudioManager.Instance.PlayAccept();
+                        GameManager.Instance.Data.CurrentLevel.timer.Stop();
                         if (GameManager.Instance.Data.CurrentLevel.template.hostile)
                         {
-                            SceneManager.Instance.AddActionMessage("mission completed");
-                            GameManager.Instance.Data.CurrentLevel.timer.Stop();
-                            Logger.Log("GlobalActions", "Level Over");
+                            SceneManager.Instance.AddActionMessage("Mission completed");
                             GameManager.Instance.SetMissionComplete();
                         }
                         else
                         {
-                            SceneManager.Instance.AddActionMessage("level completed");
-                            GameManager.Instance.Data.CurrentLevel.timer.Stop();
-                            Logger.Log("GlobalActions", "Level Over");
+                            SceneManager.Instance.AddActionMessage("Level completed");
                             GameManager.Instance.SetLevelComplete();
                         }
                     }
                     else
                     {
+                        SceneManager.Instance.AddActionMessage("Exit requirements not met");
+                        AudioManager.Instance.PlayDenied();
                         Logger.Log("GlobalScene", "Cannot exit, level incomplete");
                     }
                     return true;

@@ -20,7 +20,7 @@ namespace HackedDesign
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag(TagManager.PLAYER))
+            if (other.CompareTag(Tags.PLAYER))
             {
                 this.parent?.AddCollider(other.gameObject);
             }
@@ -28,7 +28,7 @@ namespace HackedDesign
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            if (other.CompareTag(TagManager.PLAYER))
+            if (other.CompareTag(Tags.PLAYER))
             {
                 this.parent?.AddCollider(other.gameObject);
             }
@@ -36,7 +36,7 @@ namespace HackedDesign
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.CompareTag(TagManager.PLAYER))
+            if (other.CompareTag(Tags.PLAYER))
             {
                 this.parent?.RemoveCollider(other.gameObject);
             }

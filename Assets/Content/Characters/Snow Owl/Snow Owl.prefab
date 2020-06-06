@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45e089d1306da946baa09e2444ed10e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionSprite: {fileID: 0}
   entity: {fileID: 11400000, guid: 655ec6e04065db54e8d5cf6bad859bc7, type: 2}
   playerLayerMask:
     serializedVersion: 2
@@ -174,6 +175,7 @@ MonoBehaviour:
   visibilityDistance: 3.2
   randomStartingDirection: 0
   facePlayer: 1
+  behaviour: {fileID: 11400000, guid: 79ee91161ffcc294db2c336ad0cb19f8, type: 2}
   pooled: 0
   direction: {x: 0, y: -1}
   isMoving: 0
@@ -315,8 +317,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6d08968f7b04446b6a2001d54db661d3,
+      objectReference: {fileID: 0}
+    - target: {fileID: 67481399894725183, guid: 468b9302c01989d4780290de629c1591,
         type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1205910083837189476, guid: 468b9302c01989d4780290de629c1591,
         type: 3}
       propertyPath: m_Name

@@ -1,14 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace HackedDesign
+namespace HackedDesign.Dialogue
 {
-    namespace Dialogue
+    public class NarrationHolder
     {
-        public partial class NarrationManager
-        {
-            private class NarrationHolder {
-				public List<Narration> narrations = null;
-			}
-		}
-	}
+        public List<Narration> narrations = null;
+    }
 }

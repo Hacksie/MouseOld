@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#nullable enable
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 //FIXME: Combine this with SceneManager
 namespace HackedDesign {
 	public class WorldMapManager : MonoBehaviour 
 	{
         [SerializeField] private string defaultLocation = "AisanaContractorTower2";
-        public string selectedLocation;
-        public string selectedFloor;
+        public string selectedLocation = "";
+        public string selectedFloor = "";
 
         public void Initialize() {
             selectedLocation = defaultLocation;

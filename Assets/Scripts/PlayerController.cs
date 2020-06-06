@@ -1,4 +1,5 @@
 ﻿
+#nullable enable
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,13 +19,13 @@ namespace HackedDesign
         [SerializeField] private float dashTimeToComplete = 0.2f;
         [SerializeField] private float augmentFactor = 0.1f;
         [SerializeField] private bool isHacking = false;
-        [SerializeField] private HackBar hackBar = null;
+        [SerializeField] private HackBar? hackBar = null;
         [SerializeField] private float hackSpeed = 3.0f;
 
         private float hackTimer = 0;
 
         private Vector2 movementVector;
-        private Animator anim;
+        private Animator? anim = null;
         private float dashTimer = 0;
 
         private int directionXAnimId;
@@ -76,6 +77,7 @@ namespace HackedDesign
                 {
                     isHacking = true;
                     hackTimer = Time.time;
+                    Story.SceneManager.Instance.AddActionMessage("Hacking Security...");
                 }
             }
         }
@@ -227,8 +229,8 @@ namespace HackedDesign
 
                 if (hackValue < 1)
                 {
-                    hackBar.Show();
-                    hackBar.UpdateBar(hackValue);
+                    hackBar?.Show();
+                    hackBar?.UpdateBar(hackValue);
                 }
                 else
                 {
@@ -241,7 +243,7 @@ namespace HackedDesign
             }
             else
             {
-                hackBar.Hide();
+                hackBar?.Hide();
             }
         }
 

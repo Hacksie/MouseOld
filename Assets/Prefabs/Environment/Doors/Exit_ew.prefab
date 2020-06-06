@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101992477667358}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.005, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0.005, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4018848563275878}
@@ -71,7 +71,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 836032703196725697, guid: 3c276fd9fa81e7647bab05e173a2702c, type: 3}
+  m_Sprite: {fileID: -2091701599446087683, guid: fa3f23c6a0ffd2b458723708269012f3,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -286,6 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animate: 1
+  requireSecurityDisable: 1
 --- !u!114 &6216033190113047613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,7 +326,7 @@ MonoBehaviour:
   - {x: -0.5, y: 1, z: 0}
   m_ShapePathHash: 597030165
   m_Mesh: {fileID: 0}
-  m_InstanceId: 92986
+  m_InstanceId: 179592
 --- !u!1001 &9010439769944218896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -336,7 +338,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: bfd02f87ffa614e638bc961fd5bd7766,
+      objectReference: {fileID: 21300000, guid: 63cec196c3ea34f79a5c8dbbab99f6f2,
         type: 3}
     - target: {fileID: 67481399894725183, guid: 468b9302c01989d4780290de629c1591,
         type: 3}
@@ -347,6 +349,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InteractionSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611924316147767364, guid: 468b9302c01989d4780290de629c1591,
+        type: 3}
+      propertyPath: defaultState
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8026239461692429522, guid: 468b9302c01989d4780290de629c1591,
         type: 3}

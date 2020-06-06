@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace HackedDesign.Story
 {
-
     public class SceneManager : MonoBehaviour
     {
         [Header("Level")]

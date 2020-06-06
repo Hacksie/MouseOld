@@ -11,6 +11,7 @@ namespace HackedDesign
     {
         [Header("Settings")]
         [SerializeField] private bool animate = true;
+        [SerializeField] private bool requireSecurityDisable = true;
 
         private Animator animator;
         private BaseTrigger trigger;
@@ -38,7 +39,10 @@ namespace HackedDesign
 
         public void Open()
         {
-            count++;
+            if (!requireSecurityDisable || GameManager.Instance.Data.CurrentLevel.entryTriggered)
+            {
+                count++;
+            }
         }
 
         public void Close()

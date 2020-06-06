@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace HackedDesign {
-	public class MissionCompleteManager : MonoBehaviour 
+	public class MissionCompleteManager
 	{
-		Story.SceneManager actionManager = null;
+		private Story.SceneManager actionManager = null;
 
         public void Initialize(Story.SceneManager actionManager) => this.actionManager = actionManager;
 

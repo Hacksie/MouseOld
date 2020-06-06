@@ -60,7 +60,7 @@ MonoBehaviour:
   - {x: 1.05, y: 3.64, z: 0}
   m_ShapePathHash: -1821170491
   m_Mesh: {fileID: 0}
-  m_InstanceId: 199116
+  m_InstanceId: 136280
 --- !u!1 &131214479911754990
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,7 +432,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 69
-      m_TileSpriteIndex: 62
+      m_TileSpriteIndex: 65
       m_TileMatrixIndex: 0
       m_TileColorIndex: 8
       m_TileObjectToInstantiateIndex: 65535
@@ -742,16 +742,16 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 797922496604153478, guid: 9ca9837c2d85efa4e9aceb02c0b34941, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 5428913623019525702, guid: 9ca9837c2d85efa4e9aceb02c0b34941,
       type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 2922085804239215498, guid: 9ca9837c2d85efa4e9aceb02c0b34941,
       type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 797922496604153478, guid: 9ca9837c2d85efa4e9aceb02c0b34941, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 4652123155846931694, guid: 899a32333af7bf2449af626cf200b66b,
       type: 3}
@@ -1047,7 +1047,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 69
-      m_TileSpriteIndex: 61
+      m_TileSpriteIndex: 64
       m_TileMatrixIndex: 0
       m_TileColorIndex: 8
       m_TileObjectToInstantiateIndex: 65535
@@ -1382,17 +1382,17 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: -6853076560616617414, guid: 9ca9837c2d85efa4e9aceb02c0b34941,
-      type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 8511671478629682281, guid: 9ca9837c2d85efa4e9aceb02c0b34941,
       type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1852175605183375667, guid: 9ca9837c2d85efa4e9aceb02c0b34941,
       type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -6853076560616617414, guid: 9ca9837c2d85efa4e9aceb02c0b34941,
+      type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -6796271549182179820, guid: 9ca9837c2d85efa4e9aceb02c0b34941,
       type: 3}
@@ -1531,13 +1531,28 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 9170b7ff2c954497da58374f9d6d45b4,
+      objectReference: {fileID: 0}
+    - target: {fileID: 67481399894725183, guid: 468b9302c01989d4780290de629c1591,
         type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1205910083837189476, guid: 468b9302c01989d4780290de629c1591,
         type: 3}
       propertyPath: m_Name
       value: InteractionSprite
       objectReference: {fileID: 0}
+    - target: {fileID: 2611924316147767364, guid: 468b9302c01989d4780290de629c1591,
+        type: 3}
+      propertyPath: defaultState
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611924316147767364, guid: 468b9302c01989d4780290de629c1591,
+        type: 3}
+      propertyPath: sprites
+      value: 
+      objectReference: {fileID: 11400000, guid: 659d709cb8e5ea24bb98b5c682f671f6,
+        type: 2}
     - target: {fileID: 8026239461692429522, guid: 468b9302c01989d4780290de629c1591,
         type: 3}
       propertyPath: m_AnchoredPosition.y

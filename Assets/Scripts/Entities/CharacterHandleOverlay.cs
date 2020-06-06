@@ -16,16 +16,16 @@ namespace HackedDesign.Entities
 
         private void Awake()
         {
-            SetHandleText();
+            if (character == null)
+            {
+                character = GetComponentInParent<Character>();
+            }
+
         }
 
         private void Update()
         {
-            
-            /*
-            if(GameManager.Instance.IsInGame())
-                
-                */
+            SetHandleText();
         }
 
         void SetHandleText()
@@ -34,9 +34,15 @@ namespace HackedDesign.Entities
             {
                 return;
             }
-            
-            //var character = InfoRepository.Instance.GetCharacter(this.character);
-            text.text = character.handle;
+
+            if (character != null)
+            {
+                text.text = character.handle;
+            }
+            else
+            {
+                text.text = "";
+            }
         }
     }
 }
