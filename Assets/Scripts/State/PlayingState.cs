@@ -11,6 +11,8 @@ namespace HackedDesign
         private UI.TimerPanelPresenter timerPanelPresenter;
         private UI.MinimapPresenter minimapPresenter;
 
+        private IEntity[] entityList;
+
         public PlayingState(PlayerController playerController, Story.SceneManager actionManager, UI.ActionConsolePresenter actionConsolePresenter, UI.ActionPanelPresenter actionPanelPresenter, UI.TimerPanelPresenter timerPanelPresenter, UI.MinimapPresenter minimapPresenter)
         {
             this.playerController = playerController;
@@ -26,17 +28,23 @@ namespace HackedDesign
             Logger.Log("PlayingState", "Start");
             Time.timeScale = 1;
             Cursor.visible = true;
+            entityList = GameObject.FindObjectsOfType<Entity>();
             GameManager.Instance.SetLight(GameManager.Instance.Data.CurrentLevel.template.startingLight);
             this.actionConsolePresenter.Show();
             this.actionPanelPresenter.Show();
             this.timerPanelPresenter.Show();
             this.minimapPresenter.Show();
+
         }
 
         public void Update()
         {
             this.playerController.UpdateBehaviour();
-            GameManager.Instance.Data.entityList.ForEach(entity => entity.UpdateBehaviour());
+            foreach(var entity in entityList)
+            {
+                entity.UpdateBehaviour();
+            }
+            //entityList.ForEach(entity => entity.UpdateBehaviour());
             GameManager.Instance.Data.CurrentLevel.timer.Update();
         }
 

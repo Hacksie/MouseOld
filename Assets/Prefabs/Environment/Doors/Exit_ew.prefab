@@ -94,11 +94,10 @@ GameObject:
   - component: {fileID: 4018848563275878}
   - component: {fileID: 95934519643766982}
   - component: {fileID: 61807340483984064}
-  - component: {fileID: 61823095927018240}
-  - component: {fileID: 7489292354093601359}
   - component: {fileID: 1474123107169623078}
   - component: {fileID: 6216033190113047613}
   - component: {fileID: 4447677552197337219}
+  - component: {fileID: 8332627172686619600}
   m_Layer: 0
   m_Name: Exit_ew
   m_TagString: Trigger
@@ -119,6 +118,7 @@ Transform:
   m_Children:
   - {fileID: 4219502818383600}
   - {fileID: 420723915538769678}
+  - {fileID: 6635087749179771281}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -167,113 +167,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!61 &61823095927018240
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1503932064757186}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 2.5}
-  m_EdgeRadius: 0
---- !u!114 &7489292354093601359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1503932064757186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerEnabled: 1
-  autoInteraction: 0
-  allowInteraction: 1
-  allowBug: 0
-  allowHack: 0
-  allowOverload: 0
-  allowRepeatInteractions: 0
-  allowNPCAutoInteraction: 0
-  entryActionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6428018103847912788}
-        m_TargetAssemblyTypeName: HackedDesign.Entities.InteractionSpriteOverlay,
-          Assembly-CSharp
-        m_MethodName: Show
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  interactActionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6216033190113047613}
-        m_TargetAssemblyTypeName: HackedDesign.Story.ActionInvoker, Assembly-CSharp
-        m_MethodName: Invoke
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  bugActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hackActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  overloadActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  leaveActionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6428018103847912788}
-        m_TargetAssemblyTypeName: HackedDesign.Entities.InteractionSpriteOverlay,
-          Assembly-CSharp
-        m_MethodName: Show
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  triggered: 0
-  npcTriggered: 0
-  overloaded: 0
-  hacked: 0
-  bugged: 0
 --- !u!114 &1474123107169623078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,7 +219,162 @@ MonoBehaviour:
   - {x: -0.5, y: 1, z: 0}
   m_ShapePathHash: 597030165
   m_Mesh: {fileID: 0}
-  m_InstanceId: 179592
+  m_InstanceId: 239164
+--- !u!114 &8332627172686619600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503932064757186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e45e089d1306da946baa09e2444ed10e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionSprite: {fileID: 0}
+  detection: {fileID: 0}
+  detections: []
+  entity: {fileID: 0}
+  randomStartingDirection: 0
+  autoInteraction: 0
+  allowInteraction: 1
+  allowHack: 0
+  allowOverload: 0
+  allowRepeatInteractions: 0
+  allowNPCAutoInteraction: 0
+  behaviour: {fileID: 11400000, guid: 0120557c2783b2c40af3bf05fa30a57c, type: 2}
+  pooled: 0
+  direction: {x: 0, y: -1}
+  isMoving: 0
+  hasSeenPlayer: 0
+  entryActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6428018103847912788}
+        m_TargetAssemblyTypeName: HackedDesign.InteractionSpriteOverlay, Mouse
+        m_MethodName: Show
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  interactActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6216033190113047613}
+        m_TargetAssemblyTypeName: HackedDesign.Story.ActionInvoker, Mouse
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  hackActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  overloadActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leaveActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6428018103847912788}
+        m_TargetAssemblyTypeName: HackedDesign.InteractionSpriteOverlay, Mouse
+        m_MethodName: Show
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  actionTimer: 0
+--- !u!1001 &747410005867860256
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4018848563275878}
+    m_Modifications:
+    - target: {fileID: 4321690870117452598, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_Name
+      value: Door Detection
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 50ba4d44909e8874683bc5b31a6ff619, type: 3}
+--- !u!4 &6635087749179771281 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+    type: 3}
+  m_PrefabInstance: {fileID: 747410005867860256}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9010439769944218896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -338,13 +386,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 63cec196c3ea34f79a5c8dbbab99f6f2,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 67481399894725183, guid: 468b9302c01989d4780290de629c1591,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 02071234902fe8047a8fd6539a79bae3, type: 2}
+    - target: {fileID: 67481399894725183, guid: 468b9302c01989d4780290de629c1591,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1205910083837189476, guid: 468b9302c01989d4780290de629c1591,
         type: 3}
       propertyPath: m_Name

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5361616050255730866}
   - component: {fileID: 5361616050255730865}
   - component: {fileID: 4912671877096199873}
+  - component: {fileID: 60689997656548407}
   m_Layer: 9
   m_Name: Snow Owl
   m_TagString: NPC
@@ -168,27 +169,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionSprite: {fileID: 0}
+  detection: {fileID: 0}
+  detections: []
   entity: {fileID: 11400000, guid: 655ec6e04065db54e8d5cf6bad859bc7, type: 2}
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  visibilityDistance: 3.2
   randomStartingDirection: 0
-  facePlayer: 1
+  autoInteraction: 0
+  allowInteraction: 1
+  allowHack: 0
+  allowOverload: 0
+  allowRepeatInteractions: 0
+  allowNPCAutoInteraction: 0
   behaviour: {fileID: 11400000, guid: 79ee91161ffcc294db2c336ad0cb19f8, type: 2}
   pooled: 0
   direction: {x: 0, y: -1}
   isMoving: 0
   hasSeenPlayer: 0
-  playerSeenEvent:
+  entryActionEvent:
     m_PersistentCalls:
       m_Calls: []
-  playerLeaveEvent:
+  interactActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 60689997656548407}
+        m_TargetAssemblyTypeName: HackedDesign.Story.ActionInvoker, Mouse
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  hackActionEvent:
     m_PersistentCalls:
       m_Calls: []
-  alertEvent:
+  overloadActionEvent:
     m_PersistentCalls:
       m_Calls: []
+  leaveActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  actionTimer: 0
+--- !u!114 &60689997656548407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5361616050255730870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da42ddf162ce4e549ae84e8e1f140427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: MeetSnowOwl
 --- !u!1 &5361616051293501078
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,11 +234,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5361616051293501079}
-  - component: {fileID: 5361616051293501073}
   - component: {fileID: 5361616051293501072}
-  - component: {fileID: 1537613436289513085}
+  - component: {fileID: 976315211769377965}
   m_Layer: 9
-  m_Name: Colliders
+  m_Name: Detection
   m_TagString: Trigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,61 +257,6 @@ Transform:
   m_Father: {fileID: 5361616052087722397}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5361616051293501073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5361616051293501078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerEnabled: 1
-  autoInteraction: 0
-  allowInteraction: 1
-  allowBug: 0
-  allowHack: 0
-  allowOverload: 0
-  allowRepeatInteractions: 0
-  allowNPCAutoInteraction: 0
-  entryActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  interactActionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1537613436289513085}
-        m_TargetAssemblyTypeName: HackedDesign.Story.ActionInvoker, Assembly-CSharp
-        m_MethodName: Invoke
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  bugActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hackActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  overloadActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  leaveActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  triggered: 0
-  npcTriggered: 0
-  overloaded: 0
-  hacked: 0
-  bugged: 0
 --- !u!58 &5361616051293501072
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -293,7 +273,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &1537613436289513085
+--- !u!114 &976315211769377965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -302,10 +282,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5361616051293501078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da42ddf162ce4e549ae84e8e1f140427, type: 3}
+  m_Script: {fileID: 11500000, guid: 07f7332a979b9484693b33da37e760fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: MeetSnowOwl
 --- !u!1001 &4105983403396679199
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -42,7 +42,8 @@ namespace HackedDesign
             }
         }
 
-        private readonly List<BaseTrigger> triggers = new List<BaseTrigger>();
+        //private readonly List<BaseTrigger> triggers = new List<BaseTrigger>();
+        private readonly List<IEntity> triggers = new List<IEntity>();
 
         private void Awake()
         {
@@ -73,13 +74,20 @@ namespace HackedDesign
         {
             for (int i = 0; i < triggers.Count; i++)
             {
-                if (triggers[i].allowHack && !triggers[i].hacked)
+                triggers[i].Hack(gameObject);
+            }
+            
+
+            /*
+            for (int i = 0; i < triggers.Count; i++)
+            {
+                if (triggers[i].AllowHack && !triggers[i].Hacked)
                 {
                     isHacking = true;
                     hackTimer = Time.time;
                     Story.SceneManager.Instance.AddActionMessage("Hacking Security...");
                 }
-            }
+            }*/
         }
 
         public void Dash()
@@ -166,7 +174,7 @@ namespace HackedDesign
 
         }
 
-        public void RegisterTrigger(BaseTrigger trigger)
+        public void RegisterTrigger(IEntity trigger)
         {
             if (triggers.Contains(trigger))
             {
@@ -175,14 +183,14 @@ namespace HackedDesign
             triggers.Add(trigger);
         }
 
-        public void UnregisterTrigger(BaseTrigger trigger)
+        public void UnregisterTrigger(IEntity trigger)
         {
             if (!triggers.Contains(trigger))
             {
                 return;
             }
             triggers.Remove(trigger);
-        }
+        } 
 
         public void Animate()
         {
@@ -203,7 +211,7 @@ namespace HackedDesign
 
         public void UpdateBehaviour()
         {
-            UpdateHacking();
+            //UpdateHacking();
             if (IsDashing)
             {
                 transform.Translate(movementVector * dashDistance * Time.deltaTime);

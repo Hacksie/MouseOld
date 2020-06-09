@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4476233176414782526}
   - component: {fileID: 6041581371346476612}
-  - component: {fileID: 7680050476428559339}
   m_Layer: 0
   m_Name: Laser Pylon
   m_TagString: Untagged
@@ -57,39 +56,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7680050476428559339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 113070548778443320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba93b93a022a442478d7466f874b9749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entity: {fileID: 11400000, guid: 30e0180116abfa7498ecc75e8f57aa7e, type: 2}
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  visibilityDistance: 3.2
-  randomStartingDirection: 1
-  pooled: 0
-  direction: {x: 0, y: -1}
-  isMoving: 0
-  hasSeenPlayer: 0
-  playerSeenEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  playerLeaveEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  alertEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  rotateSpeed: 45
-  resetTime: 30
 --- !u!1 &1166603396950738183
 GameObject:
   m_ObjectHideFlags: 0

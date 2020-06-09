@@ -86,27 +86,27 @@ namespace HackedDesign
             }
         }
 
-        public virtual void UpdateTrigger(Input.IInputController inputController)
-        {
+        // public virtual void UpdateTrigger(Input.IInputController inputController)
+        // {
 
-            for (int i = colliders.Count - 1; i >= 0; i--)
-            {
-                if (colliders[i].CompareTag(Tags.NPC) && allowNPCAutoInteraction)
-                {
-                    Logger.Log(name, "NPC hit door", " ", colliders[i].gameObject.name);
-                    Invoke(colliders[i].gameObject);
-                    colliders.RemoveAt(i);
-                }
+        //     for (int i = colliders.Count - 1; i >= 0; i--)
+        //     {
+        //         if (colliders[i].CompareTag(Tags.NPC) && allowNPCAutoInteraction)
+        //         {
+        //             Logger.Log(name, "NPC hit door", " ", colliders[i].gameObject.name);
+        //             Invoke(colliders[i].gameObject);
+        //             colliders.RemoveAt(i);
+        //         }
 
-                if (colliders[i].CompareTag(Tags.PLAYER))
-                {
-                    if (CheckPlayerActions(colliders[i].gameObject, inputController))
-                    {
-                        colliders.RemoveAt(i);
-                    }
-                }
-            }
-        }
+        //         if (colliders[i].CompareTag(Tags.PLAYER))
+        //         {
+        //             if (CheckPlayerActions(colliders[i].gameObject, inputController))
+        //             {
+        //                 colliders.RemoveAt(i);
+        //             }
+        //         }
+        //     }
+        // }
 
         public virtual void Entry(GameObject source)
         {
@@ -162,42 +162,42 @@ namespace HackedDesign
             leaveActionEvent.Invoke();
         }
 
-        protected bool CheckPlayerActions(GameObject source, Input.IInputController inputController)
-        {
-            if (autoInteraction)
-            {
-                Invoke(source);
-                return true;
-            }
+        // protected bool CheckPlayerActions(GameObject source, Input.IInputController inputController)
+        // {
+        //     if (autoInteraction)
+        //     {
+        //         Invoke(source);
+        //         return true;
+        //     }
 
-            if (inputController.InteractButtonUp() && allowInteraction)
-            {
-                Invoke(source);
-                return true;
-            }
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanOverload&& inputController.OverloadButtonUp() && allowOverload)
-            {
-                Overload(source);
-                return true;
-            }
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanBug&& inputController.BugButtonUp() && allowBug)
-            {
-                Bug(source);
-                return true;
-            }
-            if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanHack&& inputController.HackButtonUp() && allowHack)
-            {
-                Hack(source);
-                return true;
-            }
-            if ((overloaded || hacked || bugged) && inputController.InteractButtonUp())
-            {
-                Invoke(source);
-                return true;
-            }
+        //     if (inputController.InteractButtonUp() && allowInteraction)
+        //     {
+        //         Invoke(source);
+        //         return true;
+        //     }
+        //     if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanOverload&& inputController.OverloadButtonUp() && allowOverload)
+        //     {
+        //         Overload(source);
+        //         return true;
+        //     }
+        //     if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanBug&& inputController.BugButtonUp() && allowBug)
+        //     {
+        //         Bug(source);
+        //         return true;
+        //     }
+        //     if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanHack&& inputController.HackButtonUp() && allowHack)
+        //     {
+        //         Hack(source);
+        //         return true;
+        //     }
+        //     if ((overloaded || hacked || bugged) && inputController.InteractButtonUp())
+        //     {
+        //         Invoke(source);
+        //         return true;
+        //     }
 
-            return false;
-        }
+        //     return false;
+        // }
 
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
@@ -210,7 +210,7 @@ namespace HackedDesign
             {
                 //FIXME: cache this
                 PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
-                playerController.RegisterTrigger(this);
+                //playerController.RegisterTrigger(this);
                 Entry(other.gameObject);
             }
 
@@ -242,7 +242,7 @@ namespace HackedDesign
             if (other.CompareTag(Tags.PLAYER))
             {
                 PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
-                playerController.UnregisterTrigger(this);
+                //playerController.UnregisterTrigger(this);
                 Leave(other.gameObject);
             }
 

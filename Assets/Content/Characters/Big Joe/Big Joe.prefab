@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &822664490929354709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1159432068257084245}
+  - component: {fileID: 7465642028747886503}
+  - component: {fileID: 9118163836531527532}
+  m_Layer: 9
+  m_Name: Detection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1159432068257084245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822664490929354709}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9067204381384162637}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &7465642028747886503
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822664490929354709}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.25}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &9118163836531527532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822664490929354709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f7332a979b9484693b33da37e760fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2316057595627113002
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,7 +191,6 @@ GameObject:
   - component: {fileID: 9067204381384155230}
   - component: {fileID: 9067204381384163109}
   - component: {fileID: 9067204381384157909}
-  - component: {fileID: 6855523240453119858}
   m_Layer: 9
   m_Name: Big Joe
   m_TagString: NPC
@@ -152,6 +211,7 @@ Transform:
   m_Children:
   - {fileID: 5646209327236977502}
   - {fileID: 9150450830921051047}
+  - {fileID: 1159432068257084245}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -285,42 +345,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45e089d1306da946baa09e2444ed10e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionSprite: {fileID: 0}
+  detection: {fileID: 0}
+  detections: []
   entity: {fileID: 11400000, guid: 97c70f07c185ee7409e87ba00d90d0e1, type: 2}
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  visibilityDistance: 3.2
   randomStartingDirection: 0
-  facePlayer: 1
+  autoInteraction: 0
+  allowInteraction: 0
+  allowHack: 0
+  allowOverload: 0
+  allowRepeatInteractions: 0
+  allowNPCAutoInteraction: 0
+  behaviour: {fileID: 11400000, guid: 79ee91161ffcc294db2c336ad0cb19f8, type: 2}
   pooled: 0
   direction: {x: 0, y: -1}
   isMoving: 0
   hasSeenPlayer: 0
-  playerSeenEvent:
+  entryActionEvent:
     m_PersistentCalls:
       m_Calls: []
-  playerLeaveEvent:
+  interactActionEvent:
     m_PersistentCalls:
       m_Calls: []
-  alertEvent:
+  hackActionEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!58 &6855523240453119858
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9067204381384161475}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  overloadActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leaveActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  actionTimer: 0
 --- !u!1001 &3928942490460481856
 PrefabInstance:
   m_ObjectHideFlags: 0

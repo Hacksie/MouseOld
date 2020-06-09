@@ -352,29 +352,22 @@ namespace HackedDesign.Level
         {
             Logger.Log(name, "Populating enemy spawns");
 
-            if (entityManager.enemies.Count <= 0)
-            {
-                Logger.Log(name, "No enemies to spawn");
-                return;
-            }
-
             if (level.enemySpawnLocationList == null)
             {
                 return;
             }
 
-            for (int i = 0; i < level.enemySpawnLocationList.Count; i++)
+            foreach (Spawn spawn in level.enemySpawnLocationList)
             {
-                Logger.Log(this, "Attempting to spawn " + level.enemySpawnLocationList[i].name);
-
-                GameObject enemyPrefab = entityManager.enemies.FirstOrDefault(g => g != null && g.name == level.enemySpawnLocationList[i].name);
+                Logger.Log(this, "Attempting to spawn " + spawn.name);
+                GameObject enemyPrefab = entityManager.GetEnemyPrefabByName(spawn.name);
 
                 if (enemyPrefab is null)
                 {
                     continue;
                 }
 
-                var go = Instantiate(enemyPrefab, level.ConvertLevelPosToWorld(level.enemySpawnLocationList[i].levelLocation) + level.enemySpawnLocationList[i].worldOffset, Quaternion.identity, enemiesParent.transform);
+                var go = Instantiate(enemyPrefab, level.ConvertLevelPosToWorld(spawn.levelLocation) + spawn.worldOffset, Quaternion.identity, enemiesParent.transform);
                 IEntity enemy = go.GetComponent<IEntity>();
 
                 if (enemy is null)
@@ -384,7 +377,7 @@ namespace HackedDesign.Level
                 }
 
                 //enemy.Initialize(false, this.playerController.transform);
-                enemy.SetEntityDefinition(Story.InfoRepository.Instance.GenerateRandomEnemy((Story.Enemy)enemy.GetEntityDefinition()));
+                enemy.InfoEntity = Story.InfoRepository.Instance.GenerateRandomEnemy(enemy.InfoEntity as Story.Enemy);
                 enemyList.Add(enemy);
             }
         }
@@ -393,29 +386,23 @@ namespace HackedDesign.Level
         {
             Logger.Log(name, "Populating trap spawns");
 
-            if (entityManager.traps.Count <= 0)
-            {
-                Logger.Log(name, "No traps to spawn");
-                return;
-            }
-
             if (level.trapSpawnLocationList == null)
             {
                 return;
             }
 
-            for (int i = 0; i < level.trapSpawnLocationList.Count; i++)
+            foreach (Spawn spawn in level.trapSpawnLocationList)
             {
-                Logger.Log(this, "Attempting to spawn " + level.trapSpawnLocationList[i].name);
+                Logger.Log(this, "Attempting to spawn " + spawn.name);
 
-                GameObject trapPrefab = entityManager.traps.FirstOrDefault(g => g != null && g.name == level.trapSpawnLocationList[i].name);
-
+                GameObject trapPrefab = entityManager.GetTrapPrefabByName(spawn.name);
+                
                 if (trapPrefab is null)
                 {
                     continue;
                 }
 
-                var go = Instantiate(trapPrefab, level.ConvertLevelPosToWorld(level.trapSpawnLocationList[i].levelLocation) + level.trapSpawnLocationList[i].worldOffset, Quaternion.identity, enemiesParent.transform);
+                var go = Instantiate(trapPrefab, level.ConvertLevelPosToWorld(spawn.levelLocation) + spawn.worldOffset, Quaternion.identity, enemiesParent.transform);
                 IEntity trap = go.GetComponent<IEntity>();
 
                 if (trap is null)
@@ -425,7 +412,7 @@ namespace HackedDesign.Level
                 }
 
                 //trap.Initialize(false, this.playerController.transform);
-                trap.SetEntityDefinition(Story.InfoRepository.Instance.GenerateRandomTrap((Story.Trap)trap.GetEntityDefinition()));
+                trap.InfoEntity = Story.InfoRepository.Instance.GenerateRandomTrap(trap.InfoEntity as Story.Trap);
                 trapList.Add(trap);
             }
         }

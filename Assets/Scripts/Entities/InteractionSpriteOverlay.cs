@@ -5,12 +5,10 @@ namespace HackedDesign
 {
     public class InteractionSpriteOverlay : MonoBehaviour
     {
-        [Header("Game Objects")]
-        
+        [Header("Game Objects")]       
         [SerializeField] private SpriteRenderer spriteRenderer = null;
         
-        [Header("Configured Game Objects")]
-        [SerializeField] private EntitySprites sprites = null;
+
         [Header("Settings")]
         [SerializeField] private Color normalColor = Color.white;
         [SerializeField] private Color highlightColor = Color.white;
@@ -34,24 +32,24 @@ namespace HackedDesign
             }
         }
 
-        // public void SetSprite(int entityState)
-        // {
-        //     SetSprite((EntityState)entityState);
-        // }
-
-        // public void SetSprite(EntityState entityState)
-        // {
-        //     spriteRenderer.sprite = sprites.GetSprite(entityState);
-        // }
-
         public void SetSprite(Sprite sprite)
         {
             spriteRenderer.sprite = sprite;
         }
 
-        public void Show(bool flag)
+        public void ShowInteract()
         {
-            spriteRenderer.color = flag ? highlightColor : normalColor;
+            spriteRenderer.color = highlightColor;
         }
+
+        public void HideInteract()
+        {
+            spriteRenderer.color = normalColor;
+        }
+
+        // public void Show(bool flag)
+        // {
+        //     spriteRenderer.color = flag ? highlightColor : normalColor;
+        // }
     }
 }

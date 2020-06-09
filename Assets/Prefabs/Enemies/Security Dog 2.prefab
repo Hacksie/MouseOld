@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5143073846709079113}
   - component: {fileID: 5143073846709079112}
   - component: {fileID: 5143073846709079115}
-  - component: {fileID: 5561967091750863459}
   m_Layer: 9
   m_Name: Security Dog 2
   m_TagString: NPC
@@ -185,44 +184,6 @@ MonoBehaviour:
   restrict: 1
   closerPointOnInvalid: 1
   debugPath: 1
---- !u!114 &5561967091750863459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5143073846709079157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 853163e5d2fdba6419fdab89b7605201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entity: {fileID: 11400000, guid: 1644a06135f87754eb2c04befb217351, type: 2}
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  visibilityDistance: 3.2
-  randomStartingDirection: 1
-  pooled: 0
-  direction: {x: 0, y: -1}
-  isMoving: 0
-  hasSeenPlayer: 0
-  playerSeenEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  playerLeaveEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  alertEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  detection: {fileID: 869855225168786886}
-  patrolSpeed: 0.7
-  patrolTime: 10
-  poiLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  poiDistance: 10
 --- !u!1001 &4251642996596122596
 PrefabInstance:
   m_ObjectHideFlags: 0

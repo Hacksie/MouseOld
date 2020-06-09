@@ -1,17 +1,13 @@
 
-using System.Collections;
-using System.Collections.Generic;
+
+#nullable enable
 using UnityEngine;
-
-
 
 namespace HackedDesign
 {
-
     public class TripDetection : MonoBehaviour
     {
-        private IEntity parent;
-
+        private IEntity? parent;
 
         public void Initialize(IEntity parent)
         {
@@ -41,7 +37,5 @@ namespace HackedDesign
                 this.parent?.RemoveCollider(other.gameObject);
             }
         }
-
-
     }
 }

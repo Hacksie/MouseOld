@@ -6,7 +6,6 @@ using UnityEngine.Events;
 namespace HackedDesign
 {
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(BaseTrigger))]
     public class Door : MonoBehaviour
     {
         [Header("Settings")]
@@ -14,7 +13,7 @@ namespace HackedDesign
         [SerializeField] private bool requireSecurityDisable = true;
 
         private Animator animator;
-        private BaseTrigger trigger;
+        
 
         private int count = 0;
 
@@ -22,7 +21,6 @@ namespace HackedDesign
         private void Awake()
         {
             animator = GetComponent<Animator>();
-            trigger = GetComponent<BaseTrigger>();
         }
 
         public void Initialize()

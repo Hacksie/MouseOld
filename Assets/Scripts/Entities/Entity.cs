@@ -1,53 +1,85 @@
-﻿using UnityEngine;
+﻿#nullable enable
+using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
 using HackedDesign.Story;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace HackedDesign
 {
-    [RequireComponent(typeof(Animator))]
+
     public partial class Entity : MonoBehaviour, IEntity
     {
         [Header("Referenced Game Objects")]
-        [SerializeField] protected InteractionSpriteOverlay interactionSprite;
+        [SerializeField] protected InteractionSpriteOverlay? interactionSprite = null;
+        [SerializeField] protected Transform? detection = null;
         protected PolyNav.PolyNavAgent? polyNavAgent = null;
+        [SerializeField] protected TripDetection?[]? detections;
+        [SerializeField] protected new Collider2D? collider = null;
+        [SerializeField] protected ShadowCaster2D? shadow = null;
 
         [Header("Settings")]
-        [SerializeField] public Story.InfoEntity entity = null;
-        
-        
-        [SerializeField] private bool randomStartingDirection = true;
-        
+        [SerializeField] public Story.InfoEntity? entity = null;
+        [SerializeField] private bool randomStartingDirection = false;
+        [SerializeField] protected bool autoInteraction = false;
+        [SerializeField] protected bool allowInteraction = false;
+        [SerializeField] protected bool allowHack = false;
+        [SerializeField] protected bool allowOverload = false;
+        [SerializeField] protected bool allowRepeatInteractions = false;
+        [SerializeField] protected bool allowNPCAutoInteraction = false;
 
         [Header("State")]
-        [SerializeField] protected AbstractBehaviour behaviour;
-
+        [SerializeField] protected AbstractBehaviour? behaviour;
         [SerializeField] protected bool pooled = false;
         [SerializeField] protected Vector2 direction = Vector2.down;
         [SerializeField] protected bool isMoving = false;
         [SerializeField] private bool hasSeenPlayer;
 
-        [Header("Events")]
-        public UnityEvent playerSeenEvent;
-        public UnityEvent playerLeaveEvent;
-        public UnityEvent alertEvent;
+        protected bool overloaded = false;
+        protected bool hacked = false;
+        protected bool bugged = false;
 
-        public EntityState State { get; protected set; } = EntityState.Patrol;
-        public Vector2 Direction { get => direction; set => direction = value; }
+        // [Header("Events")]
+        // public UnityEvent playerSeenEvent;
+        // public UnityEvent playerLeaveEvent;
+        // public UnityEvent alertEvent;
 
-        private Animator animator = null; 
+        [Header("Actions")]
+        public UnityEvent? entryActionEvent;
+        public UnityEvent? interactActionEvent;
+        public UnityEvent? hackActionEvent;
+        public UnityEvent? overloadActionEvent;
+        public UnityEvent? leaveActionEvent;
+
+        private Animator? animator = null;
 
         protected readonly List<GameObject> colliders = new List<GameObject>();
-        protected Transform playerTransform;
+        protected PlayerController? playerController = null;
         protected bool playerSeen;
 
         private int directionXAnimId;
         private int directionYAnimId;
         private int isMovingAnimId;
-
         public float actionTimer = 0;
 
-        public AbstractBehaviour Behaviour
+        public EntityState State { get; protected set; } = EntityState.Patrol;
+        public Vector2 Direction { get => direction; set => direction = value; }
+        public TripDetection?[]? Detections { get => detections; private set => detections = value; }
+        public Transform Transform => this.transform;
+        public InteractionSpriteOverlay? SpriteOverlay => this.interactionSprite;
+        public PolyNav.PolyNavAgent? NavAgent => this.polyNavAgent;
+        public float LastActionTime { get => this.actionTimer; set => this.actionTimer = value; }
+        public InfoEntity? InfoEntity { get => this.entity; set => this.entity = value; }
+
+        public bool AllowInteraction { get => this.allowInteraction; }
+        public bool AllowHack { get => this.allowHack; }
+        public bool AllowOverload { get => this.allowOverload; }
+
+        public bool Hacked { get => this.hacked; protected set => this.hacked = value; }
+        public bool Overloaded { get => this.overloaded; protected set => this.overloaded = value; }
+
+
+        public AbstractBehaviour? Behaviour
         {
             get
             {
@@ -56,17 +88,9 @@ namespace HackedDesign
             set
             {
                 behaviour = value;
-                value.Begin(this);
+                value?.Begin(this);
             }
         }
-
-        public Transform Transform => this.transform;
-
-        public InteractionSpriteOverlay SpriteOverlay => this.interactionSprite;
-
-        public PolyNav.PolyNavAgent NavAgent => this.polyNavAgent;
-
-        public float LastActionTime { get => this.actionTimer; set => this.actionTimer = value; }        
 
         protected virtual void Awake()
         {
@@ -76,172 +100,151 @@ namespace HackedDesign
             directionXAnimId = Animator.StringToHash("directionX");
             directionYAnimId = Animator.StringToHash("directionY");
             isMovingAnimId = Animator.StringToHash("isMoving");
+            playerController = GameManager.Instance.Player;
             InitializeDetections();
+            colliders.Clear();
 
-           direction = Vector2.down;
+            direction = Vector2.down;
 
             if (randomStartingDirection)
             {
                 direction = Quaternion.Euler(0, 0, Random.Range(0, Mathf.PI)) * Vector2.up;
             }
-            behaviour.Begin(this);
+            behaviour?.Begin(this);
         }
-
-
-        // public virtual void Initialize(bool pooled, Transform playerTransform)
-        // {
-        //     Logger.Log(this, "Initializing Entity");
-        //     this.pooled = pooled;
-        //     this.playerTransform = playerTransform;
-
- 
-
-           
-        //     behaviour.Begin(this);
-        // }
 
         protected void InitializeDetections()
         {
-            Logger.Log(this, "InitializeDetections");
-            var detections = GetComponentsInChildren<TripDetection>();
+            Logger.Log(this, "Initialize Detections");
+            detections = GetComponentsInChildren<TripDetection>();
             foreach (var detection in detections)
             {
-                detection.Initialize(this);
+                detection?.Initialize(this);
             }
         }
 
-        public void Update()
+        public void UpdateBehaviour()
         {
-            UpdateBehaviour();
+            UpdateDirection();
+            behaviour?.UpdateBehaviour(this);
         }
 
-        public virtual void UpdateBehaviour()
-        {
+        // private void LateUpdate()
+        // {
+        //     Animate();
+        // }
 
-            behaviour.UpdateBehaviour(this);
+        private void UpdateDirection()
+        {
+            if (polyNavAgent != null && polyNavAgent.hasPath)
+            {
+                Direction = polyNavAgent.movingDirection.normalized;
+                isMoving = (polyNavAgent.movingDirection.sqrMagnitude > Vector2.kEpsilon);
+            }
+            else
+            {
+                isMoving = false;
+            }
         }
 
-        public virtual Story.InfoEntity GetEntityDefinition()
-        {
-            return this.entity;
-        }
-
-
-        public virtual void SetEntityDefinition(InfoEntity entity)
-        {
-            this.entity = entity;
-        }
 
         public virtual void SetPosition(Vector2 position)
         {
             this.transform.position = position;
         }
 
-        public void InvokeSeenPlayer()
+        public void Activate()
         {
-            //this.playerSeen.invoke();
-        }
-
-        public virtual void Activate()
-        {
-            this.gameObject.SetActive(true);
-        }
-
-        public virtual void Deactivate()
-        {
-            this.gameObject.SetActive(false);
-        }
-
-        protected virtual void UpdatePassive()
-        {
-
-        }
-
-        
-
-        protected virtual void UpdateAlerted()
-        {
-            // var hit = CanSeePlayer();
-            // if (hit.collider != null && hit.collider.CompareTag(Tags.PLAYER))
-            // {
-            // }
-            // else
-            // {
-            //     State = EntityState.Seek;
-            //     playerSeen = false;
-            //     playerLeaveEvent.Invoke();
-            // }
-
-            /*
-            if (colliders.Contains(playerTransform.gameObject))
+            if (collider != null)
             {
-                var hit = CanSeePlayer();
-                if (hit.collider != null && hit.collider.CompareTag(Tags.PLAYER))
+                collider.enabled = true;
+            }
+            if (shadow != null)
+            {
+                shadow.enabled = true;
+            }
+        }
+
+        public void Deactivate()
+        {
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
+            if (shadow != null)
+            {
+                shadow.enabled = false;
+            }
+        }
+
+
+        public virtual void Entry(GameObject source)
+        {
+            entryActionEvent?.Invoke();
+        }
+
+        public virtual void Invoke(GameObject source)
+        {
+            if (allowInteraction || hacked || bugged || overloaded)
+            {
+                interactActionEvent?.Invoke();
+            }
+        }
+
+        public virtual void Overload(GameObject source)
+        {
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanOverload && allowOverload)
+            {
+                Logger.Log(this, "Overload");
+                overloaded = true;
+
+                overloadActionEvent?.Invoke();
+                GameManager.Instance.Data.Player.ConsumeOverload();
+            }
+        }
+
+        public virtual void Hack(GameObject source)
+        {
+            if (!overloaded && !hacked && !bugged && GameManager.Instance.Data.Player.CanHack && allowHack)
+            {
+                if (GameManager.Instance.Data.Player.ConsumeHack())
                 {
-                    Logger.Log(this, "hit");
-                    playerSeen = true;
-                    playerSeenEvent.Invoke();
-                    State = EntityState.Alerted;
-                    return;
+                    hackActionEvent?.Invoke();
+                    hacked = true;
                 }
-            }            
-
-            if (playerSeen && !colliders.Contains(playerTransform.gameObject))
+            }
+            else if (hacked)
             {
-                State = EntityState.Seeking;
-                playerSeen = false;
-                playerLeaveEvent.Invoke();
-            }   */
-
-            // if (colliders.Contains(GameManager.Instance.GetPlayer()))
-            // {
-            //     var hit = CanSeePlayer();
-            //     if (hit.collider != null && hit.collider.CompareTag(TagManager.PLAYER))
-            //     {
-            //         playerSeen = true;
-            //         playerSeenEvent.Invoke();
-            //     }
-            // }
-
-            // if (playerSeen && !colliders.Contains(GameManager.Instance.GetPlayer()))
-            // {
-            //     State = EntityState.PASSIVE;
-            //     playerSeen = false;
-            //     playerLeaveEvent.Invoke();
-            // }
-
-            // if (playerSeen)
-            // {
-            //     if (scanning)
-            //     {
-            //         //direction = player.transform.position - transform.position;
-            //     }
-            //     else
-            //     {
-            //         //polyNavAgent.SetDestination(player.transform.position);
-            //     }
-            // }
+                interactActionEvent?.Invoke();
+            }
         }
 
-        protected virtual void UpdateSeek()
+        public virtual void Leave(GameObject source)
         {
+            Logger.Log(this, "leave");
+            leaveActionEvent?.Invoke();
         }
-
-        protected virtual void UpdateHunt()
-        {
-
-        }
-
-        // protected RaycastHit2D CanSeePlayer()
-        // {
-        //     return Physics2D.Raycast(transform.position, (playerTransform.position - transform.position), visibilityDistance, playerLayerMask);
-        // }
 
         public void AddCollider(GameObject collider)
         {
             if (!colliders.Contains(collider))
             {
                 colliders.Add(collider);
+
+                if (collider.CompareTag(Tags.PLAYER))
+                {
+                    interactionSprite?.ShowInteract();
+                    playerController?.RegisterTrigger(this);
+                    Entry(collider);
+                }
+
+                if (collider.CompareTag(Tags.NPC))
+                {
+                    if (allowNPCAutoInteraction)
+                    {
+                        Invoke(collider.gameObject);
+                    }
+                }
             }
         }
 
@@ -250,6 +253,18 @@ namespace HackedDesign
             if (colliders.Contains(collider))
             {
                 colliders.Remove(collider);
+                if (collider.CompareTag(Tags.PLAYER))
+                {
+                    interactionSprite?.HideInteract();
+                    playerController?.UnregisterTrigger(this);
+                    Leave(collider.gameObject);
+                }
+
+                if (collider.CompareTag(Tags.NPC))
+                {
+                    Leave(collider.gameObject);
+                }
+
             }
         }
 
@@ -284,24 +299,6 @@ namespace HackedDesign
             animator.SetFloat(directionXAnimId, direction.x);
             animator.SetFloat(directionYAnimId, direction.y);
             animator.SetBool(isMovingAnimId, isMoving);
-        }
-
-        protected virtual void OnDrawGizmos()
-        {
-
-            //Physics2D.Raycast(transform.position, (playerTransform.position - transform.position), visibilityDistance, playerLayerMask);
-
-            //Gizmos.DrawRay(transform.position, (playerTransform.position - transform.position));
-            /*
-            switch (State)
-            {
-                case EntityState.Passive:
-                    Gizmos.DrawIcon(transform.position + Vector3.up, "refresh-hs.png", true);
-                    break;
-                case EntityState.Alerted:
-                    Gizmos.DrawIcon(transform.position + Vector3.up, "skull-hs.png", true);
-                    break;
-            }*/
         }
     }
 }

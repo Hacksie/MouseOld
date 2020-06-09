@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1967568288128228559}
   - component: {fileID: 1967568288128229348}
   - component: {fileID: 1967568288128231760}
-  - component: {fileID: -2753085128929024984}
   m_Layer: 9
   m_Name: Security Camera
   m_TagString: NPC
@@ -185,40 +184,6 @@ MonoBehaviour:
   restrict: 1
   closerPointOnInvalid: 1
   debugPath: 1
---- !u!114 &-2753085128929024984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967568288128224722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b110335a0a28ba74f85a72302312d405, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entity: {fileID: 11400000, guid: 256a30d61070dda45bed3531d0acdd92, type: 2}
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  visibilityDistance: 3.2
-  randomStartingDirection: 1
-  facePlayer: 0
-  pooled: 0
-  direction: {x: 0, y: -1}
-  isMoving: 0
-  hasSeenPlayer: 0
-  playerSeenEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  playerLeaveEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  alertEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  detection: {fileID: 7190988112589774167}
-  rotateSpeed: 45
 --- !u!1001 &6113922256837544821
 PrefabInstance:
   m_ObjectHideFlags: 0

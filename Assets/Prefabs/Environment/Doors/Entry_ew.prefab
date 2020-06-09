@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 5652212586236187715}
   - component: {fileID: 5704413205964274915}
   - component: {fileID: 5667044606128391909}
-  - component: {fileID: 5667029983520468773}
-  - component: {fileID: 5952106861313315895}
   - component: {fileID: 4269703331575487086}
   - component: {fileID: 4591567402850318347}
+  - component: {fileID: 2280280327584576969}
   m_Layer: 0
   m_Name: Entry_ew
   m_TagString: Trigger
@@ -34,6 +33,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5652030606532602581}
+  - {fileID: 1240271586247220056}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -82,111 +82,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.125}
   m_EdgeRadius: 0
---- !u!61 &5667029983520468773
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5655291503860304359}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 2.5}
-  m_EdgeRadius: 0
---- !u!114 &5952106861313315895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5655291503860304359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4922a47ee376cd46b7fca6dfff07c60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerEnabled: 1
-  autoInteraction: 0
-  allowInteraction: 1
-  allowBug: 0
-  allowHack: 0
-  allowOverload: 0
-  allowRepeatInteractions: 0
-  allowNPCAutoInteraction: 0
-  entryActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  interactActionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4269703331575487086}
-        m_TargetAssemblyTypeName: HackedDesign.Triggers.Door, Assembly-CSharp
-        m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  bugActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hackActionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4269703331575487086}
-        m_TargetAssemblyTypeName: HackedDesign.Triggers.Door, Assembly-CSharp
-        m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  overloadActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  leaveActionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4269703331575487086}
-        m_TargetAssemblyTypeName: HackedDesign.Triggers.Door, Assembly-CSharp
-        m_MethodName: Close
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  triggered: 0
-  npcTriggered: 0
-  overloaded: 0
-  hacked: 0
-  bugged: 0
 --- !u!114 &4269703331575487086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +121,77 @@ MonoBehaviour:
   - {x: -0.5, y: 1, z: 0}
   m_ShapePathHash: 597030165
   m_Mesh: {fileID: 0}
-  m_InstanceId: 244114
+  m_InstanceId: 349250
+--- !u!114 &2280280327584576969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655291503860304359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e45e089d1306da946baa09e2444ed10e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionSprite: {fileID: 0}
+  detection: {fileID: 0}
+  detections: []
+  collider: {fileID: 5667044606128391909}
+  shadow: {fileID: 4591567402850318347}
+  entity: {fileID: 0}
+  randomStartingDirection: 0
+  autoInteraction: 0
+  allowInteraction: 1
+  allowHack: 0
+  allowOverload: 0
+  allowRepeatInteractions: 0
+  allowNPCAutoInteraction: 0
+  behaviour: {fileID: 0}
+  pooled: 0
+  direction: {x: 0, y: -1}
+  isMoving: 0
+  hasSeenPlayer: 0
+  entryActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  interactActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4269703331575487086}
+        m_TargetAssemblyTypeName: HackedDesign.Door, Mouse
+        m_MethodName: Open
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  hackActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  overloadActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leaveActionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4269703331575487086}
+        m_TargetAssemblyTypeName: HackedDesign.Door, Mouse
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  actionTimer: 0
 --- !u!1 &5655707733936147515
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,3 +275,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &5151432120341431273
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5652212586236187715}
+    m_Modifications:
+    - target: {fileID: 4321690870117452598, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_Name
+      value: Door Detection
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 50ba4d44909e8874683bc5b31a6ff619, type: 3}
+--- !u!4 &1240271586247220056 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6218279592386074801, guid: 50ba4d44909e8874683bc5b31a6ff619,
+    type: 3}
+  m_PrefabInstance: {fileID: 5151432120341431273}
+  m_PrefabAsset: {fileID: 0}

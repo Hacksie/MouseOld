@@ -74,7 +74,7 @@ namespace HackedDesign.UI
                 {
                     foreach (TaskObjective objective in selectedTask.objectives)
                     {
-                        taskDescription.text += "\n[" + (objective.completed ? "*" : " ") + "] " + objective.objective + (objective.optional ? "(*)" : "");
+                        taskDescription.text += "\n[" + (objective.completed ? "*" : " ") + "] " + objective.objective + (objective.optional ? "(opt.)" : "");
                         taskDescription.text += "\n<color='#999999'>" + objective.description + "</color>";
                     }
                 }
